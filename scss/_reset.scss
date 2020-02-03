@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  font-size: $fontSizeContent;
+  font-family: "RobotoMedium", sans-serif;
+  color: $colorContent;
+}
+
+a {
+  text-decoration: none;
+  color: $colorContent;
+}
+
+a:hover,
+button:hover {
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+button:focus,
+input:focus {
+  outline: none;
+}
+
+h2 {
+  @include styleForText(36px);
+}
+
+h3 {
+  @include styleForText(30px);
+}
+
+h4 {
+  @include styleForText(24px);
+}
+
+h5 {
+  @include styleForText(20px);
+}
+
+h6 {
+  @include styleForText();
+}
+
+textarea {
+  resize: none;
+}

@@ -1,0 +1,10 @@
+@mixin styleForText ($fontSize: $fontSizeContent, $fontFamily: $fontMain, $color: $colorContent) {
+  font-size: $fontSize;
+  font-family: $fontFamily;
+  color: $color;
+}
+
+@mixin container {
+  margin-left: 75px;
+  margin-right: 60px;
+}

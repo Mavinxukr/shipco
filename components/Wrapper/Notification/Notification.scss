@@ -1,0 +1,168 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  margin-bottom: 17px;
+}
+
+.title {
+  color: $colorBackground;
+}
+
+.filterText {
+  color: $colorBackground;
+  position: relative;
+}
+
+.filterIcon {
+  position: absolute;
+  left: -30px;
+  top: -2px;
+}
+
+.iconTitle {
+  fill: $colorBackground;
+  margin-right: 10px;
+}
+
+.accordionsContainer {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 68px;
+  border: 1px solid $colorBorder;
+}
+
+.accordion {
+  padding-left: 48px !important;
+  padding-right: 72px !important;
+}
+
+.accordionWrapper {
+  box-shadow: none !important;
+
+  &::before {
+    background-color: white !important;
+    height: 0 !important;
+  }
+}
+
+.accordionSummaryContent,
+.accordionWrapperExpanded{
+  margin: 0 !important;
+}
+
+.titleBlock {
+  width: 100%;
+  padding-top: 36px;
+  padding-bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E9E9E9;
+}
+
+.titleBlockNoBorder {
+  border: none;
+}
+
+.titleBlockPadding {
+  padding-bottom: 20px;
+}
+
+.mainInfo {
+  display: flex;
+  align-items: center;
+}
+
+.accordionTitle {
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.countOfNotification {
+  @include styleForText(12px);
+
+  margin-left: 26px;
+  position: relative;
+
+  &::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    position: absolute;
+    background: $colorBackground;
+    border-radius: 50%;
+    top: 3px;
+    right: -13px;
+  }
+}
+
+.accordionContent {
+  padding: 0 !important;
+}
+
+.accordionContentList {
+  width: 100%;
+}
+
+.accordionContentItem {
+  width: 100%;
+}
+
+.accordionContentFullItem {
+  background: #fafafa;
+}
+
+.accordionContentItemWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 26px;
+  padding-bottom: 24px;
+  margin-left: 48px;
+  margin-right: 72px;
+}
+
+.accordionContentItemWrapperBorder {
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.accordionContentText {
+  @include styleForText(18px);
+
+  position: relative;
+}
+
+.accordionContentTextAfter::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  position: absolute;
+  background: $colorBackground;
+  border-radius: 50%;
+  top: 7px;
+  right: -17px;
+}
+
+.accordionContentTime {
+  @include styleForText(14px);
+}
+
+.arrowIcon {
+  transform: rotate(0);
+  transition: 0.3s;
+}
+
+.arrowIconRotate {
+  transform: rotate(180deg);
+}

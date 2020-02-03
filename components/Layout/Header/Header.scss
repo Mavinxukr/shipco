@@ -1,0 +1,125 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.header {
+  max-width: 100%;
+}
+
+.top {
+  background: #6d6c6c;
+  padding: 7px 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.topLanguages {
+  display: flex;
+}
+
+.topLanguagesItem {
+  @include styleForText(14px, $fontMain, #e8e8e8);
+
+  padding: 0 5px;
+
+  &:nth-child(2) {
+    border-right: 1px solid #e8e8e8;
+  }
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.topLanguagesActive {
+  color: $colorBackground;
+}
+
+.bottom {
+  background: $colorBackground;
+  padding: 13px 19px 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menuItems {
+  display: flex;
+  align-items: center;
+}
+
+.menuLink {
+  margin: 0 70px;
+  color: $white;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.menuIcon {
+  padding-right: 10px;
+  fill: white;
+}
+
+.logo {
+  @include styleForText(48px, $fontMain, $white);
+}
+
+.bottomLanguages {
+  display: flex;
+  color: $white;
+  position: relative;
+}
+
+.bottomLanguagesIcon {
+  position: absolute;
+  right: -7px;
+  top: 6px;
+}
+
+.bottomLanguagesItem {
+  @include styleForText($fontSizeContent, $fontMain, $white);
+
+  padding: 0 8px;
+  text-transform: uppercase;
+}
+
+.bottomIconsItems {
+  display: flex;
+  align-items: center;
+}
+
+.bottomIconsLink {
+  padding-right: 18px;
+  position: relative;
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.count {
+  position: absolute;
+  display: inline-block;
+  padding: 2px 5px;
+  font-size: 10px;
+  background: #fff;
+  border-radius: 59%;
+  top: -7px;
+  right: 6px;
+}
+
+@media screen and (max-width: 1750px) {
+  .menuLink {
+    margin: 0 50px;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .menuLink {
+    margin: 0 30px;
+  }
+}

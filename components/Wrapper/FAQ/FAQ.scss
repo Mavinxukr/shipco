@@ -1,0 +1,49 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.container {
+  margin: 60px 210px 29px 228px;
+}
+
+.title {
+  color: $colorBackground;
+  width: 100%;
+  text-align: center;
+}
+
+.accordion {
+  padding: 0 !important;
+}
+
+.accordionWrapper {
+  box-shadow: none !important;
+  border-bottom: 1px solid $colorBorder;
+
+  &::before {
+    background-color: white !important;
+    height: 0 !important;
+  }
+}
+
+.accordionSummaryContent,
+.accordionWrapperExpanded{
+  margin: 0 !important;
+}
+
+.accordionContent {
+  padding: 0 !important;
+}
+
+.accordionTitleBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 35px;
+  padding-bottom: 36px;
+}
+
+.accordionDesc {
+  margin-bottom: 20px;
+  line-height: 32px;
+}
+
