@@ -1,0 +1,35 @@
+@import "scss/index";
+
+.sliderTitle {
+  color: $colorBackground;
+  margin: 60px 0 40px;
+}
+
+.ArrowL,
+.ArrowR {
+  width: 30px;
+  height: 30px;
+  background: #D73E45;
+
+  svg {
+    margin-bottom: 2px;
+  }
+
+  &:disabled {
+    background: #f8bebe;
+  }
+}
+
+.ArrowL {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 30px;
+  top: -68px;
+}
+
+.ArrowR {
+  transform: rotate(90deg);
+  position: absolute;
+  right: 0;
+  top: -68px;
+}
