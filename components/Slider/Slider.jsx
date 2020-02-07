@@ -6,6 +6,7 @@ import '../../public/slick/slick.css';
 import styles from './Slider.scss';
 
 const GlobalSlider = ({
+  className,
   count,
   countXl,
   countMd,
@@ -30,7 +31,7 @@ const GlobalSlider = ({
         counts={{ count, countXl, countMd }}
       />
     ),
-    prevArrow: <SamplePrevArrow className={styles.Arrowl} index={index} />,
+    prevArrow: <SamplePrevArrow className={styles.ArrowL} index={index} />,
     responsive: [
       {
         breakpoint: 1024,
@@ -51,7 +52,7 @@ const GlobalSlider = ({
 
   return (
     <div>
-      <h4 className={styles.sliderTitle}>{ titleSlider }</h4>
+      <h4 className={styles.sliderTitle}>{titleSlider}</h4>
       <Slider {...settings}>{children}</Slider>
     </div>
   );
@@ -77,7 +78,7 @@ const SampleNextArrow = ({
   return (
     <button
       type="button"
-      disabled={index === amountArrProduct - endCount}
+      disabled={index === endCount}
       className={styles.ArrowR}
       onClick={onClick}
     >
@@ -98,6 +99,7 @@ const SamplePrevArrow = ({ onClick, index }) => (
 );
 
 GlobalSlider.propTypes = {
+  className: PropTypes.string,
   count: PropTypes.number,
   countXl: PropTypes.number,
   countMd: PropTypes.number,

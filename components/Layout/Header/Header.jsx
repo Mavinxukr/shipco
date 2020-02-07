@@ -29,7 +29,7 @@ const Header = () => (
       </div>
     </div>
     <div className={styles.bottom}>
-      <h1 className={styles.logo}>Shipco</h1>
+      <a href="/"><h1 className={styles.logo}>Shipco</h1></a>
       <nav className={styles.menu}>
         <ul className={styles.menuItems}>
           <li className={styles.menuItem}>

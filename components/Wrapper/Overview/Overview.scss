@@ -28,7 +28,8 @@
 .flex {
   display: flex;
   justify-content: space-between;
-  padding: 0 12px 13px 17px
+  padding: 0 12px 16px 17px;
+  align-items: center;
 }
 
 .slider {
@@ -76,4 +77,19 @@
 
 .disabled {
   background: #F8BEBE;
+}
+
+.sliderIcon {
+  margin-bottom: -3px;
+  margin-right: 10px;
+}
+
+.firstBlock {
+  padding-top: 23px;
+  padding-bottom: 56px;
+}
+
+.center {
+  text-align: center;
+  padding-bottom: 19px;
 }

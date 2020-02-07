@@ -1,10 +1,13 @@
 import React from 'react';
+import cx from 'classnames';
 import GlobalSlider from '../../Slider/Slider';
+import HorizontalLabelPositionBelowStepper from '../../Stepper/GlobalStepper';
 import styles from './Overview.scss';
 import MainLayout from '../../Layout/Global/Global';
 import Image from '../../Image/Image';
+import IconShipping from '../../../assets/svg/icon.svg';
 
-import { data } from './data';
+import { data, dataShipping } from './data';
 
 const Overview = () => (
   <MainLayout>
@@ -44,31 +47,31 @@ const Overview = () => (
         count={3}
         countXl={2}
         countMd={1}
-        amountArrProduct={data.length}
+        amountArrProduct={dataShipping.length}
       >
-        {data.map(item => (
+        {dataShipping.map(item => (
           <div className={styles.slider} key={item.id}>
-            <div>
-              <Image className={styles.image} src={item.src} />
-            </div>
-            <h6 className={styles.titleSlider}>{item.title}</h6>
-            <div className={styles.flex}>
-              <span>{item.lot}</span>
-              <span>
-                Current Bid:{' '}
-                <span className={styles.title}>{item.current}</span>
+            <div className={cx(styles.flex, styles.firstBlock)}>
+              <span className={styles.title}>
+                <IconShipping className={styles.sliderIcon} />
+                {item.idCar}
               </span>
+              <span className={styles.title}>{item.title}</span>
             </div>
             <div className={styles.flex}>
-              <span>{item.location}</span>
-              <span className={styles.circle}>e</span>
+              <span>{item.firstDate}</span>
+              <span>{item.secondDate}</span>
             </div>
-            <div className={styles.bg}>{item.view}</div>
+            <div className={styles.flex}>
+              <b>{item.from}</b>
+              <b>{item.to}</b>
+            </div>
+            <HorizontalLabelPositionBelowStepper activeStep={item.step} />
+            <p className={styles.center}>{item.car}</p>
           </div>
         ))}
       </GlobalSlider>
     </div>
   </MainLayout>
 );
-
 export default Overview;
