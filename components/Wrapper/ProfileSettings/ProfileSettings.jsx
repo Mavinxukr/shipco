@@ -74,12 +74,12 @@ const ProfileSettings = () => (
                     <div className={styles.column}>
                       <label className={styles.label}>Country</label>
                       <select className={styles.field} {...input}>
-                        <option value="" />
-                        <option value="Ukraine">Ukraine</option>
-                        <option value="Ukraine">Ukraine</option>
-                        <option value="Ukraine">Ukraine</option>
-                        <option value="Ukraine">Ukraine</option>
-                        <option value="Ukraine">Ukraine</option>
+                        <option className={styles.displayNone} value="" />
+                        <option className={styles.option} value="Ukraine">Ukraine</option>
+                        <option className={styles.option} value="Ukraine">Ukraine</option>
+                        <option className={styles.option} value="Ukraine">Ukraine</option>
+                        <option className={styles.option} value="Ukraine">Ukraine</option>
+                        <option className={styles.option} value="Ukraine">Ukraine</option>
                       </select>
                       {meta.error && meta.touched && (
                       <span className={styles.error}>{meta.error}</span>
@@ -92,13 +92,13 @@ const ProfileSettings = () => (
                     <div className={styles.column}>
                       <label className={styles.label}>City</label>
                       <select className={styles.field} {...input}>
-                        <option value="" />
-                        <option value="Ukraine">Kyiv</option>
-                        <option value="Ukraine">Kyiv</option>
-                        <option value="Ukraine">Kyiv</option>
-                        <option value="Ukraine">Kyiv</option>
-                        <option value="Ukraine">Kyiv</option>
-                        <option value="Ukraine">Kyiv</option>
+                        <option className={styles.displayNone} value="" />
+                        <option className={styles.option} value="Ukraine">Kyiv</option>
+                        <option className={styles.option} value="Ukraine">Kyiv</option>
+                        <option className={styles.option} value="Ukraine">Kyiv</option>
+                        <option className={styles.option} value="Ukraine">Kyiv</option>
+                        <option className={styles.option} value="Ukraine">Kyiv</option>
+                        <option className={styles.option} value="Ukraine">Kyiv</option>
                       </select>
                       {meta.error && meta.touched && (
                       <span className={styles.error}>{meta.error}</span>
@@ -125,7 +125,11 @@ const ProfileSettings = () => (
                 </Field>
               </div>
               <div className={styles.submit}>
-                <Button onClick={handleSubmit} className={styles.btnSubmit} type="submit">
+                <Button
+                  onClick={handleSubmit}
+                  className={styles.btnSubmit}
+                  type="submit"
+                >
                   Save changes
                 </Button>
               </div>
@@ -136,7 +140,54 @@ const ProfileSettings = () => (
     </div>
     <CustomSelect />
     <Popup titleButton="open" title="Change password">
-      <div>asdad</div>
+      <Form
+        onSubmit={onSubmit}
+        render={({
+          handleSubmit, form, submitting, pristine, values,
+        }) => (
+          <form>
+            <Field
+              name="Old password"
+              validate={composeValidators(required, passwordValidation)}
+              type="password"
+            >
+              {renderInput({
+                label: 'Old password',
+                classNameWrapper: 'InputFormWrapper-popupFieldRow',
+              })}
+            </Field>
+            <Field
+              name="New password"
+              validate={composeValidators(required, passwordValidation)}
+              type="password"
+            >
+              {renderInput({
+                label: 'New password',
+                classNameWrapper: 'InputFormWrapper-popupFieldRow',
+              })}
+            </Field>
+            <Field
+              name="Confirm password"
+              validate={composeValidators(required, passwordValidation)}
+              type="password"
+            >
+              {renderInput({
+                label: 'Confirm password',
+                classNameWrapper: 'InputFormWrapper-popupFieldRow',
+              })}
+            </Field>
+            <div className={styles.submitPoup}>
+              <Button
+                onClick={handleSubmit}
+                className={styles.btnSubmit}
+                type="submit"
+              >
+                Save new password
+              </Button>
+            </div>
+          </form>
+        )}
+      />
     </Popup>
   </MainLayout>
 );
