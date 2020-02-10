@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import GlobalSlider from '../../Slider/Slider';
-import HorizontalLabelPositionBelowStepper from '../../Stepper/GlobalStepper';
+import CustomSlider from '../../CustomSlider/CustomSlider';
+import CustomStepper from '../../CustomStepper/CustomStepper';
 import styles from './Overview.scss';
 import MainLayout from '../../Layout/Global/Global';
 import Image from '../../Image/Image';
@@ -12,7 +12,7 @@ import { data, dataShipping } from './data';
 const Overview = () => (
   <MainLayout>
     <div className={styles.container}>
-      <GlobalSlider
+      <CustomSlider
         className={styles.containerSlider}
         titleSlider="Popular Vehicles Right Now"
         count={4}
@@ -40,8 +40,8 @@ const Overview = () => (
             <div className={styles.bg}>{item.view}</div>
           </div>
         ))}
-      </GlobalSlider>
-      <GlobalSlider
+      </CustomSlider>
+      <CustomSlider
         className={styles.containerSlider}
         titleSlider="Shipping "
         count={3}
@@ -66,11 +66,11 @@ const Overview = () => (
               <b>{item.from}</b>
               <b>{item.to}</b>
             </div>
-            <HorizontalLabelPositionBelowStepper activeStep={item.step} />
+            <CustomStepper activeStep={item.step} />
             <p className={styles.center}>{item.car}</p>
           </div>
         ))}
-      </GlobalSlider>
+      </CustomSlider>
     </div>
   </MainLayout>
 );

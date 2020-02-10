@@ -6,7 +6,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import IconCar from '../../assets/svg/iconcar.svg';
-import styles from './GlobalStepper.scss';
+import styles from './CustomStepper.scss';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -69,7 +69,7 @@ function ColorlibStepIcon({ active, completed }) {
 
 const getSteps = () => ['', '', ''];
 
-const HorizontalLabelPositionBelowStepper = ({ activeStep }) => {
+const CustomStepper = ({ activeStep }) => {
   const steps = getSteps();
 
   return (
@@ -85,4 +85,4 @@ const HorizontalLabelPositionBelowStepper = ({ activeStep }) => {
   );
 };
 
-export default HorizontalLabelPositionBelowStepper;
+export default CustomStepper;

@@ -1,37 +1,50 @@
 import React from 'react';
-import cx from 'classnames';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 import styles from './Button.scss';
 
 const Button = ({
   children,
-  buttonType,
-  classNameWrapper,
-  viewType,
-  buttonTitle,
+  type,
+  onClick,
+  className,
+  disabled,
+  active,
+  ...attrs
 }) => {
-  const classNameForButton = cx(styles.button, {
-    [styles.collapseButton]: viewType === 'sliderButton',
-    [styles.openButton]: viewType === 'openButton',
-  });
+  const onClickAction = (e) => {
+    if (disabled) {
+      e.preventDefault();
+    } else {
+      return onClick(e);
+    }
+  };
+
+  const classes = classNames(styles.btn, className, { active });
+
+  const Tag = attrs.href ? 'a' : 'button';
 
   return (
-    <button
-      type={buttonType}
-      className={cx(classNameForButton, classNameWrapper)}
+    <Tag
+      className={classes}
+      type={type}
+      disabled={disabled}
+      onClick={onClickAction}
+      {...attrs}
     >
       {children}
-      {buttonTitle}
-    </button>
+    </Tag>
   );
 };
 
 Button.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  buttonType: PropTypes.string,
-  classNameWrapper: PropTypes.string,
-  viewType: PropTypes.oneOf(['sliderButton', 'openButton']),
-  buttonTitle: PropTypes.string,
+  children: PropTypes.node,
+  type: PropTypes.string,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 export default Button;

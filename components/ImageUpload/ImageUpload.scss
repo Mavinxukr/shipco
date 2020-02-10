@@ -1,0 +1,48 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.previewImg {
+  max-width: 375px;
+  height: 100%;
+  max-height: 494px;
+  width: 100%;
+  object-fit: cover;
+  margin-top: 30px;
+
+  @media (max-width: 1600px) {
+    max-width: 300px;
+  }
+}
+
+.changeImage {
+  width: 375px;
+
+  @media (max-width: 1600px) {
+    width: 300px;
+  }
+}
+
+.file {
+  position: relative;
+  width: 100%;
+}
+
+.fileInput {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  z-index: -1;
+}
+
+.labelFileInput {
+  display: flex;
+  align-items: center;
+  color: $colorBackground;
+  justify-content: center;
+  margin-top: 28px;
+  cursor: pointer;
+}
+
+.iconPlus {
+  margin-right: 15px;
+}

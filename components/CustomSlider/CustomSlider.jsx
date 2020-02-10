@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import IconArrow from '../../assets/svg/Group (6).svg';
 import '../../public/slick/slick.css';
-import styles from './Slider.scss';
+import styles from './CustomSlider.scss';
 
-const GlobalSlider = ({
+const CustomSlider = ({
   className,
   count,
   countXl,
@@ -98,7 +98,7 @@ const SamplePrevArrow = ({ onClick, index }) => (
   </button>
 );
 
-GlobalSlider.propTypes = {
+CustomSlider.propTypes = {
   className: PropTypes.string,
   count: PropTypes.number,
   countXl: PropTypes.number,
@@ -120,4 +120,4 @@ SamplePrevArrow.propTypes = {
   index: PropTypes.number,
 };
 
-export default GlobalSlider;
+export default CustomSlider;

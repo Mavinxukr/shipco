@@ -1,18 +1,9 @@
 @import "scss/core/mixins";
 @import "scss/core/vars";
 
-.button {
+.btn {
   background: $colorBackground;
+  color: $white;
+  cursor: pointer;
 }
 
-.collapseButton {
-  width: 30px;
-  height: 30px;
-}
-
-.openButton {
-  width: 20px;
-  height: 20px;
-
-  @include styleForText(14px, $fontMain, $white);
-}

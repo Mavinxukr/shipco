@@ -1,0 +1,21 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.label {
+  margin: 30px 0 11px;
+  color: #d73e3e;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 435px;
+
+  @media (max-width: 1600px) {
+    width: 300px;
+  }
+}
+
+.error {
+  color: $colorBackground;
+}
