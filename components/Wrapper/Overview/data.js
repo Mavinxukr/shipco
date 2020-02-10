@@ -1,4 +1,4 @@
-export const data = [
+export const dataSlider = [
   {
     id: 1,
     src: '/images/pic.png',
@@ -128,5 +128,89 @@ export const dataShipping = [
     to: 'Kyiv',
     step: 1,
     car: 'Car on the way to port ',
+  },
+];
+
+export const dataTable = [
+  {
+    id: 22779019,
+    date: '28/12/18',
+    auto: '2013 Volkwagen Jetta Hybrid',
+    client: 'Lorem Ipsum',
+    total: 25.000,
+    paid: 0.00,
+    outstanding: 25.000,
+    status: 'Paid',
+  },
+  {
+    id: 22779018,
+    date: '28/12/13',
+    auto: '2013 Volkwagen Jetta Hybrid',
+    client: 'Lorem Ipsum',
+    total: 25.000,
+    paid: 0.00,
+    outstanding: 25.000,
+    status: 'Paid',
+  },
+  {
+    id: 22779019,
+    date: '28/12/14',
+    auto: '2013 Volkwagen Jetta Hybrid',
+    client: 'Lorem Ipsum',
+    total: 25.000,
+    paid: 0.00,
+    outstanding: 25.000,
+    status: 'Paid',
+  },
+  {
+    id: 22779017,
+    date: '28/12/12',
+    auto: '2013 Volkwagen Jetta Hybrid',
+    client: 'Lorem Ipsum',
+    total: 25.000,
+    paid: 0.00,
+    outstanding: 25.000,
+    status: 'Paid',
+  },
+
+];
+
+export const columns = [
+  {
+    Header: 'Table',
+    columns: [
+      {
+        Header: 'ID',
+        accessor: 'id',
+      },
+      {
+        Header: 'Date',
+        accessor: 'date',
+      },
+      {
+        Header: 'Auto',
+        accessor: 'auto',
+      },
+      {
+        Header: 'Client',
+        accessor: 'client',
+      },
+      {
+        Header: 'Total',
+        accessor: 'total',
+      },
+      {
+        Header: 'Paid',
+        accessor: 'paid',
+      },
+      {
+        Header: 'Outstanding',
+        accessor: 'outstanding',
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+      },
+    ],
   },
 ];

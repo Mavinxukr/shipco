@@ -81,3 +81,15 @@
 .option {
   background: $colorInput;
 }
+
+.password {
+  position: relative;
+}
+
+.showPassword {
+  position: absolute;
+  right: 21px;
+  bottom: 12px;
+  cursor: pointer;
+  z-index: 2;
+}

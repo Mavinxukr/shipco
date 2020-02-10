@@ -1,13 +1,17 @@
 import React from 'react';
 import cx from 'classnames';
+import { useTable, useSortBy } from 'react-table';
 import CustomSlider from '../../CustomSlider/CustomSlider';
 import CustomStepper from '../../CustomStepper/CustomStepper';
 import styles from './Overview.scss';
 import MainLayout from '../../Layout/Global/Global';
+import CustomTable from '../../CustomTable/CustomTable';
 import Image from '../../Image/Image';
 import IconShipping from '../../../assets/svg/icon.svg';
-
-import { data, dataShipping } from './data';
+import {
+  dataSlider, dataShipping, dataTable, columns,
+} from './data';
+import IconSortTable from '../../../assets/svg/SortTable.svg';
 
 const Overview = () => (
   <MainLayout>
@@ -18,9 +22,9 @@ const Overview = () => (
         count={4}
         countXl={2}
         countMd={1}
-        amountArrProduct={data.length}
+        amountArrProduct={dataSlider.length}
       >
-        {data.map(item => (
+        {dataSlider.map(item => (
           <div className={styles.slider} key={item.id}>
             <div>
               <Image className={styles.image} src={item.src} />
@@ -71,7 +75,58 @@ const Overview = () => (
           </div>
         ))}
       </CustomSlider>
+      <CustomTable title="Invoices">
+        <Table columns={columns} data={dataTable} />
+      </CustomTable>
     </div>
   </MainLayout>
 );
+
 export default Overview;
+
+function Table({ columns, data }) {
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy,
+  );
+
+  return (
+    <>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <IconSortTable className={styles.sort} />
+                  {column.render('Header')}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
