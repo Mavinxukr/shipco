@@ -5,6 +5,7 @@ import styles from './ProfileSettings.scss';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import { renderInput } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
+import SelectCustom from '../../SelectCustom/SelectCustom';
 import {
   required,
   snpValidation,
@@ -39,6 +40,7 @@ const ProfileSettings = () => {
               <ImageUpload />
               <div className={styles.flex}>
                 <div>
+                  <div />
                   <Field
                     name="Name"
                     validate={composeValidators(required, snpValidation)}
@@ -83,24 +85,7 @@ const ProfileSettings = () => {
                     {({ input, meta }) => (
                       <div className={styles.column}>
                         <label className={styles.label}>Country</label>
-                        <select className={styles.field} {...input}>
-                          <option className={styles.displayNone} value="" />
-                          <option className={styles.option} value="Ukraine">
-                  Ukraine
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Ukraine2
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Ukraine3
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Ukraine4
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Ukraine5
-                          </option>
-                        </select>
+                        <SelectCustom {...input} />
                         {meta.error && meta.touched && (
                         <span className={styles.error}>{meta.error}</span>
                         )}
@@ -111,27 +96,7 @@ const ProfileSettings = () => {
                     {({ input, meta }) => (
                       <div className={styles.column}>
                         <label className={styles.label}>City</label>
-                        <select className={styles.field} {...input}>
-                          <option className={styles.displayNone} value="" />
-                          <option className={styles.option} value="Ukraine">
-                  Kyiv
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Kyiv2
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Kyiv3
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Kyiv4
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Kyiv5
-                          </option>
-                          <option className={styles.option} value="Ukraine">
-                  Kyiv6
-                          </option>
-                        </select>
+                        <SelectCustom {...input} />
                         {meta.error && meta.touched && (
                         <span className={styles.error}>{meta.error}</span>
                         )}
