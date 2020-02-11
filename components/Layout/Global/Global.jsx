@@ -26,10 +26,7 @@ const Global = ({ children }) => (
 );
 
 Global.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object,
-  ]),
+  children: PropTypes.node,
 };
 
 export default Global;

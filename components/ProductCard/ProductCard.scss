@@ -1,0 +1,50 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.carsItem {
+  background: $white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  margin: 0 40px 80px;
+
+  @media screen and (max-width: 1544px){
+    margin: 0 20px 40px;
+    max-width: 30%;
+  }
+}
+
+.carsName {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  color: $colorBackground;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.carsImage {
+  width: 100%;
+}
+
+.carsItemInfo {
+  max-width: 370px;
+  margin: auto;
+  border-top: 1px solid #E5E5E5;
+  padding: 10px 0 30px;
+  justify-content: space-between;
+  display: flex;
+  @media screen and (max-width: 1544px){
+    max-width: 330px;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.textColor {
+  color: #6D6C6C;
+}
+
+.carsIcon {
+  margin-right: 10px;
+}

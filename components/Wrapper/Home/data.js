@@ -1,0 +1,77 @@
+export const data = [
+  {
+    id: 1,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    road: '69,000 km',
+    petrol: 'Petrol',
+    year: '2014',
+  },
+  {
+    id: 2,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    road: '69,000 km',
+    petrol: 'Petrol',
+    year: '2014',
+  },
+  {
+    id: 3,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    road: '69,000 km',
+    petrol: 'Petrol',
+    year: '2014',
+  },
+  {
+    id: 4,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    road: '69,000 km',
+    petrol: 'Petrol',
+    year: '2014',
+  },
+  {
+    id: 5,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    road: '69,000 km',
+    petrol: 'Petrol',
+    year: '2014',
+  },
+  {
+    id: 6,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    road: '69,000 km',
+    petrol: 'Petrol',
+    year: '2014',
+  },
+];
+
+export const sliderData = [
+  {
+    id: 1,
+    src: '/images/bmw.png',
+    srcUser: '/images/face.png',
+    name: 'Bob Gray',
+    position: 'Lorem ipsum dolor sit amet, consectetuer',
+    desc: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,.',
+  },
+  {
+    id: 2,
+    src: '/images/bmw.png',
+    srcUser: '/images/face.png',
+    name: 'Bob Gray',
+    position: 'Lorem ipsum dolor sit amet, consectetuer',
+    desc: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,.',
+  },
+  {
+    id: 3,
+    src: '/images/bmw.png',
+    srcUser: '/images/face.png',
+    name: 'Bob Gray',
+    position: 'Lorem ipsum dolor sit amet, consectetuer',
+    desc: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,.',
+  },
+];

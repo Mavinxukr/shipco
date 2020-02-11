@@ -5,8 +5,8 @@ module.exports = withCSS(
   withSass({
     cssModules: true,
     cssLoaderOptions: {
-      importLoaders: 1,
-      localIdentName: '[name]_[local]',
+      url: false,
+      localIdentName: '[name]-[local]',
     },
     webpack(config) {
       config.module.rules.push({

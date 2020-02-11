@@ -78,7 +78,7 @@ const Footer = () => (
       <a className={styles.footerLink} href="/">Privacy Policy</a>
       <a className={styles.footerLink} href="/">Copyright Terms & Conditions</a>
       <a className={styles.footerLink} href="/">Cookie Policy</a>
-      <a className={styles.footerLink} href="/">FAQ</a>
+      <a className={styles.footerLink} href="/faq">FAQ</a>
     </div>
     <p className={styles.license}>© 2019 - Shipco. All right reserved</p>
   </footer>

@@ -1,0 +1,11 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.wrapperTable {
+  width: 100%;
+}
+
+.title {
+  color: $colorBackground;
+  margin: 77px 0 32px;
+}

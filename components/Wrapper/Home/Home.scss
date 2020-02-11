@@ -1,0 +1,286 @@
+//@import "scss/core/mixins";
+//@import "scss/core/vars";
+@import "scss/index";
+
+.header {
+  height: 100vh;
+  background: url('/images/background.png') bottom;
+  background-size: cover;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.headerTitle {
+  margin: 160px auto 60px;
+  color: $white;
+  font-size: 72px;
+  line-height: 80px;
+  text-align: center;
+  text-transform: uppercase;
+  max-width: 550px;
+}
+.headerTitleBg {
+  background: $colorBackground;
+}
+
+.headerMenuItems {
+  display: flex;
+  justify-content: center;
+}
+
+.headerMenuItem {
+  margin: 0 30px;
+}
+
+.headerMenuLink {
+  color: $white;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.headerText {
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  color: $white;
+  margin: 0 auto;
+  max-width: 1205px;
+}
+
+.container{
+  margin: auto;
+  max-width: 1544px;
+
+  @media screen and (max-width: 1544px){
+    margin: 0 20px;
+  }
+}
+
+
+.containerHeader{
+  align-items: center;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoTitle {
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.infoText {
+  max-width: 631px;
+  margin-bottom: 125px;
+}
+
+.infoBlock {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.infoBlockItem {
+  max-width: 417px;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.infoBlockItemTitle {
+  font-size: 18px;
+  line-height: 21px;
+  margin: 40px 0 20px;
+}
+
+.cars {
+  background: #FAFAFA;
+  padding: 100px 0;
+}
+
+.carsTitle {
+  text-transform: uppercase;
+  margin-bottom: 100px;
+}
+
+.carsItems {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: -40px;
+  margin-right: -40px;
+
+  @media screen and (max-width: 1544px){
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+}
+
+.testimonialsTitle {
+  text-align: center;
+  position: relative;
+  text-transform: uppercase;
+  margin: 40px 0;
+}
+
+.testimonialsIcon {
+  margin-right: -35px;
+  padding-bottom: 10px;
+}
+
+.contactTitle {
+  text-transform: uppercase;
+  margin: 40px 0;
+}
+
+.contactBlock {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.contactBlockText {
+  max-width: 630px;
+}
+
+.contactColumn {
+  display: flex;
+  flex-direction: column;
+  margin-left: 66px;
+
+  p {
+    margin-bottom: 10px;
+  }
+}
+
+.contactLink {
+  color: initial;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.social {
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.socialLink {
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+
+.footer {
+  background: $colorContent;
+  padding: 40px 0 22px;
+  color: $white;
+}
+
+.footerLogo {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.fillRed {
+  fill: $colorBackground;
+}
+
+.fillWhite {
+  fill: $white;
+}
+
+.footerText {
+  max-width: 243px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  margin-bottom: 26px;
+}
+
+.footerItem {
+  margin: 0 0 1em;
+  color: $white;
+}
+
+.footerLink {
+  color: $white;
+  text-decoration: none;
+  margin: 0 0 1em;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.slider {
+  display: flex!important;
+}
+
+.sliderImg {
+  width: 40%;
+  padding: 30px;
+}
+
+.sliderContainer {
+  max-width: 1285px;
+  margin: 0 auto 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.sliderRight {
+  padding: 30px;
+}
+
+.sliderFlex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 33px;
+}
+
+.sliderUser {
+  margin-left: 40px;
+
+  h4 {
+    margin-bottom: 20px;
+  }
+}
+
+.ArrowL,
+.ArrowR {
+  width: 30px;
+  height: 30px;
+  background: #D73E45;
+
+  svg {
+    margin-bottom: 2px;
+  }
+
+  &:disabled {
+    background: #f8bebe;
+  }
+}
+
+.ArrowL {
+  transform: rotate(-90deg) translate(50%);
+  position: absolute;
+  left: -45px;
+  top: 50%;
+}
+
+.ArrowR {
+  transform: rotate(90deg) translate(-50%);
+  position: absolute;
+  right: -45px;
+  top: 50%;
+}
+
+.map {
+  width: 100%;
+  height: 678px;
+}

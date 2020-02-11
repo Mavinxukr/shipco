@@ -1,0 +1,37 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.label {
+  margin: 30px 0 11px;
+  color: #d73e3e;
+  min-width: 132px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 435px;
+
+  @media (max-width: 1600px) {
+    width: 300px;
+  }
+}
+
+.myClass {
+  display: none;
+}
+
+.error {
+  color: $colorBackground;
+}
+
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: auto;
+
+  .label {
+    margin: 0 31px 0 0;
+  }
+}
