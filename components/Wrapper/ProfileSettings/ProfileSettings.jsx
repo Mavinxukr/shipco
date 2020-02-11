@@ -86,19 +86,19 @@ const ProfileSettings = () => {
                         <select className={styles.field} {...input}>
                           <option className={styles.displayNone} value="" />
                           <option className={styles.option} value="Ukraine">
-                            Ukraine
+                  Ukraine
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Ukraine2
+                  Ukraine2
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Ukraine3
+                  Ukraine3
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Ukraine4
+                  Ukraine4
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Ukraine5
+                  Ukraine5
                           </option>
                         </select>
                         {meta.error && meta.touched && (
@@ -114,22 +114,22 @@ const ProfileSettings = () => {
                         <select className={styles.field} {...input}>
                           <option className={styles.displayNone} value="" />
                           <option className={styles.option} value="Ukraine">
-                            Kyiv
+                  Kyiv
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Kyiv2
+                  Kyiv2
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Kyiv3
+                  Kyiv3
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Kyiv4
+                  Kyiv4
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Kyiv5
+                  Kyiv5
                           </option>
                           <option className={styles.option} value="Ukraine">
-                            Kyiv6
+                  Kyiv6
                           </option>
                         </select>
                         {meta.error && meta.touched && (
