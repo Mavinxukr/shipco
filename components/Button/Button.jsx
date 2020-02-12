@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cx from 'classnames';
 
 import styles from './Button.scss';
 
@@ -8,7 +8,7 @@ const Button = ({
   children,
   type,
   onClick,
-  className,
+  customBtn,
   disabled,
   active,
   ...attrs
@@ -21,13 +21,11 @@ const Button = ({
     }
   };
 
-  const classes = classNames(styles.btn, className, { active });
-
   const Tag = attrs.href ? 'a' : 'button';
 
   return (
     <Tag
-      className={classes}
+      className={cx(styles.btn, customBtn, { active })}
       type={type}
       disabled={disabled}
       onClick={onClickAction}
@@ -39,12 +37,17 @@ const Button = ({
 };
 
 Button.propTypes = {
+  customBtn: PropTypes.string,
   children: PropTypes.node,
   type: PropTypes.string,
   onClick: PropTypes.func,
-  className: PropTypes.string,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
+  attrs: PropTypes.node,
+};
+
+Button.defaultProps = {
+  onClick: () => {},
 };
 
 export default Button;

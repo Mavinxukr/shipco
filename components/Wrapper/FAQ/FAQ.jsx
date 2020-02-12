@@ -28,11 +28,9 @@ const AccordionItem = ({ item }) => {
       >
         <div className={styles.accordionTitleBlock}>
           <div>{item.title}</div>
-          <Button
-            buttonTitle={expanded ? '-' : '+'}
-            buttonType="button"
-            viewType="openButton"
-          />
+          <Button customBtn={styles.btnFaq} type="button">
+            {expanded ? '-' : '+'}
+          </Button>
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails classes={{ root: styles.accordionContent }}>
@@ -47,11 +45,9 @@ const FAQ = () => (
     <div className={styles.container}>
       <h4 className={styles.title}>FAQ: Car from USA</h4>
       <div>
-        {
-          data.map(item => (
-            <AccordionItem key={item.id} item={item} />
-          ))
-        }
+        {data.map(item => (
+          <AccordionItem key={item.id} item={item} />
+        ))}
       </div>
     </div>
   </MainLayout>

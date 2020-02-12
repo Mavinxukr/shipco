@@ -4,12 +4,12 @@ import styles from './Popup.scss';
 import IconClose from '../../assets/svg/close.svg';
 import Button from '../Button/Button';
 
-const Popup = ({ titleButton, title, children }) => {
+const Popup = ({ titleButton, title, children, customBtn }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div>
-      <Button type="button" onClick={() => setIsModalOpen(true)}>
+      <Button customBtn={customBtn} type="button" onClick={() => setIsModalOpen(true)}>
         {titleButton}
       </Button>
       {isModalOpen && (
@@ -29,7 +29,8 @@ const Popup = ({ titleButton, title, children }) => {
 export default Popup;
 
 Popup.propTypes = {
-  titleButton: PropTypes.string,
+  titleButton: PropTypes.node,
+  customBtn: PropTypes.string,
   title: PropTypes.string,
   children: PropTypes.node,
 };

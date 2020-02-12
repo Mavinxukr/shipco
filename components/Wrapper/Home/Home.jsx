@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import '../../../public/slick/slick.css';
 import Slider from 'react-slick';
 import GoogleMapReact from 'google-map-react';
+import Button from '../../Button/Button';
 import styles from './Home.scss';
 import Image from '../../Image/Image';
 import ProductCard from '../../ProductCard/ProductCard';
@@ -88,7 +89,9 @@ const Home = () => {
               </li>
             </ul>
           </nav>
-          <button type="button">Login</button>
+          <Button customBtn={styles.btnLogin} type="button">
+            Login
+          </Button>
         </div>
         <h1 className={styles.headerTitle}>
           The{' '}
@@ -236,7 +239,9 @@ const Home = () => {
         <div>
           <div className={styles.map}>
             <GoogleMapReact
-              bootstrapURLKeys={{ key: 'AIzaSyDb8D7DDVkbXbN03KeDk0TFmBpK24NcQjg' }}
+              bootstrapURLKeys={{
+                key: 'AIzaSyDb8D7DDVkbXbN03KeDk0TFmBpK24NcQjg',
+              }}
               defaultCenter={{
                 lat: 59.955413,
                 lng: 30.337844,
@@ -333,6 +338,5 @@ SamplePrevArrow.propTypes = {
   onClick: PropTypes.func,
   index: PropTypes.number,
 };
-
 
 export default Home;

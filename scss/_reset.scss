@@ -8,6 +8,7 @@ body {
   font-size: $fontSizeContent !important;
   font-family: "RobotoMedium", sans-serif !important;
   color: $colorContent !important;
+  background: $white !important;
   margin: 0;
 }
 
@@ -61,7 +62,6 @@ textarea {
 
 table {
   width: 100%;
-  border: 1px solid $colorBorder;
   border-collapse: collapse;
 }
 
