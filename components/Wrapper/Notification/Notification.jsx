@@ -73,7 +73,10 @@ const AccordionItem = ({ item, arrData, icon }) => {
               </p>
               ) : null}
           </div>
-          <Button buttonType="button" viewType="sliderButton">
+          <Button
+            customBtn={styles.sliderButton}
+            type="button"
+          >
             <IconArrow className={classNameForIcon} />
           </Button>
         </div>
@@ -123,7 +126,12 @@ const Notification = () => (
       </div>
       <div className={styles.accordionsContainer}>
         {data.map((item, index) => (
-          <AccordionItem arrData={data} key={item.id} item={item} icon={arrOfIcons[index]} />
+          <AccordionItem
+            arrData={data}
+            key={item.id}
+            item={item}
+            icon={arrOfIcons[index]}
+          />
         ))}
       </div>
     </div>

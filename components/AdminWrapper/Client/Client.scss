@@ -1,0 +1,15 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.title {
+  display: block;
+}
+
+th:first-child {
+  width: 45px;
+  text-align: center;
+}

@@ -1,0 +1,93 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.container {
+  @include container();
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subHeader {
+  background: #efefef;
+  padding: 38px 0;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  text-transform: uppercase;
+  color: $colorBackground;
+  margin-right: 20px;
+}
+
+.titleColor {
+  color: $colorContent;
+}
+
+.menuItems {
+  display: flex;
+  align-items: center;
+}
+
+.menuLink {
+  margin: 0 43px;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 1544px){
+    margin: 0 23px;
+  }
+
+}
+
+.dotActive {
+  width: 5px;
+  height: 5px;
+  margin-left: 15px;
+  background: $colorBackground;
+  border-radius: 50%;
+  overflow: hidden;
+  display: none;
+}
+
+.active {
+  color: $colorBackground;
+
+  .dotActive {
+    display: block;
+  }
+}
+
+.search {
+  display: flex;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 17px;
+  top: 9px;
+}
+
+.inputHeight {
+  padding: 11px 0 11px 40px;
+  width: 360px;
+
+  @media screen and (max-width: 1544px){
+    max-width: 300px;
+  }
+}
+
+.customBtn {
+  background: transparent;
+}
+
+.customBtnSearch {
+  border-radius: 2px;
+  padding: 9px 37px;
+  font-weight: 500;
+  font-size: 18px;
+}
