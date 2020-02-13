@@ -13,3 +13,94 @@ th:first-child {
   width: 45px;
   text-align: center;
 }
+
+.pagination {
+  padding: 18px 15px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $colorTable;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.paginationBtn {
+  color: $colorBackground;
+  background: $white;
+  border: 1px solid $colorBorder;
+  padding: 8px 10px;
+}
+
+.paginationSelect {
+  padding: 8px 11px;
+  border: 1px solid $colorBorder;
+  font-size: 12px;
+  color: $colorTable;
+  border-radius: 2px;
+  background: $white;
+  margin: 0 10px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.plus {
+  width: 40px;
+  height: 40px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.groupBtn {
+  display: flex;
+  align-items: center;
+}
+
+.btnIcon {
+  background: $white;
+  color: $colorBackground;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-right: 33px;
+}
+
+.rightBtn {
+  font-weight: 500;
+  font-size: 18px;
+  color: $white;
+  background: $colorBorder;
+  padding: 10px;
+  min-width: 131px;
+  margin-left: 20px;
+}
+
+.selectBlock {
+  width: 240px;
+}
+
+
+.new,
+.pending,
+.delivered,
+.not {
+  text-transform: uppercase;
+}
+
+.new {
+  color: #00c236;
+}
+
+.pending {
+  color: $colorTable;
+}
+
+.delivered {
+  color:$colorContent;
+}

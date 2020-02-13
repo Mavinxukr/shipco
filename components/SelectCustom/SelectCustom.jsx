@@ -1,13 +1,15 @@
 import React from 'react';
 import Select from 'react-select';
-import { stateOptions } from './data';
 import styles from './SelectCustom.scss';
 import SelectIcon from '../../assets/svg/selectIcon.svg';
+import PropTypes from 'prop-types';
+import Button from '../Button/Button';
 
 const customStyles = {
   container: () => ({
     border: '1px solid #c4c4c4',
     width: '100%',
+    background: '#fafafa',
   }),
   control: () => ({
     background: '#fafafa',
@@ -53,15 +55,27 @@ const DropdownIndicator = () => (
   <SelectIcon className={styles.icon} />
 );
 
-const SelectCustom = () => (
+const SelectCustom = ({ options, placeholder }) => (
   <div className={styles.select}>
     <Select
-      placeholder=""
+      placeholder={placeholder}
       components={{ DropdownIndicator }}
       styles={customStyles}
-      options={stateOptions}
+      options={options}
     />
   </div>
 );
 
 export default SelectCustom;
+
+SelectCustom.propsTypes = {
+  options: PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+  }),
+  placeholder: PropTypes.string,
+};
+
+Button.defaultProps = {
+  placeholder: '',
+};

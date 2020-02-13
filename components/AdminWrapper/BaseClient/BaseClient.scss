@@ -1,0 +1,91 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  color: $colorBackground;
+  margin: 60px 0 40px;
+  text-transform: uppercase;
+}
+
+.plus {
+  width: 40px;
+  height: 40px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.groupBtn {
+  display: flex;
+  align-items: center;
+}
+
+.btnIcon {
+  background: $white;
+  color: $colorBackground;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-right: 33px;
+}
+
+.rightBtn {
+  font-weight: 500;
+  font-size: 18px;
+  color: $white;
+  background: $colorBorder;
+  padding: 10px;
+  min-width: 131px;
+  margin-left: 20px;
+}
+
+.pagination {
+  padding: 18px 15px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $colorTable;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.paginationBtn {
+  color: $colorBackground;
+  background: $white;
+  border: 1px solid $colorBorder;
+  padding: 8px 10px;
+}
+
+.paginationSelect {
+  padding: 8px 11px;
+  border: 1px solid $colorBorder;
+  font-size: 12px;
+  color: $colorTable;
+  border-radius: 2px;
+  background: $white;
+  margin: 0 10px;
+}
+
+.sort {
+  margin-right: 10px;
+}
+
+.sortHeader:first-child svg{
+  display: none;
+}
+
+th:first-child {
+  width: 45px;
+  text-align: center;
+}

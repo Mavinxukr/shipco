@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
+import formatStringByPattern from 'format-string-by-pattern';
 import MainLayout from '../../Layout/Global/Global';
 import styles from './ProfileSettings.scss';
 import ImageUpload from '../../ImageUpload/ImageUpload';
@@ -16,6 +17,7 @@ import {
 } from '../../../utils/validation';
 import Popup from '../../Popup/Popup';
 import IconEye from '../../../assets/svg/eye.svg';
+import {stateOptions} from './data';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -40,7 +42,6 @@ const ProfileSettings = () => {
               <ImageUpload />
               <div className={styles.flex}>
                 <div>
-                  <div />
                   <Field
                     name="Name"
                     validate={composeValidators(required, snpValidation)}
@@ -62,6 +63,7 @@ const ProfileSettings = () => {
                     name="phone number"
                     validate={composeValidators(required, mustBeNumber)}
                     type="text"
+                    parse={formatStringByPattern('+9 9999 999 99 99')}
                   >
                     {renderInput({ label: 'Phone number' })}
                   </Field>
@@ -85,7 +87,7 @@ const ProfileSettings = () => {
                     {({ input, meta }) => (
                       <div className={styles.column}>
                         <label className={styles.label}>Country</label>
-                        <SelectCustom {...input} />
+                        <SelectCustom {...input} options={stateOptions} />
                         {meta.error && meta.touched && (
                         <span className={styles.error}>{meta.error}</span>
                         )}
@@ -96,7 +98,7 @@ const ProfileSettings = () => {
                     {({ input, meta }) => (
                       <div className={styles.column}>
                         <label className={styles.label}>City</label>
-                        <SelectCustom {...input} />
+                        <SelectCustom {...input} options={stateOptions} />
                         {meta.error && meta.touched && (
                         <span className={styles.error}>{meta.error}</span>
                         )}
@@ -117,6 +119,7 @@ const ProfileSettings = () => {
                     name="cart"
                     validate={composeValidators(required, mustBeNumber)}
                     type="text"
+                    parse={formatStringByPattern('9999 9999 9999 9999')}
                   >
                     {renderInput({ label: 'Cart number' })}
                   </Field>
@@ -124,7 +127,7 @@ const ProfileSettings = () => {
                 <div className={styles.submit}>
                   <Button
                     onClick={handleSubmit}
-                    className={styles.btnSubmit}
+                    customBtn={styles.btnSubmit}
                     type="submit"
                   >
                     Save changes
@@ -172,10 +175,10 @@ const ProfileSettings = () => {
                   classNameWrapper: 'InputFormWrapper-popupFieldRow',
                 })}
               </Field>
-              <div className={styles.submitPoup}>
+              <div className={styles.submitPopup}>
                 <Button
                   onClick={handleSubmit}
-                  className={styles.btnSubmit}
+                  customBtn={styles.btnSubmit}
                   type="submit"
                 >
                   Save new password

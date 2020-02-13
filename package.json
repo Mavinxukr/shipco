@@ -29,6 +29,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.12.4",
     "final-form": "^4.18.7",
+    "format-string-by-pattern": "^1.1.1",
     "google-map-react": "^1.1.5",
     "next": "9.1.2",
     "next-images": "^1.2.0",
@@ -36,8 +37,8 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-select": "^3.0.8",
     "react-final-form": "^6.3.5",
+    "react-select": "^3.0.8",
     "react-slick": "^0.25.2",
     "react-table": "latest",
     "slick-carousel": "^1.8.1"

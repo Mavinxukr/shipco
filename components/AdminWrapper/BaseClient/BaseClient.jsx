@@ -1,15 +1,18 @@
 import React from 'react';
-import { usePagination, useTable, useRowSelect } from 'react-table';
 import cx from 'classnames';
+import {
+  usePagination, useRowSelect, useTable, useSortBy,
+} from 'react-table';
 import Button from '../../Button/Button';
+import Search from '../../Search/Search';
 import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
-import CustomTable from '../../CustomTable/CustomTable';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
-import styles from './Client.scss';
-import { columns, dataTable, stateStatus } from './data';
-import SelectCustom from '../../SelectCustom/SelectCustom';
+import { columns, dataTable } from './data';
+import CustomTable from '../../CustomTable/CustomTable';
+
+import styles from './BaseClient.scss';
+import IconSortTable from '../../../assets/svg/SortTable.svg';
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -28,28 +31,28 @@ const IndeterminateCheckbox = React.forwardRef(
   },
 );
 
-const Client = () => (
+const BaseClient = () => (
   <MainLayout>
-    <SubHeader />
     <div className={styles.container}>
+      <div className={styles.flex}>
+        <h4 className={styles.title}>Base client</h4>
+        <Search />
+      </div>
       <div className={styles.flex}>
         <div className={styles.groupBtn}>
           <Button customBtn={styles.btnIcon}>
             <IconPlus className={cx(styles.plus, styles.icon)} />
-            Add New offers
+            Add New client
           </Button>
           <Button customBtn={styles.btnIcon}>
             <IconMinus className={styles.icon} />
-            Delete
+            Delete client
           </Button>
         </div>
         <div className={styles.groupBtn}>
           <Button customBtn={styles.rightBtn}>Print</Button>
           <Button customBtn={styles.rightBtn}>Import</Button>
         </div>
-      </div>
-      <div className={cx(styles.flex, styles.selectBlock)}>
-        <SelectCustom placeholder="All Status" options={stateStatus} />
       </div>
       <CustomTable>
         <Table columns={columns} data={dataTable} />
@@ -58,7 +61,7 @@ const Client = () => (
   </MainLayout>
 );
 
-export default Client;
+export default BaseClient;
 
 const Table = ({ columns, data }) => {
   const {
@@ -81,6 +84,7 @@ const Table = ({ columns, data }) => {
       data,
       initialState: { pageIndex: 0 },
     },
+    useSortBy,
     usePagination,
     useRowSelect,
     (hooks) => {
@@ -168,7 +172,10 @@ const Table = ({ columns, data }) => {
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th className={styles.sortHeader} {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <IconSortTable className={styles.sort} />
+                  {column.render('Header')}
+                </th>
               ))}
             </tr>
           ))}
@@ -246,4 +253,4 @@ const Table = ({ columns, data }) => {
       </div>
     </>
   );
-}
+};

@@ -182,6 +182,7 @@ export const columns = [
       {
         Header: 'ID',
         accessor: 'id',
+        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Date',
@@ -190,6 +191,7 @@ export const columns = [
       {
         Header: 'Auto',
         accessor: 'auto',
+        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Client',

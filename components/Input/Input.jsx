@@ -10,15 +10,20 @@ const Input = ({
   customInput,
   classNameWrapperForIcon,
   onClickForIcon,
+  widthInputBlock,
 }) => (
-  <div className={styles.inputBlock}>
+  <div className={cx(styles.inputBlock, widthInputBlock)}>
     <input
       className={cx(styles.input, customInput)}
       placeholder={placeholder}
       {...addInputProps}
     />
     {icon && (
-      <button type="button" className={classNameWrapperForIcon} onClick={onClickForIcon}>
+      <button
+        type="button"
+        className={classNameWrapperForIcon}
+        onClick={onClickForIcon}
+      >
         {icon}
       </button>
     )}
@@ -27,6 +32,7 @@ const Input = ({
 
 Input.propTypes = {
   customInput: PropTypes.string,
+  widthInputBlock: PropTypes.string,
   classNameWrapperForIcon: PropTypes.string,
   placeholder: PropTypes.string,
   icon: PropTypes.node,

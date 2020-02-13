@@ -72,6 +72,7 @@ thead tr:first-child {
 th {
   padding: 14px 10px;
   text-align: left;
+  font-size: 14px;
   background: $colorBackground;
   color: $white;
   border-left: 1px solid #f8bebe;
@@ -82,7 +83,18 @@ th {
 }
 td {
   padding: 16px;
+  font-size: 14px;
   border: none;
+
+  span {
+    color: $colorBackground;
+    max-width: 176px;
+    display: block;
+  }
+
+  a {
+    text-decoration: underline;
+  }
 }
 
 tbody tr:nth-child(2n) {
