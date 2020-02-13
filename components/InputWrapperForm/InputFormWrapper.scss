@@ -4,7 +4,7 @@
 .label {
   margin: 30px 0 11px;
   color: #d73e3e;
-  min-width: 132px;
+  min-width: 136px;
 }
 
 .wrapper {
@@ -34,4 +34,14 @@
   .label {
     margin: 0 31px 0 0;
   }
+
+  .blackLabel {
+    color: $colorContent;
+    font-size: 14px;
+  }
 }
+
+.widthInputBlock {
+  width: 360px;
+}
+

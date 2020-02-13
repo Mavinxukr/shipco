@@ -13,15 +13,18 @@ const InputFormWrapper = ({
   meta,
   placeholder,
   classNameWrapper,
+  classNameWrapperLabel,
   classNameWrapperForInput,
+  widthInputBlock,
 }) => (
   <div
     className={cx(styles.wrapper, classNameWrapper)}
   >
-    <label className={styles.label}>{label}</label>
+    <label className={cx(styles.label, classNameWrapperLabel)}>{label}</label>
     <Input
       placeholder={placeholder}
       addInputProps={inputProps}
+      widthInputBlock={widthInputBlock}
       classNameWrapper={cx(styles.inputWrapper, classNameWrapperForInput)}
       icon={icon}
       classNameWrapperForIcon={classNameWrapperForIcon}
@@ -33,7 +36,9 @@ const InputFormWrapper = ({
 
 InputFormWrapper.propTypes = {
   classNameWrapperForIcon: PropTypes.string,
+  classNameWrapperLabel: PropTypes.string,
   label: PropTypes.string,
+  widthInputBlock: PropTypes.string,
   inputProps: PropTypes.object,
   onClickForIcon: PropTypes.func,
   meta: PropTypes.object,

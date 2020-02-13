@@ -84,7 +84,7 @@ const Overview = () => (
 
 export default Overview;
 
-function Table({ columns, data }) {
+const Table = ({ columns, data }) => {
   const {
     getTableProps,
     getTableBodyProps,
