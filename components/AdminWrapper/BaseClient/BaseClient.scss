@@ -89,3 +89,32 @@ th:first-child {
   width: 45px;
   text-align: center;
 }
+
+form .flex {
+  padding: 10px 0;
+}
+
+.submitPopup {
+  padding-left: 167px;
+  width: 100%;
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+}
+
+input[type="file"]:after {
+  content: '';
+  background-image: url("/images/plus.png");
+  position: absolute;
+  right: 17px;
+  top: 20px;
+  width: 14px;
+  height: 14px;
+  z-index: 99;
+}

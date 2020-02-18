@@ -1,0 +1,31 @@
+@import "../../scss/core/mixins";
+@import "../../scss/core/vars";
+
+.header {
+  background: $colorBackground;
+  color: $white;
+  padding: 11px 15px 15px;
+  font-weight: 500;
+}
+
+.informationBlock {
+  width: 100%;
+  margin-top: 15px;
+  border: 1px solid $colorBorder;
+  box-sizing: border-box;
+  justify-content: space-between;
+  margin-left: 15px;
+
+  &:nth-child(odd) {
+    max-width: 576px;
+  }
+
+  &:nth-child(even) {
+    max-width: 428px;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}

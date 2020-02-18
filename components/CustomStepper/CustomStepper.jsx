@@ -67,7 +67,7 @@ function ColorlibStepIcon({ active, completed }) {
   );
 }
 
-const getSteps = () => ['', '', ''];
+const getSteps = () => ['', '', '', ''];
 
 const CustomStepper = ({ activeStep }) => {
   const steps = getSteps();

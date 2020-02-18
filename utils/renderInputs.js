@@ -1,16 +1,19 @@
 import React from 'react';
 import InputFormWrapper from '../components/InputWrapperForm/InputFormWrapper';
-// import Checkbox from '../components/Checkbox/Checkbox';
 import SelectCustom from '../components/SelectCustom/SelectCustom';
 
-export const renderInput = props => ({ input, meta }) => (
-  <InputFormWrapper inputProps={input} meta={meta} {...props} />
+export const renderInput = props => ({ input, meta, accept }) => (
+  <InputFormWrapper inputProps={input} meta={meta} accept={accept} {...props} />
 );
 
-// export const renderCheckbox = props => ({ input }) => (
-//   <Checkbox {...props} {...input} />
-// );
-//
-export const renderSelect = props => ({ input, ...rest }) => (
-  <SelectCustom {...props} {...input} {...rest} />
+export const renderSelect = props => ({
+  input, meta, validation, ...rest
+}) => (
+  <SelectCustom
+    {...props}
+    {...input}
+    meta={meta}
+    {...rest}
+    validation={validation}
+  />
 );

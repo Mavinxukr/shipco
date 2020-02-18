@@ -30,7 +30,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
 const Client = () => (
   <MainLayout>
-    <SubHeader />
+    <SubHeader hidden />
     <div className={styles.container}>
       <div className={styles.flex}>
         <div className={styles.groupBtn}>
@@ -49,7 +49,7 @@ const Client = () => (
         </div>
       </div>
       <div className={cx(styles.flex, styles.selectBlock)}>
-        <SelectCustom placeholder="All Status" options={stateStatus} />
+         <SelectCustom placeholder="All Status" options={stateStatus} />
       </div>
       <CustomTable>
         <Table columns={columns} data={dataTable} />
@@ -246,4 +246,4 @@ const Table = ({ columns, data }) => {
       </div>
     </>
   );
-}
+};

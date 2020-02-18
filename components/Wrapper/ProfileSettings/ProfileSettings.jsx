@@ -4,9 +4,8 @@ import formatStringByPattern from 'format-string-by-pattern';
 import MainLayout from '../../Layout/Global/Global';
 import styles from './ProfileSettings.scss';
 import ImageUpload from '../../ImageUpload/ImageUpload';
-import { renderInput } from '../../../utils/renderInputs';
+import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
-import SelectCustom from '../../SelectCustom/SelectCustom';
 import {
   required,
   snpValidation,
@@ -17,7 +16,7 @@ import {
 } from '../../../utils/validation';
 import Popup from '../../Popup/Popup';
 import IconEye from '../../../assets/svg/eye.svg';
-import {stateOptions} from './data';
+import { stateOptions } from './data';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -83,28 +82,26 @@ const ProfileSettings = () => {
                   </div>
                 </div>
                 <div>
-                  <Field name="country" validate={required}>
-                    {({ input, meta }) => (
-                      <div className={styles.column}>
-                        <label className={styles.label}>Country</label>
-                        <SelectCustom {...input} options={stateOptions} />
-                        {meta.error && meta.touched && (
-                        <span className={styles.error}>{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
-                  <Field name="city" validate={required}>
-                    {({ input, meta }) => (
-                      <div className={styles.column}>
-                        <label className={styles.label}>City</label>
-                        <SelectCustom {...input} options={stateOptions} />
-                        {meta.error && meta.touched && (
-                        <span className={styles.error}>{meta.error}</span>
-                        )}
-                      </div>
-                    )}
-                  </Field>
+                  <Field
+                    name="country"
+                    validate={required}
+                    isRequired
+                    component={renderSelect({
+                      placeholder: '',
+                      label: 'Country',
+                    })}
+                    options={stateOptions}
+                  />
+                  <Field
+                    name="city"
+                    isRequired
+                    validate={required}
+                    component={renderSelect({
+                      placeholder: '',
+                      label: 'City',
+                    })}
+                    options={stateOptions}
+                  />
                   <Field
                     name="zip"
                     validate={composeValidators(required, mustBeNumber)}

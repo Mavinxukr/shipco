@@ -1,0 +1,52 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.container {
+  @include container();
+  margin-bottom: 15px;
+}
+
+.widthBlock {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.widthItems {
+  max-width: 163px;
+  text-align: right;
+}
+
+.flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 15px 9px;
+
+  &:nth-child(2n) {
+    background: $colorInput;
+  }
+}
+
+.maxWidth {
+  max-width: 736px;
+  width: 100%;
+}
+
+input[type="file"] {
+  border: none;
+  background: $white;
+
+  &:after {
+    display: none;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}

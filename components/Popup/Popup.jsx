@@ -5,26 +5,26 @@ import IconClose from '../../assets/svg/close.svg';
 import Button from '../Button/Button';
 
 const Popup = ({
-  titleButton, title, children, customBtn, subTitle,
+  titleButton, title, children, customBtn, subTitle, iconButton,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
     <>
       <Button
         customBtn={customBtn}
         type="button"
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => setIsPopupOpen(true)}
       >
-        {titleButton}
+        {iconButton}{titleButton}
       </Button>
-      {isModalOpen && (
+      {isPopupOpen && (
         <div className={styles.popup}>
           <div className={styles.popupHeader}>
             <h4 className={styles.popupTitle}>
               {title} <span className={styles.popupSubTitle}>{subTitle}</span>
             </h4>
-            <button type="button" onClick={() => setIsModalOpen(false)}>
+            <button type="button" onClick={() => setIsPopupOpen(false)}>
               <IconClose />
             </button>
           </div>
@@ -37,9 +37,10 @@ const Popup = ({
 export default Popup;
 
 Popup.propTypes = {
-  titleButton: PropTypes.node,
+  titleButton: PropTypes.string,
   subTitle: PropTypes.string,
   customBtn: PropTypes.string,
   title: PropTypes.string,
+  iconButton: PropTypes.node,
   children: PropTypes.node,
 };
