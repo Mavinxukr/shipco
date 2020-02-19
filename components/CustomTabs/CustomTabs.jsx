@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -83,6 +83,9 @@ const AntTab = withStyles(theme => ({
 const CustomTabs = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [arrPicsActions, setArrPicsActions] = useState([]);
+  const [arrPicsWarehouses, setArrPicsWarehouses] = useState([]);
+  const [arrPicsContainer, setArrPicsContainer] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -104,13 +107,13 @@ const CustomTabs = () => {
         </AntTabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Previews />
+        <Previews setArrPics={setArrPicsActions} arrPics={arrPicsActions} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Previews />
+        <Previews setArrPics={setArrPicsWarehouses} arrPics={arrPicsWarehouses} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Previews />
+        <Previews setArrPics={setArrPicsContainer} arrPics={arrPicsContainer} />
       </TabPanel>
     </div>
   );
