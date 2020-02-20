@@ -30,23 +30,21 @@ import Button from '../../Button/Button';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const onSubmit = async (values) => {
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
-
 const AutoOpen = () => {
   const [arrPicsDamage, setArrPicsDamage] = useState([]);
-  const [checkedStatus, setCheckedStatus] = useState('Case closed');
+
+  const onSubmit = async (values) => {
+    await sleep(300);
+    window.alert(JSON.stringify(values, 0, 2));
+    return { ...values, damage: checkedStatus };
+  };
 
   return (
     <MainLayout>
       <SubHeader />
       <Form
         onSubmit={onSubmit}
-        render={({
-          handleSubmit, form, submitting, pristine, values,
-        }) => (
+        render={({ handleSubmit, form, values }) => (
           <form className={styles.fullWidth}>
             <div className={styles.container}>
               <div className={styles.flex}>
@@ -231,18 +229,32 @@ const AutoOpen = () => {
                       <div className={styles.items}>
                         <span>Shipping Damage</span>
                         <div className={styles.position}>
-                          <Button customBtn={styles.status}>{checkedStatus}</Button>
+                          <Button customBtn={styles.status}>
+                            {values.status || 'Case closed'}
+                          </Button>
                           <HoverPopup>
-                            {status.map(item => (
-                              <Radio
-                                key={item.id}
-                                id={item.text}
-                                name="status"
-                                customRadio={styles.statusPopup}
-                                title={item.text}
-                                onChange={() => setCheckedStatus(item.text)}
-                              />
-                            ))}
+                            <Field name="status">
+                              {({ input }) => (
+                                <>
+                                  {status.map(item => (
+                                    <Radio
+                                      key={item.id}
+                                      value={item.text}
+                                      id={item.text}
+                                      name={input.name}
+                                      customRadio={styles.statusPopup}
+                                      title={item.text}
+                                      onChange={input.onChange}
+                                      checked={
+                                        (item.text === 'Case closed'
+                                          && input.value === '')
+                                        || input.value === item.text
+                                      }
+                                    />
+                                  ))}
+                                </>
+                              )}
+                            </Field>
                           </HoverPopup>
                         </div>
                       </div>
