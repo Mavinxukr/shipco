@@ -59,6 +59,22 @@ input[type="file"] {
   width: 100%;
 }
 
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: auto;
+
+  label {
+    margin: 0 31px 0 0;
+  }
+
+  .blackLabel {
+    color: $colorContent;
+    font-size: 14px;
+  }
+}
+
 .title {
   color: $colorBackground;
   margin-bottom: 10px;
@@ -142,4 +158,53 @@ input[type="file"] {
   top: 50%;
   left: 90%;
   transform: translateY(-50%);
+}
+
+.color {
+  color: $colorBackground;
+}
+
+.trashIcon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.blackLabel {
+  color: $colorContent;
+  font-size: 16px;
+  min-width: 136px;
+  margin: 0 31px 0 0;
+}
+
+.selectFieldRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 435px;
+  margin: 5px 16px 5px 0;
+}
+
+.customInputFile {
+  height: 40px;
+  padding: 10px 48px;
+}
+
+.customInputFile:before {
+  content: 'Choose Fie';
+  width: 135px;
+  font-weight: 500;
+  font-size: 16px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6d6c6c;
+  top: 1px;
+  background: #e5e5e5;
+  position: absolute;
+  border: 1px solid $colorBorder;
+  left: 0;
+  cursor: pointer;
 }

@@ -36,7 +36,6 @@ const AutoOpen = () => {
   const onSubmit = async (values) => {
     await sleep(300);
     window.alert(JSON.stringify(values, 0, 2));
-    return { ...values, damage: checkedStatus };
   };
 
   return (
@@ -55,33 +54,36 @@ const AutoOpen = () => {
                       <Field name="report" type="file">
                         {renderInput({
                           label: 'CarFax report',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                          classNameWrapper: styles.popupFieldRow,
+                          customInput: styles.customInputFile,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
-                          classNameWrapperForIcon: 'Input-trashIcon',
+                          classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => form.change('report', ''),
                         })}
                       </Field>
                       <Field name="invoice" type="file">
                         {renderInput({
                           label: 'Invoice',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                          classNameWrapper: styles.popupFieldRow,
+                          customInput: styles.customInputFile,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
-                          classNameWrapperForIcon: 'Input-trashIcon',
+                          classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => form.change('invoice', ''),
                         })}
                       </Field>
                       <Field name="creport" type="file">
                         {renderInput({
                           label: 'Checklist report',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                          classNameWrapper: styles.popupFieldRow,
+                          customInput: styles.customInputFile,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
-                          classNameWrapperForIcon: 'Input-trashIcon',
+                          classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => form.change('creport', ''),
                         })}
                       </Field>
@@ -94,9 +96,9 @@ const AutoOpen = () => {
                       >
                         {renderInput({
                           label: 'Tracking id:',
-                          customInput: 'Input-color',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                          customInput: styles.color,
+                          classNameWrapper: styles.popupFieldRow,
+                          classNameWrapperLabel: styles.blackLabel,
                         })}
                       </Field>
                       <div className={cx(styles.fullWidth, styles.flexInput)}>
@@ -107,9 +109,8 @@ const AutoOpen = () => {
                           component={renderSelect({
                             placeholder: '',
                             label: 'Point of loading:',
-                            classNameWrapper:
-                              'SelectCustom-popupFieldRow SelectCustom-widthFieldRow',
-                            classNameLabel: 'SelectCustom-blackLabel',
+                            classNameWrapper: styles.selectFieldRow,
+                            classNameLabel: styles.blackLabel,
                           })}
                           options={stateOptions}
                         />
@@ -123,9 +124,9 @@ const AutoOpen = () => {
                       >
                         {renderInput({
                           label: 'Container id:',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          customInput: 'Input-color',
-                          classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                          classNameWrapper: styles.popupFieldRow,
+                          customInput: styles.color,
+                          classNameWrapperLabel: styles.blackLabel,
                         })}
                       </Field>
                       <div className={cx(styles.fullWidth, styles.flexInput)}>
@@ -136,9 +137,8 @@ const AutoOpen = () => {
                           component={renderSelect({
                             placeholder: '',
                             label: 'Point of delivery:',
-                            classNameWrapper:
-                              'SelectCustom-popupFieldRow SelectCustom-widthFieldRow',
-                            classNameLabel: 'SelectCustom-blackLabel',
+                            classNameWrapper: styles.selectFieldRow,
+                            classNameLabel: styles.blackLabel,
                           })}
                           options={stateOptions}
                         />
