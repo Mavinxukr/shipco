@@ -1,0 +1,15 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.pickers {
+  background: $colorInput;
+  border: 1px solid $colorBorder !important;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 0;
+  padding: 6px 17px !important;
+
+  & > div:before {
+    display: none;
+  }
+}

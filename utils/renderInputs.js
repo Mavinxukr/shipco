@@ -1,6 +1,8 @@
 import React from 'react';
 import InputFormWrapper from '../components/InputWrapperForm/InputFormWrapper';
 import SelectCustom from '../components/SelectCustom/SelectCustom';
+import Checkbox from '../components/Checkbox/Checkbox';
+import Radio from '../components/Radio/Radio';
 
 export const renderInput = props => ({ input, meta, accept }) => (
   <InputFormWrapper inputProps={input} meta={meta} accept={accept} {...props} />
@@ -16,4 +18,12 @@ export const renderSelect = props => ({
     {...rest}
     validation={validation}
   />
+);
+
+export const renderCheckbox = props => ({ input }) => (
+  <Checkbox {...props} {...input} />
+);
+
+export const renderRadio = props => ({ input }) => (
+  <Radio {...props} {...input} />
 );

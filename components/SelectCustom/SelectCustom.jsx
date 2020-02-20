@@ -30,11 +30,11 @@ const customStyles = {
   menu: provided => ({
     ...provided,
     backgroundColor: '#fafafa',
-    width: '100%',
+    width: 'auto',
     border: '1px solid #c4c4c4',
     borderTop: 0,
     zIndex: 5,
-    left: 0,
+    right: 0,
     margin: 0,
   }),
 

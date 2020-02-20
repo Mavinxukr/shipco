@@ -1,13 +1,6 @@
 @import "../../scss/core/mixins";
 @import "../../scss/core/vars";
 
-.header {
-  background: $colorBackground;
-  color: $white;
-  padding: 11px 15px 15px;
-  font-weight: 500;
-}
-
 .informationBlock {
   width: 100%;
   margin-top: 15px;
@@ -15,13 +8,22 @@
   box-sizing: border-box;
   justify-content: space-between;
   margin-left: 15px;
+  height: max-content;
 
   &:nth-child(odd) {
     max-width: 576px;
+
+    @media (max-width: 1904px) {
+      max-width: 100%;
+    }
   }
 
   &:nth-child(even) {
     max-width: 428px;
+
+    @media (max-width: 1904px) {
+      max-width: 100%;
+    }
   }
 }
 
