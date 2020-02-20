@@ -1,6 +1,9 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
 .input {
-  background: #FAFAFA;
-  border: 1px solid #C4C4C4;
+  background: $colorInput;
+  border: 1px solid $colorBorder;
   width: 100%;
   box-sizing: border-box;
   border-radius: 2px;
@@ -14,4 +17,19 @@
 
 .maxWidth {
   width: 360px;
+}
+
+.customFile {
+  border: none;
+}
+
+.trashIcon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.color {
+  color: $colorBackground;
 }

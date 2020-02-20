@@ -1,0 +1,33 @@
+@import "../../scss/core/mixins";
+@import "../../scss/core/vars";
+
+.informationBlock {
+  width: 100%;
+  margin-top: 15px;
+  border: 1px solid $colorBorder;
+  box-sizing: border-box;
+  justify-content: space-between;
+  margin-left: 15px;
+  height: max-content;
+
+  &:nth-child(odd) {
+    max-width: 576px;
+
+    @media (max-width: 1904px) {
+      max-width: 100%;
+    }
+  }
+
+  &:nth-child(even) {
+    max-width: 428px;
+
+    @media (max-width: 1904px) {
+      max-width: 100%;
+    }
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}

@@ -6,7 +6,6 @@ import '../../public/slick/slick.css';
 import styles from './CustomSlider.scss';
 
 const CustomSlider = ({
-  className,
   count,
   countXl,
   countMd,
@@ -99,7 +98,6 @@ const SamplePrevArrow = ({ onClick, index }) => (
 );
 
 CustomSlider.propTypes = {
-  className: PropTypes.string,
   count: PropTypes.number,
   countXl: PropTypes.number,
   countMd: PropTypes.number,

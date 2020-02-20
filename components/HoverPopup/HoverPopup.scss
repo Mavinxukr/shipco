@@ -1,0 +1,32 @@
+.popup {
+  position: absolute;
+  right: 0;
+  z-index: 50;
+  background: #fff;
+  border: 1px solid #f8bebe;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  min-width: 373px;
+  display: none;
+  flex-direction: column;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: -9px;
+    z-index: 30;
+    border: 5px solid transparent;
+    border-bottom: 5px solid #fff;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    z-index: 20;
+    top: -12px;
+    border: 6px solid transparent;
+    border-bottom: 6px solid #f8bebe;
+  }
+}

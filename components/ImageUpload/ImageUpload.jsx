@@ -45,6 +45,7 @@ const ImageUpload = () => {
         <input
           className={styles.fileInput}
           type="file"
+          multiple
           onChange={onSelectFile}
           id="upload-photo"
         />

@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
 import styles from './SelectCustom.scss';
 import SelectIcon from '../../assets/svg/selectIcon.svg';
-import PropTypes from 'prop-types';
-import Button from '../Button/Button';
 
 const customStyles = {
   container: () => ({
@@ -26,21 +26,16 @@ const customStyles = {
     color: '#000',
     padding: 20,
     margin: 0,
-    '&:first-child': {
-      borderTop: '1px solid #c4c4c4',
-      margin: '0 ',
-    },
   }),
-  menu: () => ({
+  menu: provided => ({
+    ...provided,
     backgroundColor: '#fafafa',
-    position: 'absolute',
-    width: '100%',
+    width: 'auto',
     border: '1px solid #c4c4c4',
     borderTop: 0,
     zIndex: 5,
-    left: 0,
+    right: 0,
     margin: 0,
-    top: '40px',
   }),
 
   indicatorSeparator: () => ({
@@ -51,31 +46,58 @@ const customStyles = {
   }),
 };
 
-const DropdownIndicator = () => (
-  <SelectIcon className={styles.icon} />
-);
+const DropdownIndicator = () => <SelectIcon className={styles.icon} />;
 
-const SelectCustom = ({ options, placeholder }) => (
-  <div className={styles.select}>
-    <Select
-      placeholder={placeholder}
-      components={{ DropdownIndicator }}
-      styles={customStyles}
-      options={options}
-    />
+const SelectCustom = ({
+  value,
+  onChange,
+  options,
+  placeholder,
+  onFocusCustom,
+  classNameWrapper,
+  label,
+  meta,
+  classNameLabel,
+  isRequired,
+}) => (
+  <div className={cx(styles.select, classNameWrapper)}>
+    <div className={cx(styles.select, classNameWrapper)}>
+      <label className={cx(styles.label, classNameLabel)}>{label}</label>
+      <Select
+        value={value}
+        onChange={onChange}
+        onFocus={() => {
+          if (onFocusCustom) {
+            onFocusCustom();
+          }
+        }}
+        options={options}
+        components={{ DropdownIndicator }}
+        styles={customStyles}
+        placeholder={placeholder}
+      />
+    </div>
+    {isRequired && meta.error && meta.touched && (
+      <span className={styles.error}>{meta.error}</span>
+    )}
   </div>
 );
 
-export default SelectCustom;
-
-SelectCustom.propsTypes = {
-  options: PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string,
-  }),
+SelectCustom.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+  classNameLabel: PropTypes.string,
+  classNameWrapper: PropTypes.string,
+  meta: PropTypes.object,
+  options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
+  onFocusCustom: PropTypes.func,
+  isRequired: PropTypes.bool,
 };
 
-Button.defaultProps = {
+SelectCustom.defaultProps = {
   placeholder: '',
 };
+
+export default SelectCustom;

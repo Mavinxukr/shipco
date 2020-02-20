@@ -3,16 +3,34 @@ import cx from 'classnames';
 import {
   usePagination, useRowSelect, useTable, useSortBy,
 } from 'react-table';
+import { Field, Form } from 'react-final-form';
+import formatStringByPattern from 'format-string-by-pattern';
 import Button from '../../Button/Button';
 import Search from '../../Search/Search';
+import Popup from '../../Popup/Popup';
 import MainLayout from '../../Layout/Global/Global';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
 import { columns, dataTable } from './data';
 import CustomTable from '../../CustomTable/CustomTable';
-
-import styles from './BaseClient.scss';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
+import {
+  composeValidators,
+  emailValidation,
+  mustBeNumber,
+  required,
+  passwordValidation,
+} from '../../../utils/validation';
+import { renderInput, renderSelect } from '../../../utils/renderInputs';
+import styles from './BaseClient.scss';
+import { stateOptions } from '../../Wrapper/ProfileSettings/data';
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+const onSubmit = async (values) => {
+  await sleep(300);
+  window.alert(JSON.stringify(values, 0, 2));
+};
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -40,10 +58,143 @@ const BaseClient = () => (
       </div>
       <div className={styles.flex}>
         <div className={styles.groupBtn}>
-          <Button customBtn={styles.btnIcon}>
-            <IconPlus className={cx(styles.plus, styles.icon)} />
-            Add New client
-          </Button>
+          <Popup
+            customBtn={styles.btnIcon}
+            iconButton={<IconPlus className={cx(styles.plus, styles.icon)} />}
+            titleButton="Add New client"
+            title="Add New Client "
+            subTitle="(000011) 31.08.2019"
+          >
+            <Form
+              onSubmit={onSubmit}
+              render={({
+                handleSubmit,
+                form,
+                submitting,
+                pristine,
+                values,
+              }) => (
+                <form>
+                  <Field name="Name" validate={required} type="text">
+                    {renderInput({
+                      label: 'Name',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field name="Username" validate={required} type="text">
+                    {renderInput({
+                      label: 'Username',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field
+                    name="Email Address"
+                    validate={composeValidators(required, emailValidation)}
+                    type="email"
+                  >
+                    {renderInput({
+                      label: 'Email Address',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field
+                    name="phone number"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                    parse={formatStringByPattern('+9 9999 999 99 99')}
+                  >
+                    {renderInput({
+                      label: 'Phone number',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field
+                    name="Password"
+                    validate={composeValidators(required, passwordValidation)}
+                    type="password"
+                  >
+                    {renderInput({
+                      label: 'Password',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field
+                    name="country"
+                    validate={required}
+                    isRequired
+                    component={renderSelect({
+                      placeholder: '',
+                      label: 'Country',
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                    })}
+                    options={stateOptions}
+                  />
+                  <Field
+                    name="city"
+                    validate={required}
+                    isRequired
+                    component={renderSelect({
+                      placeholder: '',
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                      label: 'City',
+                    })}
+                    options={stateOptions}
+                  />
+                  <Field
+                    name="zip"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
+                    {renderInput({
+                      label: 'Zip',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field name="adress" validate={required} type="text">
+                    {renderInput({
+                      label: 'Adress',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field
+                    name="cart"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                    parse={formatStringByPattern('9999 9999 9999 9999')}
+                  >
+                    {renderInput({
+                      label: 'Cart number',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <Field name="Add photo" validate={required} type="file">
+                    {renderInput({
+                      label: 'Add photo',
+                      classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                      widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                    })}
+                  </Field>
+                  <div className={styles.submitPopup}>
+                    <Button
+                      onClick={handleSubmit}
+                      customBtn={styles.btnSubmit}
+                      type="submit"
+                    >
+                      ADD New Client
+                    </Button>
+                  </div>
+                </form>
+              )}
+            />
+          </Popup>
           <Button customBtn={styles.btnIcon}>
             <IconMinus className={styles.icon} />
             Delete client
@@ -172,7 +323,10 @@ const Table = ({ columns, data }) => {
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th className={styles.sortHeader} {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  className={styles.sortHeader}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
                   <IconSortTable className={styles.sort} />
                   {column.render('Header')}
                 </th>

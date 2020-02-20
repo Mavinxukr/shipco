@@ -1,0 +1,210 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.container {
+  @include container();
+  margin-bottom: 15px;
+}
+
+.widthBlock {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.widthItems {
+  max-width: 163px;
+  text-align: right;
+}
+
+.flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 15px 9px;
+
+  &:nth-child(2n-1) {
+    background: $colorInput;
+  }
+
+  &:first-child {
+    background: $colorBackground;
+    color: $white;
+    padding: 11px 15px 15px;
+    font-weight: 500;
+    justify-content: start;
+  }
+}
+
+.maxWidth {
+  max-width: 736px;
+  width: 100%;
+}
+
+input[type="file"] {
+  border: none;
+  background: $white;
+
+  &:after {
+    display: none;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: auto;
+
+  label {
+    margin: 0 31px 0 0;
+  }
+
+  .blackLabel {
+    color: $colorContent;
+    font-size: 14px;
+  }
+}
+
+.title {
+  color: $colorBackground;
+  margin-bottom: 10px;
+}
+
+.flexInput {
+  display: flex;
+  align-items: baseline;
+}
+
+.submit {
+  margin-top: 40px;
+}
+
+.btnSubmit {
+  text-transform: uppercase;
+  padding: 15px 0;
+  font-weight: bold;
+  width: 134px;
+}
+
+.flexRadio {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.label {
+  min-width: 136px;
+  margin: 0 31px 0 0;
+}
+
+.status {
+  background: transparent;
+  font-weight: 500;
+  font-size: 16px;
+  color: $colorBackground;
+}
+
+.statusPopup {
+  background: transparent;
+  font-weight: 500;
+  font-size: 16px;
+  color: $colorBackground;
+  text-align: left;
+  padding: 18px 31px;
+}
+
+.position {
+  position: relative;
+
+  &:hover div {
+    display: flex;
+  }
+}
+
+.statusPopup[type="radio"]:checked + label,
+.statusPopup[type="radio"]:not(:checked) + label
+{
+  background: transparent;
+  font-weight: 500;
+  font-size: 16px;
+  color: $colorBackground;
+  text-align: left;
+  padding: 18px 31px;
+  width: 100%;
+  margin: 0;
+}
+
+.statusPopup[type="radio"]:not(:checked) + label {
+  color: $colorContent;
+}
+
+.statusPopup[type="radio"]:checked + label:before,
+.statusPopup[type="radio"]:not(:checked) + label:before {
+  display: none;
+}
+
+.statusPopup[type="radio"]:checked + label:after,
+.statusPopup[type="radio"]:not(:checked) + label:after {
+  top: 50%;
+  left: 90%;
+  transform: translateY(-50%);
+}
+
+.color {
+  color: $colorBackground;
+}
+
+.trashIcon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.blackLabel {
+  color: $colorContent;
+  font-size: 16px;
+  min-width: 136px;
+  margin: 0 31px 0 0;
+}
+
+.selectFieldRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 435px;
+  margin: 5px 16px 5px 0;
+}
+
+.customInputFile {
+  height: 40px;
+  padding: 10px 48px;
+}
+
+.customInputFile:before {
+  content: 'Choose Fie';
+  width: 135px;
+  font-weight: 500;
+  font-size: 16px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6d6c6c;
+  top: 1px;
+  background: #e5e5e5;
+  position: absolute;
+  border: 1px solid $colorBorder;
+  left: 0;
+  cursor: pointer;
+}
