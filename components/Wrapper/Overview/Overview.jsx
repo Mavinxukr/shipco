@@ -120,7 +120,7 @@ const Table = ({ columns, data }) => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  <td className={`Overview-${cell.column.id}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
               </tr>
             );
@@ -129,4 +129,4 @@ const Table = ({ columns, data }) => {
       </table>
     </>
   );
-}
+};

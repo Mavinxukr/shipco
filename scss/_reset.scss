@@ -85,16 +85,6 @@ td {
   padding: 16px;
   font-size: 14px;
   border: none;
-
-  span {
-    color: $colorBackground;
-    max-width: 176px;
-    display: block;
-  }
-
-  a {
-    text-decoration: underline;
-  }
 }
 
 tbody tr:nth-child(2n) {

@@ -1,0 +1,38 @@
+export const data = [
+  {
+    id: 1,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    lot: 'Lot# 40063659',
+    current : '$0 CAD',
+    location: 'Location: NB - moncton',
+    view: 'View Vechicle',
+  },
+  {
+    id: 2,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    lot: 'Lot# 40063659',
+    current : '$0 CAD',
+    location: 'Location: NB - moncton',
+    view: 'View Vechicle',
+  },
+  {
+    id: 3,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    lot: 'Lot# 40063659',
+    current: '$0 CAD',
+    location: 'Location: NB - moncton',
+    view: 'View Vechicle',
+  },
+  {
+    id: 4,
+    src: '/images/pic.png',
+    title: '2013 Volkwagen Jetta Hybrid',
+    lot: 'Lot# 40063659',
+    current : '$0 CAD',
+    location: 'Location: NB - moncton',
+    view: 'View Vechicle',
+  },
+];

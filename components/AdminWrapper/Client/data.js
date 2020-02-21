@@ -207,7 +207,7 @@ export const dataTable = [
     total: '$25,000.00 $25,000.00',
     paid: '$0.00 $0.00',
     outstanding: '$25,000.00',
-    status: 'new',
+    status: 'pending',
   },
   {
     date: '30.08.2019',
@@ -256,17 +256,14 @@ export const columns = [
       {
         Header: 'ID',
         accessor: 'id',
-        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Model',
         accessor: 'model',
-        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Lot',
         accessor: 'lot',
-        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Point of loading',
@@ -283,7 +280,6 @@ export const columns = [
       {
         Header: 'Paiment for',
         accessor: 'paiment',
-        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Total',
@@ -300,7 +296,6 @@ export const columns = [
       {
         Header: 'Status',
         accessor: 'status',
-        Cell: ({ cell: { value } }) => <span className={`Client-${value}`}>{value}</span>,
       },
     ],
   },

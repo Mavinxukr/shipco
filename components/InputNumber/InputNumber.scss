@@ -1,0 +1,62 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.label {
+  color: $colorTable;
+  margin: 0 15px 0 20px;
+  position: relative;
+}
+
+.widthBlock {
+  width: max-content;
+  position: relative;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 1px;
+
+  button {
+    width: 20px;
+    height: 20.5px;
+    margin: 1px 0 1px;
+  }
+}
+
+.number {
+  width: 90px;
+  height: 45px;
+  background: $colorInput;
+  border: 1px solid $colorBorder;
+  padding: 10px 0 10px 10px;
+  position: relative;
+}
+
+input[type="number"] {
+  position: relative;
+
+  &:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    background: $colorContent;
+    display: inline-block;
+  }
+}
+
+.topIcon,
+.bottomIcon {
+  width: 10px;
+  height: 7px;
+}
+
+.bottomIcon {
+  transform: rotate(180deg);
+}

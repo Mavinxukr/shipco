@@ -1,64 +1,124 @@
 import React from 'react';
-import { usePagination, useTable, useRowSelect } from 'react-table';
+import { Field, Form } from 'react-final-form';
 import cx from 'classnames';
-import Button from '../../Button/Button';
+import { usePagination, useRowSelect, useTable } from 'react-table';
 import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
+import InputNumber from '../../InputNumber/InputNumber';
+import { stateOptions, columns, dataTable } from './data';
+import { renderInput, renderSelect } from '../../../utils/renderInputs';
+import Button from '../../Button/Button';
 import CustomTable from '../../CustomTable/CustomTable';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import IconMinus from '../../../assets/svg/min.svg';
-import styles from './Client.scss';
-import { columns, dataTable, stateStatus } from './data';
-import SelectCustom from '../../SelectCustom/SelectCustom';
+import styles from './Auto.scss';
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
+const Auto = () => {
+  const onSubmit = async (values) => {
+    console.log(values);
+  };
 
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  },
-);
-
-const Client = () => (
-  <MainLayout>
-    <SubHeader hidden />
-    <div className={styles.container}>
-      <div className={styles.flex}>
-        <div className={styles.groupBtn}>
-          <Button customBtn={styles.btnIcon}>
-            <IconPlus className={cx(styles.plus, styles.icon)} />
-            Add New offers
-          </Button>
-          <Button customBtn={styles.btnIcon}>
-            <IconMinus className={styles.icon} />
-            Delete
-          </Button>
-        </div>
-        <div className={styles.groupBtn}>
-          <Button customBtn={styles.rightBtn}>Print</Button>
-          <Button customBtn={styles.rightBtn}>Import</Button>
+  return (
+    <MainLayout>
+      <div className={styles.container}>
+        <h4 className={styles.title}>Auto List</h4>
+        <Form
+          onSubmit={onSubmit}
+          render={({ handleSubmit, invalid, submitting }) => (
+            <form onSubmit={handleSubmit}>
+              <div className={styles.flex}>
+                <div className={styles.column}>
+                  <div className={styles.flex}>
+                    <Field name="from" type="number">
+                      {({ input }) => (
+                        <InputNumber
+                          cassNameLabel={styles.firstLabel}
+                          title="Year from:"
+                          name="from"
+                          input={input}
+                        />
+                      )}
+                    </Field>
+                    <Field name="to" type="number">
+                      {({ input }) => (
+                        <InputNumber title="to:" name="to" input={input} />
+                      )}
+                    </Field>
+                  </div>
+                  <Field name="Lot" type="text">
+                    {renderInput({
+                      label: 'Lot:',
+                      classNameWrapper: styles.firstFlexInput,
+                      classNameWrapperLabel: styles.customLabel,
+                      classNameWrapperForInput: styles.customWidthInput,
+                    })}
+                  </Field>
+                </div>
+                <div className={cx(styles.column, styles.secondBlock)}>
+                  <Field
+                    name="Model"
+                    component={renderSelect({
+                      placeholder: '',
+                      label: 'Model:',
+                      classNameWrapper: styles.rowSelect,
+                      classNameLabel: styles.labelSelect,
+                    })}
+                    options={stateOptions}
+                  />
+                  <Field name="VIN" type="text">
+                    {renderInput({
+                      label: 'VIN:',
+                      classNameWrapper: styles.flexInput,
+                      classNameWrapperLabel: cx(
+                        styles.customLabel,
+                        styles.secondLabel,
+                      ),
+                      classNameWrapperForInput: styles.customWidthInput,
+                    })}
+                  </Field>
+                </div>
+                <div className={cx(styles.column, styles.lastColumn)}>
+                  <Field
+                    name="Point"
+                    component={renderSelect({
+                      placeholder: '',
+                      label: 'Point of loading:',
+                      classNameWrapper: styles.rowSelect,
+                      classNameLabel: styles.labelSelect,
+                    })}
+                    options={stateOptions}
+                  />
+                  <Field name="container" type="text">
+                    {renderInput({
+                      label: 'Сontainer:',
+                      classNameWrapper: styles.flexInput,
+                      classNameWrapperLabel: cx(
+                        styles.customLabel,
+                        styles.labelContainer,
+                      ),
+                      classNameWrapperForInput: styles.customWidthInput,
+                    })}
+                  </Field>
+                </div>
+                <Button
+                  customBtn={styles.btnSubmit}
+                  type="submit"
+                  disabled={submitting || invalid}
+                >
+                  Search
+                </Button>
+              </div>
+            </form>
+          )}
+        />
+        <div className={styles.row}>
+          <CustomTable title="">
+            <Table columns={columns} data={dataTable} />
+          </CustomTable>
         </div>
       </div>
-      <div className={cx(styles.flex, styles.selectBlock)}>
-         <SelectCustom placeholder="All Status" options={stateStatus} />
-      </div>
-      <CustomTable>
-        <Table columns={columns} data={dataTable} />
-      </CustomTable>
-    </div>
-  </MainLayout>
-);
+    </MainLayout>
+  );
+};
 
-export default Client;
+export default Auto;
 
 const Table = ({ columns, data }) => {
   const {
@@ -83,24 +143,6 @@ const Table = ({ columns, data }) => {
     },
     usePagination,
     useRowSelect,
-    (hooks) => {
-      hooks.flatColumns.push(columns => [
-        {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ]);
-    },
   );
 
   return (
@@ -179,7 +221,7 @@ const Table = ({ columns, data }) => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => (
-                  <td className={cx(`Client-${cell.column.id}`, `Client-${cell.value}`)} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  <td className={`Auto-${cell.column.id}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
               </tr>
             );
