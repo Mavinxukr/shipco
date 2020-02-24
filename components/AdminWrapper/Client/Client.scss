@@ -104,3 +104,11 @@ th:first-child {
 .delivered {
   color:$colorContent;
 }
+
+.id,
+.model,
+.lot,
+.paiment,
+.not{
+  color: $colorBackground;
+}

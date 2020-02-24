@@ -1,0 +1,105 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.popularItems {
+  margin-left: -7.5px;
+  margin-right: -7.5px;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.popular {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  background: $white;
+  margin: 15px 7.5px;
+}
+
+.image {
+  width: 100%;
+}
+
+.title {
+  color: $colorBackground;
+  margin-top: 60px;
+  font-weight: 500px;
+}
+
+.uppercaseTitle {
+  text-transform: uppercase;
+}
+
+.circle {
+  text-transform: uppercase;
+  color: $white;
+  background: #9AD9F3;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titlePopular {
+  color: $colorBackground;
+  margin: 24px 17px 17px;
+}
+
+.flexPopular {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px 16px 17px;
+  align-items: center;
+}
+
+.bg {
+  color: $white;
+  background: $colorBackground;
+  text-align: center;
+  padding: 12px;
+  text-transform: uppercase;
+}
+
+.fullWidth {
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 15px 9px;
+
+  &:nth-child(2n-1) {
+    background: $colorInput;
+  }
+
+  &:first-child {
+    background: $colorBackground;
+    color: $white;
+    padding: 11px 15px 15px;
+    font-weight: 500;
+    justify-content: start;
+  }
+}
+
+.rightText {
+  text-align: right;
+}
+
+.colorText {
+  color: $colorBackground;
+}
+
+.widthBlock {
+  max-width: 436px!important;
+}

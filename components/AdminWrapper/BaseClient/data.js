@@ -5,7 +5,6 @@ export const columns = [
       {
         Header: 'ID',
         accessor: 'id',
-        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Name',

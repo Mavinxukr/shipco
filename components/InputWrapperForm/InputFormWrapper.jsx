@@ -16,6 +16,7 @@ const InputFormWrapper = ({
   classNameWrapperLabel,
   classNameWrapperForInput,
   widthInputBlock,
+  notForm,
   accept,
   customInput,
 }) => (
@@ -34,7 +35,7 @@ const InputFormWrapper = ({
       classNameWrapperForIcon={classNameWrapperForIcon}
       onClickForIcon={onClickForIcon}
     />
-    {meta.touched && meta.error && <p className={styles.error}>{meta.error}</p>}
+    {notForm ? null : <>{meta.touched && meta.error && <p className={styles.error}>{meta.error}</p>}</>}
   </div>
 );
 
@@ -46,6 +47,7 @@ InputFormWrapper.propTypes = {
   inputProps: PropTypes.object,
   onClickForIcon: PropTypes.func,
   meta: PropTypes.object,
+  notForm: PropTypes.bool,
   placeholder: PropTypes.string,
   customInput: PropTypes.string,
   icon: PropTypes.node,

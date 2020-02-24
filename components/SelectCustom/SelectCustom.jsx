@@ -10,6 +10,7 @@ const customStyles = {
     border: '1px solid #c4c4c4',
     width: '100%',
     background: '#fafafa',
+    position: 'relative',
   }),
   control: () => ({
     background: '#fafafa',
@@ -17,9 +18,9 @@ const customStyles = {
     borderRadius: '2px',
     padding: '5px 0',
     zIndex: 20,
-    width: 'auto',
     display: 'flex',
     margin: '0 10px',
+    width: 'auto',
   }),
   option: () => ({
     backgroundColor: '#fafafa',
@@ -30,7 +31,7 @@ const customStyles = {
   menu: provided => ({
     ...provided,
     backgroundColor: '#fafafa',
-    width: 'auto',
+    width: '100%',
     border: '1px solid #c4c4c4',
     borderTop: 0,
     zIndex: 5,

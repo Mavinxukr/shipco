@@ -1,0 +1,53 @@
+.slid {
+  margin: 0;
+  max-height: 480px;
+  height: 100%;
+
+  img {
+    width: 100%;
+  }
+}
+
+.tabsItems {
+  padding: 0;
+}
+
+.ArrowL,
+.ArrowR {
+  width: 30px;
+  height: 30px;
+  background: #D73E45;
+
+  svg {
+    margin-bottom: 2px;
+  }
+
+  &:disabled {
+    background: #f8bebe;
+  }
+}
+
+.ArrowL {
+  transform: rotate(-90deg);
+  position: absolute;
+  left: 1px;
+  top: 217px;
+  z-index: 9;
+}
+
+.ArrowR {
+  transform: rotate(90deg);
+  position: absolute;
+  right: 0;
+  top: 217px;
+  z-index: 9;
+}
+
+.customSlider {
+  overflow: hidden;
+}
+
+.itemTabs {
+  margin-left: -24px!important;
+  margin-right: -24px!important;
+}
