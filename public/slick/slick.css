@@ -2,7 +2,6 @@
 .slider {
   position: relative;
   display: block;
-  max-width: 1305px;
   box-sizing: border-box;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -141,7 +140,8 @@
   margin: 0 7.5px;
 }
 
-.thumb {
+.thumb,
+.thumb img {
   height: 100%;
 }
 
