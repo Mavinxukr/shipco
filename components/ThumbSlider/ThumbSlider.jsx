@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Slider from 'react-slick';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import IconArrow from '../../assets/svg/Group (6).svg';
 import styles from '../SliderTabs/SliderTabs.scss';
@@ -26,7 +27,7 @@ const SamplePrevArrow = ({ onClick, index }) => (
   </button>
 );
 
-const ThumbSlider = ({ children }) => {
+const ThumbSlider = ({ children, customArrow, initialSlide }) => {
   const [index, setIndex] = useState(0);
 
   const settings = {
@@ -40,6 +41,7 @@ const ThumbSlider = ({ children }) => {
     dots: true,
     dotsClass: 'slick-dots slick-thumb',
     infinite: true,
+    initialSlide: `${initialSlide}`,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -55,7 +57,7 @@ const ThumbSlider = ({ children }) => {
   };
 
   return (
-    <Slider className={styles.customSlider} {...settings}>
+    <Slider className={cx(styles.customSlider, customArrow)} {...settings}>
       {children}
     </Slider>
   );
@@ -63,6 +65,8 @@ const ThumbSlider = ({ children }) => {
 
 ThumbSlider.propTypes = {
   children: PropTypes.node,
+  customArrow: PropTypes.string,
+  initialSlide: PropTypes.number,
 };
 
 SampleNextArrow.propTypes = {

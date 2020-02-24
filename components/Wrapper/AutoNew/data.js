@@ -126,3 +126,22 @@ export const damage = [
     text: 'Case closed',
   },
 ];
+
+export const images = [
+  {
+    id: 1,
+    src: '/images/bmw.png',
+  },
+  {
+    id: 2,
+    src: '/images/background.png',
+  },
+  {
+    id: 3,
+    src: '/images/bmw.png',
+  },
+  {
+    id: 4,
+    src: '/images/bmw.png',
+  },
+];

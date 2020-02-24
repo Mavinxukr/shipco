@@ -27,6 +27,7 @@ const onSubmit = async (values) => {
 
 const ProfileSettings = () => {
   const [isChangeType, setIsChangeType] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
     <MainLayout>
@@ -135,56 +136,62 @@ const ProfileSettings = () => {
           )}
         />
       </div>
-      <Popup titleButton="open" title="Change password">
-        <Form
-          onSubmit={onSubmit}
-          render={({
-            handleSubmit, form, submitting, pristine, values,
-          }) => (
-            <form>
-              <Field
-                name="Old password"
-                validate={composeValidators(required, passwordValidation)}
-                type="password"
-              >
-                {renderInput({
-                  label: 'Old password',
-                  classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                })}
-              </Field>
-              <Field
-                name="New password"
-                validate={composeValidators(required, passwordValidation)}
-                type="password"
-              >
-                {renderInput({
-                  label: 'New password',
-                  classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                })}
-              </Field>
-              <Field
-                name="Confirm password"
-                validate={composeValidators(required, passwordValidation)}
-                type="password"
-              >
-                {renderInput({
-                  label: 'Confirm password',
-                  classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                })}
-              </Field>
-              <div className={styles.submitPopup}>
-                <Button
-                  onClick={handleSubmit}
-                  customBtn={styles.btnSubmit}
-                  type="submit"
+      <Button type="button" onClick={() => setIsPopupOpen(true)}>
+        open
+      </Button>
+      {isPopupOpen && (
+        <Popup
+          title="Change password"
+          setIsPopupOpen={setIsPopupOpen}
+        >
+          <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit }) => (
+              <form>
+                <Field
+                  name="Old password"
+                  validate={composeValidators(required, passwordValidation)}
+                  type="password"
                 >
-                  Save new password
-                </Button>
-              </div>
-            </form>
-          )}
-        />
-      </Popup>
+                  {renderInput({
+                    label: 'Old password',
+                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                  })}
+                </Field>
+                <Field
+                  name="New password"
+                  validate={composeValidators(required, passwordValidation)}
+                  type="password"
+                >
+                  {renderInput({
+                    label: 'New password',
+                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                  })}
+                </Field>
+                <Field
+                  name="Confirm password"
+                  validate={composeValidators(required, passwordValidation)}
+                  type="password"
+                >
+                  {renderInput({
+                    label: 'Confirm password',
+                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
+                  })}
+                </Field>
+                <div className={styles.submitPopup}>
+                  <Button
+                    onClick={handleSubmit}
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                  >
+                    Save new password
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
     </MainLayout>
   );
 };

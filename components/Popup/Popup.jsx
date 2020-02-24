@@ -1,46 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import styles from './Popup.scss';
 import IconClose from '../../assets/svg/close.svg';
-import Button from '../Button/Button';
 
 const Popup = ({
-  titleButton, title, children, customBtn, subTitle, iconButton,
-}) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  return (
-    <>
-      <Button
-        customBtn={customBtn}
+  title, children, subTitle, setIsPopupOpen, customPopup
+}) => (
+  <div className={cx(styles.popup, customPopup)}>
+    <div className={styles.popupHeader}>
+      <h4 className={styles.popupTitle}>
+        {title} <span className={styles.popupSubTitle}>{subTitle}</span>
+      </h4>
+      <button
         type="button"
-        onClick={() => setIsPopupOpen(true)}
+        onClick={() => setIsPopupOpen(false)}
       >
-        {iconButton}{titleButton}
-      </Button>
-      {isPopupOpen && (
-        <div className={styles.popup}>
-          <div className={styles.popupHeader}>
-            <h4 className={styles.popupTitle}>
-              {title} <span className={styles.popupSubTitle}>{subTitle}</span>
-            </h4>
-            <button type="button" onClick={() => setIsPopupOpen(false)}>
-              <IconClose />
-            </button>
-          </div>
-          <div>{children}</div>
-        </div>
-      )}
-    </>
-  );
-};
+        <IconClose />
+      </button>
+    </div>
+    <div>{children}</div>
+  </div>
+);
 export default Popup;
 
 Popup.propTypes = {
-  titleButton: PropTypes.string,
   subTitle: PropTypes.string,
-  customBtn: PropTypes.string,
+  customPopup: PropTypes.string,
+  setIsPopupOpen: PropTypes.func,
   title: PropTypes.string,
-  iconButton: PropTypes.node,
   children: PropTypes.node,
 };
