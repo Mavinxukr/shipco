@@ -111,7 +111,7 @@ const SliderTabs = () => {
         </AntTabs>
       </AppBar>
       <TabPanel className={styles.itemTabs} value={value} index={0}>
-        <ThumbSlider>
+        <ThumbSlider initialSlide={0}>
           {sliderItems.map(item => (
             <div key={item.id} className={styles.slid}>
               <img src={item.src} alt="a" />
@@ -120,7 +120,7 @@ const SliderTabs = () => {
         </ThumbSlider>
       </TabPanel>
       <TabPanel className={styles.itemTabs} value={value} index={1}>
-        <ThumbSlider>
+        <ThumbSlider initialSlide={0}>
           {sliderItems.map(item => (
             <div key={item.id} className={styles.slid}>
               <img src={item.src} alt="a" />
@@ -129,7 +129,7 @@ const SliderTabs = () => {
         </ThumbSlider>
       </TabPanel>
       <TabPanel className={styles.itemTabs} value={value} index={2}>
-        <ThumbSlider>
+        <ThumbSlider initialSlide={0}>
           {sliderItems.map(item => (
             <div key={item.id} className={styles.slid}>
               <img src={item.src} alt="a" />

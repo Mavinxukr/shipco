@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
 import { Field, Form } from 'react-final-form';
@@ -14,7 +14,6 @@ import {
   required,
 } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
-// import SelectCustom from '../../SelectCustom/SelectCustom';
 import styles from './SubHeader.scss';
 import { stateOptions } from './data';
 
@@ -25,27 +24,70 @@ const onSubmit = async (values) => {
   window.alert(JSON.stringify(values, 0, 2));
 };
 
-const SubHeader = ({ hidden }) => (
-  <div className={styles.subHeader}>
-    <div className={styles.container}>
-      <div className={styles.flex}>
-        <h4 className={styles.title}>
+const SubHeader = ({ hidden }) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  return (
+    <div className={styles.subHeader}>
+      <div className={styles.container}>
+        <div className={styles.flex}>
+          <h4 className={styles.title}>
             Bob Hudson <span className={styles.titleColor}>(ID 000011)</span>
-        </h4>
-        {hidden && (
+          </h4>
+          <Button
+            type="button"
+            customBtn={styles.customBtn}
+            onClick={() => setIsPopupOpen(true)}
+          >
+            <IconSettings />
+          </Button>
+        </div>
+        <nav>
+          <ul className={styles.menuItems}>
+            <li>
+              <a className={cs(styles.menuLink, styles.active)} href="/">
+                Auto
+                <span className={styles.dotActive} />
+              </a>
+            </li>
+            <li>
+              <a className={styles.menuLink} href="/">
+                Auto for dismanting
+                <span className={styles.dotActive} />
+              </a>
+            </li>
+            <li>
+              <a className={styles.menuLink} href="/">
+                Invoice
+                <span className={styles.dotActive} />
+              </a>
+            </li>
+            <li>
+              <a className={styles.menuLink} href="/">
+                Parts
+                <span className={styles.dotActive} />
+              </a>
+            </li>
+            <li>
+              <a className={styles.menuLink} href="/">
+                Shipping
+                <span className={styles.dotActive} />
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <Search />
+      </div>
+      {hidden && isPopupOpen && (
         <Popup
-          customBtn={styles.customBtn}
-          iconButton={<IconSettings />}
+          isPopupOpen={isPopupOpen}
+          setIsPopupOpen={setIsPopupOpen}
           title="Bob Hudson "
           subTitle="(ID 000011)"
         >
           <Form
             onSubmit={onSubmit}
-            render={({
-              handleSubmit,
-              submitting,
-              invalid,
-            }) => (
+            render={({ handleSubmit, submitting, invalid }) => (
               <form onSubmit={handleSubmit}>
                 <Field name="Name" validate={required} type="text">
                   {renderInput({
@@ -138,53 +180,17 @@ const SubHeader = ({ hidden }) => (
                     type="submit"
                     disabled={invalid || submitting}
                   >
-                        Save
+                    Save
                   </Button>
                 </div>
               </form>
             )}
           />
         </Popup>
-        )}
-      </div>
-      <nav>
-        <ul className={styles.menuItems}>
-          <li>
-            <a className={cs(styles.menuLink, styles.active)} href="/">
-                Auto
-              <span className={styles.dotActive} />
-            </a>
-          </li>
-          <li>
-            <a className={styles.menuLink} href="/">
-                Auto for dismanting
-              <span className={styles.dotActive} />
-            </a>
-          </li>
-          <li>
-            <a className={styles.menuLink} href="/">
-                Invoice
-              <span className={styles.dotActive} />
-            </a>
-          </li>
-          <li>
-            <a className={styles.menuLink} href="/">
-                Parts
-              <span className={styles.dotActive} />
-            </a>
-          </li>
-          <li>
-            <a className={styles.menuLink} href="/">
-                Shipping
-              <span className={styles.dotActive} />
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <Search />
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 SubHeader.propTyps = {
   hidden: PropTypes.bool,
