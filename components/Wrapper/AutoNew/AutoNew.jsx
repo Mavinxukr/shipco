@@ -1,13 +1,62 @@
 import React from 'react';
-import MainLayout from '../../Layout/Global/Global';
 import cx from 'classnames';
+import MainLayout from '../../Layout/Global/Global';
+import SliderTabs from '../../SliderTabs/SliderTabs';
 import styles from './AutoNew.scss';
-import { data } from './data';
 import Image from '../../Image/Image';
+import InformationBlock from '../../InformationBlock/InformationBlock';
+import { lot, shipping, data, damage } from './data';
 
 const AutoNew = () => (
   <MainLayout>
     <div className={styles.container}>
+      <h3 className={cx(styles.title, styles.uppercaseTitle)}>2013 VOLKSWAGEN JETTA HYBRID</h3>
+      <div className={styles.flex}>
+        <div>
+          <SliderTabs />
+        </div>
+        <div className={cx(styles.fullWidth, styles.flex)}>
+          <InformationBlock>
+            <>
+              {lot.map(item => (
+                <div
+                  className={styles.items}
+                  key={`${item.id}${item.title}`}
+                >
+                  <span>{item.title}</span>
+                  <span>{item.text}</span>
+                </div>
+              ))}
+            </>
+          </InformationBlock>
+          <InformationBlock>
+            <>
+              {shipping.map(item => (
+                <div
+                  className={styles.items}
+                  key={`${item.id}${item.title}`}
+                >
+                  <span>{item.title}</span>
+                  <span className={styles.rightText}>{item.text}<br />{item.date}</span>
+                </div>
+              ))}
+            </>
+          </InformationBlock>
+          <InformationBlock customInformationBlock={styles.widthBlock}>
+            <>
+              {damage.map(item => (
+                <div
+                  className={styles.items}
+                  key={`${item.id}${item.title}`}
+                >
+                  <span>{item.title}</span>
+                  <span className={styles.colorText}>{item.text}</span>
+                </div>
+              ))}
+            </>
+          </InformationBlock>
+        </div>
+      </div>
       <h3 className={styles.title}>Popular Vehicles Right Now</h3>
       <div className={cx(styles.flex, styles.popularItems)}>
         <>
@@ -20,9 +69,9 @@ const AutoNew = () => (
               <div className={styles.flexPopular}>
                 <span>{item.lot}</span>
                 <span>
-                Current Bid:{' '}
+                  Current Bid:{' '}
                   <span className={styles.title}>{item.current}</span>
-              </span>
+                </span>
               </div>
               <div className={styles.flexPopular}>
                 <span>{item.location}</span>
