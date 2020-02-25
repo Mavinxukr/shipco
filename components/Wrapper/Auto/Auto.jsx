@@ -4,8 +4,11 @@ import cx from 'classnames';
 import { usePagination, useRowSelect, useTable } from 'react-table';
 import MainLayout from '../../Layout/Global/Global';
 import InputNumber from '../../InputNumber/InputNumber';
-import { stateOptions, columns, dataTable } from './data';
+import {
+  stateOptions, columns, dataTable, filter,
+} from './data';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
+import Filter from '../../Filter/Filter';
 import Button from '../../Button/Button';
 import CustomTable from '../../CustomTable/CustomTable';
 import styles from './Auto.scss';
@@ -109,6 +112,40 @@ const Auto = () => {
           )}
         />
         <div className={styles.row}>
+          <div className={styles.leftBlock}>
+            <Filter title="GA Warehouse">
+              {filter.map(item => (
+                <div className={styles.itemFilter} key={item.id}>
+                  <span className={styles.colorFilter}>{item.title}</span>
+                  <span>{item.num}</span>
+                </div>
+              ))}
+            </Filter>
+            <Filter title="GA Warehouse">
+              {filter.map(item => (
+                <div className={styles.itemFilter} key={item.id}>
+                  <span className={styles.colorFilter}>{item.title}</span>
+                  <span>{item.num}</span>
+                </div>
+              ))}
+            </Filter>
+            <Filter title="GA Warehouse">
+              {filter.map(item => (
+                <div className={styles.itemFilter} key={item.id}>
+                  <span className={styles.colorFilter}>{item.title}</span>
+                  <span>{item.num}</span>
+                </div>
+              ))}
+            </Filter>
+            <Filter title="GA Warehouse">
+              {filter.map(item => (
+                <div className={styles.itemFilter} key={item.id}>
+                  <span className={styles.colorFilter}>{item.title}</span>
+                  <span>{item.num}</span>
+                </div>
+              ))}
+            </Filter>
+          </div>
           <CustomTable title="">
             <Table columns={columns} data={dataTable} />
           </CustomTable>
@@ -221,7 +258,19 @@ const Table = ({ columns, data }) => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => (
-                  <td className={`Auto-${cell.column.id}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  <td
+                    className={`Auto-${cell.column.id}`}
+                    {...cell.getCellProps()}
+                  >
+                    {cell.column.id === 'src' ? (
+                      <>
+                        <img className={styles.imageTable} src={cell.render('Cell')} alt="" />
+                        <span>{cell.render('Cell')}</span>
+                      </>
+                    ) : (
+                      <>{cell.render('Cell')}</>
+                    )}
+                  </td>
                 ))}
               </tr>
             );

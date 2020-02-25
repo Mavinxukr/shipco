@@ -44,6 +44,7 @@ export const dataTable = [
     lot: '40063659',
     vin: '3VW637AJ5DM*****',
     point: 'GA',
+    src: '/images/bmw.png',
   },
   {
     id: 22779018,
@@ -56,6 +57,7 @@ export const dataTable = [
     lot: '40063659',
     vin: '3VW637AJ5DM*****',
     point: 'GA',
+    src: '/images/bmw.png',
   },
   {
     id: 22779019,
@@ -68,6 +70,7 @@ export const dataTable = [
     lot: '40063659',
     vin: '3VW637AJ5DM*****',
     point: 'GA',
+    src: '/images/bmw.png',
   },
   {
     id: 22779017,
@@ -80,6 +83,7 @@ export const dataTable = [
     lot: '40063659',
     vin: '3VW637AJ5DM*****',
     point: 'GA',
+    src: '/images/bmw.png',
   },
 
 ];
@@ -94,7 +98,7 @@ export const columns = [
       },
       {
         Header: 'Images',
-        accessor: 'images',
+        accessor: 'src',
       },
       {
         Header: 'Date',
@@ -149,5 +153,34 @@ export const columns = [
         accessor: 'loren8',
       },
     ],
+  },
+];
+
+
+export const filter = [
+  {
+    id: 1,
+    title: 'All',
+    num: 575,
+  },
+  {
+    id: 2,
+    title: 'Ad the Terminal',
+    num: 25,
+  },
+  {
+    id: 3,
+    title: 'Lorem Ipsum',
+    num: 9,
+  },
+  {
+    id: 4,
+    title: 'New',
+    num: 9,
+  },
+  {
+    id: 5,
+    title: 'Lorem Ipsum',
+    num: 478,
   },
 ];

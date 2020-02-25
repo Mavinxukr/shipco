@@ -1,0 +1,15 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.filter {
+  padding: 13px 15px;
+  margin: 20px 0 0;
+  background: $white;
+  border: 1px solid $colorDisabled;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.titleFilter {
+  margin-bottom: 3px;
+}
