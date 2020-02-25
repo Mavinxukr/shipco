@@ -34,13 +34,15 @@ const SubHeader = ({ hidden }) => {
           <h4 className={styles.title}>
             Bob Hudson <span className={styles.titleColor}>(ID 000011)</span>
           </h4>
-          <Button
-            type="button"
-            customBtn={styles.customBtn}
-            onClick={() => setIsPopupOpen(true)}
-          >
-            <IconSettings />
-          </Button>
+          {hidden && (
+            <Button
+              type="button"
+              customBtn={styles.customBtn}
+              onClick={() => setIsPopupOpen(true)}
+            >
+              <IconSettings />
+            </Button>
+          )}
         </div>
         <nav>
           <ul className={styles.menuItems}>
@@ -63,7 +65,7 @@ const SubHeader = ({ hidden }) => {
               </a>
             </li>
             <li>
-              <a className={styles.menuLink} href="/">
+              <a className={styles.menuLink} href="/admin-parts">
                 Parts
                 <span className={styles.dotActive} />
               </a>

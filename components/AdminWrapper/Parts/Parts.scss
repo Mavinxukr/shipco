@@ -1,0 +1,44 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterText {
+  color: $colorBackground;
+  background: $white;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-right: 61px;
+}
+
+.rightBlock {
+  display: flex;
+  align-items: center;
+}
+
+.filterIcon {
+  margin-right: 17px;
+}
+
+.btnIcon {
+  background: $white;
+  color: $colorBackground;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-right: 33px;
+}
+
+.plus {
+  width: 40px;
+  height: 40px;
+}
