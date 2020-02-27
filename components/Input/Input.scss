@@ -33,3 +33,14 @@
 .color {
   color: $colorBackground;
 }
+
+.chosenFile,
+.chosenFileValue{
+  padding: 10px 0 10px 150px;
+}
+
+.chosenFile {
+  color: $colorTable;
+  font-size: 14px;
+  font-weight: normal;
+}
