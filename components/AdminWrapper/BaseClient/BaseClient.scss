@@ -113,14 +113,10 @@ form .flex {
   }
 }
 
-input[type="file"] {
-
-  border: 1px solid $colorBorder;
-  background: $colorInput;
-}
-
 .file {
   position: relative;
+  border: 1px solid $colorBorder;
+  background: $colorInput;
 
   &:after {
     content: '';
