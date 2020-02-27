@@ -19,6 +19,7 @@ import {
   renderInput,
   renderSelect,
   renderRadio,
+  renderInputFile,
 } from '../../../utils/renderInputs';
 import Pickers from '../../Pickers/Pickers';
 import {
@@ -27,6 +28,7 @@ import {
   required,
 } from '../../../utils/validation';
 import Button from '../../Button/Button';
+import IconPlus from '../../../assets/svg/Plus.svg';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -52,7 +54,7 @@ const AutoOpen = () => {
                   <div className={styles.flex}>
                     <div className={styles.fullWidth}>
                       <Field name="report" type="file">
-                        {renderInput({
+                        {renderInputFile({
                           label: 'CarFax report',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
@@ -65,7 +67,7 @@ const AutoOpen = () => {
                         })}
                       </Field>
                       <Field name="invoice" type="file">
-                        {renderInput({
+                        {renderInputFile({
                           label: 'Invoice',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
@@ -78,7 +80,7 @@ const AutoOpen = () => {
                         })}
                       </Field>
                       <Field name="creport" type="file">
-                        {renderInput({
+                        {renderInputFile({
                           label: 'Checklist report',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
@@ -265,6 +267,8 @@ const AutoOpen = () => {
                         setArrPics={setArrPicsDamage}
                         arrPics={arrPicsDamage}
                         customTumd="Previews-reverse"
+                        icon={<IconPlus className={styles.icon} />}
+                        title="Add photo"
                       />
                     </>
                   </InformationBlock>

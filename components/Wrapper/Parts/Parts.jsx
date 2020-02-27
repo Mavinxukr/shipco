@@ -11,6 +11,7 @@ import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
 import IconAc from '../../../assets/svg/Ac.svg';
+import IconSearch from '../../../assets/svg/Search_icon.svg';
 import IconDec from '../../../assets/svg/Dec.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
@@ -327,6 +328,8 @@ const Parts = () => {
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
+                    icon: <IconSearch />,
+                    classNameWrapperForIcon: styles.positionIcon,
                   })}
                 </Field>
                 <Field name="name" validate={required} type="text">

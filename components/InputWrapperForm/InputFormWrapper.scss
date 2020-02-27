@@ -41,41 +41,6 @@
   }
 }
 
-.labelFile {
-  color: $colorBackground;
-  min-width: 150px;
-}
-
 .widthInputBlock {
   width: 360px;
-}
-
-.fileLabel {
-  width: 100%;
-  margin: 0;
-  height: 40px;
-  position: relative;
-  cursor: pointer;
-
-  & > div {
-    height: 40px;
-  }
-
-  &:before {
-    content: 'Choose Files';
-    width: 135px;
-    font-weight: 500;
-    font-size: 16px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #6d6c6c;
-    top: 1px;
-    background: #e5e5e5;
-    position: absolute;
-    border: 1px solid $colorBorder;
-    left: 0;
-    cursor: pointer;
-  }
 }
