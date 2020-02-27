@@ -11,6 +11,7 @@ import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconUpload from '../../../assets/svg/uploadfile.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
+import IconSearch from '../../../assets/svg/Search_icon.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
 import { columns, dataTable, stateOptions } from './data';
@@ -315,6 +316,8 @@ const Parts = () => {
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
+                    icon: <IconSearch />,
+                    classNameWrapperForIcon: styles.positionIcon,
                   })}
                 </Field>
                 <Field
