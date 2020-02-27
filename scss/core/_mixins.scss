@@ -5,6 +5,11 @@
 }
 
 @mixin container {
-  margin-left: 75px;
-  margin-right: 60px;
+  max-width: 1785px;
+  margin: 0 auto;
+
+  @media (max-width: 1850px) {
+    margin-left: 75px;
+    margin-right: 60px;
+  }
 }
