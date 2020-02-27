@@ -1,3 +1,15 @@
 .root > div {
   padding: 20px 0 38px 9px !important
 }
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px 16px 17px;
+  align-items: center;
+}
+
+.center {
+  text-align: center;
+  padding-bottom: 19px;
+}

@@ -106,19 +106,49 @@ form .flex {
   font-size: 18px;
   text-transform: uppercase;
   padding: 10px;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
 }
 
-input[type="file"]:after {
-  content: '';
-  background-image: url("/images/plus.png");
-  position: absolute;
-  right: 17px;
-  top: 20px;
-  width: 14px;
-  height: 14px;
-  z-index: 99;
+input[type="file"] {
+
+  border: 1px solid $colorBorder;
+  background: $colorInput;
+}
+
+.file {
+  position: relative;
+
+  &:after {
+    content: '';
+    background-image: url("/images/plus.png");
+    position: absolute;
+    right: 17px;
+    top: 20px;
+    width: 14px;
+    height: 14px;
+    z-index: 99;
+  }
 }
 
 .id {
   color: $colorBackground;
+}
+
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: auto;
+
+  .label {
+    margin: 0 31px 0 0;
+  }
+}
+
+.widthInputBlock {
+  width: 360px;
 }

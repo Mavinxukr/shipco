@@ -3,10 +3,19 @@ import { useDropzone } from 'react-dropzone';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import IconRemoveImage from '../../assets/svg/removeImg.svg';
-import IconPlus from '../../assets/svg/Plus.svg';
 import styles from './Previews.scss';
 
-const Previews = ({ setArrPics, arrPics, customTumd }) => {
+const Previews = ({
+  setArrPics,
+  arrPics,
+  customTumd,
+  icon,
+  title,
+  custom,
+  customText,
+  customIconBlock,
+  customThumbs,
+}) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
@@ -41,14 +50,20 @@ const Previews = ({ setArrPics, arrPics, customTumd }) => {
 
   return (
     <section className={cx('container', customTumd)}>
-      <div {...getRootProps({ className: 'dropzone' })}>
+      <div
+        style={{ outline: 'none' }}
+        className={custom}
+        {...getRootProps({ className: 'dropzone' })}
+      >
         <input {...getInputProps()} type="file" />
-        <p className={styles.color}>
-          <IconPlus className={styles.icon} />
-          Add Picture
-        </p>
+        <div className={cx(styles.color, customText)}>
+          {icon && <div className={customIconBlock}>{icon}</div>}
+          <>{title}</>
+        </div>
       </div>
-      <aside className={styles.thumbsContainer}>{thumbs}</aside>
+      <aside className={cx(styles.thumbsContainer, customThumbs)}>
+        {thumbs}
+      </aside>
     </section>
   );
 };
@@ -57,6 +72,12 @@ Previews.propTypes = {
   setArrPics: PropTypes.func,
   arrPics: PropTypes.arrayOf(PropTypes.object),
   customTumd: PropTypes.string,
+  icon: PropTypes.node,
+  title: PropTypes.string,
+  custom: PropTypes.string,
+  customText: PropTypes.string,
+  customIconBlock: PropTypes.string,
+  customThumbs: PropTypes.string,
 };
 
 export default Previews;

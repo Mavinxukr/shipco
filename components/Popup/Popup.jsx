@@ -5,7 +5,7 @@ import styles from './Popup.scss';
 import IconClose from '../../assets/svg/close.svg';
 
 const Popup = ({
-  title, children, subTitle, setIsPopupOpen, customPopup
+  title, children, subTitle, setIsPopupOpen, customPopup,
 }) => (
   <div className={cx(styles.popup, customPopup)}>
     <div className={styles.popupHeader}>

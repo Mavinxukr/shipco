@@ -6,7 +6,7 @@ const CustomTable = ({ title, children }) => (
   <>
     <h4 className={styles.title}>{title}</h4>
     <div className={styles.wrapperTable}>
-      <div>{children}</div>
+      <div className={styles.scroll}>{children}</div>
     </div>
   </>
 );

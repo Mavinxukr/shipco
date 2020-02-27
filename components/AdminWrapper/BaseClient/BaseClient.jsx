@@ -77,26 +77,22 @@ const BaseClient = () => {
               >
                 <Form
                   onSubmit={onSubmit}
-                  render={({
-                    handleSubmit,
-                    form,
-                    submitting,
-                    pristine,
-                    values,
-                  }) => (
-                    <form>
+                  render={({ handleSubmit, invalid, submitting }) => (
+                    <form onSubmit={handleSubmit}>
                       <Field name="Name" validate={required} type="text">
                         {renderInput({
                           label: 'Name',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field name="Username" validate={required} type="text">
                         {renderInput({
                           label: 'Username',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field
@@ -106,8 +102,9 @@ const BaseClient = () => {
                       >
                         {renderInput({
                           label: 'Email Address',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field
@@ -118,8 +115,9 @@ const BaseClient = () => {
                       >
                         {renderInput({
                           label: 'Phone number',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field
@@ -132,8 +130,9 @@ const BaseClient = () => {
                       >
                         {renderInput({
                           label: 'Password',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field
@@ -165,15 +164,17 @@ const BaseClient = () => {
                       >
                         {renderInput({
                           label: 'Zip',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field name="adress" validate={required} type="text">
                         {renderInput({
                           label: 'Adress',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <Field
@@ -184,22 +185,24 @@ const BaseClient = () => {
                       >
                         {renderInput({
                           label: 'Cart number',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: styles.widthInputBlock,
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
-                      <Field name="Add photo" validate={required} type="file">
+                      <Field name="Add photo" type="file">
                         {renderInput({
                           label: 'Add photo',
-                          classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                          widthInputBlock: 'InputFormWrapper-widthInputBlock',
+                          classNameWrapper: styles.popupFieldRow,
+                          widthInputBlock: cx(styles.widthInputBlock, styles.file),
+                          classNameWrapperLabel: styles.label,
                         })}
                       </Field>
                       <div className={styles.submitPopup}>
                         <Button
-                          onClick={handleSubmit}
                           customBtn={styles.btnSubmit}
                           type="submit"
+                          disabled={submitting || invalid}
                         >
                           ADD New Client
                         </Button>

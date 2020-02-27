@@ -1,8 +1,15 @@
+@import "scss/core/vars";
+
 .customBtnSearch {
   border-radius: 2px;
   padding: 9px 37px;
   font-weight: 500;
   font-size: 18px;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
 }
 
 .search {

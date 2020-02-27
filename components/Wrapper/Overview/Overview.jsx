@@ -62,16 +62,7 @@ const Overview = () => (
               </span>
               <span className={styles.title}>{item.title}</span>
             </div>
-            <div className={styles.flex}>
-              <span>{item.firstDate}</span>
-              <span>{item.secondDate}</span>
-            </div>
-            <div className={styles.flex}>
-              <b>{item.from}</b>
-              <b>{item.to}</b>
-            </div>
-            <CustomStepper activeStep={item.step} />
-            <p className={styles.center}>{item.car}</p>
+            <CustomStepper item={item} />
           </div>
         ))}
       </CustomSlider>

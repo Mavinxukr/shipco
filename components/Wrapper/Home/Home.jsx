@@ -7,7 +7,7 @@ import GoogleMapReact from 'google-map-react';
 import Button from '../../Button/Button';
 import styles from './Home.scss';
 import Image from '../../Image/Image';
-import ProductCard from '../../ProductCard/ProductCard';
+// import ProductCard from '../../ProductCard/ProductCard';
 import IconQuotes from '../../../assets/svg/quotes.svg';
 import IconFb from '../../../assets/svg/Vector(1).svg';
 import IconIn from '../../../assets/svg/Group.svg';
@@ -148,16 +148,16 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className={styles.cars}>
-          <div className={styles.container}>
-            <h2 className={styles.carsTitle}>Cars</h2>
-            <div className={styles.carsItems}>
-              {data.map(item => (
-                <ProductCard key={item.id} item={item} />
-              ))}
-            </div>
-          </div>
-        </div>
+        {/*<div className={styles.cars}>*/}
+        {/*  <div className={styles.container}>*/}
+        {/*    <h2 className={styles.carsTitle}>Cars</h2>*/}
+        {/*    <div className={styles.carsItems}>*/}
+        {/*      {data.map(item => (*/}
+        {/*        <ProductCard key={item.id} item={item} />*/}
+        {/*      ))}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
         <div className={styles.container}>
           <h2 className={styles.testimonialsTitle}>
             <IconQuotes className={styles.testimonialsIcon} />

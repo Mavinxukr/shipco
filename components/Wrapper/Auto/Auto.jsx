@@ -264,8 +264,7 @@ const Table = ({ columns, data }) => {
                   >
                     {cell.column.id === 'src' ? (
                       <>
-                        <img className={styles.imageTable} src={cell.render('Cell')} alt="" />
-                        <span>{cell.render('Cell')}</span>
+                        <img className={styles.imageTable} src={cell.value} alt="" />
                       </>
                     ) : (
                       <>{cell.render('Cell')}</>
