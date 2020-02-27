@@ -94,6 +94,11 @@ input[type="file"] {
   padding: 15px 0;
   font-weight: bold;
   width: 134px;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
 }
 
 .flexRadio {

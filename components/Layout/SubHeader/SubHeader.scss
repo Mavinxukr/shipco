@@ -97,4 +97,9 @@
   font-size: 18px;
   text-transform: uppercase;
   padding: 10px;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
 }

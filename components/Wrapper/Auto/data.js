@@ -57,7 +57,7 @@ export const dataTable = [
     lot: '40063659',
     vin: '3VW637AJ5DM*****',
     point: 'GA',
-    src: '/images/bmw.png',
+    src: '/images/background.png',
   },
   {
     id: 22779019,
@@ -70,7 +70,7 @@ export const dataTable = [
     lot: '40063659',
     vin: '3VW637AJ5DM*****',
     point: 'GA',
-    src: '/images/bmw.png',
+    src: '/images/pic.png',
   },
   {
     id: 22779017,

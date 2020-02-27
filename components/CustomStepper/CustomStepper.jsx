@@ -69,19 +69,32 @@ function ColorlibStepIcon({ active, completed }) {
 
 const getSteps = () => ['', '', '', ''];
 
-const CustomStepper = ({ activeStep }) => {
+const CustomStepper = ({ item }) => {
   const steps = getSteps();
 
   return (
-    <div className={styles.root}>
-      <Stepper activeStep={activeStep} connector={<ColorlibConnector />}>
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-    </div>
+    <>
+      <div className={styles.flex}>
+        <span>{item.firstDate}</span>
+        <span>{item.secondDate}</span>
+      </div>
+      <div className={styles.flex}>
+        <b>{item.from}</b>
+        <b>{item.to}</b>
+      </div>
+      <div className={styles.root}>
+        <Stepper activeStep={item.id} connector={<ColorlibConnector />}>
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                {label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </div>
+      <p className={styles.center}>{item.car}</p>
+    </>
   );
 };
 

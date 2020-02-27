@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
+import cx from 'classnames';
 import { Field, Form } from 'react-final-form';
 import MainLayout from '../../Layout/Global/Global';
 import Popup from '../../Popup/Popup';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
 import Button from '../../Button/Button';
-import Previews from '../../Previews/Previews';
+import AsNavForSlider from '../../AsNavForSlider/AsNavForSlider';
 import IconP from '../../../assets/svg/p.svg';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
-import IconUpload from '../../../assets/svg/uploadfile.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
+import IconAc from '../../../assets/svg/Ac.svg';
+import IconDec from '../../../assets/svg/Dec.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns, dataTable, stateOptions } from './data';
-import styles from './Parts.scss';
-import { required, mustBeNumber, composeValidators } from '../../../utils/validation';
+import {
+  columns, dataTable, stateOptions, images,
+} from './data';
+import { required } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
+import styles from './Parts.scss';
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -35,7 +38,7 @@ const IndeterminateCheckbox = React.forwardRef(
   },
 );
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -164,7 +167,7 @@ const Table = ({ columns, data }) => {
                     {...cell.getCellProps()}
                   >
                     {cell.column.id === 'actions' ? (
-                      <>
+                      <div className={styles.tdFlex}>
                         <Button type="button" customBtn={styles.actionsButton}>
                           <IconP />
                         </Button>
@@ -175,9 +178,30 @@ const Table = ({ columns, data }) => {
                         >
                           <IconTrash />
                         </Button>
-                      </>
+                        <div className={styles.rightIcon}>
+                          <Button type="button" customBtn={styles.background}>
+                            <IconDec />
+                          </Button>
+                          <Button type="button" customBtn={styles.background}>
+                            <IconAc />
+                          </Button>
+                        </div>
+                        {/* <span className={styles.colorAc}>Accepted</span><span className={styles.colorDec}>Declined</span> */}
+                      </div>
                     ) : (
-                      <>{cell.render('Cell')}</>
+                      <>
+                        {cell.column.id === 'photo' ? (
+                          <Button
+                            type="button"
+                            customBtn={cx(styles.background, styles.colorDec)}
+                            onClick={() => setIsPopupPhotoOpen(true)}
+                          >
+                            {cell.render('Cell')}
+                          </Button>
+                        ) : (
+                          <>{cell.render('Cell')}</>
+                        )}
+                      </>
                     )}
                   </td>
                 ))}
@@ -250,7 +274,7 @@ const Table = ({ columns, data }) => {
 
 const Parts = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [arrPicsContainer, setArrPicsContainer] = useState([]);
+  const [isPopupPhotoOpen, setIsPopupPhotoOpen] = useState(false);
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -261,8 +285,8 @@ const Parts = () => {
 
   return (
     <MainLayout>
-      <SubHeader />
       <div className={styles.container}>
+        <h3 className={styles.title}>Parts</h3>
         <div className={styles.flex}>
           <Button
             customBtn={styles.btnIcon}
@@ -280,7 +304,11 @@ const Parts = () => {
           </div>
         </div>
         <CustomTable>
-          <Table columns={columns} data={dataTable} />
+          <Table
+            columns={columns}
+            data={dataTable}
+            setIsPopupPhotoOpen={setIsPopupPhotoOpen}
+          />
         </CustomTable>
       </div>
       {isPopupOpen && (
@@ -293,23 +321,7 @@ const Parts = () => {
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
-                <Field
-                  name="id"
-                  validate={required}
-                  type="text"
-                >
-                  {renderInput({
-                    label: 'Client ID',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field
-                  name="catalog"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="catalog" validate={required} type="text">
                   {renderInput({
                     label: 'Catalog number',
                     classNameWrapper: styles.popupFieldRow,
@@ -317,11 +329,7 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="name"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="name" validate={required} type="text">
                   {renderInput({
                     label: 'Name',
                     classNameWrapper: styles.popupFieldRow,
@@ -329,11 +337,7 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="make"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="make" validate={required} type="text">
                   {renderInput({
                     label: 'Make',
                     classNameWrapper: styles.popupFieldRow,
@@ -354,11 +358,7 @@ const Parts = () => {
                   })}
                   options={stateOptions}
                 />
-                <Field
-                  name="quantity"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="quantity" validate={required} type="text">
                   {renderInput({
                     label: 'Quantity',
                     classNameWrapper: styles.popupFieldRow,
@@ -366,27 +366,17 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="container"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                >
-                  {renderInput({
-                    label: 'Add container #',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Previews
-                  icon={<IconUpload className={styles.icon} />}
-                  setArrPics={setArrPicsContainer}
-                  arrPics={arrPicsContainer}
-                  title="Add photo"
-                  customText={styles.customText}
-                  customIconBlock={styles.customIconBlock}
-                  customThumbs={styles.thumbs}
-                />
+                <div className={styles.popupFieldRow}>
+                  <label className={cx(styles.label, styles.colorDec)}>
+                    Comment
+                  </label>
+                  <Field
+                    className={cx(styles.widthInput, styles.customTextarea)}
+                    name="comment"
+                    component="textarea"
+                    placeholder=""
+                  />
+                </div>
                 <Button
                   customBtn={styles.btnSubmit}
                   type="submit"
@@ -397,6 +387,16 @@ const Parts = () => {
               </form>
             )}
           />
+        </Popup>
+      )}
+      {isPopupPhotoOpen && (
+        <Popup
+          isPopupOpen={isPopupPhotoOpen}
+          setIsPopupOpen={setIsPopupPhotoOpen}
+          title="Parts photo"
+          customPopup={styles.paddingBottom}
+        >
+          <AsNavForSlider sliderImages={images} />
         </Popup>
       )}
     </MainLayout>

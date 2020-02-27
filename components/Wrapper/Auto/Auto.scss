@@ -95,6 +95,11 @@
   border-radius: 2px;
   margin-left: 56px;
   margin-bottom: 20px;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
 }
 
 .row {

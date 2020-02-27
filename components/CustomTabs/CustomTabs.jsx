@@ -7,6 +7,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Previews from '../Previews/Previews';
+import IconPlus from '../../assets/svg/Plus.svg';
+import styles from './CustomTabs.scss';
 
 const TabPanel = ({
   children, value, index, ...other
@@ -107,13 +109,28 @@ const CustomTabs = () => {
         </AntTabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Previews setArrPics={setArrPicsActions} arrPics={arrPicsActions} />
+        <Previews
+          setArrPics={setArrPicsActions}
+          arrPics={arrPicsActions}
+          icon={<IconPlus className={styles.icon} />}
+          title="Add Picture"
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Previews setArrPics={setArrPicsWarehouses} arrPics={arrPicsWarehouses} />
+        <Previews
+          setArrPics={setArrPicsWarehouses}
+          arrPics={arrPicsWarehouses}
+          icon={<IconPlus className={styles.icon} />}
+          title="Add Picture"
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Previews setArrPics={setArrPicsContainer} arrPics={arrPicsContainer} />
+        <Previews
+          setArrPics={setArrPicsContainer}
+          arrPics={arrPicsContainer}
+          icon={<IconPlus className={styles.icon} />}
+          title="Add Picture"
+        />
       </TabPanel>
     </div>
   );
