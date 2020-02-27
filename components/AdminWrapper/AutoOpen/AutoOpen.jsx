@@ -56,6 +56,7 @@ const AutoOpen = () => {
                           label: 'CarFax report',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
+                          file: true,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
@@ -68,6 +69,7 @@ const AutoOpen = () => {
                           label: 'Invoice',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
+                          file: true,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
@@ -80,6 +82,7 @@ const AutoOpen = () => {
                           label: 'Checklist report',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
+                          file: true,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,

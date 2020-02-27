@@ -13,6 +13,7 @@ const Input = ({
   onClickForIcon,
   widthInputBlock,
   accept,
+  file,
 }) => (
   <div className={cx(styles.inputBlock, widthInputBlock)}>
     <input
@@ -22,14 +23,25 @@ const Input = ({
       accept={accept}
     />
     {icon && (
-      <Button
-        type="button"
-        className={classNameWrapperForIcon}
-        onClick={onClickForIcon}
-      >
-        {icon}
-      </Button>
+    <Button
+      type="button"
+      className={classNameWrapperForIcon}
+      onClick={onClickForIcon}
+    >
+      {icon}
+    </Button>
     )}
+    <>
+      {file && (
+      <>
+        {addInputProps.value === '' ? (
+          <p className={styles.chosenFile}>No file chosen</p>
+        ) : (
+          <p className={styles.chosenFileValue}>{addInputProps.value}</p>
+        )}
+      </>
+      )}
+    </>
   </div>
 );
 
@@ -42,6 +54,7 @@ Input.propTypes = {
   onClickForIcon: PropTypes.func,
   addInputProps: PropTypes.object,
   accept: PropTypes.string,
+  file: PropTypes.bool,
 };
 
 export default Input;

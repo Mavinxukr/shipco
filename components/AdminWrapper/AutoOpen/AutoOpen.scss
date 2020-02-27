@@ -69,6 +69,10 @@ input[type="file"] {
     margin: 0 31px 0 0;
   }
 
+  .fileLabel {
+    margin: 0;
+  }
+
   .blackLabel {
     color: $colorContent;
     font-size: 14px;
@@ -194,22 +198,5 @@ input[type="file"] {
 .customInputFile {
   height: 40px;
   padding: 10px 70px;
-}
-
-.customInputFile:before {
-  content: 'Choose Files';
-  width: 185px;
-  font-weight: 500;
-  font-size: 16px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #6d6c6c;
-  top: 1px;
-  background: #e5e5e5;
-  position: absolute;
-  border: 1px solid $colorBorder;
-  left: 0;
-  cursor: pointer;
+  display: none;
 }
