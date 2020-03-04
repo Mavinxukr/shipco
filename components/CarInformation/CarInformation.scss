@@ -1,0 +1,86 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.flexItems {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 30px;
+
+  &:nth-child(odd) {
+    background: $colorInput;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.btnYes,
+.btnNo {
+  width: 48px;
+  height: 24px;
+  opacity: .3;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.btnYes {
+  background: $colorAccepted;
+}
+
+.btnNo {
+  background: $colorBackground;
+}
+
+.image {
+  width: 210px;
+  height: 180px;
+
+  img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+
+  p,
+  a {
+    margin: 0 0 20px;
+  }
+}
+
+.stepperContainer {
+  min-width: 500px;
+}
+
+.colorText {
+  color: $colorBackground;
+}
+
+.paddingBlock {
+  padding: 0;
+  margin: 0 !important;
+}
+
+.paddingBottom {
+  padding-bottom: 5px;
+}
+
+.svg {
+  margin-right: 8px;
+}
+
+.btn {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  color: $colorBackground;
+}

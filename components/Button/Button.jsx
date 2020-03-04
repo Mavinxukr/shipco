@@ -24,15 +24,29 @@ const Button = ({
   const Tag = attrs.href ? 'a' : 'button';
 
   return (
-    <Tag
-      className={cx(styles.btn, customBtn, { active })}
-      type={type}
-      disabled={disabled}
-      onClick={onClickAction}
-      {...attrs}
-    >
-      {children}
-    </Tag>
+    <>
+      {active ? (
+        <Tag
+          className={cx(styles.btn, customBtn, styles.active)}
+          type={type}
+          disabled={disabled}
+          onClick={onClickAction}
+          {...attrs}
+        >
+          {children}
+        </Tag>
+      ) : (
+        <Tag
+          className={cx(styles.btn, customBtn)}
+          type={type}
+          disabled={disabled}
+          onClick={onClickAction}
+          {...attrs}
+        >
+          {children}
+        </Tag>
+      )}
+    </>
   );
 };
 

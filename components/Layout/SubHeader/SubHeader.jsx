@@ -3,6 +3,7 @@ import cs from 'classnames';
 import PropTypes from 'prop-types';
 import { Field, Form } from 'react-final-form';
 import formatStringByPattern from 'format-string-by-pattern';
+import ActiveLink from '../ActiveLink/ActiveLink';
 import Button from '../../Button/Button';
 import IconSettings from '../../../assets/svg/Settings.svg';
 import Search from '../../Search/Search';
@@ -47,34 +48,53 @@ const SubHeader = ({ hidden }) => {
         <nav>
           <ul className={styles.menuItems}>
             <li>
-              <a className={cs(styles.menuLink, styles.active)} href="/">
-                Auto
-                <span className={styles.dotActive} />
-              </a>
+              <ActiveLink activeClassName={styles.active} href="/client">
+                <a className={styles.menuLink}>
+                  Auto
+                  <span className={styles.dotActive} />
+                </a>
+              </ActiveLink>
             </li>
             <li>
-              <a className={styles.menuLink} href="/">
-                Auto for dismanting
-                <span className={styles.dotActive} />
-              </a>
+              <ActiveLink
+                activeClassName={styles.active}
+                href="/admin-dismanting"
+              >
+                <a className={styles.menuLink}>
+                  Auto for dismanting
+                  <span className={styles.dotActive} />
+                </a>
+              </ActiveLink>
             </li>
             <li>
-              <a className={styles.menuLink} href="/">
-                Invoice
-                <span className={styles.dotActive} />
-              </a>
+              <ActiveLink
+                activeClassName={styles.active}
+                href="/admin-invoices"
+              >
+                <a className={styles.menuLink} href="/">
+                  Invoice
+                  <span className={styles.dotActive} />
+                </a>
+              </ActiveLink>
             </li>
             <li>
-              <a className={styles.menuLink} href="/admin-parts">
-                Parts
-                <span className={styles.dotActive} />
-              </a>
+              <ActiveLink activeClassName={styles.active} href="/admin-parts">
+                <a className={styles.menuLink}>
+                  Parts
+                  <span className={styles.dotActive} />
+                </a>
+              </ActiveLink>
             </li>
             <li>
-              <a className={styles.menuLink} href="/">
-                Shipping
-                <span className={styles.dotActive} />
-              </a>
+              <ActiveLink
+                activeClassName={styles.active}
+                href="/admin-shipping"
+              >
+                <a className={styles.menuLink}>
+                  Shipping
+                  <span className={styles.dotActive} />
+                </a>
+              </ActiveLink>
             </li>
           </ul>
         </nav>

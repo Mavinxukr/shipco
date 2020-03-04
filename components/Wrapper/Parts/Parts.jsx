@@ -10,9 +10,9 @@ import IconP from '../../../assets/svg/p.svg';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-import IconAc from '../../../assets/svg/Ac.svg';
+// import IconAc from '../../../assets/svg/Ac.svg';
 import IconSearch from '../../../assets/svg/Search_icon.svg';
-import IconDec from '../../../assets/svg/Dec.svg';
+// import IconDec from '../../../assets/svg/Dec.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
 import {
@@ -118,7 +118,7 @@ const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
           >
             Previous
           </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
+          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
           <Button customBtn={styles.paginationBtn}>2</Button>
           <Button customBtn={styles.paginationBtn}>3</Button>
           <Button customBtn={styles.paginationBtn}>4</Button>
@@ -179,14 +179,14 @@ const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
                         >
                           <IconTrash />
                         </Button>
-                        <div className={styles.rightIcon}>
-                          <Button type="button" customBtn={styles.background}>
-                            <IconDec />
-                          </Button>
-                          <Button type="button" customBtn={styles.background}>
-                            <IconAc />
-                          </Button>
-                        </div>
+                        {/* <div className={styles.rightIcon}> */}
+                        {/*  <Button type="button" customBtn={styles.background}> */}
+                        {/*    <IconDec /> */}
+                        {/*  </Button> */}
+                        {/*  <Button type="button" customBtn={styles.background}> */}
+                        {/*    <IconAc /> */}
+                        {/*  </Button> */}
+                        {/* </div> */}
                         {/* <span className={styles.colorAc}>Accepted</span><span className={styles.colorDec}>Declined</span> */}
                       </div>
                     ) : (
@@ -245,7 +245,7 @@ const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
           >
             Previous
           </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
+          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
           <Button customBtn={styles.paginationBtn}>2</Button>
           <Button customBtn={styles.paginationBtn}>3</Button>
           <Button customBtn={styles.paginationBtn}>4</Button>

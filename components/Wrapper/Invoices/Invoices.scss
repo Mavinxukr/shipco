@@ -1,0 +1,87 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  color: $colorBackground;
+  margin-top: 60px;
+}
+
+.filterText {
+  color: $colorBackground;
+  background: $white;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-right: 61px;
+}
+
+.rightBlock {
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.filterIcon {
+  margin-right: 17px;
+}
+
+.sort {
+  margin-right: 10px;
+}
+
+.view .sort {
+  display: none;
+}
+
+.star {
+  margin-right: 5px;
+}
+
+.viewBtn {
+  background: transparent;
+  color: #d73e3e;
+  border: 1px solid #d73e3e;
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  max-width: 113px;
+}
+
+td.id,
+td.paiment,
+td.auto {
+  color: $colorBackground;
+}
+
+.paiment,
+.total,
+.paid,
+.outstanding,
+.status {
+  position: relative;
+  p + p {
+    margin-top: 26px;
+  }
+}
+
+.total p:before,
+.paid p:before,
+.outstanding p:before {
+  content: '$';
+}
+
+.view div + div {
+  margin-top: 20px;
+}

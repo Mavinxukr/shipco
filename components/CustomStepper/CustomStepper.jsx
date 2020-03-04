@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import cx from 'classnames';
@@ -6,6 +7,9 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import IconCar from '../../assets/svg/iconcar.svg';
+import HoverPopup from '../HoverPopup/HoverPopup';
+import IconUpdate from '../../assets/svg/updateStatus.svg';
+import Button from '../Button/Button';
 import styles from './CustomStepper.scss';
 
 const ColorlibConnector = withStyles({
@@ -69,7 +73,7 @@ function ColorlibStepIcon({ active, completed }) {
 
 const getSteps = () => ['', '', '', ''];
 
-const CustomStepper = ({ item }) => {
+const CustomStepper = ({ item, customBlock, paddingBottom, status }) => {
   const steps = getSteps();
 
   return (
@@ -78,12 +82,12 @@ const CustomStepper = ({ item }) => {
         <span>{item.firstDate}</span>
         <span>{item.secondDate}</span>
       </div>
-      <div className={styles.flex}>
+      <div className={cx(styles.flex, paddingBottom)}>
         <b>{item.from}</b>
         <b>{item.to}</b>
       </div>
       <div className={styles.root}>
-        <Stepper activeStep={item.id} connector={<ColorlibConnector />}>
+        <Stepper activeStep={item.step} connector={<ColorlibConnector />}>
           {steps.map(label => (
             <Step key={label}>
               <StepLabel StepIconComponent={ColorlibStepIcon}>
@@ -93,9 +97,33 @@ const CustomStepper = ({ item }) => {
           ))}
         </Stepper>
       </div>
-      <p className={styles.center}>{item.car}</p>
+      {status ? (
+        <div className={styles.status}>
+          <Button customBtn={styles.update}><IconUpdate className={styles.icon} /> Update status</Button>
+          <p className={cx(styles.center, customBlock)}>{item.car}</p>
+          <HoverPopup customClass={styles.statusPopup}>
+            <div>12312</div>
+          </HoverPopup>
+        </div>
+      ) : (
+        <p className={cx(styles.center, customBlock)}>{item.car}</p>
+      )}
     </>
   );
+};
+
+CustomStepper.propTypes = {
+  status: PropTypes.bool,
+  paddingBottom: PropTypes.string,
+  customBlock: PropTypes.string,
+  item: PropTypes.shape({
+    firstDate: PropTypes.string,
+    secondDate: PropTypes.string,
+    from: PropTypes.string,
+    to: PropTypes.string,
+    step: PropTypes.number,
+    car: PropTypes.string,
+  }),
 };
 
 export default CustomStepper;

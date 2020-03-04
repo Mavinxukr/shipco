@@ -1,5 +1,9 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
 .root > div {
-  padding: 20px 0 38px 9px !important
+  padding: 20px 0 38px 9px !important;
+  background: transparent;
 }
 
 .flex {
@@ -12,4 +16,43 @@
 .center {
   text-align: center;
   padding-bottom: 19px;
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px 0 17px;
+  position: relative;
+
+  &:hover .statusPopup {
+    display: block;
+  }
+}
+
+.statusPopup{
+  left: 0;
+  max-width: 500px;
+  top: 25px;
+  padding: 25px;
+
+  &:before{
+    right: 95%;
+  }
+
+  &:after {
+    right: 94.8%;
+  }
+}
+
+.update {
+  background: transparent;
+  color: $colorBackground;
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 8px;
 }

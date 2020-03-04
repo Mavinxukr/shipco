@@ -66,6 +66,11 @@
   padding: 8px 10px;
 }
 
+.active {
+  background: $colorBackground;
+  color: $white;
+}
+
 .paginationSelect {
   padding: 8px 11px;
   border: 1px solid $colorBorder;

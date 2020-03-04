@@ -112,6 +112,15 @@
   right: 6px;
 }
 
+.active:after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $white;
+  margin-left: 10px;
+}
+
 @media screen and (max-width: 1750px) {
   .menuLink {
     margin: 0 50px;

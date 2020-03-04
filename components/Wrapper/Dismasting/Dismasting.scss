@@ -1,0 +1,38 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.container {
+  @include container();
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.widthSelect {
+  max-width: 240px;
+
+  label {
+    display: none;
+  }
+}
+
+.filterText {
+  color: $colorBackground;
+  background: $white;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-right: 61px;
+}
+
+.rightBlock {
+  display: flex;
+  align-items: center;
+}
+
+.filterIcon {
+  margin-right: 17px;
+}
