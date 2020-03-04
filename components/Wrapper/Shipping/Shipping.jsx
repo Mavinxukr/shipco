@@ -1,6 +1,5 @@
 import React from 'react';
 import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 import CustomTable from '../../CustomTable/CustomTable';
 import Button from '../../Button/Button';
@@ -13,8 +12,8 @@ import styles from './Shipping.scss';
 
 const Shipping = () => (
   <MainLayout>
-    <SubHeader />
     <div className={styles.container}>
+      <h3 className={styles.title}>Shipping</h3>
       <div className={styles.flex}>
         <SelectCustom classNameWrapper={styles.widthSelect} placeholder="All Status" options={stateStatus} />
         <div className={styles.rightBlock}>
