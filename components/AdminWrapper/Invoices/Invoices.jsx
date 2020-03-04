@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSortBy, useTable } from 'react-table';
 import MainLayout from '../../Layout/Global/Global';
+import SubHeader from '../../Layout/SubHeader/SubHeader';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconFilter from '../../../assets/svg/Group (5).svg';
@@ -93,17 +94,8 @@ const Table = ({ columns, data }) => {
 
 const Invoices = () => (
   <MainLayout>
+    <SubHeader />
     <div className={styles.container}>
-      <div className={styles.flex}>
-        <h3 className={styles.title}>Invoices</h3>
-        <div className={styles.rightBlock}>
-          <Button customBtn={styles.filterText}>
-            <IconFilter className={styles.filterIcon} />
-            Filter
-          </Button>
-          <Search />
-        </div>
-      </div>
       <CustomTable>
         <Pagination />
         <Table columns={columns} data={dataTable} />

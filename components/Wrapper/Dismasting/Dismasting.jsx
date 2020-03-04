@@ -1,6 +1,5 @@
 import React from 'react';
 import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 import CustomTable from '../../CustomTable/CustomTable';
 import Button from '../../Button/Button';
@@ -13,8 +12,8 @@ import styles from './Dismasting.scss';
 
 const Dismasting = () => (
   <MainLayout>
-    <SubHeader />
     <div className={styles.container}>
+      <h3 className={styles.title}>Auto for dismanting</h3>
       <div className={styles.flex}>
         <SelectCustom
           classNameWrapper={styles.widthSelect}

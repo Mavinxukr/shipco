@@ -5,6 +5,11 @@
   @include container();
 }
 
+.title {
+  color: $colorBackground;
+  margin: 60px 0 30px;
+}
+
 .flex {
   display: flex;
   align-items: center;
