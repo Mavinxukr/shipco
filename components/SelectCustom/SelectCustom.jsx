@@ -63,7 +63,9 @@ const SelectCustom = ({
 }) => (
   <div className={cx(styles.select, classNameWrapper)}>
     <div className={cx(styles.select, classNameWrapper)}>
-      <label className={cx(styles.label, classNameLabel)}>{label}</label>
+      {label && (
+        <label className={cx(styles.label, classNameLabel)}>{label}</label>
+      )}
       <Select
         value={value}
         onChange={onChange}

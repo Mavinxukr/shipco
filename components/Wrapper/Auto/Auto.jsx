@@ -218,7 +218,7 @@ const Table = ({ columns, data }) => {
           >
             Previous
           </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
+          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
           <Button customBtn={styles.paginationBtn}>2</Button>
           <Button customBtn={styles.paginationBtn}>3</Button>
           <Button customBtn={styles.paginationBtn}>4</Button>
@@ -264,11 +264,20 @@ const Table = ({ columns, data }) => {
                   >
                     {cell.column.id === 'src' ? (
                       <>
-                        <img className={styles.imageTable} src={cell.value} alt="" />
+                        <img
+                          className={styles.imageTable}
+                          src={cell.value}
+                          alt=""
+                        />
                       </>
                     ) : (
                       <>{cell.render('Cell')}</>
                     )}
+                    <>
+                      {cell.column.id === 'id' && (
+                        <span className={styles.index}>{cell.row.index + 1}.</span>
+                      )}
+                    </>
                   </td>
                 ))}
               </tr>
@@ -310,7 +319,7 @@ const Table = ({ columns, data }) => {
           >
             Previous
           </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
+          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
           <Button customBtn={styles.paginationBtn}>2</Button>
           <Button customBtn={styles.paginationBtn}>3</Button>
           <Button customBtn={styles.paginationBtn}>4</Button>

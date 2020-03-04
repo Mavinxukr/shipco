@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import ActiveLink from '../ActiveLink/ActiveLink';
 import IconAuto from '../../../assets/svg/Vector (2).svg';
 import IconRepair from '../../../assets/svg/Group (1).svg';
 import IconSetting from '../../../assets/svg/Group (2).svg';
@@ -33,34 +34,44 @@ const Header = () => (
       <nav className={styles.menu}>
         <ul className={styles.menuItems}>
           <li className={styles.menuItem}>
-            <a className={styles.menuLink} href="/">
-              <IconAuto className={styles.menuIcon} />
-              Auto
-            </a>
+            <ActiveLink activeClassName={styles.active} href="/auto">
+              <a className={styles.menuLink}>
+                <IconAuto className={styles.menuIcon} />
+                Auto
+              </a>
+            </ActiveLink>
           </li>
           <li className={styles.menuItem}>
-            <a className={styles.menuLink} href="/">
-              <IconRepair className={styles.menuIcon} />
-              Auto for dismanting
-            </a>
+            <ActiveLink activeClassName={styles.active} href="/dismanting">
+              <a className={styles.menuLink}>
+                <IconRepair className={styles.menuIcon} />
+                Auto for dismanting
+              </a>
+            </ActiveLink>
           </li>
           <li className={styles.menuItem}>
-            <a className={styles.menuLink} href="/">
-              <IconSetting className={styles.menuIcon} />
-              parts
-            </a>
+            <ActiveLink activeClassName={styles.active} href="/parts">
+              <a className={styles.menuLink}>
+                <IconSetting className={styles.menuIcon} />
+                parts
+              </a>
+            </ActiveLink>
           </li>
           <li className={styles.menuItem}>
-            <a className={styles.menuLink} href="/">
-              <IconShipping className={styles.menuIcon} />
-              Shipping
-            </a>
+            <ActiveLink activeClassName={styles.active} href="/shipping">
+              <a className={styles.menuLink}>
+                <IconShipping className={styles.menuIcon} />
+                Shipping
+              </a>
+            </ActiveLink>
           </li>
           <li className={styles.menuItem}>
-            <a className={styles.menuLink} href="/">
-              <IconInvoices className={styles.menuIcon} />
-              Invoices
-            </a>
+            <ActiveLink activeClassName={styles.active} href="/invoices">
+              <a className={styles.menuLink} href="/invoices">
+                <IconInvoices className={styles.menuIcon} />
+                Invoices
+              </a>
+            </ActiveLink>
           </li>
         </ul>
       </nav>

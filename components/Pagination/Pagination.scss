@@ -1,0 +1,31 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.pagination {
+  padding: 18px 15px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $colorTable;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.paginationFlex {
+  display: flex;
+  align-items: center;
+}
+
+.paginationBtn {
+  color: $colorBackground;
+  background: $white;
+  border: 1px solid $colorBorder;
+  padding: 8px 10px;
+}
+
+.widthSelect .widthSelect {
+  max-width: 100px;
+  margin: 0 5px;
+  padding: 0 10px;
+  font-size: 16px;
+}

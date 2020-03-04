@@ -34,7 +34,7 @@ const AsNavForSlider = ({ sliderImages }) => {
   const [index, setIndex] = useState(0);
 
   const settings = {
-    dots: true,
+    // dots: true,
     beforeChange: (param, param2) => setIndex(param2),
     nextArrow: <SampleNextArrow sliderImages={sliderImages.length} index={index} className={styles.ArrowR} />,
     prevArrow: <SamplePrevArrow index={index} className={styles.ArrowL} />,

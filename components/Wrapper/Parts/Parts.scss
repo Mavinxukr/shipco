@@ -16,6 +16,11 @@
   justify-content: space-between;
 }
 
+th:first-child {
+  width: 45px;
+  text-align: center;
+}
+
 .filterText {
   color: $colorBackground;
   background: $white;
@@ -69,6 +74,11 @@
   background: $white;
   border: 1px solid $colorBorder;
   padding: 8px 10px;
+}
+
+.active {
+  background: $colorBackground;
+  color: $white;
 }
 
 .paginationSelect {

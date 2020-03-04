@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
 import { Field, Form } from 'react-final-form';
+import cx from 'classnames';
 import MainLayout from '../../Layout/Global/Global';
 import Popup from '../../Popup/Popup';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
@@ -115,7 +116,7 @@ const Table = ({ columns, data }) => {
           >
             Previous
           </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
+          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
           <Button customBtn={styles.paginationBtn}>2</Button>
           <Button customBtn={styles.paginationBtn}>3</Button>
           <Button customBtn={styles.paginationBtn}>4</Button>
@@ -221,7 +222,7 @@ const Table = ({ columns, data }) => {
           >
             Previous
           </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
+          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
           <Button customBtn={styles.paginationBtn}>2</Button>
           <Button customBtn={styles.paginationBtn}>3</Button>
           <Button customBtn={styles.paginationBtn}>4</Button>

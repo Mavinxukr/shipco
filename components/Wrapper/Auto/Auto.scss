@@ -140,6 +140,11 @@
   padding: 8px 10px;
 }
 
+.active {
+  background: $colorBackground;
+  color: $white;
+}
+
 .paginationSelect {
   padding: 8px 11px;
   border: 1px solid $colorBorder;
@@ -153,6 +158,7 @@
 .id,
 .model,
 .lot {
+  position: relative;
   color: $colorBackground;
 }
 
@@ -160,4 +166,11 @@
   width: 104px;
   height: 68px;
   object-fit: cover;
+}
+
+.index {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: $colorContent;
 }
