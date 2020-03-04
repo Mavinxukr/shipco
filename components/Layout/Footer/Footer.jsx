@@ -18,24 +18,10 @@ const Footer = () => (
           <a className={styles.menuLink} href="/">Our location</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">europe</a>
+          <a className={styles.menuLink} href="/">Europe</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">america</a>
-        </li>
-        <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">Middle East</a>
-        </li>
-      </ul>
-      <ul className={styles.menuList}>
-        <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">Our location</a>
-        </li>
-        <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">europe</a>
-        </li>
-        <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">america</a>
+          <a className={styles.menuLink} href="/">America</a>
         </li>
         <li className={styles.menuItem}>
           <a className={styles.menuLink} href="/">Middle East</a>
@@ -43,30 +29,44 @@ const Footer = () => (
       </ul>
       <ul className={styles.menuList}>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">Our location</a>
+          <a className={styles.menuLink} href="/">Services</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">europe</a>
+          <a className={styles.menuLink} href="/">Auto</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">america</a>
+          <a className={styles.menuLink} href="/">Auto For Dismanting</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">Middle East</a>
+          <a className={styles.menuLink} href="/">Perts</a>
         </li>
       </ul>
       <ul className={styles.menuList}>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">Our location</a>
+          <a className={styles.menuLink} href="/">Get to Know Us</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">europe</a>
+          <a className={styles.menuLink} href="/">About </a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">america</a>
+          <a className={styles.menuLink} href="/">General Info</a>
         </li>
         <li className={styles.menuItem}>
-          <a className={styles.menuLink} href="/">Middle East</a>
+          <a className={styles.menuLink} href="/">Contact</a>
+        </li>
+      </ul>
+      <ul className={styles.menuList}>
+        <li className={styles.menuItem}>
+          <a className={styles.menuLink} href="/">Connect  with us</a>
+        </li>
+        <li className={styles.menuItem}>
+          <a className={styles.menuLink} href="/">Facebook</a>
+        </li>
+        <li className={styles.menuItem}>
+          <a className={styles.menuLink} href="/">Instagram</a>
+        </li>
+        <li className={styles.menuItem}>
+          <a className={styles.menuLink} href="/">Youtube</a>
         </li>
       </ul>
     </div>
