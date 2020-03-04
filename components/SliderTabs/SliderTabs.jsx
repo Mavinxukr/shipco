@@ -58,9 +58,7 @@ const useStyles = makeStyles(theme => ({
 
 const AntTabs = withStyles({
   indicator: {
-    backgroundColor: '#d73e3e',
-    color: '#fff',
-    width: '100%',
+    display: 'none',
   },
 })(Tabs);
 
@@ -69,7 +67,11 @@ const AntTab = withStyles(theme => ({
     fontWeight: 'bold',
     maxWidth: '33,4%',
     opacity: 1,
+    borderLeft: '1px solid #fff',
     textTransform: 'uppercase',
+    '&:first-child': {
+      borderLeft: 0,
+    },
     '&:hover': {
       color: '#fff',
       opacity: 1,
