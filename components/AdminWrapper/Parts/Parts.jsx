@@ -262,7 +262,7 @@ const Parts = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout admin>
       <SubHeader />
       <div className={styles.container}>
         <div className={styles.flex}>

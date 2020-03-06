@@ -54,24 +54,7 @@ const Table = ({ columns, data }) => {
                     className={`Invoices-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.column.id === 'view' ? (
-                      <>
-                        <div>
-                          <Button type="button" customBtn={styles.viewBtn}>
-                            <IconStar className={styles.star} />
-                            View Invoice
-                          </Button>
-                        </div>
-                        <div>
-                          <Button type="button" customBtn={styles.viewBtn}>
-                            <IconStar className={styles.star} />
-                            View Invoice
-                          </Button>
-                        </div>
-                      </>
-                    ) : (
-                      <>{cell.render('Cell')}</>
-                    )}
+                    {cell.render('Cell')}
                   </td>
                 ))}
               </tr>

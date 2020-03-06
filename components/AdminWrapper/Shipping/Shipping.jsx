@@ -12,7 +12,7 @@ import { stateStatus, carInfo } from './data';
 import styles from './Shipping.scss';
 
 const Shipping = () => (
-  <MainLayout>
+  <MainLayout newLink admin>
     <SubHeader />
     <div className={styles.container}>
       <div className={styles.flex}>

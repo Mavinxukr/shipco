@@ -29,7 +29,7 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Client = () => (
-  <MainLayout>
+  <MainLayout admin>
     <SubHeader hidden />
     <div className={styles.container}>
       <div className={styles.flex}>

@@ -1,3 +1,7 @@
+import IconStar from '../../../assets/svg/viewStar.svg';
+import IconStarDisabled from '../../../assets/svg/viewStarDisabled.svg';
+import Button from '../../Button/Button';
+
 export const dataTable = [
   {
     id: 22779018,
@@ -76,18 +80,6 @@ export const columns = [
       {
         Header: 'Paiment for',
         accessor: 'paiment',
-        Cell: ({ cell: { value } }) => (
-          <>
-            <p>{value[0]}</p>
-            {value[1] === '' ? (
-              <button className="Invoices-paimentBtn" type="button">
-                Shipping charge invoice
-              </button>
-            ) : (
-              <p>{value[1]}</p>
-            )}
-          </>
-        ),
       },
       {
         Header: 'Total',
@@ -95,13 +87,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            {!value[1] ? (
-              <span>
-                -
-              </span>
-            ) : (
-              <p>{value[1]}</p>
-            )}
+            {!value[1] ? <span>-</span> : <p>{value[1]}</p>}
           </>
         ),
       },
@@ -111,13 +97,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            {value[1] === undefined ? (
-              <span>
-                -
-              </span>
-            ) : (
-              <p>{value[1]}</p>
-            )}
+            {value[1] === undefined ? <span>-</span> : <p>{value[1]}</p>}
           </>
         ),
       },
@@ -127,13 +107,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            {value[1] === '' ? (
-              <span>
-                -
-              </span>
-            ) : (
-              <p>{value[1]}</p>
-            )}
+            {value[1] === '' ? <span>-</span> : <p>{value[1]}</p>}
           </>
         ),
       },
@@ -150,6 +124,25 @@ export const columns = [
       {
         Header: '',
         accessor: 'view',
+        Cell: ({ cell: { value } }) => (
+          <>
+            <Button target="_blank" href={value[0]} customBtn="Invoices-viewBtn">
+              <IconStar className="Invoices-star" />
+              View Invoice
+            </Button>
+            {value[1] === '' ? (
+              <Button disabled target="_blank" href={value[1]} customBtn="Invoices-viewBtn">
+                <IconStarDisabled className="Invoices-star" />
+                View Invoice
+              </Button>
+            ) : (
+              <Button target="_blank" href={value[1]} customBtn="Invoices-viewBtn">
+                <IconStar className="Invoices-star" />
+                View Invoice
+              </Button>
+            )}
+          </>
+        ),
       },
     ],
   },

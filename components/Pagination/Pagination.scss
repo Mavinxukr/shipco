@@ -23,9 +23,22 @@
   padding: 8px 10px;
 }
 
+.active {
+  background: $colorBackground;
+  color: $white;
+}
+
 .widthSelect .widthSelect {
   max-width: 100px;
   margin: 0 5px;
   padding: 0 10px;
   font-size: 16px;
+
+  div div{
+    padding: .5px 2px!important;
+
+    svg {
+      margin-top: 10px !important;
+    }
+  }
 }

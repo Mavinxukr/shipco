@@ -12,7 +12,7 @@ import { stateStatus, carInfo } from './data';
 import styles from './Dismasting.scss';
 
 const Dismasting = () => (
-  <MainLayout>
+  <MainLayout newLink admin>
     <SubHeader />
     <div className={styles.container}>
       <div className={styles.flex}>

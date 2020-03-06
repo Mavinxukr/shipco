@@ -35,9 +35,17 @@
 }
 
 .menuLink {
-  margin: 0 43px;
+  margin: 0 23px 0 43px;
   display: flex;
   align-items: center;
+
+  &:hover {
+    color: $colorBackground;
+
+    .dotActive {
+      opacity: 1;
+    }
+  }
 
   @media screen and (max-width: 1544px){
     margin: 0 23px;
@@ -52,14 +60,15 @@
   background: $colorBackground;
   border-radius: 50%;
   overflow: hidden;
-  display: none;
+  display: block;
+  opacity: 0;
 }
 
 .active {
   color: $colorBackground;
 
   .dotActive {
-    display: block;
+    opacity: 1;
   }
 }
 

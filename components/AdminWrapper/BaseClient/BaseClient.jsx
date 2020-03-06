@@ -53,7 +53,7 @@ const BaseClient = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
-    <MainLayout>
+    <MainLayout admin>
       <div className={styles.container}>
         <div className={styles.flex}>
           <h4 className={styles.title}>Base client</h4>
