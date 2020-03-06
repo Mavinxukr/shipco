@@ -24,17 +24,19 @@
   align-items: center;
   padding: 0 12px 0 17px;
   position: relative;
+}
 
-  &:hover .statusPopup {
-    display: block;
-  }
+.active .statusPopup {
+  display: flex;
+  flex-direction: column;
 }
 
 .statusPopup{
-  left: 0;
-  max-width: 500px;
+  left: 20px;
+  max-width: 446px;
   top: 25px;
-  padding: 25px;
+  font-weight: 500;
+  font-size: 16px;
 
   &:before{
     right: 95%;
@@ -55,4 +57,47 @@
 
 .icon {
   margin-right: 8px;
+}
+
+.position {
+  position: relative;
+
+  &:hover div {
+    display: flex;
+  }
+}
+
+.btn {
+  background: $colorInput;
+  color: $colorContent;
+  border-top: 1px solid #e9e9e9;
+  padding: 18px 30px;
+  font-size: 14px;
+  text-align: left;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+
+  &:first-child{
+    border-top: none;
+  }
+}
+
+.activeStatus {
+  color: $colorBackground;
+  background: $white;
+
+  .circle {
+    opacity: 1;
+  }
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  margin-left: 14px;
+  border-radius: 50%;
+  background: $colorBackground;
+  overflow: hidden;
+  opacity: 0;
 }

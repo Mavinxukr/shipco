@@ -85,3 +85,9 @@ td.auto {
 .view div + div {
   margin-top: 20px;
 }
+
+td.id,
+td.date,
+td.auto {
+  padding-bottom: 65px;
+}

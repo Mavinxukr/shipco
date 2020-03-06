@@ -142,20 +142,26 @@
   position: relative;
 }
 
-.accordionContentTextAfter::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  display: inline-block;
-  position: absolute;
-  background: $colorBackground;
-  border-radius: 50%;
-  top: 7px;
-  right: -17px;
+.accordionContentTextAfter{
+  margin-right: 100px;
+
+  &::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    position: absolute;
+    background: $colorBackground;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -17px;
+  }
 }
 
 .accordionContentTime {
   @include styleForText(14px);
+  white-space: nowrap;
 }
 
 .arrowIcon {

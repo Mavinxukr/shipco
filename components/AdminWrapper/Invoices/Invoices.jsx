@@ -1,16 +1,14 @@
 import React from 'react';
 import { useSortBy, useTable } from 'react-table';
+import { Field, Form } from 'react-final-form';
 import MainLayout from '../../Layout/Global/Global';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
-import IconFilter from '../../../assets/svg/Group (5).svg';
-import Search from '../../Search/Search';
-import Button from '../../Button/Button';
 import { columns, dataTable } from './data';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
-import IconStar from '../../../assets/svg/viewStar.svg';
-import IconStarDisabled from '../../../assets/svg/viewStarDisabled.svg';
+import { renderInputFile } from '../../../utils/renderInputs';
+import IconPlus from '../../../assets/svg/Plus.svg';
 import styles from './Invoices.scss';
 
 const Table = ({ columns, data }) => {
@@ -27,6 +25,13 @@ const Table = ({ columns, data }) => {
     },
     useSortBy,
   );
+
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  const onSubmit = async (values) => {
+    await sleep(300);
+    window.alert(JSON.stringify(values, 0, 2));
+  };
 
   return (
     <>
@@ -56,27 +61,38 @@ const Table = ({ columns, data }) => {
                     className={`Invoices-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.column.id === 'view' ? (
+                    {cell.column.id === 'paiment' ? (
                       <>
-                        <div>
-                          <Button target="_blank" href={cell.row.original.view[0]} customBtn={styles.viewBtn}>
-                            <IconStar className={styles.star} />
-                            View Invoice
-                          </Button>
-                        </div>
-                        <div>
-                          {cell.row.original.view[1] === '' ? (
-                            <Button disabled target="_blank" href={cell.row.original.view[1]} customBtn={styles.viewBtn}>
-                              <IconStarDisabled className={styles.star} />
-                              View Invoice
-                            </Button>
-                          ) : (
-                            <Button target="_blank" href={cell.row.original.view[1]} customBtn={styles.viewBtn}>
-                              <IconStar className={styles.star} />
-                              View Invoice
-                            </Button>
-                          )}
-                        </div>
+                        {cell.row.original.paiment[1] === '' ? (
+                          <>
+                            <p>{cell.row.original.paiment[0]}</p>
+                            <Form
+                              onSubmit={onSubmit}
+                              render={({ handleSubmit }) => (
+                                <form onSubmit={handleSubmit}>
+                                  <Field type="file" name="invoice">
+                                    {renderInputFile({
+                                      classNameWrapper: styles.fieldRow,
+                                      customInput: styles.customInputFile,
+                                      customLabel: styles.customLabel,
+                                      classNameWrapperForIcon: styles.iconPlus,
+                                      widthInputBlock: styles.widthInputBlock,
+                                      file: true,
+                                      accept:
+                                        '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                                      icon: <IconPlus />,
+                                    })}
+                                  </Field>
+                                </form>
+                              )}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <p>{cell.row.original.paiment[0]}</p>
+                            <p>{cell.row.original.paiment[1]}</p>
+                          </>
+                        )}
                       </>
                     ) : (
                       <>{cell.render('Cell')}</>
@@ -93,7 +109,7 @@ const Table = ({ columns, data }) => {
 };
 
 const Invoices = () => (
-  <MainLayout>
+  <MainLayout admin>
     <SubHeader />
     <div className={styles.container}>
       <CustomTable>

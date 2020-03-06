@@ -20,10 +20,10 @@ const InputFormWrapper = ({
   accept,
   customInput,
 }) => (
-  <div
-    className={cx(styles.wrapper, classNameWrapper)}
-  >
-    <label className={cx(styles.label, classNameWrapperLabel)}>{label}</label>
+  <div className={cx(styles.wrapper, classNameWrapper)}>
+    {label === '' ? null : (
+      <label className={cx(styles.label, classNameWrapperLabel)}>{label}</label>
+    )}
     <Input
       placeholder={placeholder}
       addInputProps={inputProps}
@@ -35,7 +35,13 @@ const InputFormWrapper = ({
       classNameWrapperForIcon={classNameWrapperForIcon}
       onClickForIcon={onClickForIcon}
     />
-    {notForm ? null : <>{meta.touched && meta.error && <p className={styles.error}>{meta.error}</p>}</>}
+    {notForm ? null : (
+      <>
+        {meta.touched && meta.error && (
+          <p className={styles.error}>{meta.error}</p>
+        )}
+      </>
+    )}
   </div>
 );
 

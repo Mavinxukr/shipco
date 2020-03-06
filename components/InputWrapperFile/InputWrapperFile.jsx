@@ -17,15 +17,18 @@ const InputWrapperFile = ({
   notForm,
   accept,
   customInput,
+  widthInputBlock,
+  customLabel,
 }) => (
   <div className={cx(styles.wrapper, classNameWrapper)}>
     <>
       <span className={cx(styles.labelFile, classNameWrapperLabel)}>
         {label}
       </span>
-      <label className={styles.fileLabel}>
+      <label className={cx(styles.fileLabel, customLabel)}>
         <Input
           addInputProps={inputProps}
+          widthInputBlock={widthInputBlock}
           file
           classNameWrapper={classNameWrapperForInput}
           icon={icon}
@@ -58,9 +61,11 @@ InputWrapperFile.propTypes = {
   notForm: PropTypes.bool,
   customInput: PropTypes.string,
   icon: PropTypes.node,
+  widthInputBlock: PropTypes.string,
   classNameWrapperForInput: PropTypes.string,
   classNameWrapper: PropTypes.string,
   accept: PropTypes.string,
+  customLabel: PropTypes.string,
 };
 
 export default InputWrapperFile;

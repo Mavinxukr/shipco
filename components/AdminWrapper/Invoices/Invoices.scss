@@ -90,6 +90,69 @@ td.auto {
   content: '$';
 }
 
-.view div + div {
+.viewBtn + .viewBtn {
   margin-top: 20px;
+}
+
+.paimentBtn {
+  display: flex;
+  align-items: center;
+  color: $colorBorder;
+  margin-top: 26px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+  }
+}
+
+.fieldRow {
+  display: block;
+  width: auto;
+
+  p {
+    display: none;
+  }
+}
+.customInputFile {
+  border: none;
+  display: none;
+}
+
+.iconPlus {
+  padding-left: 160px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.widthInputBlock {
+  height: auto !important;
+}
+
+.customLabel{
+  z-index: 1;
+
+  &:before {
+    background: transparent;
+    border: none;
+    content: 'Shipping charge invoice';
+    font-weight: 500;
+    font-size: 14px;
+    width: 180px;
+    left: -14px;
+    height: auto;
+    top: -1px;
+    cursor: pointer;
+    z-index: -2;
+  }
+}
+
+td.id,
+td.date,
+td.auto {
+  padding-bottom: 65px;
 }

@@ -14,7 +14,6 @@ import {
   composeValidators,
   passwordValidation,
 } from '../../../utils/validation';
-import Popup from '../../Popup/Popup';
 import IconEye from '../../../assets/svg/eye.svg';
 import { stateOptions } from './data';
 
@@ -27,7 +26,6 @@ const onSubmit = async (values) => {
 
 const ProfileSettings = () => {
   const [isChangeType, setIsChangeType] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
     <MainLayout>
@@ -35,10 +33,19 @@ const ProfileSettings = () => {
         <h4 className={styles.title}>Profile settings</h4>
         <Form
           onSubmit={onSubmit}
+          validate={(values) => {
+            const errors = {};
+            if (!values.confirm) {
+              errors.confirm = 'Required';
+            } else if (values.confirm !== values.password) {
+              errors.confirm = 'The password was entered incorrectly';
+            }
+            return errors;
+          }}
           render={({
-            handleSubmit, form, submitting, pristine, values,
+            handleSubmit, submitting, invalid,
           }) => (
-            <form className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
               <ImageUpload />
               <div className={styles.flex}>
                 <div>
@@ -59,6 +66,40 @@ const ProfileSettings = () => {
                   >
                     {renderInput({ label: 'E-mail adress' })}
                   </Field>
+                  <div className={styles.password}>
+                    <Field
+                      name="Old password"
+                      validate={composeValidators(required, passwordValidation)}
+                      type={isChangeType ? 'text' : 'password'}
+                    >
+                      {renderInput({
+                        label: 'Old password',
+                        icon: <IconEye />,
+                        classNameWrapperForIcon: styles.showPassword,
+                        onClickForIcon: () => setIsChangeType(!isChangeType),
+                      })}
+                    </Field>
+                    <Field
+                      name="password"
+                      validate={composeValidators(required, passwordValidation)}
+                      type="password"
+                    >
+                      {renderInput({
+                        label: 'New password',
+                      })}
+                    </Field>
+                    <Field
+                      name="confirm"
+                      validate={composeValidators(required, passwordValidation)}
+                      type="password"
+                    >
+                      {renderInput({
+                        label: 'Confirm password',
+                      })}
+                    </Field>
+                  </div>
+                </div>
+                <div>
                   <Field
                     name="phone number"
                     validate={composeValidators(required, mustBeNumber)}
@@ -67,22 +108,6 @@ const ProfileSettings = () => {
                   >
                     {renderInput({ label: 'Phone number' })}
                   </Field>
-                  <div className={styles.password}>
-                    <Field
-                      name="password"
-                      validate={composeValidators(required, passwordValidation)}
-                      type={isChangeType ? 'text' : 'password'}
-                    >
-                      {renderInput({
-                        label: 'Password',
-                        icon: <IconEye />,
-                        classNameWrapperForIcon: styles.showPassword,
-                        onClickForIcon: () => setIsChangeType(!isChangeType),
-                      })}
-                    </Field>
-                  </div>
-                </div>
-                <div>
                   <Field
                     name="country"
                     validate={required}
@@ -124,7 +149,7 @@ const ProfileSettings = () => {
                 </div>
                 <div className={styles.submit}>
                   <Button
-                    onClick={handleSubmit}
+                    disabled={invalid || submitting}
                     customBtn={styles.btnSubmit}
                     type="submit"
                   >
@@ -136,62 +161,6 @@ const ProfileSettings = () => {
           )}
         />
       </div>
-      <Button type="button" onClick={() => setIsPopupOpen(true)}>
-        open
-      </Button>
-      {isPopupOpen && (
-        <Popup
-          title="Change password"
-          setIsPopupOpen={setIsPopupOpen}
-        >
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit }) => (
-              <form>
-                <Field
-                  name="Old password"
-                  validate={composeValidators(required, passwordValidation)}
-                  type="password"
-                >
-                  {renderInput({
-                    label: 'Old password',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                  })}
-                </Field>
-                <Field
-                  name="New password"
-                  validate={composeValidators(required, passwordValidation)}
-                  type="password"
-                >
-                  {renderInput({
-                    label: 'New password',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                  })}
-                </Field>
-                <Field
-                  name="Confirm password"
-                  validate={composeValidators(required, passwordValidation)}
-                  type="password"
-                >
-                  {renderInput({
-                    label: 'Confirm password',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                  })}
-                </Field>
-                <div className={styles.submitPopup}>
-                  <Button
-                    onClick={handleSubmit}
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                  >
-                    Save new password
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

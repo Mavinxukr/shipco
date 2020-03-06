@@ -5,7 +5,7 @@ import './Global.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-const Global = ({ children }) => (
+const Global = ({ children, newLink, admin }) => (
   <>
     <Head>
       <title>Home</title>
@@ -19,7 +19,7 @@ const Global = ({ children }) => (
         />
       )}
     </Head>
-    <Header />
+    <Header newLink={newLink} admin={admin} />
     {children}
     <Footer />
   </>
@@ -27,6 +27,8 @@ const Global = ({ children }) => (
 
 Global.propTypes = {
   children: PropTypes.node,
+  newLink: PropTypes.bool,
+  admin: PropTypes.bool,
 };
 
 export default Global;

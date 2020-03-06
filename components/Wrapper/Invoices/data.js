@@ -1,3 +1,6 @@
+import Button from '../../Button/Button';
+import IconStar from '../../../assets/svg/viewStar.svg';
+
 export const dataTable = [
   {
     id: 22779019,
@@ -8,6 +11,10 @@ export const dataTable = [
     paid: [0.00, 0.00],
     outstanding: ['25,000.00', '10,000.00'],
     status: ['Paid', 'Paid'],
+    view: [
+      'https://mixnews.lv/wp-content/uploads/2019/11/22/1574367889_0042-e1574430618761.jpg',
+      'https://www.prikol.ru/wp-content/uploads/2017/10/kartinki-04102017-001.jpg',
+    ],
   },
   {
     id: 22779018,
@@ -18,6 +25,10 @@ export const dataTable = [
     paid: [0.00, 0.00],
     outstanding: ['25,000.00', '10,000.00'],
     status: ['Paid', 'Paid'],
+    view: [
+      'https://mixnews.lv/wp-content/uploads/2019/11/22/1574367889_0042-e1574430618761.jpg',
+      'https://www.prikol.ru/wp-content/uploads/2017/10/kartinki-04102017-001.jpg',
+    ],
   },
   {
     id: 22779019,
@@ -28,6 +39,10 @@ export const dataTable = [
     paid: [0.00, 0.00],
     outstanding: ['25,000.00', '10,000.00'],
     status: ['Paid', 'Paid'],
+    view: [
+      'https://mixnews.lv/wp-content/uploads/2019/11/22/1574367889_0042-e1574430618761.jpg',
+      'https://www.prikol.ru/wp-content/uploads/2017/10/kartinki-04102017-001.jpg',
+    ],
   },
   {
     id: 22779017,
@@ -38,6 +53,10 @@ export const dataTable = [
     paid: [0.00, 0.00],
     outstanding: ['25,000.00', '10,000.00'],
     status: ['Paid', 'Paid'],
+    view: [
+      'https://mixnews.lv/wp-content/uploads/2019/11/22/1574367889_0042-e1574430618761.jpg',
+      'https://www.prikol.ru/wp-content/uploads/2017/10/kartinki-04102017-001.jpg',
+    ],
   },
 
 ];
@@ -111,6 +130,18 @@ export const columns = [
       {
         Header: '',
         accessor: 'view',
+        Cell: ({ cell: { value } }) => (
+          <>
+            <Button target="_blank" href={value[0]} customBtn="Invoices-viewBtn">
+              <IconStar className="Invoices-star" />
+              View Invoice
+            </Button>
+            <Button target="_blank" href={value[1]} customBtn="Invoices-viewBtn">
+              <IconStar className="Invoices-star" />
+              View Invoice
+            </Button>
+          </>
+        ),
       },
     ],
   },

@@ -85,13 +85,13 @@ const CarInformation = ({
         )}
       </div>
       <div className={styles.column}>
-        <a href={item.car_fax_href} className={styles.colorText}>
+        <a href={item.car_fax_href} download={item.car_fax_href} className={styles.colorText}>
           CarFax report
         </a>
-        <a href={item.invoice_href} className={styles.colorText}>
+        <a href={item.invoice_href} download={item.invoice_href} className={styles.colorText}>
           Invoice
         </a>
-        <a href={item.notes_href} className={styles.colorText}>
+        <a href={item.notes_href} download={item.notes_href} className={styles.colorText}>
           Adding notes
         </a>
       </div>

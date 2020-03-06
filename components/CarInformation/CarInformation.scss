@@ -9,6 +9,10 @@
 
   &:nth-child(odd) {
     background: $colorInput;
+
+    div {
+      z-index: 1!important;
+    }
   }
 }
 
@@ -68,6 +72,7 @@
 .paddingBlock {
   padding: 0;
   margin: 0 !important;
+  z-index: -1;
 }
 
 .paddingBottom {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -10,6 +10,7 @@ import IconCar from '../../assets/svg/iconcar.svg';
 import HoverPopup from '../HoverPopup/HoverPopup';
 import IconUpdate from '../../assets/svg/updateStatus.svg';
 import Button from '../Button/Button';
+import { statusCar } from './data';
 import styles from './CustomStepper.scss';
 
 const ColorlibConnector = withStyles({
@@ -37,7 +38,7 @@ const ColorlibConnector = withStyles({
 const useColorlibStepIconStyles = makeStyles({
   root: {
     backgroundColor: '#f8bebe',
-    zIndex: 1,
+    zIndex: -1,
     color: '#f8bebe',
     width: 15,
     height: 15,
@@ -73,8 +74,15 @@ function ColorlibStepIcon({ active, completed }) {
 
 const getSteps = () => ['', '', '', ''];
 
-const CustomStepper = ({ item, customBlock, paddingBottom, status }) => {
+const CustomStepper = ({
+  item, customBlock, paddingBottom, status,
+}) => {
   const steps = getSteps();
+  const [isOpenStatusPanel, setIsOpenStatusPanel] = useState(false);
+  const [stepIndex, setStepIndex] = useState(item.step);
+  const classNameForOpenStatus = cx(styles.status, {
+    [styles.active]: isOpenStatusPanel,
+  });
 
   return (
     <>
@@ -87,7 +95,7 @@ const CustomStepper = ({ item, customBlock, paddingBottom, status }) => {
         <b>{item.to}</b>
       </div>
       <div className={styles.root}>
-        <Stepper activeStep={item.step} connector={<ColorlibConnector />}>
+        <Stepper activeStep={stepIndex} connector={<ColorlibConnector />}>
           {steps.map(label => (
             <Step key={label}>
               <StepLabel StepIconComponent={ColorlibStepIcon}>
@@ -98,11 +106,34 @@ const CustomStepper = ({ item, customBlock, paddingBottom, status }) => {
         </Stepper>
       </div>
       {status ? (
-        <div className={styles.status}>
-          <Button customBtn={styles.update}><IconUpdate className={styles.icon} /> Update status</Button>
+        <div className={classNameForOpenStatus}>
+          <Button
+            onClick={() => setIsOpenStatusPanel(!isOpenStatusPanel)}
+            customBtn={styles.update}
+          >
+            <IconUpdate className={styles.icon} /> Update status
+          </Button>
           <p className={cx(styles.center, customBlock)}>{item.car}</p>
           <HoverPopup customClass={styles.statusPopup}>
-            <div>12312</div>
+            {statusCar.map((carStatus, index) => {
+              const classNameForButton = cx(styles.btn, {
+                [styles.activeStatus]: stepIndex === index,
+              });
+
+              return (
+                <Button
+                  onClick={() => {
+                    setStepIndex(index);
+                    setIsOpenStatusPanel(false);
+                  }}
+                  customBtn={classNameForButton}
+                  key={`${carStatus.id}${item.id}`}
+                >
+                  {carStatus.text}
+                  <span className={styles.circle} />
+                </Button>
+              );
+            })}
           </HoverPopup>
         </div>
       ) : (
@@ -119,6 +150,7 @@ CustomStepper.propTypes = {
   item: PropTypes.shape({
     firstDate: PropTypes.string,
     secondDate: PropTypes.string,
+    id: PropTypes.number,
     from: PropTypes.string,
     to: PropTypes.string,
     step: PropTypes.number,

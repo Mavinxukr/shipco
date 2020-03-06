@@ -41,7 +41,7 @@ const AutoOpen = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout admin>
       <SubHeader />
       <Form
         onSubmit={onSubmit}

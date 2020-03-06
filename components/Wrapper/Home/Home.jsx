@@ -4,18 +4,27 @@ import PropTypes from 'prop-types';
 import '../../../public/slick/slick.css';
 import Slider from 'react-slick';
 import GoogleMapReact from 'google-map-react';
+import { Field, Form } from 'react-final-form';
 import Button from '../../Button/Button';
-import styles from './Home.scss';
 import Image from '../../Image/Image';
+import Popup from '../../Popup/Popup';
 // import ProductCard from '../../ProductCard/ProductCard';
+import { data, sliderData } from './data';
+import {
+  composeValidators,
+  emailValidation,
+  required,
+  passwordValidation,
+  snpValidation,
+} from '../../../utils/validation';
+import { renderInput } from '../../../utils/renderInputs';
 import IconQuotes from '../../../assets/svg/quotes.svg';
 import IconFb from '../../../assets/svg/Vector(1).svg';
 import IconIn from '../../../assets/svg/Group.svg';
 import IckonTw from '../../../assets/svg/Vector.svg';
 import IconYoutube from '../../../assets/svg/Vector(2).svg';
 import IconArrow from '../../../assets/svg/Group (6).svg';
-
-import { data, sliderData } from './data';
+import styles from './Home.scss';
 
 const SampleNextArrow = ({ onClick, index }) => (
   <button
@@ -41,6 +50,15 @@ const SamplePrevArrow = ({ onClick, index }) => (
 
 const Home = () => {
   const [index, setIndex] = useState(0);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  const onSubmit = async (values) => {
+    await sleep(300);
+    window.alert(JSON.stringify(values, 0, 2));
+  };
 
   const settings = {
     dots: true,
@@ -89,7 +107,11 @@ const Home = () => {
               </li>
             </ul>
           </nav>
-          <Button customBtn={styles.btnLogin} type="button">
+          <Button
+            onClick={() => setIsLoginPopupOpen(true)}
+            customBtn={styles.btnLogin}
+            type="button"
+          >
             Login
           </Button>
         </div>
@@ -148,16 +170,16 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/*<div className={styles.cars}>*/}
-        {/*  <div className={styles.container}>*/}
-        {/*    <h2 className={styles.carsTitle}>Cars</h2>*/}
-        {/*    <div className={styles.carsItems}>*/}
-        {/*      {data.map(item => (*/}
-        {/*        <ProductCard key={item.id} item={item} />*/}
-        {/*      ))}*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+        {/* <div className={styles.cars}> */}
+        {/*  <div className={styles.container}> */}
+        {/*    <h2 className={styles.carsTitle}>Cars</h2> */}
+        {/*    <div className={styles.carsItems}> */}
+        {/*      {data.map(item => ( */}
+        {/*        <ProductCard key={item.id} item={item} /> */}
+        {/*      ))} */}
+        {/*    </div> */}
+        {/*  </div> */}
+        {/* </div> */}
         <div className={styles.container}>
           <h2 className={styles.testimonialsTitle}>
             <IconQuotes className={styles.testimonialsIcon} />
@@ -250,7 +272,149 @@ const Home = () => {
             />
           </div>
         </div>
+        {isLoginPopupOpen && (
+          <Popup
+            isPopupOpen={isLoginPopupOpen}
+            setIsPopupOpen={setIsLoginPopupOpen}
+            title="Shipco"
+            customPopup={styles.customTitle}
+          >
+            <div>
+              <h5>Sign In</h5>
+              <Form
+                onSubmit={onSubmit}
+                render={({ handleSubmit, submitting, invalid }) => (
+                  <form className={styles.widthForm} onSubmit={handleSubmit}>
+                    <Field
+                      name="Email Address"
+                      validate={composeValidators(required, emailValidation)}
+                      type="email"
+                    >
+                      {renderInput({
+                        label: '',
+                        placeholder: 'Email Address',
+                      })}
+                    </Field>
+                    <Field
+                      name="Password"
+                      validate={composeValidators(required, passwordValidation)}
+                      type="password"
+                    >
+                      {renderInput({
+                        label: '',
+                        placeholder: 'Password',
+                      })}
+                    </Field>
+                    <Button
+                      customBtn={styles.btnSubmit}
+                      type="submit"
+                      disabled={invalid || submitting}
+                    >
+                      Sign in
+                    </Button>
+                  </form>
+                )}
+              />
+              <p className={styles.text}>
+                Not on Shipco yet?{' '}
+                <Button
+                  customBtn={styles.btnRegister}
+                  onClick={() => {
+                    setIsLoginPopupOpen(!isLoginPopupOpen);
+                    setIsRegisterPopupOpen(!isRegisterPopupOpen);
+                  }}
+                >
+                  Register
+                </Button>
+              </p>
+            </div>
+          </Popup>
+        )}
       </main>
+      {isRegisterPopupOpen && (
+        <Popup
+          isPopupOpen={isRegisterPopupOpen}
+          setIsPopupOpen={setIsRegisterPopupOpen}
+          title="Shipco"
+          customPopup={styles.customTitle}
+        >
+          <div>
+            <h5>Sign In</h5>
+            <Form
+              onSubmit={onSubmit}
+              validate={(values) => {
+                const errors = {};
+                if (!values.confirm) {
+                  errors.confirm = 'Required';
+                } else if (values.confirm !== values.password) {
+                  errors.confirm = 'The password was entered incorrectly';
+                }
+                return errors;
+              }}
+              render={({
+                handleSubmit, submitting, invalid, values,
+              }) => (
+                <form className={styles.widthForm} onSubmit={handleSubmit}>
+                  <Field name="Name" validate={snpValidation} type="text">
+                    {renderInput({
+                      label: '',
+                      placeholder: 'Name',
+                    })}
+                  </Field>
+                  <Field
+                    name="Email Address"
+                    validate={composeValidators(required, emailValidation)}
+                    type="email"
+                  >
+                    {renderInput({
+                      label: '',
+                      placeholder: 'Email Address',
+                    })}
+                  </Field>
+                  <Field
+                    name="password"
+                    validate={composeValidators(required, passwordValidation)}
+                    type="password"
+                  >
+                    {renderInput({
+                      label: '',
+                      placeholder: 'Password',
+                    })}
+                  </Field>
+                  <Field
+                    name="confirm"
+                    type="password"
+                  >
+                    {renderInput({
+                      label: '',
+                      placeholder: 'Confirm password',
+                    })}
+                  </Field>
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={invalid || submitting}
+                  >
+                    send request
+                  </Button>
+                </form>
+              )}
+            />
+            <p className={styles.text}>
+              Already Registered?{' '}
+              <Button
+                customBtn={styles.btnRegister}
+                onClick={() => {
+                  setIsRegisterPopupOpen(!isRegisterPopupOpen);
+                  setIsLoginPopupOpen(!isLoginPopupOpen);
+                }}
+              >
+                Log In
+              </Button>
+            </p>
+          </div>
+        </Popup>
+      )}
       <footer className={styles.footer}>
         <div className={styles.container}>
           <div className={styles.footerLogo}>

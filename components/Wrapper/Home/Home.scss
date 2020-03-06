@@ -291,3 +291,40 @@
   font-size: 16px;
   text-transform: uppercase;
 }
+
+.customTitle {
+  padding: 75px;
+
+  h4 {
+    font-size: 48px;
+  }
+
+  h5 {
+    margin: 40px 0 0;
+  }
+
+  .text {
+    margin-top: 40px;
+  }
+}
+
+.widthForm {
+  width: 435px;
+
+  input{
+    margin-top: 40px;
+  }
+}
+
+.btnSubmit{
+  margin-top: 40px;
+  text-transform: uppercase;
+  height: 40px;
+  width: 100%;
+}
+
+.btnRegister {
+  background: transparent;
+  color: blue;
+  font-size: 16px;
+}

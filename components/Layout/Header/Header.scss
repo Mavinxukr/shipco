@@ -38,12 +38,24 @@
   color: $colorBackground;
 }
 
+.menuItem {
+  position: relative;
+}
+
 .bottom {
   background: $colorBackground;
   padding: 13px 19px 21px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+}
+
+.adminMenu {
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .menuItems {
@@ -52,11 +64,17 @@
 }
 
 .menuLink {
-  margin: 0 70px;
+  margin: 0 55px 0 70px;
   color: $white;
   text-transform: uppercase;
   display: flex;
   align-items: center;
+
+  &:hover {
+    .menuDot {
+      opacity: 1;
+    }
+  }
 }
 
 .menuIcon {
@@ -112,23 +130,105 @@
   right: 6px;
 }
 
-.active:after {
-  content: '';
+.menuDot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: $white;
   margin-left: 10px;
+  opacity: 0;
+}
+
+.active {
+
+  .menuDot {
+    opacity: 1;
+  }
+}
+
+.btnOpenPopup {
+  font-size: 16px;
 }
 
 @media screen and (max-width: 1750px) {
   .menuLink {
-    margin: 0 50px;
+    margin: 0 35px 0 50px;
   }
 }
 
 @media screen and (max-width: 1500px) {
   .menuLink {
-    margin: 0 30px;
+    margin: 0 15px 0 30px;
   }
+}
+
+.activePopup .containerPopup{
+  display: flex;
+  flex-direction: column;
+}
+
+.containerPopup{
+  left: 61px;
+  min-width: auto;
+  width: 100%;
+  max-width: 500px;
+  top: 36px;
+  font-weight: 500;
+  font-size: 16px;
+
+  &:before{
+    right: 95%;
+  }
+
+  &:after {
+    right: 94.8%;
+  }
+}
+
+.trackingId {
+  padding: 20px 30px;
+  border-bottom: 1px solid $colorBorder;
+  margin-bottom: 20px;
+}
+
+.flexInput {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.customLabel,
+.carId {
+  margin: 0 25px 0 0;
+  min-width: 83px;
+}
+
+.customInput {
+  width: 180px;
+}
+
+.id {
+  width: 180px;
+  background: #fafafa;
+  border: 1px solid $colorBorder;
+  border-radius: 2px;
+  padding: 15px 20px;
+  font-size: 12px;
+}
+
+.containerCar {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexCar {
+  display: flex;
+  align-items: center;
+  padding: 10px 30px 0;
+}
+
+.addContainer {
+  margin: 20px 30px;
+  height: 40px;
+  text-transform: uppercase;
 }
