@@ -49,6 +49,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 9;
 }
 
 .adminMenu {
@@ -169,7 +170,7 @@
 
 .containerPopup{
   left: 61px;
-  min-width: auto;
+  min-width: fit-content;
   width: 100%;
   max-width: 500px;
   top: 36px;
