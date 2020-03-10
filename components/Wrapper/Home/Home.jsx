@@ -339,7 +339,7 @@ const Home = () => {
           customPopup={styles.customTitle}
         >
           <div>
-            <h5>Sign In</h5>
+            <h5>Register</h5>
             <Form
               onSubmit={onSubmit}
               validate={(values) => {
@@ -390,6 +390,21 @@ const Home = () => {
                       placeholder: 'Confirm password',
                     })}
                   </Field>
+                  <div className={styles.checkboxBlock}>
+                    <Field
+                      name="checked"
+                      type="checkbox"
+                      validate={required}
+                    >
+                      {renderInput({
+                        label: 'I agree to Shipco\'s',
+                        classNameWrapper: styles.checkedLogin,
+                        widthInputBlock: styles.widthCheckboxBlock,
+                        classNameWrapperLabel: styles.classNameWrapperLabel,
+                      })}
+                    </Field>
+                    <a href="/">Terms of Use</a>
+                  </div>
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
