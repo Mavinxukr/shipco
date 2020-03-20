@@ -12,11 +12,11 @@ const Global = ({ children, newLink, admin }) => (
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       {process.env.NODE_ENV !== 'production' && (
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href={`/_next/static/css/styles.chunk.css?v=${Date.now()}`}
-        />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href={`/_next/static/css/styles.chunk.css?v=${Date.now()}`}
+      />
       )}
     </Head>
     <Header newLink={newLink} admin={admin} />

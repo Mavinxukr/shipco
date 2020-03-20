@@ -11,6 +11,7 @@ import HoverPopup from '../HoverPopup/HoverPopup';
 import IconUpdate from '../../assets/svg/updateStatus.svg';
 import Button from '../Button/Button';
 import { statusCar } from './data';
+import { getStatusInNumber } from '../../utils/helpers';
 import styles from './CustomStepper.scss';
 
 const ColorlibConnector = withStyles({
@@ -38,7 +39,7 @@ const ColorlibConnector = withStyles({
 const useColorlibStepIconStyles = makeStyles({
   root: {
     backgroundColor: '#f8bebe',
-    zIndex: -1,
+    // zIndex: -1,
     color: '#f8bebe',
     width: 15,
     height: 15,
@@ -79,7 +80,7 @@ const CustomStepper = ({
 }) => {
   const steps = getSteps();
   const [isOpenStatusPanel, setIsOpenStatusPanel] = useState(false);
-  const [stepIndex, setStepIndex] = useState(item.step);
+  const [stepIndex, setStepIndex] = useState(getStatusInNumber(item.shipping.status));
   const classNameForOpenStatus = cx(styles.status, {
     [styles.active]: isOpenStatusPanel,
   });
@@ -87,12 +88,12 @@ const CustomStepper = ({
   return (
     <>
       <div className={styles.flex}>
-        <span>{item.firstDate}</span>
-        <span>{item.secondDate}</span>
+        <span>{item.ship_info.point_load_date}</span>
+        <span>{item.ship_info.point_delivery_date}</span>
       </div>
       <div className={cx(styles.flex, paddingBottom)}>
-        <b>{item.from}</b>
-        <b>{item.to}</b>
+        <b>{item.ship_info.point_load_city}</b>
+        <b>{item.ship_info.point_delivery_city}</b>
       </div>
       <div className={styles.root}>
         <Stepper activeStep={stepIndex} connector={<ColorlibConnector />}>
@@ -113,7 +114,13 @@ const CustomStepper = ({
           >
             <IconUpdate className={styles.icon} /> Update status
           </Button>
-          <p className={cx(styles.center, customBlock)}>{item.car}</p>
+          <>
+            {item.ship_info.disassembly ? (
+              <p className={cx(styles.center, customBlock)}>Disassembled</p>
+            ) : (
+              <p className={cx(styles.center, customBlock)}>Car on the way to port</p>
+            )}
+          </>
           <HoverPopup customClass={styles.statusPopup}>
             {statusCar.map((carStatus, index) => {
               const classNameForButton = cx(styles.btn, {
@@ -137,7 +144,13 @@ const CustomStepper = ({
           </HoverPopup>
         </div>
       ) : (
-        <p className={cx(styles.center, customBlock)}>{item.car}</p>
+        <>
+          {item.ship_info.disassembly ? (
+            <p className={cx(styles.center, customBlock)}>Disassembled</p>
+          ) : (
+            <p className={cx(styles.center, customBlock)}>Car on the way to port</p>
+          )}
+        </>
       )}
     </>
   );

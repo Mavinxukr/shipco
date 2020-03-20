@@ -17,6 +17,10 @@
   text-align: center;
   padding: 12px;
   text-transform: uppercase;
+
+  a {
+    color: $white;
+  }
 }
 
 .header {
@@ -97,7 +101,10 @@
   display: flex;
 }
 
-.id,
-.auto {
-  color: $colorBackground
+td span {
+  color: $colorBackground;
+}
+
+th:first-child  {
+  width: 60px;
 }

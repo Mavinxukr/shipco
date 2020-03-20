@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, forwardRef } from 'react';
 import { usePagination, useTable, useRowSelect } from 'react-table';
 import cx from 'classnames';
 import Button from '../../Button/Button';
@@ -11,12 +11,12 @@ import styles from './Client.scss';
 import { columns, dataTable, stateStatus } from './data';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 
-const IndeterminateCheckbox = React.forwardRef(
+const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef();
     const resolvedRef = ref || defaultRef;
 
-    React.useEffect(() => {
+    useEffect(() => {
       resolvedRef.current.indeterminate = indeterminate;
     }, [resolvedRef, indeterminate]);
 

@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const columns = [
   {
     Header: 'Table',
@@ -5,6 +7,23 @@ export const columns = [
       {
         Header: 'ID',
         accessor: 'id',
+        Cell: ({ cell: { value } }) => (
+          <Link href={{
+            pathname: '/client',
+            query: {
+              idUser: value,
+            },
+          }}>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                console.log(value);
+              }}
+            >
+              <span>{value}</span>
+            </a>
+          </Link>
+        ),
       },
       {
         Header: 'Name',
@@ -25,142 +44,13 @@ export const columns = [
       },
       {
         Header: 'Payment Information',
-        accessor: 'payment',
+        accessor: 'card_number',
       },
 
       {
         Header: 'Date of registration',
-        accessor: 'date',
+        accessor: 'date_register',
       },
     ],
-  },
-];
-
-export const dataTable = [
-  {
-    id: 22779011,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779012,
-    name: 'Bob Hudson1',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779013,
-    name: 'Bob Hudson3',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779014,
-    name: 'Bob Hudson4',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779015,
-    name: 'Bob Hudson5',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779016,
-    name: 'Bob Hudson6',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779017,
-    name: 'Bob Hudson7',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
-  },
-  {
-    id: 22779019,
-    name: 'Bob Hudson',
-    email: 'hudson_89@gmail.com',
-    phone: '+3 8077 777 77 77',
-    address: 'Vokzalna st 129/a, Kyiv, Ukraine, 01000',
-    payment: '7777 7777 7777 7777',
-    date: '30.08.2019',
   },
 ];

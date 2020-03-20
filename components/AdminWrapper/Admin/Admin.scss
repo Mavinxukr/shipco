@@ -1,0 +1,24 @@
+@import "scss/core/mixins";
+@import "scss/core/vars";
+
+.form {
+  max-width: 400px;
+  margin: 100px auto 0;
+
+  div {
+    width: 100% !important;
+    margin-top: 20px;
+  }
+}
+
+.error {
+  margin-top: 20px;
+  color: $colorBackground;
+}
+
+.btnSubmit{
+  margin-top: 40px;
+  text-transform: uppercase;
+  height: 40px;
+  width: 100%;
+}

@@ -1,56 +1,98 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect, useState, forwardRef, useRef,
+} from 'react';
 import cx from 'classnames';
-import {
-  usePagination, useRowSelect, useTable, useSortBy,
-} from 'react-table';
+import { useRowSelect, useTable, useSortBy } from 'react-table';
+import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
 import formatStringByPattern from 'format-string-by-pattern';
+import _ from 'lodash';
+import ImageUpload from '../../ImageUpload/ImageUpload';
+import {
+  getBaseClient,
+  deleteBaseClient,
+  addNewBaseClient,
+} from '../../../redux/actions/baseClient';
+import {
+  baseClientDataSelector,
+  baseClientDataReceivedSelector,
+} from '../../../utils/selectors';
 import Button from '../../Button/Button';
 import Search from '../../Search/Search';
 import Popup from '../../Popup/Popup';
 import MainLayout from '../../Layout/Global/Global';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
-import { columns, dataTable } from './data';
+import { columns } from './data';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
 import {
   composeValidators,
   emailValidation,
-  mustBeNumber,
   required,
   passwordValidation,
 } from '../../../utils/validation';
+import Pagination from '../../Pagination/Pagination';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './BaseClient.scss';
 import { stateOptions } from '../../Wrapper/ProfileSettings/data';
+import Loader from '../../Loader/Loader';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = useRef();
+  const resolvedRef = ref || defaultRef;
 
-const onSubmit = async (values) => {
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
+  useEffect(() => {
+    resolvedRef.current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <input type="checkbox" ref={resolvedRef} {...rest} />
+    </>
+  );
+});
 
 const BaseClient = () => {
+  const baseClient = useSelector(baseClientDataSelector);
+  const isDataReceived = useSelector(baseClientDataReceivedSelector);
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [initialPage, setInitialPage] = useState(0);
+  const [countPagination, setCountPagination] = useState('10');
+  const [image, setImage] = useState('/images/no-preview-available.png');
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBaseClient({}));
+  }, []);
+
+  useEffect(() => {
+    if (baseClient) {
+      setCountPagination(`${baseClient.links.per_page}`);
+    }
+  }, [baseClient]);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  const arrClientsId = [];
+
+  const onSubmit = (values) => {
+    dispatch(
+      addNewBaseClient(
+        {},
+        {
+          ...values,
+          country: values.country && values.country.label,
+          city: values.city && values.city.label,
+          image: _.isObject(image) ? image : null,
+        },
+      ),
+    );
+  };
 
   return (
     <MainLayout admin>
@@ -69,150 +111,20 @@ const BaseClient = () => {
               <IconPlus className={cx(styles.plus, styles.icon)} />
               Add New client
             </Button>
-            {isPopupOpen && (
-              <Popup
-                setIsPopupOpen={setIsPopupOpen}
-                title="Add New Client "
-                subTitle="(000011) 31.08.2019"
-              >
-                <Form
-                  onSubmit={onSubmit}
-                  render={({ handleSubmit, invalid, submitting }) => (
-                    <form onSubmit={handleSubmit}>
-                      <Field name="Name" validate={required} type="text">
-                        {renderInput({
-                          label: 'Name',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field name="Username" validate={required} type="text">
-                        {renderInput({
-                          label: 'Username',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field
-                        name="Email Address"
-                        validate={composeValidators(required, emailValidation)}
-                        type="email"
-                      >
-                        {renderInput({
-                          label: 'Email Address',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field
-                        name="phone number"
-                        validate={composeValidators(required, mustBeNumber)}
-                        type="text"
-                        parse={formatStringByPattern('+9 9999 999 99 99')}
-                      >
-                        {renderInput({
-                          label: 'Phone number',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field
-                        name="Password"
-                        validate={composeValidators(
-                          required,
-                          passwordValidation,
-                        )}
-                        type="password"
-                      >
-                        {renderInput({
-                          label: 'Password',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field
-                        name="country"
-                        validate={required}
-                        isRequired
-                        component={renderSelect({
-                          placeholder: '',
-                          label: 'Country',
-                          classNameWrapper: 'SelectCustom-popupFieldRow',
-                        })}
-                        options={stateOptions}
-                      />
-                      <Field
-                        name="city"
-                        validate={required}
-                        isRequired
-                        component={renderSelect({
-                          placeholder: '',
-                          classNameWrapper: 'SelectCustom-popupFieldRow',
-                          label: 'City',
-                        })}
-                        options={stateOptions}
-                      />
-                      <Field
-                        name="zip"
-                        validate={composeValidators(required, mustBeNumber)}
-                        type="text"
-                      >
-                        {renderInput({
-                          label: 'Zip',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field name="adress" validate={required} type="text">
-                        {renderInput({
-                          label: 'Adress',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field
-                        name="cart"
-                        validate={composeValidators(required, mustBeNumber)}
-                        type="text"
-                        parse={formatStringByPattern('9999 9999 9999 9999')}
-                      >
-                        {renderInput({
-                          label: 'Cart number',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: styles.widthInputBlock,
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <Field name="Add photo" type="file">
-                        {renderInput({
-                          label: 'Add photo',
-                          classNameWrapper: styles.popupFieldRow,
-                          widthInputBlock: cx(styles.widthInputBlock, styles.file),
-                          classNameWrapperLabel: styles.label,
-                        })}
-                      </Field>
-                      <div className={styles.submitPopup}>
-                        <Button
-                          customBtn={styles.btnSubmit}
-                          type="submit"
-                          disabled={submitting || invalid}
-                        >
-                          ADD New Client
-                        </Button>
-                      </div>
-                    </form>
-                  )}
-                />
-              </Popup>
-            )}
-            <Button customBtn={styles.btnIcon}>
+            <Button
+              type="button"
+              customBtn={styles.btnIcon}
+              onClick={() => {
+                dispatch(
+                  deleteBaseClient(
+                    {},
+                    {
+                      client_id: arrClientsId,
+                    },
+                  ),
+                );
+              }}
+            >
               <IconMinus className={styles.icon} />
               Delete client
             </Button>
@@ -223,30 +135,167 @@ const BaseClient = () => {
           </div>
         </div>
         <CustomTable>
-          <Table columns={columns} data={dataTable} />
+          <Pagination
+            params={baseClient.links}
+            countPagination={countPagination}
+            setInitialPage={setInitialPage}
+            initialPage={initialPage}
+            action={getBaseClient}
+          />
+          <Table
+            columns={columns}
+            data={baseClient.data}
+            arrClientsId={arrClientsId}
+          />
+          <Pagination
+            params={baseClient.links}
+            countPagination={countPagination}
+            setInitialPage={setInitialPage}
+            initialPage={initialPage}
+            action={getBaseClient}
+          />
         </CustomTable>
       </div>
+      {isPopupOpen && (
+        <Popup
+          setIsPopupOpen={setIsPopupOpen}
+          title="Add New Client "
+          subTitle="(000011) 31.08.2019"
+        >
+          <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <Field name="name" validate={required} type="text">
+                  {renderInput({
+                    label: 'Name',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field name="username" validate={required} type="text">
+                  {renderInput({
+                    label: 'Username',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="email"
+                  validate={composeValidators(required, emailValidation)}
+                  type="email"
+                >
+                  {renderInput({
+                    label: 'Email Address',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="phone"
+                  type="text"
+                  validate={required}
+                  parse={formatStringByPattern('+9-9999-999-99-99')}
+                >
+                  {renderInput({
+                    label: 'Phone number',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="password"
+                  validate={composeValidators(required, passwordValidation)}
+                  type="password"
+                >
+                  {renderInput({
+                    label: 'Password',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="country"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: '',
+                    label: 'Country',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                  })}
+                  options={stateOptions}
+                />
+                <Field
+                  name="city"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: '',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    label: 'City',
+                  })}
+                  options={stateOptions}
+                />
+                <Field name="zip" type="text" validate={required}>
+                  {renderInput({
+                    label: 'Zip',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field validate={required} name="address" type="text">
+                  {renderInput({
+                    label: 'Address',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="card_number"
+                  type="text"
+                  validate={required}
+                  parse={formatStringByPattern('9999-9999-9999-9999')}
+                >
+                  {renderInput({
+                    label: 'Cart number',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <ImageUpload baseClient image={image} setImage={setImage} />
+                <div className={styles.submitPopup}>
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    ADD New Client
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
     </MainLayout>
   );
 };
 
 export default BaseClient;
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, arrClientsId }) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
     prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageSize },
   } = useTable(
     {
       columns,
@@ -254,21 +303,20 @@ const Table = ({ columns, data }) => {
       initialState: { pageIndex: 0 },
     },
     useSortBy,
-    usePagination,
     useRowSelect,
     (hooks) => {
       hooks.flatColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
+            </>
           ),
           Cell: ({ row }) => (
-            <div>
+            <>
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
+            </>
           ),
         },
         ...columns,
@@ -278,64 +326,6 @@ const Table = ({ columns, data }) => {
 
   return (
     <>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -353,7 +343,7 @@ const Table = ({ columns, data }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {rows.map((row, i) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -361,6 +351,18 @@ const Table = ({ columns, data }) => {
                   <td
                     className={`BaseClient-${cell.column.id}`}
                     {...cell.getCellProps()}
+                    onClick={() => {
+                      if (!cell.row.isSelected) {
+                        arrClientsId.push(cell.row.original.id);
+                      } else {
+                        const index = arrClientsId.indexOf(
+                          cell.row.original.id,
+                        );
+                        if (index > -1) {
+                          arrClientsId.splice(index, 1);
+                        }
+                      }
+                    }}
                   >
                     {cell.render('Cell')}
                   </td>
@@ -370,64 +372,6 @@ const Table = ({ columns, data }) => {
           })}
         </tbody>
       </table>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={styles.paginationBtn}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
     </>
   );
 };
