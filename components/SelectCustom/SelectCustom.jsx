@@ -60,6 +60,8 @@ const SelectCustom = ({
   meta,
   classNameLabel,
   isRequired,
+  custonOnChange,
+  defaultInputValue,
 }) => (
   <div className={cx(styles.select, classNameWrapper)}>
     <div className={cx(styles.select, classNameWrapper)}>
@@ -68,7 +70,14 @@ const SelectCustom = ({
       )}
       <Select
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+          if (onChange) {
+            onChange(e);
+          }
+          if (custonOnChange) {
+            custonOnChange(e);
+          }
+        }}
         onFocus={() => {
           if (onFocusCustom) {
             onFocusCustom();
@@ -78,6 +87,7 @@ const SelectCustom = ({
         components={{ DropdownIndicator }}
         styles={customStyles}
         placeholder={placeholder}
+        defaultInputValue={defaultInputValue}
       />
     </div>
     {isRequired && meta.error && meta.touched && (
@@ -87,7 +97,8 @@ const SelectCustom = ({
 );
 
 SelectCustom.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]),
+  defaultInputValue: PropTypes.string,
   onChange: PropTypes.func,
   label: PropTypes.string,
   classNameLabel: PropTypes.string,
@@ -97,6 +108,7 @@ SelectCustom.propTypes = {
   placeholder: PropTypes.string,
   onFocusCustom: PropTypes.func,
   isRequired: PropTypes.bool,
+  custonOnChange: PropTypes.func,
 };
 
 SelectCustom.defaultProps = {

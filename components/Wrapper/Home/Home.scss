@@ -295,6 +295,10 @@
 .customTitle {
   padding: 75px;
 
+  .widthForm {
+    width: 100%;
+  }
+
   h4 {
     font-size: 48px;
   }
@@ -305,6 +309,14 @@
 
   .text {
     margin-top: 40px;
+  }
+
+   @media screen and (max-width: 1650px) {
+    padding: 35px;
+
+     h5 {
+       margin: 0;
+     }
   }
 }
 
@@ -321,6 +333,15 @@
   text-transform: uppercase;
   height: 40px;
   width: 100%;
+
+  &:disabled {
+    opacity: .7;
+  }
+}
+
+.error {
+  margin-top: 20px;
+  color: $colorBackground;
 }
 
 .btnRegister {

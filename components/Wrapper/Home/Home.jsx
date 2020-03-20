@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import '../../../public/slick/slick.css';
 import Slider from 'react-slick';
 import GoogleMapReact from 'google-map-react';
 import { Field, Form } from 'react-final-form';
+import { login, registration } from '../../../services/user';
+import { cookies } from '../../../utils/getCookies';
 import Button from '../../Button/Button';
 import Image from '../../Image/Image';
 import Popup from '../../Popup/Popup';
 // import ProductCard from '../../ProductCard/ProductCard';
-import { data, sliderData } from './data';
+import { sliderData } from './data';
 import {
   composeValidators,
   emailValidation,
@@ -48,16 +51,32 @@ const SamplePrevArrow = ({ onClick, index }) => (
   </button>
 );
 
+const validateForm = (values) => {
+  const errors = {};
+  if (!values.password_confirmation) {
+    errors.password_confirmation = 'Required';
+  } else if (values.password_confirmation !== values.password) {
+    errors.password_confirmation = 'The password was entered incorrectly';
+  }
+  return errors;
+};
+
 const Home = () => {
   const [index, setIndex] = useState(0);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const router = useRouter();
 
-  const onSubmit = async (values) => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
+  const onSubmit = async (values, funcAuth) => {
+    const response = await funcAuth({}, values);
+    if (response.status) {
+      cookies.set('token', response.data.data.auth.token, { maxAge: 60 * 60 * 24 * 30 });
+      router.push('/overview');
+    } else {
+      setErrorMessage(response.message);
+    }
   };
 
   const settings = {
@@ -282,11 +301,11 @@ const Home = () => {
             <div>
               <h5>Sign In</h5>
               <Form
-                onSubmit={onSubmit}
+                onSubmit={values => onSubmit(values, login)}
                 render={({ handleSubmit, submitting, invalid }) => (
                   <form className={styles.widthForm} onSubmit={handleSubmit}>
                     <Field
-                      name="Email Address"
+                      name="email"
                       validate={composeValidators(required, emailValidation)}
                       type="email"
                     >
@@ -296,8 +315,8 @@ const Home = () => {
                       })}
                     </Field>
                     <Field
-                      name="Password"
-                      validate={composeValidators(required, passwordValidation)}
+                      name="password"
+                      validate={composeValidators(required)}
                       type="password"
                     >
                       {renderInput({
@@ -305,6 +324,11 @@ const Home = () => {
                         placeholder: 'Password',
                       })}
                     </Field>
+                    {errorMessage && (
+                      <p className={styles.error}>
+                        The given data was invalid.
+                      </p>
+                    )}
                     <Button
                       customBtn={styles.btnSubmit}
                       type="submit"
@@ -341,28 +365,22 @@ const Home = () => {
           <div>
             <h5>Register</h5>
             <Form
-              onSubmit={onSubmit}
-              validate={(values) => {
-                const errors = {};
-                if (!values.confirm) {
-                  errors.confirm = 'Required';
-                } else if (values.confirm !== values.password) {
-                  errors.confirm = 'The password was entered incorrectly';
-                }
-                return errors;
-              }}
-              render={({
-                handleSubmit, submitting, invalid, values,
-              }) => (
+              onSubmit={values => onSubmit(values, registration)}
+              validate={validateForm}
+              render={({ handleSubmit, submitting, invalid }) => (
                 <form className={styles.widthForm} onSubmit={handleSubmit}>
-                  <Field name="Name" validate={snpValidation} type="text">
+                  <Field
+                    name="name"
+                    validate={composeValidators(required, snpValidation)}
+                    type="text"
+                  >
                     {renderInput({
                       label: '',
                       placeholder: 'Name',
                     })}
                   </Field>
                   <Field
-                    name="Email Address"
+                    name="email"
                     validate={composeValidators(required, emailValidation)}
                     type="email"
                   >
@@ -381,23 +399,16 @@ const Home = () => {
                       placeholder: 'Password',
                     })}
                   </Field>
-                  <Field
-                    name="confirm"
-                    type="password"
-                  >
+                  <Field name="password_confirmation" type="password">
                     {renderInput({
                       label: '',
                       placeholder: 'Confirm password',
                     })}
                   </Field>
                   <div className={styles.checkboxBlock}>
-                    <Field
-                      name="checked"
-                      type="checkbox"
-                      validate={required}
-                    >
+                    <Field name="checked" type="checkbox" validate={required}>
                       {renderInput({
-                        label: 'I agree to Shipco\'s',
+                        label: "I agree to Shipco's",
                         classNameWrapper: styles.checkedLogin,
                         widthInputBlock: styles.widthCheckboxBlock,
                         classNameWrapperLabel: styles.classNameWrapperLabel,

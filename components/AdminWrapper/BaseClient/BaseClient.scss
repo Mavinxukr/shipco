@@ -113,24 +113,7 @@ form .flex {
   }
 }
 
-.file {
-  position: relative;
-  border: 1px solid $colorBorder;
-  background: $colorInput;
-
-  &:after {
-    content: '';
-    background-image: url("/images/plus.png");
-    position: absolute;
-    right: 17px;
-    top: 20px;
-    width: 14px;
-    height: 14px;
-    z-index: 99;
-  }
-}
-
-.id {
+.id span{
   color: $colorBackground;
 }
 

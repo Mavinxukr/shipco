@@ -11,6 +11,10 @@
   font-size: 12px;
 }
 
+.margitRight {
+  margin-right: 15px;
+}
+
 .paginationFlex {
   display: flex;
   align-items: center;
@@ -20,12 +24,16 @@
   color: $colorBackground;
   background: $white;
   border: 1px solid $colorBorder;
-  padding: 8px 10px;
+  padding: 9px 10px;
+
+  a {
+    color: $colorBackground;
+  }
 }
 
-.active {
-  background: $colorBackground;
-  color: $white;
+.widthSelect {
+  margin: 0;
+  padding: 0;
 }
 
 .widthSelect .widthSelect {
@@ -34,11 +42,46 @@
   padding: 0 10px;
   font-size: 16px;
 
-  div div{
+  & > div {
+    height: 35px;
+
+    & > div {
+      padding: 0 !important;
+
+      & + div {
+        text-align: center!important;
+      }
+    }
+  }
+
+  div div div div{
     padding: .5px 2px!important;
 
     svg {
       margin-top: 10px !important;
+    }
+  }
+}
+
+.paginationBtns {
+  display: flex;
+  align-items: center;
+
+  li {
+    background: $white;
+    border: 1px solid $colorBorder;
+    padding: 8px 10px;
+
+    a {
+      color: $colorBackground;
+    }
+  }
+
+  .active {
+    background: $colorBackground;
+
+    a {
+      color: $white;
     }
   }
 }

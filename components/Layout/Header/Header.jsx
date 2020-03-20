@@ -42,7 +42,7 @@ const Header = ({ newLink, admin }) => {
         </div>
       </div>
       <div className={styles.bottom}>
-        <a href="/">
+        <a href={admin ? '/base-client' : '/overview'}>
           <h1 className={styles.logo}>Shipco</h1>
         </a>
         <nav className={styles.menu}>
@@ -192,7 +192,7 @@ const Header = ({ newLink, admin }) => {
             <IconBell />
             <span className={styles.count}>1</span>
           </a>
-          <a href="/" className={styles.bottomIconsLink}>
+          <a href={admin ? '/' : '/profile-settings'} className={styles.bottomIconsLink}>
             <IconUser />
           </a>
         </div>

@@ -74,6 +74,10 @@
   &:hover {
     background: $colorBackgroundHover;
   }
+
+  &:disabled {
+    opacity: .6;
+  }
 }
 
 .submitPopup {
