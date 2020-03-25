@@ -196,7 +196,7 @@ const Header = ({ newLink, admin }) => {
         <div className={styles.bottomIconsItems}>
           <a href="/notification" className={styles.bottomIconsLink}>
             <IconBell />
-            <span className={styles.count}>1</span>
+            {/*<span className={styles.count}>1</span>*/}
           </a>
           <a
             href={admin ? '/' : '/profile-settings'}

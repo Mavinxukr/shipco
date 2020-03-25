@@ -416,6 +416,11 @@ const Home = () => {
                     </Field>
                     <a href="/">Terms of Use</a>
                   </div>
+                  {errorMessage && (
+                    <div className={styles.error}>
+                      The email has already been taken.
+                    </div>
+                  )}
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
