@@ -9,7 +9,6 @@ import Loader from '../../Loader/Loader';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
 import {
-  required,
   snpValidation,
   mustBeNumber,
   emailValidation,
@@ -55,7 +54,7 @@ const ProfileSettings = () => {
           onSubmit={onSubmit}
           validate={(values) => {
             const errors = {};
-            if (values.pimageassword_confirmation !== values.password) {
+            if (values.password_confirmation !== values.password) {
               errors.password_confirmation = 'The password was entered incorrectly';
             }
             return errors;
@@ -69,7 +68,7 @@ const ProfileSettings = () => {
                 <div>
                   <Field
                     name="name"
-                    validate={composeValidators(required, snpValidation)}
+                    validate={composeValidators(snpValidation)}
                     type="text"
                     defaultValue={userData.name || ''}
                   >
@@ -79,7 +78,6 @@ const ProfileSettings = () => {
                   </Field>
                   <Field
                     name="username"
-                    validate={required}
                     type="text"
                     defaultValue={userData.username || ''}
                   >
@@ -87,7 +85,7 @@ const ProfileSettings = () => {
                   </Field>
                   <Field
                     name="email"
-                    validate={composeValidators(required, emailValidation)}
+                    validate={composeValidators(emailValidation)}
                     type="email"
                     defaultValue={userData.email || ''}
                   >
