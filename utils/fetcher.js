@@ -9,7 +9,6 @@ export const generalOptions = co => ({
     Accept: 'application/json',
     'Content-Type': 'application/json',
     Authorization: co.get('token'),
-    'Access-Control-Allow-Origin': '*',
   },
 });
 
