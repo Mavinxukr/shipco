@@ -4,7 +4,7 @@ import { cookies } from './getCookies';
 import { API_DOMAIN_ADMIN, API_DOMAIN_CLIENT } from '../enums/api';
 
 export const generalOptions = co => ({
-  mode: 'cors',
+  // mode: 'cors',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
