@@ -160,7 +160,6 @@ const BaseClient = () => {
         <Popup
           setIsPopupOpen={setIsPopupOpen}
           title="Add New Client "
-          subTitle="(000011) 31.08.2019"
         >
           <Form
             onSubmit={onSubmit}

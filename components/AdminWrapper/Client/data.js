@@ -1,245 +1,4 @@
-export const dataTable = [
-  {
-    date: '31.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'new',
-  },
-  {
-    date: '01.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '02.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'delivered',
-  },
-  {
-    date: '03.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'new',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'delivered',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'new',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'delivered',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'pending',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'not approved',
-  },
-  {
-    date: '30.08.2019',
-    product: 'Auto',
-    id: 22779019,
-    model: '2013 Volkwagen Jetta Hybrid',
-    lot: 40063659,
-    loading: 'California 27.08.2019',
-    container: 40063659,
-    delivery: 'Kyiv 27.08.2019',
-    paiment: 'Auction invoice Shipping charge invoice',
-    total: '$25,000.00 $25,000.00',
-    paid: '$0.00 $0.00',
-    outstanding: '$25,000.00',
-    status: 'delivered',
-  },
-];
+import Link from 'next/link';
 
 export const columns = [
   {
@@ -247,35 +6,75 @@ export const columns = [
     columns: [
       {
         Header: 'Date',
-        accessor: 'date',
+        accessor: 'created_at',
       },
       {
         Header: 'Product',
         accessor: 'product',
+        Cell: ({ cell: { value } }) => <>Auto{value}</>,
       },
       {
         Header: 'ID',
         accessor: 'id',
+        Cell: ({ cell: { value } }) => (
+          <Link href={{
+            pathname: '/auto-open',
+            query: {
+              idAuto: value,
+            },
+          }}
+          >
+            <a>
+              <span>{value}</span>
+            </a>
+          </Link>
+        ),
       },
       {
         Header: 'Model',
-        accessor: 'model',
+        accessor: 'model_name',
+        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Lot',
-        accessor: 'lot',
+        accessor: 'lot_info.lot_number',
+        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'Point of loading',
-        accessor: 'loading',
+        accessor: 'ship_info.point_load',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value ? (
+              <>
+                <p>{value[0]}</p>
+                <p>{value[1]}</p>
+              </>
+            ) : (
+              <>{value}</>
+            )}
+          </>
+        ),
       },
       {
         Header: 'Container ID',
-        accessor: 'container',
+        accessor: 'ship_info.container_id',
       },
       {
         Header: 'Point of delivery',
-        accessor: 'delivery',
+        accessor: 'ship_info.point_delivery',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value ? (
+              <>
+                <p>{value[0]}</p>
+                <p>{value[1]}</p>
+              </>
+            ) : (
+              <>{value}</>
+            )}
+          </>
+        ),
       },
       {
         Header: 'Paiment for',
@@ -283,15 +82,40 @@ export const columns = [
       },
       {
         Header: 'Total',
-        accessor: 'total',
+        accessor: 'invoice.total',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value ? (
+              <>
+                <p><span>{value[0]}</span></p>
+                <p><span>{value[1]}</span></p>
+              </>
+            ) : (
+              <>{value}</>
+            )}
+          </>
+        ),
       },
       {
         Header: 'Paid',
-        accessor: 'paid',
+        accessor: 'invoice.paid',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value ? (
+              <>
+                <p><span>{value[0]}</span></p>
+                <p><span>{value[1]}</span></p>
+              </>
+            ) : (
+              <>{value}</>
+            )}
+          </>
+        ),
       },
       {
         Header: 'Outstanding',
-        accessor: 'outstanding',
+        accessor: 'invoice.outstanding_price',
+        Cell: ({ cell: { value } }) => <p>{value && (<span>{value}</span>)}</p>,
       },
       {
         Header: 'Status',
@@ -303,23 +127,23 @@ export const columns = [
 
 export const stateStatus = [
   {
-    value: 'All Status',
+    value: '',
     label: 'All Status',
   },
   {
-    value: 'New',
+    value: 'new',
     label: 'New',
   },
   {
-    value: 'Pending',
+    value: 'pending',
     label: 'Pending',
   },
   {
-    value: 'Not approved',
+    value: 'not_approved',
     label: 'Not approved',
   },
   {
-    value: 'Delivered',
+    value: 'delivered',
     label: 'Delivered',
   },
 ];

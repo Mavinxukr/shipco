@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import cs from 'classnames';
 import PropTypes from 'prop-types';
 import { Field, Form } from 'react-final-form';
+import { useDispatch } from 'react-redux';
 import formatStringByPattern from 'format-string-by-pattern';
 import ActiveLink from '../ActiveLink/ActiveLink';
 import Button from '../../Button/Button';
@@ -17,38 +17,56 @@ import {
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './SubHeader.scss';
 import { stateOptions } from './data';
+import { updateCurrentClient } from '../../../redux/actions/currentClient';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-const onSubmit = async (values) => {
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
-
-const SubHeader = ({ hidden }) => {
+const SubHeader = ({ hidden, currentClientId, currentClient }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = async (values) => {
+    dispatch(
+      updateCurrentClient(
+        {},
+        {
+          ...values,
+          country: values.country && values.country.label,
+          city: values.city && values.city.label,
+        },
+        currentClient.data.id,
+      ),
+    );
+  };
 
   return (
     <div className={styles.subHeader}>
       <div className={styles.container}>
-        <div className={styles.flex}>
-          <h4 className={styles.title}>
-            Bob Hudson <span className={styles.titleColor}>(ID 000011)</span>
-          </h4>
-          {hidden && (
-            <Button
-              type="button"
-              customBtn={styles.customBtn}
-              onClick={() => setIsPopupOpen(true)}
-            >
-              <IconSettings />
-            </Button>
-          )}
-        </div>
+        {currentClientId && (
+          <div className={styles.flex}>
+            <h4 className={styles.title}>
+              {currentClient.data.name}{' '}
+              <span className={styles.titleColor}>
+                (ID {currentClient.data.id})
+              </span>
+            </h4>
+            {hidden && (
+              <Button
+                type="button"
+                customBtn={styles.customBtn}
+                onClick={() => setIsPopupOpen(true)}
+              >
+                <IconSettings />
+              </Button>
+            )}
+          </div>
+        )}
         <nav>
           <ul className={styles.menuItems}>
             <li>
-              <ActiveLink activeClassName={styles.active} href="/client">
+              <ActiveLink
+                activeClassName={styles.active}
+                href={{ pathname: '/client', query: { isClient: false } }}
+              >
                 <a className={styles.menuLink}>
                   Auto
                   <span className={styles.dotActive} />
@@ -104,14 +122,19 @@ const SubHeader = ({ hidden }) => {
         <Popup
           isPopupOpen={isPopupOpen}
           setIsPopupOpen={setIsPopupOpen}
-          title="Bob Hudson "
-          subTitle="(ID 000011)"
+          title={currentClient.data.name}
+          subTitle={currentClient.data.id}
         >
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, submitting, invalid }) => (
               <form onSubmit={handleSubmit}>
-                <Field name="Name" validate={required} type="text">
+                <Field
+                  name="name"
+                  validate={required}
+                  type="text"
+                  defaultValue={currentClient.data.name || ''}
+                >
                   {renderInput({
                     label: 'Name',
                     classNameWrapper: 'InputFormWrapper-popupFieldRow',
@@ -119,9 +142,10 @@ const SubHeader = ({ hidden }) => {
                   })}
                 </Field>
                 <Field
-                  name="Email Address"
+                  name="email"
                   validate={composeValidators(required, emailValidation)}
                   type="email"
+                  defaultValue={currentClient.data.email || ''}
                 >
                   {renderInput({
                     label: 'Email Address',
@@ -130,10 +154,11 @@ const SubHeader = ({ hidden }) => {
                   })}
                 </Field>
                 <Field
-                  name="Phone number"
+                  name="phone"
                   validate={composeValidators(required, mustBeNumber)}
                   type="text"
-                  parse={formatStringByPattern('+9 9999 999 99 99')}
+                  parse={formatStringByPattern('+9-9999-999-99-99')}
+                  defaultValue={currentClient.data.phone || ''}
                 >
                   {renderInput({
                     label: 'Phone number',
@@ -143,32 +168,31 @@ const SubHeader = ({ hidden }) => {
                 </Field>
                 <Field
                   name="country"
-                  validate={required}
-                  isRequired
                   component={renderSelect({
                     placeholder: '',
                     label: 'Country',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                     classNameLabel: 'SelectCustom-blackLabel',
+                    defaultInputValue: currentClient.data.country || '',
                   })}
                   options={stateOptions}
                 />
                 <Field
                   name="city"
-                  isRequired
-                  validate={required}
                   component={renderSelect({
                     placeholder: '',
                     label: 'City',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                     classNameLabel: 'SelectCustom-blackLabel',
+                    defaultInputValue: currentClient.data.city || '',
                   })}
                   options={stateOptions}
                 />
                 <Field
-                  name="ZIP"
+                  name="zip"
                   validate={composeValidators(required, mustBeNumber)}
                   type="text"
+                  defaultValue={currentClient.data.zip || ''}
                 >
                   {renderInput({
                     label: 'ZIP',
@@ -176,7 +200,12 @@ const SubHeader = ({ hidden }) => {
                     classNameWrapperLabel: 'InputFormWrapper-blackLabel',
                   })}
                 </Field>
-                <Field name="Address" validate={required} type="text">
+                <Field
+                  name="address"
+                  validate={required}
+                  type="text"
+                  defaultValue={currentClient.data.address || ''}
+                >
                   {renderInput({
                     label: 'Address',
                     widthInputBlock: 'InputFormWrapper-widthInputBlock',
@@ -185,10 +214,11 @@ const SubHeader = ({ hidden }) => {
                   })}
                 </Field>
                 <Field
-                  name="Payment Information"
+                  name="card_number"
                   validate={composeValidators(required, mustBeNumber)}
                   type="text"
-                  parse={formatStringByPattern('9999 9999 9999 9999')}
+                  parse={formatStringByPattern('9999-9999-9999-9999')}
+                  defaultValue={currentClient.data.card_number || ''}
                 >
                   {renderInput({
                     label: 'Payment Information',
@@ -216,6 +246,8 @@ const SubHeader = ({ hidden }) => {
 
 SubHeader.propTyps = {
   hidden: PropTypes.bool,
+  currentClientId: PropTypes.number,
+  currentClient: PropTypes.object,
 };
 
 export default SubHeader;

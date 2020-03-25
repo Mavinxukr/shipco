@@ -39,3 +39,33 @@ export const baseClientDataReceivedSelector = createSelector(
   state => state.baseClient.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const clientDataSelector = createSelector(
+  state => state.client.clientData,
+  clientData => clientData,
+);
+
+export const clientDataReceivedSelector = createSelector(
+  state => state.client.isDataReceived,
+  isDataReceived => isDataReceived,
+);
+
+export const currentClientDataSelector = createSelector(
+  state => state.currentClient.currentClient,
+  currentClient => currentClient,
+);
+
+export const currentClientDataReceivedSelector = createSelector(
+  state => state.currentClient.isDataReceived,
+  isDataReceived => isDataReceived,
+);
+
+export const autoDataSelector = createSelector(
+  state => state.auto.autoData,
+  autoData => autoData,
+);
+
+export const autoDataReceivedSelector = createSelector(
+  state => state.auto.isDataReceived,
+  isDataReceived => isDataReceived,
+);

@@ -41,3 +41,16 @@ export const editCurrentUserRequest = async (params, body) => {
   const response = serverData.json();
   return response;
 };
+
+export const getClientById = async (params, id) => {
+  const url = id ? `get-client/${id}` : 'get-client';
+  const serverData = await Fetch.get(url, params, {}, true);
+  return serverData;
+};
+
+export const updateClientById = async (params, body, id) => {
+  const serverData = await Fetch.post(`update-client/${id}`, params, {
+    body: JSON.stringify(body),
+  }, true);
+  return serverData;
+};

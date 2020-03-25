@@ -29,6 +29,6 @@ export const renderCheckbox = props => ({ input }) => (
   <Checkbox {...props} {...input} />
 );
 
-export const renderRadio = props => ({ input }) => (
-  <Radio {...props} {...input} />
+export const renderRadio = props => ({ input, checked }) => (
+  <Radio {...props} {...input} {...checked} />
 );

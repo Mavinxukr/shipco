@@ -49,7 +49,10 @@ const Header = ({ newLink, admin }) => {
           {admin ? (
             <ul className={cx(styles.menuItems, styles.adminMenu)}>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/">
+                <ActiveLink
+                  activeClassName={styles.active}
+                  href={{ pathname: '/client', query: { isClient: false } }}
+                >
                   <a className={styles.menuLink}>
                     <IconAuto className={styles.menuIcon} />
                     Auto
@@ -58,7 +61,7 @@ const Header = ({ newLink, admin }) => {
                 </ActiveLink>
               </li>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/">
+                <ActiveLink activeClassName={styles.active} href="/admin-parts">
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
                     parts
@@ -67,7 +70,7 @@ const Header = ({ newLink, admin }) => {
                 </ActiveLink>
               </li>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/">
+                <ActiveLink activeClassName={styles.active} href="/base-client">
                   <a className={styles.menuLink}>
                     <IconClients className={styles.menuIcon} />
                     Clients
@@ -116,7 +119,10 @@ const Header = ({ newLink, admin }) => {
                         <p className={styles.carId}>To</p>
                         <p className={styles.id}>CA - Los Angeles</p>
                       </div>
-                      <Button onClick={() => window.location.reload()} customBtn={styles.addContainer}>
+                      <Button
+                        onClick={() => window.location.reload()}
+                        customBtn={styles.addContainer}
+                      >
                         Add Shipping container
                       </Button>
                     </div>
@@ -192,7 +198,10 @@ const Header = ({ newLink, admin }) => {
             <IconBell />
             <span className={styles.count}>1</span>
           </a>
-          <a href={admin ? '/' : '/profile-settings'} className={styles.bottomIconsLink}>
+          <a
+            href={admin ? '/' : '/profile-settings'}
+            className={styles.bottomIconsLink}
+          >
             <IconUser />
           </a>
         </div>

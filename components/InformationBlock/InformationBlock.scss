@@ -10,6 +10,10 @@
   margin-left: 15px;
   height: max-content;
 
+  span {
+    text-transform: capitalize;
+  }
+
   &:nth-child(odd) {
     max-width: 576px;
 
