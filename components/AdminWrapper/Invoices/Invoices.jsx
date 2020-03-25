@@ -113,9 +113,9 @@ const Invoices = () => (
     <SubHeader />
     <div className={styles.container}>
       <CustomTable>
-        <Pagination />
+        {/*<Pagination />*/}
         <Table columns={columns} data={dataTable} />
-        <Pagination />
+        {/*<Pagination />*/}
       </CustomTable>
     </div>
   </MainLayout>

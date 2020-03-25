@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Field, Form } from 'react-final-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import cx from 'classnames';
 import formatStringByPattern from 'format-string-by-pattern';
+import { getAuto } from '../../../redux/actions/auto';
+import {
+  autoDataSelector,
+  autoDataReceivedSelector,
+} from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
 import CustomTabs from '../../CustomTabs/CustomTabs';
@@ -29,16 +36,52 @@ import {
 } from '../../../utils/validation';
 import Button from '../../Button/Button';
 import IconPlus from '../../../assets/svg/Plus.svg';
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+import Loader from '../../Loader/Loader';
 
 const AutoOpen = () => {
+  const auto = useSelector(autoDataSelector);
+  const isDataReceived = useSelector(autoDataReceivedSelector);
   const [arrPicsDamage, setArrPicsDamage] = useState([]);
 
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const idAuto = router.query.idAuto;
+    dispatch(getAuto({}, +idAuto));
+  }, []);
+
   const onSubmit = async (values) => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
+    console.log(values);
   };
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  const saleObj = auto.data.sale_info;
+  const saleArr = Object.keys(saleObj).map((item, index) => ({
+    id: index + 1,
+    title: item.split('_').join(' '),
+    value: saleObj[item],
+  }));
+
+  const lotObj = auto.data.lot_info;
+  const lotArr = Object.keys(lotObj).map((item, index) => ({
+    id: index + 1,
+    title: item.split('_').join(' '),
+    value: lotObj[item],
+  }));
+
+  const featureObj = auto.data.feature_info;
+  const featureArr = Object.keys(featureObj).map((item, index) => ({
+    id: index + 1,
+    title: item.split('_').join(' '),
+    value: featureObj[item],
+  }));
+
+  console.log(auto.data.ship_info.disassembly);
 
   return (
     <MainLayout admin>
@@ -98,6 +141,7 @@ const AutoOpen = () => {
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
                         parse={formatStringByPattern('99 9999 9999 9999')}
+                        defaultValue={auto.data.ship_info.tracking_id || ''}
                       >
                         {renderInput({
                           label: 'Tracking id:',
@@ -126,6 +170,7 @@ const AutoOpen = () => {
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
                         parse={formatStringByPattern('999999999')}
+                        defaultValue={auto.data.ship_info.container_id || ''}
                       >
                         {renderInput({
                           label: 'Container id:',
@@ -155,10 +200,11 @@ const AutoOpen = () => {
                           {renderRadio({
                             label: 'Yes',
                             title: 'Yes',
-                            checked: true,
+                            checked: 'checked',
                             id: 'disassemblyYes',
                           })}
                         </Field>
+                        <p>{auto.data.ship_info.disassembly ?  '1' : '2'}</p>
                         <Field name="disassembly" type="radio">
                           {renderRadio({
                             label: 'No',
@@ -183,39 +229,49 @@ const AutoOpen = () => {
                 <div className={styles.widthBlock}>
                   <InformationBlock>
                     <>
-                      {lot.map(item => (
+                      {lotArr.map(item => (
                         <div
                           className={styles.items}
-                          key={`${item.id}${item.title}`}
+                          key={item.id}
                         >
-                          <span>{item.title}</span>
-                          <span className={styles.widthItems}>{item.text}</span>
+                          <span>{item.title}:</span>
+                          <span className={styles.widthItems}>{item.value}</span>
                         </div>
                       ))}
                     </>
                   </InformationBlock>
                   <InformationBlock>
                     <>
-                      {sale.map(item => (
+                      <div
+                        className={styles.items}
+                      >
+                        <span>Sale Information</span>
+                      </div>
+                      {saleArr.map(item => (
                         <div
                           className={styles.items}
-                          key={`${item.id}${item.title}`}
+                          key={item.id}
                         >
-                          <span>{item.title}</span>
-                          <span className={styles.widthItems}>{item.text}</span>
+                          <span>{item.title}:</span>
+                          <span className={styles.widthItems}>{item.value}</span>
                         </div>
                       ))}
                     </>
                   </InformationBlock>
                   <InformationBlock>
+                    <div
+                      className={styles.items}
+                    >
+                      <span>Features</span>
+                    </div>
                     <>
-                      {features.map(item => (
+                      {featureArr.map(item => (
                         <div
                           className={styles.items}
-                          key={`${item.id}${item.title}`}
+                          key={item.id}
                         >
-                          <span>{item.title}</span>
-                          <span className={styles.widthItems}>{item.text}</span>
+                          <span>{item.title}:</span>
+                          <span className={styles.widthItems}>{item.value}</span>
                         </div>
                       ))}
                     </>

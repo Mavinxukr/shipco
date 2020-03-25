@@ -10,7 +10,7 @@ const Popup = ({
   <div className={cx(styles.popup, customPopup)}>
     <div className={styles.popupHeader}>
       <h4 className={styles.popupTitle}>
-        {title} <span className={styles.popupSubTitle}>{subTitle}</span>
+        {title} {subTitle && <span className={styles.popupSubTitle}>{subTitle}</span>}
       </h4>
       <button
         type="button"
@@ -25,7 +25,7 @@ const Popup = ({
 export default Popup;
 
 Popup.propTypes = {
-  subTitle: PropTypes.string,
+  subTitle: PropTypes.number,
   customPopup: PropTypes.string,
   setIsPopupOpen: PropTypes.func,
   title: PropTypes.string,

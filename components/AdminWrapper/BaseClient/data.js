@@ -14,12 +14,7 @@ export const columns = [
               idUser: value,
             },
           }}>
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                console.log(value);
-              }}
-            >
+            <a>
               <span>{value}</span>
             </a>
           </Link>
@@ -40,7 +35,7 @@ export const columns = [
       },
       {
         Header: 'Address',
-        accessor: 'address',
+        accessor: 'full_address',
       },
       {
         Header: 'Payment Information',

@@ -62,6 +62,12 @@ th:first-child {
   align-items: center;
 }
 
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
+}
+
 .btnIcon {
   background: $white;
   color: $colorBackground;
@@ -106,9 +112,53 @@ th:first-child {
 }
 
 .id,
-.model,
-.lot,
-.paiment,
+td span,
 .not{
   color: $colorBackground;
+}
+
+.submitPopup {
+  padding-left: 167px;
+  width: 100%;
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}
+
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: auto;
+
+  .label {
+    margin: 0 31px 0 0;
+  }
+}
+
+.widthInputBlock {
+  width: 360px;
+}
+
+td.paiment {
+  display: grid;
+
+  a {
+    color: $colorBackground;
+  }
+}
+
+td p span:before {
+  content: '$';
 }

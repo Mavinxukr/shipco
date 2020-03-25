@@ -23,6 +23,7 @@
 .popupTitle {
   color: $colorBackground;
   margin-bottom: 30px;
+  text-transform: uppercase;
 }
 
 .close {
@@ -32,4 +33,12 @@
 .popupSubTitle {
   color: $colorContent;
   margin-left: 6px;
+
+  &:before {
+    content: '(ID ';
+  }
+
+  &:after {
+    content: ')';
+  }
 }
