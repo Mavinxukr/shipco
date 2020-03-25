@@ -33,8 +33,6 @@ const Overview = () => {
     return <Loader />;
   }
 
-  console.log(overviews.vehicles);
-
   return (
     <MainLayout>
       <div className={styles.container}>
