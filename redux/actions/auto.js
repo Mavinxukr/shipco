@@ -6,6 +6,20 @@ export const getAuto = (params, id) => ({
   id,
 });
 
+export const updateAuto = (params, body, id) => ({
+  type: actionTypes.auto.update,
+  params,
+  body,
+  id,
+});
+
+export const deleteAuto = (params, body, id) => ({
+  type: actionTypes.auto.update,
+  params,
+  body,
+  id,
+});
+
 export const getAutoSuccess = body => ({
   type: actionTypes.auto.success,
   body,

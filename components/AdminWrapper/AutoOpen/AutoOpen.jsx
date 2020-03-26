@@ -20,7 +20,7 @@ import Radio from '../../Radio/Radio';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import styles from './AutoOpen.scss';
 import {
-  features, stateOptions, lot, sale, damage, status,
+  stateOptions, damage, status,
 } from './data';
 import {
   renderInput,
@@ -67,12 +67,20 @@ const AutoOpen = () => {
     value: saleObj[item],
   }));
 
+  saleArr[1].title = 'Lane/Item/Grid/Row';
+
   const lotObj = auto.data.lot_info;
   const lotArr = Object.keys(lotObj).map((item, index) => ({
     id: index + 1,
     title: item.split('_').join(' '),
     value: lotObj[item],
   }));
+
+  lotArr[0].title = 'Lot # ';
+  lotArr[4].title = 'Primary Damage';
+  lotArr[5].title = 'Secondary Damage';
+  lotArr[6].title = 'Est. Retail Value';
+  lotArr[7].title = 'VIN';
 
   const featureObj = auto.data.feature_info;
   const featureArr = Object.keys(featureObj).map((item, index) => ({
@@ -81,7 +89,29 @@ const AutoOpen = () => {
     value: featureObj[item],
   }));
 
-  console.log(auto.data.ship_info.disassembly);
+  featureArr[2].title = 'Engine Type';
+  featureArr[4].title = 'Transmission';
+
+  const arrTypes = [
+    'auction_picture',
+    'warehouse_picture',
+    'container_picture',
+    'car_fax_report',
+    'invoice',
+    'checklist_report',
+    'shipping_damage',
+  ];
+
+  const getArr = (items, arr) => items.map((item, index) => {
+    const images = arr.filter(itemChild => itemChild.type === item);
+    return {
+      id: index + 1,
+      title: item,
+      images,
+    };
+  });
+
+  const imagesData = getArr(arrTypes, auto.data.document);
 
   return (
     <MainLayout admin>
@@ -93,10 +123,14 @@ const AutoOpen = () => {
             <div className={styles.container}>
               <div className={styles.flex}>
                 <div className={styles.maxWidth}>
-                  <CustomTabs />
+                  <CustomTabs data={imagesData} />
                   <div className={styles.flex}>
                     <div className={styles.fullWidth}>
-                      <Field name="report" type="file">
+                      <Field
+                        name="car_fax_report"
+                        type="file"
+                        defaultValue={imagesData[3].images.length !== 0 ? imagesData[3].images[0].link : ''}
+                      >
                         {renderInputFile({
                           label: 'CarFax report',
                           classNameWrapper: styles.popupFieldRow,
@@ -109,7 +143,11 @@ const AutoOpen = () => {
                           onClickForIcon: () => form.change('report', ''),
                         })}
                       </Field>
-                      <Field name="invoice" type="file">
+                      <Field
+                        name="invoice"
+                        type="file"
+                        defaultValue={imagesData[4].images.length !== 0 ? imagesData[4].images[0].link : ''}
+                      >
                         {renderInputFile({
                           label: 'Invoice',
                           classNameWrapper: styles.popupFieldRow,
@@ -122,7 +160,11 @@ const AutoOpen = () => {
                           onClickForIcon: () => form.change('invoice', ''),
                         })}
                       </Field>
-                      <Field name="creport" type="file">
+                      <Field
+                        name="checklist_report"
+                        type="file"
+                        defaultValue={imagesData[5].images.length !== 0 ? imagesData[5].images[0].link : ''}
+                      >
                         {renderInputFile({
                           label: 'Checklist report',
                           classNameWrapper: styles.popupFieldRow,
@@ -153,13 +195,12 @@ const AutoOpen = () => {
                       <div className={cx(styles.fullWidth, styles.flexInput)}>
                         <Field
                           name="loading"
-                          validate={required}
-                          isRequired
                           component={renderSelect({
                             placeholder: '',
                             label: 'Point of loading:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
+                            defaultInputValue: auto.data.ship_info.point_load[0] || '',
                           })}
                           options={stateOptions}
                         />
@@ -182,13 +223,12 @@ const AutoOpen = () => {
                       <div className={cx(styles.fullWidth, styles.flexInput)}>
                         <Field
                           name="delivery"
-                          validate={required}
-                          isRequired
                           component={renderSelect({
                             placeholder: '',
                             label: 'Point of delivery:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
+                            defaultInputValue: auto.data.ship_info.point_delivery[0] || '',
                           })}
                           options={stateOptions}
                         />
@@ -204,7 +244,7 @@ const AutoOpen = () => {
                             id: 'disassemblyYes',
                           })}
                         </Field>
-                        <p>{auto.data.ship_info.disassembly ?  '1' : '2'}</p>
+                        <p>{auto.data.ship_info.disassembly ? '1' : '2'}</p>
                         <Field name="disassembly" type="radio">
                           {renderRadio({
                             label: 'No',

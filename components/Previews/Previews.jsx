@@ -23,24 +23,24 @@ const Previews = ({
         ...arrPics,
         ...acceptedFiles.map(pic => ({
           ...pic,
-          preview: URL.createObjectURL(pic),
+          link: URL.createObjectURL(pic),
         })),
       ]);
     },
   });
 
-  const handleRemoveItem = (preview) => {
-    setArrPics(arrPics.filter(item => item.preview !== preview));
+  const handleRemoveItem = (link) => {
+    setArrPics(arrPics.filter(item => item.link !== link));
   };
 
   const thumbs = arrPics.map(pic => (
-    <div className={styles.thumb} key={pic.preview}>
+    <div className={styles.thumb} key={pic.link}>
       <div className={styles.thumbInner}>
-        <img src={pic.preview} className={styles.img} />
+        <img src={pic.link} className={styles.img} alt={pic.link} />
         <button
           type="button"
           className={styles.removeIcon}
-          onClick={() => handleRemoveItem(pic.preview)}
+          onClick={() => handleRemoveItem(pic.link)}
         >
           <IconRemoveImage />
         </button>

@@ -155,11 +155,13 @@ const Client = () => {
                 initialPage={initialPage}
                 action={getClient}
               />
-              <Table
-                columns={columns}
-                data={client.data}
-                arrAutoId={arrAutoId}
-              />
+              <div className={styles.scrollTable}>
+                <Table
+                  columns={columns}
+                  data={client.data}
+                  arrAutoId={arrAutoId}
+                />
+              </div>
               <Pagination
                 params={client.links}
                 countPagination={countPagination}
