@@ -199,7 +199,7 @@ const Home = () => {
         {/*    </div> */}
         {/*  </div> */}
         {/* </div> */}
-        <div className={styles.container}>
+        <div className={cx(styles.container, styles.mediaWidth)}>
           <h2 className={styles.testimonialsTitle}>
             <IconQuotes className={styles.testimonialsIcon} />
             Testimonials

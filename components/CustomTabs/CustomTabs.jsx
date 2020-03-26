@@ -84,12 +84,12 @@ const AntTab = withStyles(theme => ({
   selected: {},
 }))(props => <Tab disableRipple {...props} />);
 
-const CustomTabs = () => {
+const CustomTabs = ({ data }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [arrPicsActions, setArrPicsActions] = useState([]);
-  const [arrPicsWarehouses, setArrPicsWarehouses] = useState([]);
-  const [arrPicsContainer, setArrPicsContainer] = useState([]);
+  const [arrPicsActions, setArrPicsActions] = useState(data[0].images);
+  const [arrPicsWarehouses, setArrPicsWarehouses] = useState(data[1].images);
+  const [arrPicsContainer, setArrPicsContainer] = useState(data[2].images);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

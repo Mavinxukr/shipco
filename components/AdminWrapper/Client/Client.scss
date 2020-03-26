@@ -162,3 +162,8 @@ td.paiment {
 td p span:before {
   content: '$';
 }
+
+.scrollTable {
+  width: 100%;
+  overflow: auto;
+}

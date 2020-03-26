@@ -142,11 +142,13 @@ const BaseClient = () => {
             initialPage={initialPage}
             action={getBaseClient}
           />
-          <Table
-            columns={columns}
-            data={baseClient.data}
-            arrClientsId={arrClientsId}
-          />
+          <div className={styles.scrollTable}>
+            <Table
+              columns={columns}
+              data={baseClient.data}
+              arrClientsId={arrClientsId}
+            />
+          </div>
           <Pagination
             params={baseClient.links}
             countPagination={countPagination}

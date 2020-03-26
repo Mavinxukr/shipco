@@ -55,6 +55,13 @@
   }
 }
 
+.mediaWidth {
+  @media screen and (max-width: 1400px){
+    margin: 0 auto;
+    max-width: 90%;
+  }
+}
+
 
 .containerHeader{
   align-items: center;
