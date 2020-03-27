@@ -1,4 +1,6 @@
-import React, { useEffect, forwardRef, useState, useRef } from 'react';
+import React, {
+  useEffect, forwardRef, useState, useRef,
+} from 'react';
 import { usePagination, useTable, useRowSelect } from 'react-table';
 import cx from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
@@ -524,6 +526,8 @@ const Table = ({ columns, data, arrAutoId }) => {
     },
   );
 
+  console.log(data);
+
   return (
     <>
       <table {...getTableProps()}>
@@ -580,16 +584,16 @@ const Table = ({ columns, data, arrAutoId }) => {
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
+                          href={
+                            cell.row.original.document.length === 2
+                              ? cell.row.original.document[1].link
+                              : '/'
+                          }
                           onClick={(e) => {
-                            if (cell.row.original.document.length === 1) {
+                            if (cell.row.original.document.length !== 2) {
                               e.preventDefault();
                             }
                           }}
-                          href={
-                            cell.row.original.document.length === 1
-                              ? '/'
-                              : cell.row.original.document[1].link
-                          }
                         >
                           Shipping charge invoice
                         </a>
