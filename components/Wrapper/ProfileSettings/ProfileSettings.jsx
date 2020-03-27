@@ -63,7 +63,7 @@ const ProfileSettings = () => {
             handleSubmit, submitting, invalid,
           }) => (
             <form onSubmit={handleSubmit} className={styles.form}>
-              <ImageUpload image={image} setImage={setImage} />
+              <ImageUpload customImageUpload={styles.heightBlock} image={image} setImage={setImage} />
               <div className={styles.flex}>
                 <div>
                   <Field

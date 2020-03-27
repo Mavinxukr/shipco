@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import cx from 'classnames';
 import formatStringByPattern from 'format-string-by-pattern';
-import { getAuto } from '../../../redux/actions/auto';
+import { getAuto, updateAuto } from '../../../redux/actions/auto';
 import {
   autoDataSelector,
   autoDataReceivedSelector,
@@ -19,13 +19,10 @@ import Previews from '../../Previews/Previews';
 import Radio from '../../Radio/Radio';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import styles from './AutoOpen.scss';
-import {
-  stateOptions, damage, status,
-} from './data';
+import { stateOptions, damage, status } from './data';
 import {
   renderInput,
   renderSelect,
-  renderRadio,
   renderInputFile,
 } from '../../../utils/renderInputs';
 import Pickers from '../../Pickers/Pickers';
@@ -37,6 +34,25 @@ import {
 import Button from '../../Button/Button';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import Loader from '../../Loader/Loader';
+
+const arrTypes = [
+  'auction_picture',
+  'warehouse_picture',
+  'container_picture',
+  'car_fax_report',
+  'invoice',
+  'checklist_report',
+  'shipping_damage',
+];
+
+const getArr = (items, arr) => items.map((item, index) => {
+  const images = arr.filter(itemChild => itemChild.type === item);
+  return {
+    id: index + 1,
+    title: item,
+    images,
+  };
+});
 
 const AutoOpen = () => {
   const auto = useSelector(autoDataSelector);
@@ -52,9 +68,11 @@ const AutoOpen = () => {
     dispatch(getAuto({}, +idAuto));
   }, []);
 
-  const onSubmit = async (values) => {
-    console.log(values);
-  };
+  useEffect(() => {
+    if (auto && auto.data.document.length > 0) {
+      setArrPicsDamage(getArr(arrTypes, auto.data.document)[6].images);
+    }
+  }, [auto]);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -92,26 +110,25 @@ const AutoOpen = () => {
   featureArr[2].title = 'Engine Type';
   featureArr[4].title = 'Transmission';
 
-  const arrTypes = [
-    'auction_picture',
-    'warehouse_picture',
-    'container_picture',
-    'car_fax_report',
-    'invoice',
-    'checklist_report',
-    'shipping_damage',
-  ];
-
-  const getArr = (items, arr) => items.map((item, index) => {
-    const images = arr.filter(itemChild => itemChild.type === item);
-    return {
-      id: index + 1,
-      title: item,
-      images,
-    };
-  });
-
   const imagesData = getArr(arrTypes, auto.data.document);
+
+  const onSubmit = async (values) => {
+    dispatch(
+      updateAuto(
+        {},
+        {
+          ship: 1,
+          ...values,
+          point_load_city: values.point_load_city && values.point_load_city.label,
+          point_delivery_city: values.point_delivery_city && values.point_delivery_city.label,
+          // document: [{ type: 'shipping_damage', file: [arrPicsDamage] }],
+        },
+        auto.data.id,
+      ),
+    );
+  };
+
+  console.log('arrPicsDamage', arrPicsDamage);
 
   return (
     <MainLayout admin>
@@ -129,7 +146,11 @@ const AutoOpen = () => {
                       <Field
                         name="car_fax_report"
                         type="file"
-                        defaultValue={imagesData[3].images.length !== 0 ? imagesData[3].images[0].link : ''}
+                        defaultValue={
+                          imagesData[3].images.length !== 0
+                            ? imagesData[3].images[0].link
+                            : ''
+                        }
                       >
                         {renderInputFile({
                           label: 'CarFax report',
@@ -146,7 +167,11 @@ const AutoOpen = () => {
                       <Field
                         name="invoice"
                         type="file"
-                        defaultValue={imagesData[4].images.length !== 0 ? imagesData[4].images[0].link : ''}
+                        defaultValue={
+                          imagesData[4].images.length !== 0
+                            ? imagesData[4].images[0].link
+                            : ''
+                        }
                       >
                         {renderInputFile({
                           label: 'Invoice',
@@ -163,7 +188,11 @@ const AutoOpen = () => {
                       <Field
                         name="checklist_report"
                         type="file"
-                        defaultValue={imagesData[5].images.length !== 0 ? imagesData[5].images[0].link : ''}
+                        defaultValue={
+                          imagesData[5].images.length !== 0
+                            ? imagesData[5].images[0].link
+                            : ''
+                        }
                       >
                         {renderInputFile({
                           label: 'Checklist report',
@@ -179,7 +208,7 @@ const AutoOpen = () => {
                       </Field>
                       <h4 className={styles.title}>Shipping Information</h4>
                       <Field
-                        name="tracking"
+                        name="tracking_id"
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
                         parse={formatStringByPattern('99 9999 9999 9999')}
@@ -194,20 +223,21 @@ const AutoOpen = () => {
                       </Field>
                       <div className={cx(styles.fullWidth, styles.flexInput)}>
                         <Field
-                          name="loading"
+                          name="point_load_city"
                           component={renderSelect({
                             placeholder: '',
                             label: 'Point of loading:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            defaultInputValue: auto.data.ship_info.point_load[0] || '',
+                            defaultInputValue:
+                              auto.data.ship_info.point_load[0] || '',
                           })}
                           options={stateOptions}
                         />
                         <Pickers id="loadind" />
                       </div>
                       <Field
-                        name="container"
+                        name="container_id"
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
                         parse={formatStringByPattern('999999999')}
@@ -222,13 +252,14 @@ const AutoOpen = () => {
                       </Field>
                       <div className={cx(styles.fullWidth, styles.flexInput)}>
                         <Field
-                          name="delivery"
+                          name="point_delivery_city"
                           component={renderSelect({
                             placeholder: '',
                             label: 'Point of delivery:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            defaultInputValue: auto.data.ship_info.point_delivery[0] || '',
+                            defaultInputValue:
+                              auto.data.ship_info.point_delivery[0] || '',
                           })}
                           options={stateOptions}
                         />
@@ -236,22 +267,35 @@ const AutoOpen = () => {
                       </div>
                       <div className={styles.flexRadio}>
                         <p className={styles.label}>Disassembly</p>
-                        <Field name="disassembly" type="radio">
-                          {renderRadio({
-                            label: 'Yes',
-                            title: 'Yes',
-                            checked: 'checked',
-                            id: 'disassemblyYes',
-                          })}
-                        </Field>
-                        <p>{auto.data.ship_info.disassembly ? '1' : '2'}</p>
-                        <Field name="disassembly" type="radio">
-                          {renderRadio({
-                            label: 'No',
-                            title: 'No',
-                            checked: false,
-                            id: 'disassemblyNo',
-                          })}
+                        <Field name="disassembly">
+                          {({ input }) => (
+                            <div>
+                              <Radio
+                                name={input.name}
+                                title="Yes"
+                                value="Yes"
+                                checked={
+                                  input.value === 'Yes'
+                                  || auto.data.ship_info.disassembly
+                                }
+                                onChange={input.onChange}
+                                inputName="Yes"
+                                id="yes"
+                              />
+                              <Radio
+                                name={input.name}
+                                title="No"
+                                value="No"
+                                checked={
+                                  input.value === 'No'
+                                  || !auto.data.ship_info.disassembly
+                                }
+                                onChange={input.onChange}
+                                inputName="No"
+                                id="no"
+                              />
+                            </div>
+                          )}
                         </Field>
                       </div>
                       <div className={styles.submit}>
@@ -270,48 +314,41 @@ const AutoOpen = () => {
                   <InformationBlock>
                     <>
                       {lotArr.map(item => (
-                        <div
-                          className={styles.items}
-                          key={item.id}
-                        >
+                        <div className={styles.items} key={item.id}>
                           <span>{item.title}:</span>
-                          <span className={styles.widthItems}>{item.value}</span>
+                          <span className={styles.widthItems}>
+                            {item.value}
+                          </span>
                         </div>
                       ))}
                     </>
                   </InformationBlock>
                   <InformationBlock>
                     <>
-                      <div
-                        className={styles.items}
-                      >
+                      <div className={styles.items}>
                         <span>Sale Information</span>
                       </div>
                       {saleArr.map(item => (
-                        <div
-                          className={styles.items}
-                          key={item.id}
-                        >
+                        <div className={styles.items} key={item.id}>
                           <span>{item.title}:</span>
-                          <span className={styles.widthItems}>{item.value}</span>
+                          <span className={styles.widthItems}>
+                            {item.value}
+                          </span>
                         </div>
                       ))}
                     </>
                   </InformationBlock>
                   <InformationBlock>
-                    <div
-                      className={styles.items}
-                    >
+                    <div className={styles.items}>
                       <span>Features</span>
                     </div>
                     <>
                       {featureArr.map(item => (
-                        <div
-                          className={styles.items}
-                          key={item.id}
-                        >
+                        <div className={styles.items} key={item.id}>
                           <span>{item.title}:</span>
-                          <span className={styles.widthItems}>{item.value}</span>
+                          <span className={styles.widthItems}>
+                            {item.value}
+                          </span>
                         </div>
                       ))}
                     </>

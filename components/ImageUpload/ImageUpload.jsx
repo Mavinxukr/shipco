@@ -1,9 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
+import cx from 'classnames';
 import styles from './ImageUpload.scss';
 import IconPlus from '../../assets/svg/Plus.svg';
 
-const ImageUpload = ({ image, setImage, baseClient }) => {
+const ImageUpload = ({ image, setImage, baseClient, customImageUpload }) => {
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       return;
@@ -29,7 +30,7 @@ const ImageUpload = ({ image, setImage, baseClient }) => {
           />
         </div>
       ) : (
-        <div className={styles.changeImage}>
+        <div className={cx(styles.changeImage, customImageUpload)}>
           <img className={styles.previewImg} src={_.isObject(image) && URL.createObjectURL(image) || image} alt="face" />
           <div className={styles.file}>
             <label className={styles.labelFileInput} htmlFor="upload-photo">

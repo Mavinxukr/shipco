@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import PropsType from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { currentUserDataSelector } from '../../../utils/selectors';
 import ActiveLink from '../ActiveLink/ActiveLink';
 import Button from '../../Button/Button';
 import HoverPopup from '../../HoverPopup/HoverPopup';
@@ -16,12 +18,21 @@ import IconClients from '../../../assets/svg/Clients.svg';
 import IconBell from '../../../assets/svg/Group (4).svg';
 import IconUser from '../../../assets/svg/Vector (1).svg';
 import styles from './Header.scss';
+import { getCurrentUser } from '../../../redux/actions/currentUser';
 
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
   const classNameForOpenContainer = cx(styles.menuItem, {
     [styles.activePopup]: isOpenContainerPanel,
   });
+
+  const user = useSelector(currentUserDataSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCurrentUser({}));
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -194,10 +205,14 @@ const Header = ({ newLink, admin }) => {
         )}
 
         <div className={styles.bottomIconsItems}>
-          <a href="/notification" className={styles.bottomIconsLink}>
-            <IconBell />
-            {/*<span className={styles.count}>1</span>*/}
-          </a>
+          {admin ? null : (
+            <a href="/notification" className={styles.bottomIconsLink}>
+              <IconBell />
+              {user.new_notification > 0 ? (
+                <span className={styles.count}>{user.new_notification}</span>
+              ) : null}
+            </a>
+          )}
           <a
             href={admin ? '/' : '/profile-settings'}
             className={styles.bottomIconsLink}
