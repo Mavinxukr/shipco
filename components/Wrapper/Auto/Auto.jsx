@@ -1,19 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import cx from 'classnames';
+import { useSelector, useDispatch } from 'react-redux';
 import { usePagination, useRowSelect, useTable } from 'react-table';
+import { getAutoClient } from '../../../redux/actions/autoClient';
+import {
+  autoClientDataSelector,
+  autoClientDataReceivedSelector,
+} from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import InputNumber from '../../InputNumber/InputNumber';
-import {
-  stateOptions, columns, dataTable, filter,
-} from './data';
+import { stateOptions, columns, filter } from './data';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Filter from '../../Filter/Filter';
 import Button from '../../Button/Button';
+import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
 import styles from './Auto.scss';
+import Loader from '../../Loader/Loader';
+import { getBaseClient } from '../../../redux/actions/baseClient';
 
 const Auto = () => {
+  const autoClient = useSelector(autoClientDataSelector);
+  const isDataReceived = useSelector(autoClientDataReceivedSelector);
+
+  const [initialPage, setInitialPage] = useState(0);
+  const [countPagination, setCountPagination] = useState('10');
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAutoClient({}));
+  }, []);
+
+  useEffect(() => {
+    if (autoClient) {
+      setCountPagination(`${autoClient.links.per_page}`);
+    }
+  }, [autoClient]);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
   const onSubmit = async (values) => {
     console.log(values);
   };
@@ -147,7 +176,41 @@ const Auto = () => {
             </Filter>
           </div>
           <CustomTable title="">
-            <Table columns={columns} data={dataTable} />
+            <Pagination
+              params={autoClient.links}
+              countPagination={countPagination}
+              setInitialPage={setInitialPage}
+              initialPage={initialPage}
+              action={getAutoClient}
+              onPageChange={(data) => {
+                dispatch(
+                  getAutoClient({
+                    page: data.selected + 1,
+                    countpage: countPagination,
+                  }),
+                );
+                setInitialPage(data.selected);
+              }}
+            />
+            <div className={styles.scrollTable}>
+              <Table columns={columns} data={autoClient.data} />
+            </div>
+            <Pagination
+              params={autoClient.links}
+              countPagination={countPagination}
+              setInitialPage={setInitialPage}
+              initialPage={initialPage}
+              action={getAutoClient}
+              onPageChange={(data) => {
+                dispatch(
+                  getAutoClient({
+                    page: data.selected + 1,
+                    countpage: countPagination,
+                  }),
+                );
+                setInitialPage(data.selected);
+              }}
+            />
           </CustomTable>
         </div>
       </div>
@@ -163,15 +226,7 @@ const Table = ({ columns, data }) => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageSize },
+    rows,
   } = useTable(
     {
       columns,
@@ -183,166 +238,40 @@ const Table = ({ columns, data }) => {
   );
 
   return (
-    <>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map(cell => (
+                <td
+                  className={`Auto-${cell.column.id}`}
+                  {...cell.getCellProps()}
+                >
+                  <>{cell.render('Cell')}</>
+                  <>
+                    {cell.column.id === 'id' && (
+                      <span className={styles.index}>
+                        {cell.row.index + 1}.
+                      </span>
+                    )}
+                  </>
+                </td>
               ))}
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td
-                    className={`Auto-${cell.column.id}`}
-                    {...cell.getCellProps()}
-                  >
-                    {cell.column.id === 'src' ? (
-                      <>
-                        <img
-                          className={styles.imageTable}
-                          src={cell.value}
-                          alt=""
-                        />
-                      </>
-                    ) : (
-                      <>{cell.render('Cell')}</>
-                    )}
-                    <>
-                      {cell.column.id === 'id' && (
-                        <span className={styles.index}>{cell.row.index + 1}.</span>
-                      )}
-                    </>
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
-    </>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };

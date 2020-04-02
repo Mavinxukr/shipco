@@ -14,11 +14,14 @@ const Input = ({
   widthInputBlock,
   accept,
   file,
+  id,
+  fileValue,
 }) => (
   <div className={cx(styles.inputBlock, widthInputBlock)}>
     <input
       className={cx(styles.input, customInput)}
       placeholder={placeholder}
+      id={id}
       {...addInputProps}
       accept={accept}
     />
@@ -35,7 +38,7 @@ const Input = ({
       {file && (
       <>
         {addInputProps.value === '' ? (
-          <p className={styles.chosenFile}>No file chosen</p>
+          <p className={styles.chosenFile}>{fileValue || 'No file chosen'}</p>
         ) : (
           <p className={styles.chosenFileValue}>{addInputProps.value}</p>
         )}
@@ -47,6 +50,8 @@ const Input = ({
 
 Input.propTypes = {
   customInput: PropTypes.string,
+  fileValue: PropTypes.string,
+  id: PropTypes.string,
   widthInputBlock: PropTypes.string,
   classNameWrapperForIcon: PropTypes.string,
   placeholder: PropTypes.string,

@@ -141,6 +141,15 @@ const BaseClient = () => {
             setInitialPage={setInitialPage}
             initialPage={initialPage}
             action={getBaseClient}
+            onPageChange={(data) => {
+              dispatch(
+                getBaseClient({
+                  page: data.selected + 1,
+                  countpage: countPagination,
+                }),
+              );
+              setInitialPage(data.selected);
+            }}
           />
           <div className={styles.scrollTable}>
             <Table
@@ -155,14 +164,20 @@ const BaseClient = () => {
             setInitialPage={setInitialPage}
             initialPage={initialPage}
             action={getBaseClient}
+            onPageChange={(data) => {
+              dispatch(
+                getBaseClient({
+                  page: data.selected + 1,
+                  countpage: countPagination,
+                }),
+              );
+              setInitialPage(data.selected);
+            }}
           />
         </CustomTable>
       </div>
       {isPopupOpen && (
-        <Popup
-          setIsPopupOpen={setIsPopupOpen}
-          title="Add New Client "
-        >
+        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Client ">
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (

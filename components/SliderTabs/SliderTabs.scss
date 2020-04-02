@@ -45,9 +45,21 @@
 
 .customSlider {
   overflow: hidden;
+
+  ul {
+    height: 89px;
+  }
 }
 
 .itemTabs {
   margin-left: -24px!important;
   margin-right: -24px!important;
+}
+
+.noImages{
+  width: 730px;
+  text-align: center;
+  margin: 100px 0;
+  text-transform: uppercase;
+  font-weight: bold;
 }

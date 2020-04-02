@@ -119,6 +119,11 @@
   margin-right: 5px;
 }
 
+.scrollTable {
+  width: 100%;
+  overflow: auto;
+}
+
 .itemFilter {
   margin-top: 10px;
 }
@@ -155,14 +160,16 @@
   margin: 0 10px;
 }
 
-.id,
-.model,
-.lot {
+.id {
   position: relative;
+}
+
+.id a,
+table span {
   color: $colorBackground;
 }
 
-.imageTable {
+table img {
   width: 104px;
   height: 68px;
   object-fit: cover;

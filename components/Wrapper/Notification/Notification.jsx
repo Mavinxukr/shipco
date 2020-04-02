@@ -14,7 +14,6 @@ import { updateStatusNotificationsRequest } from '../../../services/notification
 import styles from './Notification.scss';
 import MainLayout from '../../Layout/Global/Global';
 import Button from '../../Button/Button';
-import IconFilter from '../../../assets/svg/Group (5).svg';
 import IconArrow from '../../../assets/svg/Group (6).svg';
 import IconAuto from '../../../assets/svg/Vector (2).svg';
 import IconRepair from '../../../assets/svg/Group (1).svg';
@@ -157,10 +156,6 @@ const Notification = () => {
       <div className={styles.container}>
         <div className={styles.header}>
           <h4 className={styles.title}>Notifications</h4>
-          <p className={styles.filterText}>
-            <IconFilter className={styles.filterIcon} />
-            Filter
-          </p>
         </div>
         <div className={styles.accordionsContainer}>
           {notificationData.map((item, index) => (

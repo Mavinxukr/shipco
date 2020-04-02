@@ -37,49 +37,6 @@ export const data = [
   },
 ];
 
-export const lot = [
-  {
-    id: 18,
-    title: 'Lot # ',
-    text: 40063659,
-  },
-  {
-    id: 1,
-    title: 'Doc Type:',
-    text: 'QC-IRRECUPERABLE',
-  },
-  {
-    id: 2,
-    title: 'Odometer:',
-    text: '170,747 km (ACTUAL)',
-  },
-  {
-    id: 3,
-    title: 'Highlights:',
-    text: 'Enhancel Vehicles',
-  },
-  {
-    id: 4,
-    title: 'Primary Damage:',
-    text: 'SIDE',
-  },
-  {
-    id: 5,
-    title: 'Secondary Damage:',
-    text: 'REAR END',
-  },
-  {
-    id: 6,
-    title: 'Est. Retail Value:',
-    text: '$14,093 CAD',
-  },
-  {
-    id: 7,
-    title: 'VIN:',
-    text: '3VW637AJ5DM*****',
-  },
-];
-
 export const shipping = [
   {
     id: 18,

@@ -5,6 +5,7 @@ import Input from '../Input/Input';
 import styles from './InputWrapperFile.scss';
 
 const InputWrapperFile = ({
+  id,
   label,
   inputProps,
   icon,
@@ -19,6 +20,7 @@ const InputWrapperFile = ({
   customInput,
   widthInputBlock,
   customLabel,
+  fileValue,
 }) => (
   <div className={cx(styles.wrapper, classNameWrapper)}>
     <>
@@ -27,6 +29,8 @@ const InputWrapperFile = ({
       </span>
       <label className={cx(styles.fileLabel, customLabel)}>
         <Input
+          id={id}
+          fileValue={fileValue}
           addInputProps={inputProps}
           widthInputBlock={widthInputBlock}
           file
@@ -53,8 +57,10 @@ const InputWrapperFile = ({
 
 InputWrapperFile.propTypes = {
   classNameWrapperForIcon: PropTypes.string,
+  fileValue: PropTypes.string,
   classNameWrapperLabel: PropTypes.string,
   label: PropTypes.string,
+  id: PropTypes.string,
   inputProps: PropTypes.object,
   onClickForIcon: PropTypes.func,
   meta: PropTypes.object,
