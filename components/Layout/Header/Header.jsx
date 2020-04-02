@@ -210,7 +210,9 @@ const Header = ({ newLink, admin }) => {
               <IconBell />
               {user.new_notification > 0 ? (
                 <span className={styles.count}>{user.new_notification}</span>
-              ) : null}
+              ) : (
+                <span />
+              )}
             </a>
           )}
           <a

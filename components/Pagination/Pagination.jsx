@@ -7,7 +7,12 @@ import styles from './Pagination.scss';
 import { pagination } from './data';
 
 const Pagination = ({
-  params, action, countPagination, initialPage, setInitialPage,
+  params,
+  action,
+  countPagination,
+  initialPage,
+  setInitialPage,
+  onPageChange,
 }) => {
   const dispatch = useDispatch();
 
@@ -25,7 +30,9 @@ const Pagination = ({
         <span>entries</span>
       </div>
       <div className={styles.paginationFlex}>
-        <span className={styles.margitRight}>Showing {params.from} to {params.to} of {params.total} entries</span>
+        <span className={styles.margitRight}>
+          Showing {params.from} to {params.to} of {params.total} entries
+        </span>
         <div className={styles.paginationFlex}>
           <Button
             customBtn={styles.paginationBtn}
@@ -44,7 +51,7 @@ const Pagination = ({
             pageCount={params.last_page}
             pageRangeDisplayed={5}
             forcePage={initialPage}
-            onPageChange={data => dispatch(action({ page: data.selected + 1 }))}
+            onPageChange={onPageChange}
             containerClassName={styles.paginationBtns}
             previousClassName={styles.paginationBtn}
             nextClassName={styles.paginationBtn}

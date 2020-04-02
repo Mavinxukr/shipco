@@ -14,7 +14,7 @@ export const updateAuto = (params, body, id) => ({
 });
 
 export const deleteAuto = (params, body, id) => ({
-  type: actionTypes.auto.update,
+  type: actionTypes.auto.delete,
   params,
   body,
   id,

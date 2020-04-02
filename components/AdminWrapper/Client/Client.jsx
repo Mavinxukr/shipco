@@ -28,6 +28,7 @@ import Popup from '../../Popup/Popup';
 import { required } from '../../../utils/validation';
 import { renderInput } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
+import { getBaseClient } from '../../../redux/actions/baseClient';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -156,6 +157,15 @@ const Client = () => {
                 setInitialPage={setInitialPage}
                 initialPage={initialPage}
                 action={getClient}
+                onPageChange={(data) => {
+                  dispatch(
+                    getClient({
+                      page: data.selected + 1,
+                      countpage: countPagination,
+                    }),
+                  );
+                  setInitialPage(data.selected);
+                }}
               />
               <div className={styles.scrollTable}>
                 <Table
@@ -170,6 +180,15 @@ const Client = () => {
                 setInitialPage={setInitialPage}
                 initialPage={initialPage}
                 action={getClient}
+                onPageChange={(data) => {
+                  dispatch(
+                    getClient({
+                      page: data.selected + 1,
+                      countpage: countPagination,
+                    }),
+                  );
+                  setInitialPage(data.selected);
+                }}
               />
             </CustomTable>
           ) : (
@@ -525,8 +544,6 @@ const Table = ({ columns, data, arrAutoId }) => {
       ]);
     },
   );
-
-  console.log(data);
 
   return (
     <>

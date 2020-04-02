@@ -38,6 +38,10 @@
 .chosenFile,
 .chosenFileValue{
   padding: 10px 0 10px 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
 }
 
 .chosenFile {

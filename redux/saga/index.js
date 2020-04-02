@@ -13,6 +13,9 @@ import { watchUpdateCurrentClient } from './currentClient/updateCurrentClient';
 import { watchGetAuto } from './auto/getAuto';
 import { watchUpdateAuto } from './auto/updateAuto';
 import { watchDeleteAutoDocument } from './auto/deleteAutoDocument';
+import { watchAutoClient } from './getAutoClient';
+import { watchAutoId } from './getAutoId';
+import { watchParts } from './parts/getParts';
 
 export function* rootSaga() {
   yield all([
@@ -30,5 +33,8 @@ export function* rootSaga() {
     watchGetAuto(),
     watchUpdateAuto(),
     watchDeleteAutoDocument(),
+    watchAutoClient(),
+    watchAutoId(),
+    watchParts(),
   ]);
 }

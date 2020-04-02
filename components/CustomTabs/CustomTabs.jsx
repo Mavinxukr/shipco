@@ -84,12 +84,23 @@ const AntTab = withStyles(theme => ({
   selected: {},
 }))(props => <Tab disableRipple {...props} />);
 
-const CustomTabs = ({ data }) => {
+const CustomTabs = ({
+  arrPicsActions,
+  setArrPicsActions,
+  arrPicsWarehouses,
+  setArrPicsWarehouses,
+  arrPicsContainer,
+  setArrPicsContainer,
+  newArrPicsActions,
+  setNewArrPicsActions,
+  newArrPicsWarehouses,
+  setNewArrPicsWarehouses,
+  newArrPicsContainer,
+  setNewArrPicsContainer,
+  idAuto,
+}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [arrPicsActions, setArrPicsActions] = useState(data[0].images);
-  const [arrPicsWarehouses, setArrPicsWarehouses] = useState(data[1].images);
-  const [arrPicsContainer, setArrPicsContainer] = useState(data[2].images);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -112,26 +123,38 @@ const CustomTabs = ({ data }) => {
       </AppBar>
       <TabPanel value={value} index={0}>
         <Previews
+          idAuto={idAuto}
           setArrPics={setArrPicsActions}
+          setNewArrPics={setNewArrPicsActions}
+          newArrPics={newArrPicsActions}
           arrPics={arrPicsActions}
           icon={<IconPlus className={styles.icon} />}
           title="Add Picture"
+          type="auction_picture"
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Previews
+          idAuto={idAuto}
           setArrPics={setArrPicsWarehouses}
+          setNewArrPics={setNewArrPicsWarehouses}
+          newArrPics={newArrPicsWarehouses}
           arrPics={arrPicsWarehouses}
           icon={<IconPlus className={styles.icon} />}
           title="Add Picture"
+          type="warehouse_picture"
         />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Previews
+          idAuto={idAuto}
           setArrPics={setArrPicsContainer}
           arrPics={arrPicsContainer}
+          newArrPics={newArrPicsContainer}
+          setNewArrPics={setNewArrPicsContainer}
           icon={<IconPlus className={styles.icon} />}
           title="Add Picture"
+          type="container_picture"
         />
       </TabPanel>
     </div>

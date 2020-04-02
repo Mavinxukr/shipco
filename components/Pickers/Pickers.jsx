@@ -9,8 +9,8 @@ import {
 } from '@material-ui/pickers';
 import styles from './Pickers.scss';
 
-const Pickers = ({ id }) => {
-  const [selectedDate, setSelectedDate] = React.useState(new Date(Date.now()));
+const Pickers = ({ id, time }) => {
+  const [selectedDate, setSelectedDate] = React.useState(time);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -40,6 +40,7 @@ const Pickers = ({ id }) => {
 
 Pickers.propTypes = {
   id: PropTypes.string,
+  time: PropTypes.string,
 };
 
 export default Pickers;

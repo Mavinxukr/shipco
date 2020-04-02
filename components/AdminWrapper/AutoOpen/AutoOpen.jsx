@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import cx from 'classnames';
 import formatStringByPattern from 'format-string-by-pattern';
-import { getAuto, updateAuto } from '../../../redux/actions/auto';
+import { getAuto, updateAuto, deleteAuto } from '../../../redux/actions/auto';
 import {
   autoDataSelector,
   autoDataReceivedSelector,
@@ -57,7 +57,14 @@ const getArr = (items, arr) => items.map((item, index) => {
 const AutoOpen = () => {
   const auto = useSelector(autoDataSelector);
   const isDataReceived = useSelector(autoDataReceivedSelector);
+  const [arrPicsActions, setArrPicsActions] = useState([]);
+  const [arrPicsWarehouses, setArrPicsWarehouses] = useState([]);
+  const [arrPicsContainer, setArrPicsContainer] = useState([]);
   const [arrPicsDamage, setArrPicsDamage] = useState([]);
+  const [newArrPicsActions, setNewArrPicsActions] = useState([]);
+  const [newArrPicsWarehouses, setNewArrPicsWarehouses] = useState([]);
+  const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
+  const [newArrPicsDamage, setNewArrPicsDamage] = useState([]);
 
   const router = useRouter();
 
@@ -71,6 +78,9 @@ const AutoOpen = () => {
   useEffect(() => {
     if (auto && auto.data.document.length > 0) {
       setArrPicsDamage(getArr(arrTypes, auto.data.document)[6].images);
+      setArrPicsActions(getArr(arrTypes, auto.data.document)[0].images);
+      setArrPicsWarehouses(getArr(arrTypes, auto.data.document)[1].images);
+      setArrPicsContainer(getArr(arrTypes, auto.data.document)[2].images);
     }
   }, [auto]);
 
@@ -111,6 +121,7 @@ const AutoOpen = () => {
   featureArr[4].title = 'Transmission';
 
   const imagesData = getArr(arrTypes, auto.data.document);
+  const idAuto = auto.data.id;
 
   const onSubmit = async (values) => {
     dispatch(
@@ -119,16 +130,51 @@ const AutoOpen = () => {
         {
           ship: 1,
           ...values,
-          point_load_city: values.point_load_city && values.point_load_city.label,
-          point_delivery_city: values.point_delivery_city && values.point_delivery_city.label,
-          // document: [{ type: 'shipping_damage', file: [arrPicsDamage] }],
+          point_load_city:
+            values.point_load_city && values.point_load_city.label,
+          point_delivery_city:
+            values.point_delivery_city && values.point_delivery_city.label,
+          point_load_date: document.querySelector('#loadind').value,
+          point_delivery_date: document.querySelector('#delivery').value,
+          damage_status:
+            values.damage_status
+            && values.damage_status.toLowerCase().replace(' ', '_'),
+          disassembly: values.disassembly,
+          document: [
+            {
+              type: 'car_fax_report',
+              file: document.querySelector('#car_fax_report').files,
+            },
+            {
+              type: 'invoice',
+              file: document.querySelector('#invoice').files,
+            },
+            {
+              type: 'checklist_report',
+              file: document.querySelector('#checklist_report').files,
+            },
+            {
+              type: 'shipping_damage',
+              file: newArrPicsDamage,
+            },
+            {
+              type: 'auction_picture',
+              file: newArrPicsActions,
+            },
+            {
+              type: 'warehouse_picture',
+              file: newArrPicsWarehouses,
+            },
+            {
+              type: 'container_picture',
+              file: newArrPicsContainer,
+            },
+          ],
         },
         auto.data.id,
       ),
     );
   };
-
-  console.log('arrPicsDamage', arrPicsDamage);
 
   return (
     <MainLayout admin>
@@ -140,70 +186,117 @@ const AutoOpen = () => {
             <div className={styles.container}>
               <div className={styles.flex}>
                 <div className={styles.maxWidth}>
-                  <CustomTabs data={imagesData} />
+                  <CustomTabs
+                    idAuto={idAuto}
+                    arrPicsActions={arrPicsActions}
+                    setArrPicsActions={setArrPicsActions}
+                    arrPicsWarehouses={arrPicsWarehouses}
+                    setArrPicsWarehouses={setArrPicsWarehouses}
+                    arrPicsContainer={arrPicsContainer}
+                    setArrPicsContainer={setArrPicsContainer}
+                    newArrPicsActions={newArrPicsActions}
+                    setNewArrPicsActions={setNewArrPicsActions}
+                    newArrPicsWarehouses={newArrPicsWarehouses}
+                    setNewArrPicsWarehouses={setNewArrPicsWarehouses}
+                    newArrPicsContainer={newArrPicsContainer}
+                    setNewArrPicsContainer={setNewArrPicsContainer}
+                  />
                   <div className={styles.flex}>
                     <div className={styles.fullWidth}>
-                      <Field
-                        name="car_fax_report"
-                        type="file"
-                        defaultValue={
-                          imagesData[3].images.length !== 0
-                            ? imagesData[3].images[0].link
-                            : ''
-                        }
-                      >
+                      <Field name="car_fax_report" type="file">
                         {renderInputFile({
                           label: 'CarFax report',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
                           file: true,
+                          id: 'car_fax_report',
+                          fileValue:
+                            imagesData[3].images.length === 0
+                              ? ''
+                              : imagesData[3].images[0].name,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
-                          onClickForIcon: () => form.change('report', ''),
+                          onClickForIcon: () => {
+                            if (imagesData[3].images.length > 0) {
+                              dispatch(
+                                deleteAuto(
+                                  {},
+                                  {
+                                    ids: imagesData[3].images[0].id,
+                                  },
+                                  idAuto,
+                                ),
+                              );
+                              imagesData[3].images[0].name = '';
+                            }
+                            form.change('car_fax_report', '');
+                          },
                         })}
                       </Field>
-                      <Field
-                        name="invoice"
-                        type="file"
-                        defaultValue={
-                          imagesData[4].images.length !== 0
-                            ? imagesData[4].images[0].link
-                            : ''
-                        }
-                      >
+                      <Field name="invoice" type="file">
                         {renderInputFile({
                           label: 'Invoice',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
+                          id: 'invoice',
+                          fileValue:
+                            imagesData[4].images.length === 0
+                              ? ''
+                              : imagesData[4].images[0].name,
                           file: true,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
-                          onClickForIcon: () => form.change('invoice', ''),
+                          onClickForIcon: () => {
+                            if (imagesData[4].images.length > 0) {
+                              dispatch(
+                                deleteAuto(
+                                  {},
+                                  {
+                                    ids: imagesData[4].images[0].id,
+                                  },
+                                  idAuto,
+                                ),
+                              );
+                              imagesData[4].images[0].name = '';
+                            }
+                            form.change('invoice', '');
+                          },
                         })}
                       </Field>
-                      <Field
-                        name="checklist_report"
-                        type="file"
-                        defaultValue={
-                          imagesData[5].images.length !== 0
-                            ? imagesData[5].images[0].link
-                            : ''
-                        }
-                      >
+                      <Field name="checklist_report" type="file">
                         {renderInputFile({
                           label: 'Checklist report',
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
+                          id: 'checklist_report',
+                          fileValue:
+                            imagesData[5].images.length === 0
+                              ? ''
+                              : imagesData[5].images[0].name,
                           file: true,
                           accept:
                             '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
-                          onClickForIcon: () => form.change('creport', ''),
+                          onClickForIcon: () => {
+                            if (imagesData[5].images.length > 0) {
+                              dispatch(
+                                deleteAuto(
+                                  {},
+                                  {
+                                    ids: imagesData[5].images[0].id,
+                                  },
+                                  idAuto,
+                                ),
+                              );
+                              imagesData[5].images[0].name = '';
+                            }
+                            form.change('checklist_report', '');
+                          },
                         })}
                       </Field>
                       <h4 className={styles.title}>Shipping Information</h4>
@@ -234,7 +327,10 @@ const AutoOpen = () => {
                           })}
                           options={stateOptions}
                         />
-                        <Pickers id="loadind" />
+                        <Pickers
+                          time={auto.data.ship_info.point_load_date}
+                          id="loadind"
+                        />
                       </div>
                       <Field
                         name="container_id"
@@ -263,7 +359,10 @@ const AutoOpen = () => {
                           })}
                           options={stateOptions}
                         />
-                        <Pickers id="delivery" />
+                        <Pickers
+                          time={auto.data.ship_info.point_delivery_date}
+                          id="delivery"
+                        />
                       </div>
                       <div className={styles.flexRadio}>
                         <p className={styles.label}>Disassembly</p>
@@ -273,9 +372,9 @@ const AutoOpen = () => {
                               <Radio
                                 name={input.name}
                                 title="Yes"
-                                value="Yes"
+                                value="1"
                                 checked={
-                                  input.value === 'Yes'
+                                  input.value === '1'
                                   || auto.data.ship_info.disassembly
                                 }
                                 onChange={input.onChange}
@@ -285,9 +384,9 @@ const AutoOpen = () => {
                               <Radio
                                 name={input.name}
                                 title="No"
-                                value="No"
+                                value="0"
                                 checked={
-                                  input.value === 'No'
+                                  input.value === '0'
                                   || !auto.data.ship_info.disassembly
                                 }
                                 onChange={input.onChange}
@@ -367,11 +466,11 @@ const AutoOpen = () => {
                       <div className={styles.items}>
                         <span>Shipping Damage</span>
                         <div className={styles.position}>
-                          <Button customBtn={styles.status}>
-                            {values.status || 'Case closed'}
-                          </Button>
+                          <span className={styles.status}>
+                            {values.damage_status || 'Case closed'}
+                          </span>
                           <HoverPopup>
-                            <Field name="status">
+                            <Field name="damage_status">
                               {({ input }) => (
                                 <>
                                   {status.map(item => (
@@ -384,7 +483,7 @@ const AutoOpen = () => {
                                       title={item.text}
                                       onChange={input.onChange}
                                       checked={
-                                        (item.text === 'Case closed'
+                                        (item.text === 'case_closed'
                                           && input.value === '')
                                         || input.value === item.text
                                       }
@@ -397,11 +496,15 @@ const AutoOpen = () => {
                         </div>
                       </div>
                       <Previews
-                        setArrPics={setArrPicsDamage}
+                        idAuto={idAuto}
                         arrPics={arrPicsDamage}
+                        setArrPics={setArrPicsDamage}
                         customTumd="Previews-reverse"
+                        type="shipping_damage"
                         icon={<IconPlus className={styles.icon} />}
                         title="Add photo"
+                        setNewArrPics={setNewArrPicsDamage}
+                        newArrPics={newArrPicsDamage}
                       />
                     </>
                   </InformationBlock>

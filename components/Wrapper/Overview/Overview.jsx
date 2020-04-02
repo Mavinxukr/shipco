@@ -70,8 +70,15 @@ const Overview = () => {
                     <span className={styles.circle}>e</span>
                   </div>
                   <div className={styles.bg}>
-                    <Link href="/auto/[bid]" as={`/auto/${item.id}`}>
-                      <a className={styles.link}>view</a>
+                    <Link
+                      href={{
+                        pathname: '/auto-new',
+                        query: {
+                          idAuto: item.id,
+                        },
+                      }}
+                    >
+                      <a>view</a>
                     </Link>
                   </div>
                 </div>

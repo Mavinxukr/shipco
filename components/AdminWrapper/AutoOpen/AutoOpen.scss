@@ -110,6 +110,10 @@ input[type="file"] {
   display: flex;
   align-items: center;
   margin-top: 15px;
+
+  & > div {
+    display: flex;
+  }
 }
 
 .label {

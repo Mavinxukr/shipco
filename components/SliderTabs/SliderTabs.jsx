@@ -89,7 +89,7 @@ const AntTab = withStyles(theme => ({
   selected: {},
 }))(props => <Tab disableRipple {...props} />);
 
-const SliderTabs = () => {
+const SliderTabs = ({ autoAuction, autoWerhouse, autoContainer }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -113,31 +113,50 @@ const SliderTabs = () => {
         </AntTabs>
       </AppBar>
       <TabPanel className={styles.itemTabs} value={value} index={0}>
-        <ThumbSlider initialSlide={0}>
-          {sliderItems.map(item => (
-            <div key={item.id} className={styles.slid}>
-              <img src={item.src} alt="a" />
-            </div>
-          ))}
-        </ThumbSlider>
+        {autoAuction.length === 0 ? (
+          <div className={styles.noImages}>
+            there are no pictures
+          </div>
+        ) : (
+          <ThumbSlider initialSlide={0}>
+            {autoAuction.map(item => (
+              <div key={item.id} className={styles.slid}>
+                <img src={item.link} alt={item.name} />
+              </div>
+            ))}
+          </ThumbSlider>
+        )}
+
       </TabPanel>
       <TabPanel className={styles.itemTabs} value={value} index={1}>
-        <ThumbSlider initialSlide={0}>
-          {sliderItems.map(item => (
-            <div key={item.id} className={styles.slid}>
-              <img src={item.src} alt="a" />
-            </div>
-          ))}
-        </ThumbSlider>
+        {autoWerhouse.length === 0 ? (
+          <div className={styles.noImages}>
+            there are no pictures
+          </div>
+        ) : (
+          <ThumbSlider initialSlide={0}>
+            {autoWerhouse.map(item => (
+              <div key={item.id} className={styles.slid}>
+                <img src={item.link} alt={item.name} />
+              </div>
+            ))}
+          </ThumbSlider>
+        )}
       </TabPanel>
       <TabPanel className={styles.itemTabs} value={value} index={2}>
-        <ThumbSlider initialSlide={0}>
-          {sliderItems.map(item => (
-            <div key={item.id} className={styles.slid}>
-              <img src={item.src} alt="a" />
-            </div>
-          ))}
-        </ThumbSlider>
+        {autoContainer.length === 0 ? (
+          <div className={styles.noImages}>
+            there are no pictures
+          </div>
+        ) : (
+          <ThumbSlider initialSlide={0}>
+            {autoContainer.map(item => (
+              <div key={item.id} className={styles.slid}>
+                <img src={item.link} alt={item.name} />
+              </div>
+            ))}
+          </ThumbSlider>
+        )}
       </TabPanel>
     </div>
   );

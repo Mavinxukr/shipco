@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
+import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
-import cx from 'classnames';
+import { getParts } from '../../../redux/actions/parts';
+import {
+  partsDataSelector,
+  partsDataReceivedSelector,
+} from '../../../utils/selectors';
+import Loader from '../../Loader/Loader';
 import MainLayout from '../../Layout/Global/Global';
 import Popup from '../../Popup/Popup';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
@@ -15,10 +21,15 @@ import IconFilter from '../../../assets/svg/Group (5).svg';
 import IconSearch from '../../../assets/svg/Search_icon.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns, dataTable, stateOptions } from './data';
+import { columns, stateOptions } from './data';
 import styles from './Parts.scss';
-import { required, mustBeNumber, composeValidators } from '../../../utils/validation';
+import {
+  required,
+  mustBeNumber,
+  composeValidators,
+} from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
+import Pagination from '../../Pagination/Pagination';
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -43,15 +54,7 @@ const Table = ({ columns, data }) => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageSize },
+    rows,
   } = useTable(
     {
       columns,
@@ -81,184 +84,87 @@ const Table = ({ columns, data }) => {
   );
 
   return (
-    <>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th
+                {...column.getHeaderProps()}
+                className={`Parts-${column.id}Header`}
+              >
+                {column.render('Header')}
+              </th>
             ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  className={`Parts-${column.id}Header`}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map(cell => (
+                <td
+                  className={`Parts-${cell.column.id}`}
+                  {...cell.getCellProps()}
                 >
-                  {column.render('Header')}
-                </th>
+                  {cell.column.id === 'actions' ? (
+                    <>
+                      <Button type="button" customBtn={styles.actionsButton}>
+                        <IconP />
+                      </Button>
+                      <Button
+                        type="button"
+                        customBtn={styles.actionsButton}
+                        onClick={() => console.log(cell.row)}
+                      >
+                        <IconTrash />
+                      </Button>
+                    </>
+                  ) : (
+                    <>{cell.render('Cell')}</>
+                  )}
+                </td>
               ))}
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td
-                    className={`Parts-${cell.column.id}`}
-                    {...cell.getCellProps()}
-                  >
-                    {cell.column.id === 'actions' ? (
-                      <>
-                        <Button type="button" customBtn={styles.actionsButton}>
-                          <IconP />
-                        </Button>
-                        <Button
-                          type="button"
-                          customBtn={styles.actionsButton}
-                          onClick={() => console.log(cell.row)}
-                        >
-                          <IconTrash />
-                        </Button>
-                      </>
-                    ) : (
-                      <>{cell.render('Cell')}</>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
-    </>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 
 const Parts = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [arrPicsContainer, setArrPicsContainer] = useState([]);
+  const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
+  const [initialPage, setInitialPage] = useState(0);
+  const [countPagination, setCountPagination] = useState('10');
 
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const parts = useSelector(partsDataSelector);
+  const isDataReceived = useSelector(partsDataReceivedSelector);
+
+  useEffect(() => {
+    if (parts) {
+      setCountPagination(`${parts.links.per_page}`);
+    }
+  }, [parts]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getParts({}));
+  }, []);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  console.log('parst', parts);
 
   const onSubmit = async (values) => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
+    console.log(values);
   };
 
   return (
@@ -282,7 +188,41 @@ const Parts = () => {
           </div>
         </div>
         <CustomTable>
-          <Table columns={columns} data={dataTable} />
+          <Pagination
+            params={parts.links}
+            countPagination={countPagination}
+            setInitialPage={setInitialPage}
+            initialPage={initialPage}
+            action={getParts}
+            onPageChange={(data) => {
+              dispatch(
+                getParts({
+                  page: data.selected + 1,
+                  countpage: countPagination,
+                }),
+              );
+              setInitialPage(data.selected);
+            }}
+          />
+          <div className={styles.scrollTable}>
+            <Table columns={columns} data={parts.data} />
+          </div>
+          <Pagination
+            params={parts.links}
+            countPagination={countPagination}
+            setInitialPage={setInitialPage}
+            initialPage={initialPage}
+            action={getParts}
+            onPageChange={(data) => {
+              dispatch(
+                getParts({
+                  page: data.selected + 1,
+                  countpage: countPagination,
+                }),
+              );
+              setInitialPage(data.selected);
+            }}
+          />
         </CustomTable>
       </div>
       {isPopupOpen && (
@@ -295,11 +235,7 @@ const Parts = () => {
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
-                <Field
-                  name="id"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="id" validate={required} type="text">
                   {renderInput({
                     label: 'Client ID',
                     classNameWrapper: styles.popupFieldRow,
@@ -307,11 +243,7 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="catalog"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="catalog" validate={required} type="text">
                   {renderInput({
                     label: 'Catalog number',
                     classNameWrapper: styles.popupFieldRow,
@@ -321,11 +253,7 @@ const Parts = () => {
                     classNameWrapperForIcon: styles.positionIcon,
                   })}
                 </Field>
-                <Field
-                  name="name"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="name" validate={required} type="text">
                   {renderInput({
                     label: 'Name',
                     classNameWrapper: styles.popupFieldRow,
@@ -333,11 +261,7 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="make"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="make" validate={required} type="text">
                   {renderInput({
                     label: 'Make',
                     classNameWrapper: styles.popupFieldRow,
@@ -358,11 +282,7 @@ const Parts = () => {
                   })}
                   options={stateOptions}
                 />
-                <Field
-                  name="quantity"
-                  validate={required}
-                  type="text"
-                >
+                <Field name="quantity" validate={required} type="text">
                   {renderInput({
                     label: 'Quantity',
                     classNameWrapper: styles.popupFieldRow,
@@ -390,6 +310,8 @@ const Parts = () => {
                   customText={styles.customText}
                   customIconBlock={styles.customIconBlock}
                   customThumbs={styles.thumbs}
+                  setNewArrPics={setNewArrPicsContainer}
+                  newArrPics={newArrPicsContainer}
                 />
                 <Button
                   customBtn={styles.btnSubmit}

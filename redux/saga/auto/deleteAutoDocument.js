@@ -1,4 +1,6 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import {
+  call, put, takeLatest,
+} from 'redux-saga/effects';
 import { getAutoSuccess, getAutoError } from '../../actions/auto';
 import { deleteAutoDocumentRequest } from '../../../services/auto';
 import * as actionTypes from '../../actions/actionTypes';
