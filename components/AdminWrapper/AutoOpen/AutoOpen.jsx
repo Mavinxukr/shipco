@@ -174,6 +174,10 @@ const AutoOpen = () => {
         auto.data.id,
       ),
     );
+    setNewArrPicsWarehouses([]);
+    setNewArrPicsContainer([]);
+    setNewArrPicsDamage([]);
+    setNewArrPicsActions([]);
   };
 
   return (
