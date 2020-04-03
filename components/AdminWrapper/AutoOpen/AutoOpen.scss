@@ -202,6 +202,10 @@ input[type="file"] {
   align-items: center;
   min-width: 435px;
   margin: 5px 16px 5px 0;
+
+  @media screen and (max-width: 1400px){
+    min-width: 350px;
+  }
 }
 
 .customInputFile {

@@ -25,7 +25,7 @@ const Popup = ({
 export default Popup;
 
 Popup.propTypes = {
-  subTitle: PropTypes.number,
+  subTitle: PropTypes.string,
   customPopup: PropTypes.string,
   setIsPopupOpen: PropTypes.func,
   title: PropTypes.string,

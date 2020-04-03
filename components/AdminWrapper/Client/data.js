@@ -158,7 +158,6 @@ export const stateStatus = [
 ];
 
 export const status = [
-
   {
     value: 'new',
     label: 'New',

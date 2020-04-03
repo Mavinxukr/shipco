@@ -53,6 +53,21 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   );
 });
 
+const todayDate = new Date();
+const currYear = todayDate.getFullYear();
+let currMonth = todayDate.getMonth() + 1;
+let currDay = todayDate.getDate();
+
+if (currMonth < 10) {
+  currMonth = `0${todayDate.getMonth() + 1}`;
+}
+
+if (currDay < 10) {
+  currDay = `0${todayDate.getDate()}`;
+}
+
+const finalDate = `${currDay}.${currMonth}.${currYear}`;
+
 const BaseClient = () => {
   const baseClient = useSelector(baseClientDataSelector);
   const isDataReceived = useSelector(baseClientDataReceivedSelector);
@@ -92,6 +107,7 @@ const BaseClient = () => {
         },
       ),
     );
+    setIsPopupOpen(false);
   };
 
   return (
@@ -177,7 +193,11 @@ const BaseClient = () => {
         </CustomTable>
       </div>
       {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Client ">
+        <Popup
+          setIsPopupOpen={setIsPopupOpen}
+          title="Add New Client "
+          subTitle={finalDate}
+        >
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (

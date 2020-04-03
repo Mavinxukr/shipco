@@ -8,8 +8,16 @@ const ActiveLink = ({ children, activeClassName, ...props }) => {
   const child = Children.only(children);
   const childClassName = child.props.className || '';
 
+  let link;
+
+  if (typeof props.href === 'object') {
+    link = props.href.pathname;
+  } else {
+    link = props.href;
+  }
+
   const className =
-    pathname === props.href
+    pathname === link
       ? `${childClassName} ${activeClassName}`.trim()
       : childClassName;
 
@@ -24,6 +32,7 @@ const ActiveLink = ({ children, activeClassName, ...props }) => {
 
 ActiveLink.propTypes = {
   activeClassName: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
 
 export default ActiveLink;
