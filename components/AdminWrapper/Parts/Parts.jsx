@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
-import { getParts } from '../../../redux/actions/parts';
+import { getParts, deleteParts } from '../../../redux/actions/parts';
 import {
   partsDataSelector,
   partsDataReceivedSelector,
@@ -18,10 +18,10 @@ import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconUpload from '../../../assets/svg/uploadfile.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-import IconSearch from '../../../assets/svg/Search_icon.svg';
+// import IconSearch from '../../../assets/svg/Search_icon.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns, stateOptions } from './data';
+import { columns } from './data';
 import styles from './Parts.scss';
 import {
   required,
@@ -49,6 +49,8 @@ const IndeterminateCheckbox = React.forwardRef(
 );
 
 const Table = ({ columns, data }) => {
+  const dispatch = useDispatch();
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -117,7 +119,8 @@ const Table = ({ columns, data }) => {
                       <Button
                         type="button"
                         customBtn={styles.actionsButton}
-                        onClick={() => console.log(cell.row)}
+                        onClick={() => dispatch(deleteParts({}, cell.row.original.id))
+                        }
                       >
                         <IconTrash />
                       </Button>
@@ -235,7 +238,7 @@ const Parts = () => {
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
-                <Field name="id" validate={required} type="text">
+                <Field name="client_id" validate={required} type="text">
                   {renderInput({
                     label: 'Client ID',
                     classNameWrapper: styles.popupFieldRow,
@@ -243,16 +246,28 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field name="catalog" validate={required} type="text">
-                  {renderInput({
+                <Field
+                  name="catalog_number"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: '',
                     label: 'Catalog number',
                     classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
+                    classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
-                    icon: <IconSearch />,
-                    classNameWrapperForIcon: styles.positionIcon,
                   })}
-                </Field>
+                  options={parts.additional.catalog_numbers}
+                />
+                {/* <Field name="catalog_number" validate={required} type="text"> */}
+                {/*  {renderInput({ */}
+                {/*    label: 'Catalog number', */}
+                {/*    classNameWrapper: styles.popupFieldRow, */}
+                {/*    classNameWrapperLabel: styles.label, */}
+                {/*    widthInputBlock: styles.widthInput, */}
+                {/*    icon: <IconSearch />, */}
+                {/*    classNameWrapperForIcon: styles.positionIcon, */}
+                {/*  })} */}
+                {/* </Field> */}
                 <Field name="name" validate={required} type="text">
                   {renderInput({
                     label: 'Name',
@@ -261,9 +276,9 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field name="make" validate={required} type="text">
+                <Field name="auto" validate={required} type="text">
                   {renderInput({
-                    label: 'Make',
+                    label: 'Auto',
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -271,7 +286,6 @@ const Parts = () => {
                 </Field>
                 <Field
                   name="vin"
-                  isRequired
                   validate={required}
                   component={renderSelect({
                     placeholder: '',
@@ -280,9 +294,9 @@ const Parts = () => {
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
                   })}
-                  options={stateOptions}
+                  options={parts.additional.vin_numbers}
                 />
-                <Field name="quantity" validate={required} type="text">
+                <Field name="quality" validate={required} type="text">
                   {renderInput({
                     label: 'Quantity',
                     classNameWrapper: styles.popupFieldRow,

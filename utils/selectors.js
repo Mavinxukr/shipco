@@ -91,8 +91,8 @@ export const autoIdDataReceivedSelector = createSelector(
 );
 
 export const partsDataSelector = createSelector(
-  state => state.parts.partsDara,
-  partsDara => partsDara,
+  state => state.parts.partsData,
+  partsData => partsData,
 );
 
 export const partsDataReceivedSelector = createSelector(

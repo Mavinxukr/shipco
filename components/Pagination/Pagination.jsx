@@ -38,7 +38,7 @@ const Pagination = ({
             customBtn={styles.paginationBtn}
             onClick={() => {
               setInitialPage(0);
-              dispatch(action({ page: 1 }));
+              dispatch(action({ page: 1, countpage: countPagination }));
             }}
           >
             First
@@ -61,7 +61,9 @@ const Pagination = ({
             customBtn={styles.paginationBtn}
             onClick={() => {
               setInitialPage(params.last_page - 1);
-              dispatch(action({ page: params.last_page }));
+              dispatch(
+                action({ page: params.last_page, countpage: countPagination }),
+              );
             }}
           >
             Last

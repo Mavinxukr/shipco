@@ -19,7 +19,7 @@ import styles from './SubHeader.scss';
 import { stateOptions } from './data';
 import { updateCurrentClient } from '../../../redux/actions/currentClient';
 
-const SubHeader = ({ hidden, currentClientId, currentClient }) => {
+const SubHeader = ({ hidden, currentClientId, currentClient, onClick }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -116,7 +116,7 @@ const SubHeader = ({ hidden, currentClientId, currentClient }) => {
             </li>
           </ul>
         </nav>
-        <Search />
+        <Search onClick={onClick} />
       </div>
       {hidden && isPopupOpen && (
         <Popup
@@ -248,6 +248,7 @@ SubHeader.propTyps = {
   hidden: PropTypes.bool,
   currentClientId: PropTypes.number,
   currentClient: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 export default SubHeader;

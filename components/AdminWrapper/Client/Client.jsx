@@ -6,7 +6,11 @@ import cx from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
 import { useRouter } from 'next/router';
-import { getClient, deleteClient } from '../../../redux/actions/client';
+import {
+  getClient,
+  deleteClient,
+  addNewClient,
+} from '../../../redux/actions/client';
 import {
   clientDataSelector,
   clientDataReceivedSelector,
@@ -21,14 +25,13 @@ import CustomTable from '../../CustomTable/CustomTable';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
 import styles from './Client.scss';
-import { columns, stateStatus } from './data';
+import { columns, stateStatus, status, city } from './data';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 import Loader from '../../Loader/Loader';
 import Popup from '../../Popup/Popup';
 import { required } from '../../../utils/validation';
-import { renderInput } from '../../../utils/renderInputs';
+import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
-import { getBaseClient } from '../../../redux/actions/baseClient';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -61,7 +64,24 @@ const Client = () => {
   const router = useRouter();
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch(
+      addNewClient(
+        {},
+        {
+          ...values,
+          status: values.status && values.status.value,
+          point_load_city:
+            values.point_load_city && values.point_load_city.label,
+          point_delivery_city:
+            values.point_delivery_city && values.point_delivery_city.label,
+          ship: 1,
+          lot: 1,
+          sale: 1,
+          feature: 1,
+          disassembly: 0,
+        },
+      ),
+    );
   };
 
   useEffect(() => {
@@ -102,6 +122,12 @@ const Client = () => {
         hidden
         currentClient={currentClient}
         currentClientId={router.query.idUser}
+        onClick={() => dispatch(
+          getClient({
+            search: document.querySelector('#search').value,
+          }),
+        )
+        }
       />
       <div className={styles.container}>
         <div className={styles.flex}>
@@ -217,22 +243,16 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="status" validate={required} type="text">
-                    {renderInput({
+                  <Field
+                    name="status"
+                    validate={required}
+                    component={renderSelect({
+                      placeholder: '',
                       label: 'Status',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
                     })}
-                  </Field>
-                  <Field name="ship" validate={required} type="text">
-                    {renderInput({
-                      label: 'Ship',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
+                    options={status}
+                  />
                   <Field name="tracking_id" validate={required} type="text">
                     {renderInput({
                       label: 'Tracking id',
@@ -249,14 +269,15 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="point_load_city" validate={required} type="text">
-                    {renderInput({
-                      label: 'Load City',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
+                  <Field
+                    name="point_load_city"
+                    component={renderSelect({
+                      placeholder: '',
+                      label: 'Point of loading',
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
                     })}
-                  </Field>
+                    options={city}
+                  />
                   <Field name="point_load_date" validate={required} type="text">
                     {renderInput({
                       label: 'Load date',
@@ -267,16 +288,13 @@ const Client = () => {
                   </Field>
                   <Field
                     name="point_delivery_city"
-                    validate={required}
-                    type="text"
-                  >
-                    {renderInput({
+                    component={renderSelect({
+                      placeholder: '',
                       label: 'Delivery City',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
                     })}
-                  </Field>
+                    options={city}
+                  />
                   <Field
                     name="point_delivery_date"
                     validate={required}
@@ -284,14 +302,6 @@ const Client = () => {
                   >
                     {renderInput({
                       label: 'Delivery date',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="lot" validate={required} type="text">
-                    {renderInput({
-                      label: 'Lot',
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -316,14 +326,6 @@ const Client = () => {
                   <Field name="odometer" validate={required} type="text">
                     {renderInput({
                       label: 'Odometer',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="highlight" validate={required} type="text">
-                    {renderInput({
-                      label: 'Highlight',
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -369,14 +371,6 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="sale" validate={required} type="text">
-                    {renderInput({
-                      label: 'Sale',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
                   <Field name="location" validate={required} type="text">
                     {renderInput({
                       label: 'Location',
@@ -404,14 +398,6 @@ const Client = () => {
                   <Field name="ret_date" validate={required} type="text">
                     {renderInput({
                       label: 'Retail date',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="feature" validate={required} type="text">
-                    {renderInput({
-                      label: 'Feature',
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,

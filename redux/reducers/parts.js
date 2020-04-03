@@ -2,14 +2,16 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   isFetch: false,
-  partsDara: null,
+  partsData: null,
   isDataReceived: false,
   error: null,
 };
 
 export const parts = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.parts.request:
+    case actionTypes.parts.request
+      || actionTypes.parts.save
+      || actionTypes.parts.delete:
       return {
         ...state,
         isFetch: true,
@@ -20,7 +22,7 @@ export const parts = (state = initialState, action) => {
         ...state,
         isFetch: false,
         isDataReceived: true,
-        partsDara: action.body,
+        partsData: action.body,
       };
 
     case actionTypes.parts.error:
