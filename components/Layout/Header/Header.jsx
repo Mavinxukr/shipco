@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
+import Link from 'next/link';
 import PropsType from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { currentUserDataSelector } from '../../../utils/selectors';
@@ -205,22 +206,21 @@ const Header = ({ newLink, admin }) => {
         )}
 
         <div className={styles.bottomIconsItems}>
-          {admin ? null : (
-            <a href="/notification" className={styles.bottomIconsLink}>
-              <IconBell />
-              {user.new_notification > 0 ? (
-                <span className={styles.count}>{user.new_notification}</span>
-              ) : (
-                <span />
-              )}
-            </a>
+          {!admin && (
+            <Link href="/notification">
+              <a className={styles.bottomIconsLink}>
+                <IconBell />
+                {user && user.new_notification > 0 && (
+                  <span className={styles.count}>{user.new_notification}</span>
+                )}
+              </a>
+            </Link>
           )}
-          <a
-            href={admin ? '/' : '/profile-settings'}
-            className={styles.bottomIconsLink}
-          >
-            <IconUser />
-          </a>
+          <Link href={admin ? '/' : '/profile-settings'}>
+            <a className={styles.bottomIconsLink}>
+              <IconUser />
+            </a>
+          </Link>
         </div>
       </div>
     </header>

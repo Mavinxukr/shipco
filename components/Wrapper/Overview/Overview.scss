@@ -39,6 +39,18 @@
 .slider {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   background: $white;
+
+  img {
+    height: 280px;
+
+    @media screen and (max-width: 1700px) {
+      height: 230px;
+    }
+
+    @media screen and (max-width: 1500px) {
+      height: 200px;
+    }
+  }
 }
 
 .image {
