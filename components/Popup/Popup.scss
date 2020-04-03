@@ -33,12 +33,4 @@
 .popupSubTitle {
   color: $colorContent;
   margin-left: 6px;
-
-  &:before {
-    content: '(ID ';
-  }
-
-  &:after {
-    content: ')';
-  }
 }

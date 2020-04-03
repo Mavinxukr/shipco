@@ -10,6 +10,10 @@
   &:hover {
     background: $colorBackgroundHover;
   }
+
+  @media screen and (max-width: 1470px){
+    padding: 9px 9px;
+  }
 }
 
 .search {
@@ -28,5 +32,13 @@
 
   @media screen and (max-width: 1544px){
     max-width: 300px;
+  }
+
+  @media screen and (max-width: 1470px){
+    max-width: 240px;
+  }
+
+  @media screen and (max-width: 1280px){
+    max-width: 170px;
   }
 }

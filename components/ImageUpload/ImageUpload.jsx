@@ -3,8 +3,11 @@ import _ from 'lodash';
 import cx from 'classnames';
 import styles from './ImageUpload.scss';
 import IconPlus from '../../assets/svg/Plus.svg';
+import IconSuccess from '../../assets/svg/Dec.svg';
 
-const ImageUpload = ({ image, setImage, baseClient, customImageUpload }) => {
+const ImageUpload = ({
+  image, setImage, baseClient, customImageUpload,
+}) => {
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       return;
@@ -18,8 +21,15 @@ const ImageUpload = ({ image, setImage, baseClient, customImageUpload }) => {
       {baseClient ? (
         <div className={styles.flex}>
           <p className={styles.label}>Add photo</p>
-          <label className={styles.labelFileInputNoPreview} htmlFor="upload-photo">
-            <IconPlus className={styles.iconPlus} />
+          <label
+            className={styles.labelFileInputNoPreview}
+            htmlFor="upload-photo"
+          >
+            {document.querySelector('#upload-photo') && document.querySelector('#upload-photo').value === '' ? (
+              <IconPlus className={styles.iconPlus} />
+            ) : (
+              <IconSuccess className={styles.iconPlus} />
+            )}
           </label>
           <input
             className={styles.fileInput}
@@ -31,7 +41,11 @@ const ImageUpload = ({ image, setImage, baseClient, customImageUpload }) => {
         </div>
       ) : (
         <div className={cx(styles.changeImage, customImageUpload)}>
-          <img className={styles.previewImg} src={_.isObject(image) && URL.createObjectURL(image) || image} alt="face" />
+          <img
+            className={styles.previewImg}
+            src={(_.isObject(image) && URL.createObjectURL(image)) || image}
+            alt="face"
+          />
           <div className={styles.file}>
             <label className={styles.labelFileInput} htmlFor="upload-photo">
               <IconPlus className={styles.iconPlus} /> Add new photo

@@ -164,7 +164,14 @@ const Parts = () => {
     return <Loader />;
   }
 
-  console.log('parst', parts);
+  const vinNumbers = parts.additional.vin_numbers;
+  const vinArr = Object.keys(vinNumbers).map((item, index) => ({
+    id: index + 1,
+    label: item,
+    value: vinNumbers[item],
+  }));
+
+  console.log('vinArr', vinArr);
 
   const onSubmit = async (values) => {
     console.log(values);
@@ -284,18 +291,18 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="vin"
-                  validate={required}
-                  component={renderSelect({
-                    placeholder: '',
-                    label: 'VIN Number',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={parts.additional.vin_numbers}
-                />
+                {/*<Field*/}
+                {/*  name="vin"*/}
+                {/*  validate={required}*/}
+                {/*  component={renderSelect({*/}
+                {/*    placeholder: '',*/}
+                {/*    label: 'VIN Number',*/}
+                {/*    classNameWrapper: styles.popupFieldRow,*/}
+                {/*    classNameLabel: styles.label,*/}
+                {/*    widthInputBlock: styles.widthInput,*/}
+                {/*  })}*/}
+                {/*  options={vinArr}*/}
+                {/*/>*/}
                 <Field name="quality" validate={required} type="text">
                   {renderInput({
                     label: 'Quantity',
