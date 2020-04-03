@@ -169,22 +169,20 @@ const SubHeader = ({ hidden, currentClientId, currentClient, onClick }) => {
                 <Field
                   name="country"
                   component={renderSelect({
-                    placeholder: '',
                     label: 'Country',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                     classNameLabel: 'SelectCustom-blackLabel',
-                    defaultInputValue: currentClient.data.country || '',
+                    placeholder: currentClient.data.country || '',
                   })}
                   options={stateOptions}
                 />
                 <Field
                   name="city"
                   component={renderSelect({
-                    placeholder: '',
                     label: 'City',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                     classNameLabel: 'SelectCustom-blackLabel',
-                    defaultInputValue: currentClient.data.city || '',
+                    placeholder: currentClient.data.city || '',
                   })}
                   options={stateOptions}
                 />

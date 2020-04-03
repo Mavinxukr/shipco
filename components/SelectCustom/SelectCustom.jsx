@@ -22,6 +22,10 @@ const customStyles = {
     margin: '0 10px',
     width: 'auto',
   }),
+  placeholder: () => ({
+    color: '#000',
+    position: 'absolute',
+  }),
   option: () => ({
     backgroundColor: '#fafafa',
     color: '#000',

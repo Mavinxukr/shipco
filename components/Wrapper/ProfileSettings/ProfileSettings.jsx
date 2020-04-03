@@ -134,18 +134,16 @@ const ProfileSettings = () => {
                   <Field
                     name="country"
                     component={renderSelect({
-                      placeholder: '',
                       label: 'Country',
-                      defaultInputValue: userData.country || '',
+                      placeholder: userData.country || '',
                     })}
                     options={stateOptions}
                   />
                   <Field
                     name="city"
                     component={renderSelect({
-                      placeholder: '',
                       label: 'City',
-                      defaultInputValue: userData.city || '',
+                      placeholder: userData.city || '',
                     })}
                     options={stateOptions}
                   />

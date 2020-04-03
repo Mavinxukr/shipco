@@ -322,11 +322,10 @@ const AutoOpen = () => {
                         <Field
                           name="point_load_city"
                           component={renderSelect({
-                            placeholder: '',
                             label: 'Point of loading:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            defaultInputValue:
+                            placeholder:
                               auto.data.ship_info.point_load[0] || '',
                           })}
                           options={stateOptions}
@@ -354,11 +353,10 @@ const AutoOpen = () => {
                         <Field
                           name="point_delivery_city"
                           component={renderSelect({
-                            placeholder: '',
                             label: 'Point of delivery:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            defaultInputValue:
+                            placeholder:
                               auto.data.ship_info.point_delivery[0] || '',
                           })}
                           options={stateOptions}
