@@ -7,6 +7,7 @@ import { watchGetBaseClient } from './baseClient/getBaseClient';
 import { watchDeleteBaseClient } from './baseClient/deleteBaseClient';
 import { watchAddNewBaseClient } from './baseClient/addNewBaseClient';
 import { watchGetClient } from './client/getClient';
+import { watchAddNewClient } from './client/addNewClient';
 import { watchGetCurrentClient } from './currentClient/getCurrentClient';
 import { watchDeleteClient } from './client/deleteClient';
 import { watchUpdateCurrentClient } from './currentClient/updateCurrentClient';
@@ -16,6 +17,8 @@ import { watchDeleteAutoDocument } from './auto/deleteAutoDocument';
 import { watchAutoClient } from './getAutoClient';
 import { watchAutoId } from './getAutoId';
 import { watchParts } from './parts/getParts';
+import { watchDeleteParts } from './parts/deleteParts';
+import { watchAddNewParts } from './parts/addNewParts';
 
 export function* rootSaga() {
   yield all([
@@ -27,6 +30,7 @@ export function* rootSaga() {
     watchDeleteBaseClient(),
     watchAddNewBaseClient(),
     watchGetClient(),
+    watchAddNewClient(),
     watchGetCurrentClient(),
     watchDeleteClient(),
     watchUpdateCurrentClient(),
@@ -36,5 +40,7 @@ export function* rootSaga() {
     watchAutoClient(),
     watchAutoId(),
     watchParts(),
+    watchDeleteParts(),
+    watchAddNewParts(),
   ]);
 }

@@ -5,6 +5,12 @@ export const getClient = params => ({
   params,
 });
 
+export const addNewClient = (params, body) => ({
+  type: actionTypes.client.save,
+  params,
+  body,
+});
+
 export const deleteClient = (params, body) => ({
   type: actionTypes.client.delete,
   params,

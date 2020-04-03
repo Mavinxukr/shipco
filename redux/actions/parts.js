@@ -5,6 +5,17 @@ export const getParts = params => ({
   params,
 });
 
+export const addNewParts = (params, body) => ({
+  type: actionTypes.parts.save,
+  params,
+  body,
+});
+
+export const deleteParts = (params, id) => ({
+  type: actionTypes.parts.delete,
+  id,
+});
+
 export const getPartsSuccess = body => ({
   type: actionTypes.parts.success,
   body,

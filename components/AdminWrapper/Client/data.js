@@ -120,9 +120,18 @@ export const columns = [
       {
         Header: 'Status',
         accessor: 'status',
+        Cell: ({ cell: { value } }) => <>{value.replace('_', ' ')}</>,
       },
     ],
   },
+];
+
+export const city = [
+  { value: '1', label: 'California' },
+  { value: '2', label: 'Texas' },
+  { value: '3', label: 'New Jersey' },
+  { value: '4', label: 'Savannah' },
+  { value: '5', label: 'Montreal' },
 ];
 
 export const stateStatus = [
@@ -130,6 +139,26 @@ export const stateStatus = [
     value: '',
     label: 'All Status',
   },
+  {
+    value: 'new',
+    label: 'New',
+  },
+  {
+    value: 'pending',
+    label: 'Pending',
+  },
+  {
+    value: 'not_approved',
+    label: 'Not approved',
+  },
+  {
+    value: 'delivered',
+    label: 'Delivered',
+  },
+];
+
+export const status = [
+
   {
     value: 'new',
     label: 'New',

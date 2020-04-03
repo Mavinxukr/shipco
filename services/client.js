@@ -11,3 +11,10 @@ export const deleteClientRequest = async (params, body) => {
   }, true);
   return serverData;
 };
+
+export const addNewClientRequest = async (params, body) => {
+  const serverData = await Fetch.post('store-auto', params, {
+    body: JSON.stringify(body),
+  }, true);
+  return serverData;
+};
