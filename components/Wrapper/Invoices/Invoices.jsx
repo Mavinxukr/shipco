@@ -80,9 +80,9 @@ const Invoices = () => (
         </div>
       </div>
       <CustomTable>
-        <Pagination />
+        {/*<Pagination />*/}
         <Table columns={columns} data={dataTable} />
-        <Pagination />
+        {/*<Pagination />*/}
       </CustomTable>
     </div>
   </MainLayout>

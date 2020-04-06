@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
-import { usePagination, useRowSelect, useTable } from 'react-table';
+import React, { useEffect, useState } from 'react';
+import { useTable } from 'react-table';
+import { useSelector, useDispatch } from 'react-redux';
 import cx from 'classnames';
 import { Field, Form } from 'react-final-form';
+import {
+  getClientParts,
+  addNewClientParts,
+  deleteClientParts,
+} from '../../../redux/actions/clientParts';
+import {
+  clientPartsDataSelector,
+  clientPartsDataReceivedSelector,
+  currentUserDataSelector,
+} from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import Popup from '../../Popup/Popup';
 import Button from '../../Button/Button';
@@ -10,279 +21,159 @@ import IconP from '../../../assets/svg/p.svg';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-// import IconAc from '../../../assets/svg/Ac.svg';
 import IconSearch from '../../../assets/svg/Search_icon.svg';
-// import IconDec from '../../../assets/svg/Dec.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
+import { columns, images } from './data';
 import {
-  columns, dataTable, stateOptions, images,
-} from './data';
-import { required } from '../../../utils/validation';
+  composeValidators,
+  mustBeNumber,
+  required,
+} from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './Parts.scss';
-
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  },
-);
+import Loader from '../../Loader/Loader';
+import Pagination from '../../Pagination/Pagination';
+import { getCurrentUser } from '../../../redux/actions/currentUser';
 
 const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
+  const dispatch = useDispatch();
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageSize },
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    usePagination,
-    useRowSelect,
-    (hooks) => {
-      hooks.flatColumns.push(columns => [
-        {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ]);
-    },
-  );
+    rows,
+  } = useTable({
+    columns,
+    data,
+  });
 
   return (
-    <>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th
+                {...column.getHeaderProps()}
+                className={`Parts-${column.id}Header`}
+              >
+                {column.render('Header')}
+              </th>
             ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  className={`Parts-${column.id}Header`}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map(cell => (
+                <td
+                  className={`Parts-${cell.column.id}`}
+                  {...cell.getCellProps()}
                 >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td
-                    className={`Parts-${cell.column.id}`}
-                    {...cell.getCellProps()}
-                  >
-                    {cell.column.id === 'actions' ? (
-                      <div className={styles.tdFlex}>
-                        <Button type="button" customBtn={styles.actionsButton}>
-                          <IconP />
-                        </Button>
+                  {cell.column.id === 'actions' ? (
+                    <div className={styles.tdFlex}>
+                      <Button type="button" customBtn={styles.actionsButton}>
+                        <IconP />
+                      </Button>
+                      <Button
+                        type="button"
+                        customBtn={styles.actionsButton}
+                        onClick={() => dispatch(deleteClientParts({}, cell.row.original.id))
+                        }
+                      >
+                        <IconTrash />
+                      </Button>
+                    </div>
+                  ) : (
+                    <>
+                      {cell.column.id === 'photo' ? (
                         <Button
                           type="button"
-                          customBtn={styles.actionsButton}
-                          onClick={() => console.log(cell.row)}
+                          customBtn={cx(styles.background, styles.colorDec)}
+                          onClick={() => setIsPopupPhotoOpen(true)}
                         >
-                          <IconTrash />
+                          View pics
                         </Button>
-                        {/* <div className={styles.rightIcon}> */}
-                        {/*  <Button type="button" customBtn={styles.background}> */}
-                        {/*    <IconDec /> */}
-                        {/*  </Button> */}
-                        {/*  <Button type="button" customBtn={styles.background}> */}
-                        {/*    <IconAc /> */}
-                        {/*  </Button> */}
-                        {/* </div> */}
-                        {/* <span className={styles.colorAc}>Accepted</span><span className={styles.colorDec}>Declined</span> */}
-                      </div>
-                    ) : (
-                      <>
-                        {cell.column.id === 'photo' ? (
-                          <Button
-                            type="button"
-                            customBtn={cx(styles.background, styles.colorDec)}
-                            onClick={() => setIsPopupPhotoOpen(true)}
-                          >
-                            {cell.render('Cell')}
-                          </Button>
-                        ) : (
-                          <>{cell.render('Cell')}</>
-                        )}
-                      </>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className={styles.pagination}>
-        <div>
-          <span>Show</span>
-          <select
-            className={styles.paginationSelect}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <span>entries</span>
-        </div>
-        <div>
-          <span>Showing 1 to 20 of 4,260 entries</span>{' '}
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            First
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button customBtn={cx(styles.paginationBtn, styles.active)}>1</Button>
-          <Button customBtn={styles.paginationBtn}>2</Button>
-          <Button customBtn={styles.paginationBtn}>3</Button>
-          <Button customBtn={styles.paginationBtn}>4</Button>
-          <Button customBtn={styles.paginationBtn}>5</Button>
-          <Button customBtn={styles.paginationBtn} disabled={!canPreviousPage}>
-            ...
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Next
-          </Button>
-          <Button
-            customBtn={styles.paginationBtn}
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            Last
-          </Button>
-        </div>
-      </div>
-    </>
+                      ) : (
+                        <>{cell.render('Cell')}</>
+                      )}
+                    </>
+                  )}
+                </td>
+              ))}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 
 const Parts = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupPhotoOpen, setIsPopupPhotoOpen] = useState(false);
+  const [initialPage, setInitialPage] = useState(0);
+  const [countPagination, setCountPagination] = useState('10');
+  const clientParts = useSelector(clientPartsDataSelector);
+  const isDataReceived = useSelector(clientPartsDataReceivedSelector);
+  const user = useSelector(currentUserDataSelector);
 
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (clientParts) {
+      setCountPagination(`${clientParts.links.per_page}`);
+    }
+  }, [clientParts]);
+
+  useEffect(() => {
+    dispatch(getCurrentUser({}));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getClientParts({}));
+  }, []);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  const vinNumbers = clientParts.additional.vin_numbers;
+  const vinArr = Object.keys(vinNumbers).map((item, index) => ({
+    id: index + 1,
+    label: vinNumbers[index].vin,
+    value: vinNumbers[index].vin,
+  }));
+
+  const catalogNumbers = clientParts.additional.catalog_numbers;
+  const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
+    id: index + 1,
+    label: catalogNumbers[index].catalog_number,
+    value: catalogNumbers[index].catalog_number,
+  }));
 
   const onSubmit = async (values) => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
+    dispatch(
+      addNewClientParts(
+        {},
+        {
+          ...values,
+          client_id: user.id,
+          vin: values.vin && values.vin.label,
+          catalog_number: values.catalog_number && values.catalog_number.label,
+        },
+      ),
+    );
+    setIsPopupOpen(false);
   };
+
+  console.log(user);
 
   return (
     <MainLayout>
@@ -305,10 +196,42 @@ const Parts = () => {
           </div>
         </div>
         <CustomTable>
+          <Pagination
+            params={clientParts.links}
+            countPagination={countPagination}
+            setInitialPage={setInitialPage}
+            initialPage={initialPage}
+            action={getClientParts}
+            onPageChange={(data) => {
+              dispatch(
+                getClientParts({
+                  page: data.selected + 1,
+                  countpage: countPagination,
+                }),
+              );
+              setInitialPage(data.selected);
+            }}
+          />
           <Table
             columns={columns}
-            data={dataTable}
+            data={clientParts.data}
             setIsPopupPhotoOpen={setIsPopupPhotoOpen}
+          />
+          <Pagination
+            params={clientParts.links}
+            countPagination={countPagination}
+            setInitialPage={setInitialPage}
+            initialPage={initialPage}
+            action={getClientParts}
+            onPageChange={(data) => {
+              dispatch(
+                getClientParts({
+                  page: data.selected + 1,
+                  countpage: countPagination,
+                }),
+              );
+              setInitialPage(data.selected);
+            }}
           />
         </CustomTable>
       </div>
@@ -322,16 +245,18 @@ const Parts = () => {
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
-                <Field name="catalog" validate={required} type="text">
-                  {renderInput({
+                <Field
+                  name="catalog_number"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: '',
                     label: 'Catalog number',
                     classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
+                    classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
-                    icon: <IconSearch />,
-                    classNameWrapperForIcon: styles.positionIcon,
                   })}
-                </Field>
+                  options={catalogArr}
+                />
                 <Field name="name" validate={required} type="text">
                   {renderInput({
                     label: 'Name',
@@ -340,9 +265,9 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field name="make" validate={required} type="text">
+                <Field name="auto" validate={required} type="text">
                   {renderInput({
-                    label: 'Make',
+                    label: 'Auto',
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -359,11 +284,23 @@ const Parts = () => {
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
                   })}
-                  options={stateOptions}
+                  options={vinArr}
                 />
-                <Field name="quantity" validate={required} type="text">
+                <Field
+                  name="container"
+                  validate={composeValidators(required, mustBeNumber)}
+                  type="text"
+                >
                   {renderInput({
-                    label: 'Quantity',
+                    label: 'Container',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field name="quality" validate={required} type="text">
+                  {renderInput({
+                    label: 'Quality',
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,

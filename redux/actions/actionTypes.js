@@ -17,3 +17,4 @@ export const auto = generateAction('auto');
 export const autoClient = generateAction('autoClient');
 export const autoId = generateAction('autoId');
 export const parts = generateAction('parts');
+export const clientParts = generateAction('clientParts');

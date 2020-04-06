@@ -17,7 +17,6 @@
   display: flex;
   align-items: center;
   font-size: 16px;
-  margin-right: 61px;
 }
 
 .rightBlock {
@@ -32,6 +31,12 @@
 .scrollTable {
   width: 100%;
   overflow: auto;
+}
+
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
 }
 
 .filterIcon {

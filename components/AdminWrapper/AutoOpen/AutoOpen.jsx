@@ -19,7 +19,9 @@ import Previews from '../../Previews/Previews';
 import Radio from '../../Radio/Radio';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import styles from './AutoOpen.scss';
-import { stateOptions, damage, status } from './data';
+import {
+  stateOptions, damage, status, stateOptionsDelivery,
+} from './data';
 import {
   renderInput,
   renderSelect,
@@ -325,8 +327,7 @@ const AutoOpen = () => {
                             label: 'Point of loading:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            placeholder:
-                              auto.data.ship_info.point_load[0] || '',
+                            placeholder: auto.data.ship_info.point_load[0] || '',
                           })}
                           options={stateOptions}
                         />
@@ -359,7 +360,7 @@ const AutoOpen = () => {
                             placeholder:
                               auto.data.ship_info.point_delivery[0] || '',
                           })}
-                          options={stateOptions}
+                          options={stateOptionsDelivery}
                         />
                         <Pickers
                           time={auto.data.ship_info.point_delivery_date}

@@ -18,6 +18,14 @@ export const addNewPartsRequest = async (params, body) => {
     if (!value) {
       return;
     }
+    if (key === 'image') {
+      let indexFile = 0;
+      value.forEach((item) => {
+        formData.append(`image[${indexFile}]`, item);
+        indexFile += 1;
+      });
+      return;
+    }
     formData.append(key, value);
   });
   const serverData = await fetch(

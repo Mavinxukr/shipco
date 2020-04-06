@@ -42,3 +42,18 @@ export const stateOptions = [
   { value: '4', label: 'Savannah' },
   { value: '5', label: 'Montreal' },
 ];
+
+
+export const stateOptionsDelivery = [
+  { value: '1', label: 'Alexandria, Egypt' },
+  { value: '2', label: 'Aqaba, Jordan' },
+  { value: '3', label: 'Batumi, Georgia' },
+  { value: '4', label: 'Damietta, Egypt' },
+  { value: '5', label: 'Jebel Ali, UAE' },
+  { value: '6', label: 'Mersin, Turkey' },
+  { value: '7', label: 'Muscat, Oman' },
+  { value: '8', label: 'Port Said, Egypt' },
+  { value: '9', label: 'Salalah, Oman' },
+  { value: '10', label: 'Sohar, Oman' },
+  { value: '11', label: 'Umm Qasr, Iraq' },
+];

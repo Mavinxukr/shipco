@@ -17,6 +17,7 @@ function* addNewParts({ params, body }) {
     yield put(getPartsSuccess({
       data: [response.data.data, ...partsData.data],
       links: partsData.links,
+      additional: response.data.additional,
     }));
   } else {
     yield put(getPartsError('error'));

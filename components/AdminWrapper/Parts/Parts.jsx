@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  forwardRef, useRef, useEffect, useState,
+} from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
-import { getParts, deleteParts } from '../../../redux/actions/parts';
+import {
+  getParts,
+  deleteParts,
+  addNewParts,
+} from '../../../redux/actions/parts';
 import {
   partsDataSelector,
   partsDataReceivedSelector,
@@ -31,22 +37,20 @@ import {
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
+const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = useRef();
+  const resolvedRef = ref || defaultRef;
 
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
+  useEffect(() => {
+    resolvedRef.current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
 
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <input type="checkbox" ref={resolvedRef} {...rest} />
+    </>
+  );
+});
 
 const Table = ({ columns, data }) => {
   const dispatch = useDispatch();
@@ -167,19 +171,42 @@ const Parts = () => {
   const vinNumbers = parts.additional.vin_numbers;
   const vinArr = Object.keys(vinNumbers).map((item, index) => ({
     id: index + 1,
-    label: item,
-    value: vinNumbers[item],
+    label: vinNumbers[index].vin,
+    value: vinNumbers[index].vin,
   }));
 
-  console.log('vinArr', vinArr);
+  const catalogNumbers = parts.additional.catalog_numbers;
+  const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
+    id: index + 1,
+    label: catalogNumbers[index].catalog_number,
+    value: catalogNumbers[index].catalog_number,
+  }));
 
   const onSubmit = async (values) => {
-    console.log(values);
+    dispatch(
+      addNewParts(
+        {},
+        {
+          ...values,
+          vin: values.vin && values.vin.label,
+          catalog_number: values.catalog_number && values.catalog_number.label,
+          image: newArrPicsContainer,
+        },
+      ),
+    );
+    setIsPopupOpen(false);
   };
 
   return (
     <MainLayout admin>
-      <SubHeader />
+      <SubHeader
+        onClick={() => dispatch(
+          getParts({
+            search: document.querySelector('#search').value,
+          }),
+        )
+        }
+      />
       <div className={styles.container}>
         <div className={styles.flex}>
           <Button
@@ -194,46 +221,49 @@ const Parts = () => {
               <IconFilter className={styles.filterIcon} />
               Filter
             </Button>
-            <Search />
           </div>
         </div>
-        <CustomTable>
-          <Pagination
-            params={parts.links}
-            countPagination={countPagination}
-            setInitialPage={setInitialPage}
-            initialPage={initialPage}
-            action={getParts}
-            onPageChange={(data) => {
-              dispatch(
-                getParts({
-                  page: data.selected + 1,
-                  countpage: countPagination,
-                }),
-              );
-              setInitialPage(data.selected);
-            }}
-          />
-          <div className={styles.scrollTable}>
-            <Table columns={columns} data={parts.data} />
-          </div>
-          <Pagination
-            params={parts.links}
-            countPagination={countPagination}
-            setInitialPage={setInitialPage}
-            initialPage={initialPage}
-            action={getParts}
-            onPageChange={(data) => {
-              dispatch(
-                getParts({
-                  page: data.selected + 1,
-                  countpage: countPagination,
-                }),
-              );
-              setInitialPage(data.selected);
-            }}
-          />
-        </CustomTable>
+        {parts.data.length !== 0 ? (
+          <CustomTable>
+            <Pagination
+              params={parts.links}
+              countPagination={countPagination}
+              setInitialPage={setInitialPage}
+              initialPage={initialPage}
+              action={getParts}
+              onPageChange={(data) => {
+                dispatch(
+                  getParts({
+                    page: data.selected + 1,
+                    countpage: countPagination,
+                  }),
+                );
+                setInitialPage(data.selected);
+              }}
+            />
+            <div className={styles.scrollTable}>
+              <Table columns={columns} data={parts.data} />
+            </div>
+            <Pagination
+              params={parts.links}
+              countPagination={countPagination}
+              setInitialPage={setInitialPage}
+              initialPage={initialPage}
+              action={getParts}
+              onPageChange={(data) => {
+                dispatch(
+                  getParts({
+                    page: data.selected + 1,
+                    countpage: countPagination,
+                  }),
+                );
+                setInitialPage(data.selected);
+              }}
+            />
+          </CustomTable>
+        ) : (
+          <h1 className={styles.notFound}>nothing found</h1>
+        )}
       </div>
       {isPopupOpen && (
         <Popup
@@ -263,7 +293,7 @@ const Parts = () => {
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
                   })}
-                  options={parts.additional.catalog_numbers}
+                  options={catalogArr}
                 />
                 {/* <Field name="catalog_number" validate={required} type="text"> */}
                 {/*  {renderInput({ */}
@@ -291,18 +321,18 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                {/*<Field*/}
-                {/*  name="vin"*/}
-                {/*  validate={required}*/}
-                {/*  component={renderSelect({*/}
-                {/*    placeholder: '',*/}
-                {/*    label: 'VIN Number',*/}
-                {/*    classNameWrapper: styles.popupFieldRow,*/}
-                {/*    classNameLabel: styles.label,*/}
-                {/*    widthInputBlock: styles.widthInput,*/}
-                {/*  })}*/}
-                {/*  options={vinArr}*/}
-                {/*/>*/}
+                <Field
+                  name="vin"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: '',
+                    label: 'VIN Number',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={vinArr}
+                />
                 <Field name="quality" validate={required} type="text">
                   {renderInput({
                     label: 'Quantity',

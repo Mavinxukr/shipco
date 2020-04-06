@@ -26,11 +26,11 @@ const Shipping = () => (
         </div>
       </div>
       <CustomTable>
-        <Pagination />
+        {/*<Pagination />*/}
         {carInfo.map(item => (
           <CarInformation key={item.id} item={item} status />
         ))}
-        <Pagination />
+        {/*<Pagination />*/}
       </CustomTable>
     </div>
   </MainLayout>
