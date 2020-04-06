@@ -81,7 +81,7 @@ const CustomStepper = ({
   const steps = getSteps();
   const [isOpenStatusPanel, setIsOpenStatusPanel] = useState(false);
   const [stepIndex, setStepIndex] = useState(
-    getStatusInNumber(item.shipping.status),
+    item.shipping && getStatusInNumber(item.shipping.status) || 0,
   );
   const classNameForOpenStatus = cx(styles.status, {
     [styles.active]: isOpenStatusPanel,
@@ -100,7 +100,18 @@ const CustomStepper = ({
             <b>{item.ship_info.point_delivery_city}</b>
           </div>
         </>
-      ) : null}
+      ) : (
+        <>
+          <div className={styles.flex}>
+            <span>23123</span>
+            <span>rewre</span>
+          </div>
+          <div className={cx(styles.flex, paddingBottom)}>
+            <b>sdfsdf</b>
+            <b>sadasd</b>
+          </div>
+        </>
+      )}
       <div className={styles.root}>
         <Stepper activeStep={stepIndex} connector={<ColorlibConnector />}>
           {steps.map(label => (

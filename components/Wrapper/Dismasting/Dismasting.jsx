@@ -29,11 +29,11 @@ const Dismasting = () => (
         </div>
       </div>
       <CustomTable>
-        <Pagination />
+        {/*<Pagination />*/}
         {carInfo.map(item => (
           <CarInformation key={item.id} item={item} disassembled />
         ))}
-        <Pagination />
+        {/*<Pagination />*/}
       </CustomTable>
     </div>
   </MainLayout>

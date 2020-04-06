@@ -1,12 +1,12 @@
 export const stateStatus = [
   {
     value: 'All Ports',
-    label: 'All Ports',
+    label: 'All Ports'
   },
   {
     value: 'Ports',
-    label: 'Ports',
-  },
+    label: 'Ports'
+  }
 ];
 
 export const carInfo = [
@@ -20,7 +20,7 @@ export const carInfo = [
     secondDate: '10  Aug, 2019',
     from: 'California',
     to: 'Kyiv',
-    step: 2,
+    shipping: [{ status: 2 }],
     car: 'Car on the way to port ',
     tracking_id: '20 4001 3813 4902',
     point: 'California',
@@ -28,7 +28,7 @@ export const carInfo = [
     container_id: 444665843,
     car_fax_href: 'backgound.png',
     invoice_href: 'backgound.png',
-    notes_href: 'backgound.png',
+    notes_href: 'backgound.png'
   },
   {
     id: 3,
@@ -40,7 +40,7 @@ export const carInfo = [
     secondDate: '10  Aug, 2019',
     from: 'California',
     to: 'Kyiv',
-    step: 1,
+    shipping: [{ status: 2 }],
     car: 'Car on the way to port ',
     tracking_id: '20 4001 3813 4902',
     point: 'California',
@@ -48,7 +48,7 @@ export const carInfo = [
     container_id: 444665843,
     car_fax_href: 'backgound.png',
     invoice_href: 'backgound.png',
-    notes_href: 'backgound.png',
+    notes_href: 'backgound.png'
   },
   {
     id: 2,
@@ -60,7 +60,7 @@ export const carInfo = [
     secondDate: '10  Aug, 2019',
     from: 'California',
     to: 'Kyiv',
-    step: 0,
+    shipping: [{ status: 2 }],
     car: 'Car on the way to port ',
     tracking_id: '20 4001 3813 4902',
     point: 'California',
@@ -68,7 +68,7 @@ export const carInfo = [
     container_id: 444665843,
     car_fax_href: 'backgound.png',
     invoice_href: 'backgound.png',
-    notes_href: 'backgound.png',
+    notes_href: 'backgound.png'
   },
   {
     id: 11,
@@ -80,7 +80,7 @@ export const carInfo = [
     secondDate: '10  Aug, 2019',
     from: 'California',
     to: 'Kyiv2',
-    step: 2,
+    shipping: [{ status: 2 }],
     car: 'Car on the way to port ',
     tracking_id: '20 4001 3813 4902',
     point: 'California',
@@ -88,7 +88,7 @@ export const carInfo = [
     container_id: 444665843,
     car_fax_href: 'backgound.png',
     invoice_href: 'backgound.png',
-    notes_href: 'backgound.png',
+    notes_href: 'backgound.png'
   },
   {
     id: 32,
@@ -100,7 +100,7 @@ export const carInfo = [
     secondDate: '10  Aug, 2019',
     from: 'California',
     to: 'Kyiv',
-    step: 1,
+    shipping: [{ status: 2 }],
     car: 'Car on the way to port ',
     tracking_id: '20 4001 3813 4902',
     point: 'California',
@@ -108,7 +108,7 @@ export const carInfo = [
     container_id: 444665843,
     car_fax_href: 'backgound.png',
     invoice_href: 'backgound.png',
-    notes_href: 'backgound.png',
+    notes_href: 'backgound.png'
   },
   {
     id: 21,
@@ -120,7 +120,7 @@ export const carInfo = [
     secondDate: '10  Aug, 2019',
     from: 'California',
     to: 'Kyiv',
-    step: 0,
+    shipping: [{ status: 2 }],
     car: 'Car on the way to port ',
     tracking_id: '20 4001 3813 4902',
     point: 'California',
@@ -128,6 +128,6 @@ export const carInfo = [
     container_id: 444665843,
     car_fax_href: 'backgound.png',
     invoice_href: 'backgound.png',
-    notes_href: 'backgound.png',
-  },
+    notes_href: 'backgound.png'
+  }
 ];

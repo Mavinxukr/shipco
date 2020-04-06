@@ -9,6 +9,7 @@ import { auto } from './auto';
 import { autoClient } from './autoClient';
 import { autoId } from './autoId';
 import { parts } from './parts';
+import { clientParts } from './clientParts';
 
 export default combineReducers({
   currentUser,
@@ -21,4 +22,5 @@ export default combineReducers({
   autoClient,
   autoId,
   parts,
+  clientParts,
 });

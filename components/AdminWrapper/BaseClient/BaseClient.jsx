@@ -115,7 +115,14 @@ const BaseClient = () => {
       <div className={styles.container}>
         <div className={styles.flex}>
           <h4 className={styles.title}>Base client</h4>
-          <Search />
+          <Search
+            onClick={() => dispatch(
+              getBaseClient({
+                search: document.querySelector('#search').value,
+              }),
+            )
+            }
+          />
         </div>
         <div className={styles.flex}>
           <div className={styles.groupBtn}>
@@ -150,6 +157,7 @@ const BaseClient = () => {
             <Button customBtn={styles.rightBtn}>Import</Button>
           </div>
         </div>
+        {baseClient.data.length !== 0 ? (
         <CustomTable>
           <Pagination
             params={baseClient.links}
@@ -191,6 +199,9 @@ const BaseClient = () => {
             }}
           />
         </CustomTable>
+          ): (
+          <h1 className={styles.notFound}>nothing found</h1>
+          )}
       </div>
       {isPopupOpen && (
         <Popup
