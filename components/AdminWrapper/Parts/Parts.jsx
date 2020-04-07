@@ -8,6 +8,7 @@ import {
   getParts,
   deleteParts,
   addNewParts,
+  updateParts,
 } from '../../../redux/actions/parts';
 import {
   partsDataSelector,
@@ -52,7 +53,9 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   );
 });
 
-const Table = ({ columns, data }) => {
+const Table = ({
+  columns, data, setIsPopupUpdateOpen, setUpdateData,
+}) => {
   const dispatch = useDispatch();
 
   const {
@@ -117,14 +120,22 @@ const Table = ({ columns, data }) => {
                 >
                   {cell.column.id === 'actions' ? (
                     <>
-                      <Button type="button" customBtn={styles.actionsButton}>
+                      <Button
+                        type="button"
+                        customBtn={styles.actionsButton}
+                        onClick={() => {
+                          setUpdateData(cell.row.original);
+                          setIsPopupUpdateOpen(true);
+                        }}
+                      >
                         <IconP />
                       </Button>
                       <Button
                         type="button"
                         customBtn={styles.actionsButton}
-                        onClick={() => dispatch(deleteParts({}, cell.row.original.id))
-                        }
+                        onClick={() => {
+                          dispatch(deleteParts({}, {}, cell.row.original.id));
+                        }}
                       >
                         <IconTrash />
                       </Button>
@@ -146,6 +157,8 @@ const Parts = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [arrPicsContainer, setArrPicsContainer] = useState([]);
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
+  const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
+  const [updateData, setUpdateData] = useState(null);
   const [initialPage, setInitialPage] = useState(0);
   const [countPagination, setCountPagination] = useState('10');
 
@@ -163,6 +176,12 @@ const Parts = () => {
   useEffect(() => {
     dispatch(getParts({}));
   }, []);
+
+  useEffect(() => {
+    if (updateData && updateData.images) {
+      setArrPicsContainer(updateData.images);
+    }
+  }, [updateData]);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -197,6 +216,24 @@ const Parts = () => {
     setIsPopupOpen(false);
   };
 
+  const onSubmitUpdate = async (values) => {
+    dispatch(
+      updateParts(
+        {},
+        {
+          ...values,
+          vin: values.vin && values.vin.label,
+          catalog_number: values.catalog_number && values.catalog_number.label,
+          image: newArrPicsContainer,
+        },
+        updateData.id,
+      ),
+    );
+    setArrPicsContainer([]);
+    setNewArrPicsContainer([]);
+    setIsPopupUpdateOpen(false);
+  };
+
   return (
     <MainLayout admin>
       <SubHeader
@@ -211,7 +248,10 @@ const Parts = () => {
         <div className={styles.flex}>
           <Button
             customBtn={styles.btnIcon}
-            onClick={() => setIsPopupOpen(true)}
+            onClick={() => {
+              setArrPicsContainer([]);
+              setIsPopupOpen(true);
+            }}
           >
             <IconPlus className={styles.plus} />
             Add New Part
@@ -242,7 +282,12 @@ const Parts = () => {
               }}
             />
             <div className={styles.scrollTable}>
-              <Table columns={columns} data={parts.data} />
+              <Table
+                columns={columns}
+                data={parts.data}
+                setIsPopupUpdateOpen={setIsPopupUpdateOpen}
+                setUpdateData={setUpdateData}
+              />
             </div>
             <Pagination
               params={parts.links}
@@ -265,12 +310,131 @@ const Parts = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
+      {isPopupUpdateOpen && (
+        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title="Update Part">
+          <Form
+            onSubmit={onSubmitUpdate}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <Field
+                  name="client_id"
+                  type="text"
+                  defaultValue={updateData.client_id || ''}
+                >
+                  {renderInput({
+                    label: 'Client ID',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="catalog_number"
+                  component={renderSelect({
+                    placeholder: updateData.catalog_number,
+                    label: 'Catalog number',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={catalogArr}
+                />
+                {/* <Field name="catalog_number" validate={required} type="text"> */}
+                {/*  {renderInput({ */}
+                {/*    label: 'Catalog number', */}
+                {/*    classNameWrapper: styles.popupFieldRow, */}
+                {/*    classNameWrapperLabel: styles.label, */}
+                {/*    widthInputBlock: styles.widthInput, */}
+                {/*    icon: <IconSearch />, */}
+                {/*    classNameWrapperForIcon: styles.positionIcon, */}
+                {/*  })} */}
+                {/* </Field> */}
+                <Field
+                  name="name"
+                  type="text"
+                  defaultValue={updateData.name || ''}
+                >
+                  {renderInput({
+                    label: 'Name',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="auto"
+                  type="text"
+                  defaultValue={updateData.auto || ''}
+                >
+                  {renderInput({
+                    label: 'Auto',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="vin"
+                  component={renderSelect({
+                    placeholder: updateData.vin,
+                    label: 'VIN Number',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={vinArr}
+                />
+                <Field
+                  name="quality"
+                  type="text"
+                  defaultValue={updateData.quality || ''}
+                >
+                  {renderInput({
+                    label: 'Quantity',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="container"
+                  validate={composeValidators(mustBeNumber)}
+                  type="text"
+                  defaultValue={updateData.container || ''}
+                >
+                  {renderInput({
+                    label: 'Add container #',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Previews
+                  idAuto={updateData.id}
+                  icon={<IconUpload className={styles.icon} />}
+                  setArrPics={setArrPicsContainer}
+                  arrPics={arrPicsContainer}
+                  title="Add photo"
+                  customText={styles.customText}
+                  customIconBlock={styles.customIconBlock}
+                  customThumbs={styles.thumbs}
+                  setNewArrPics={setNewArrPicsContainer}
+                  newArrPics={newArrPicsContainer}
+                />
+                <Button
+                  customBtn={styles.btnSubmit}
+                  type="submit"
+                  disabled={submitting || invalid}
+                >
+                  Update part
+                </Button>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
       {isPopupOpen && (
-        <Popup
-          isPopupOpen={isPopupOpen}
-          setIsPopupOpen={setIsPopupOpen}
-          title="Add New Part"
-        >
+        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Part">
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -369,7 +533,7 @@ const Parts = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  ADD New part
+                  Add New part
                 </Button>
               </form>
             )}

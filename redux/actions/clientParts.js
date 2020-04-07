@@ -16,6 +16,12 @@ export const deleteClientParts = (params, id) => ({
   id,
 });
 
+export const updateClientParts = (params, body, id) => ({
+  type: actionTypes.clientParts.update,
+  body,
+  id,
+});
+
 export const getClientPartsSuccess = body => ({
   type: actionTypes.clientParts.success,
   body,

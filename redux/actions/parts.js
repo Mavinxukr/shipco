@@ -11,8 +11,16 @@ export const addNewParts = (params, body) => ({
   body,
 });
 
-export const deleteParts = (params, id) => ({
+export const deleteParts = (params, body, id, isImage) => ({
   type: actionTypes.parts.delete,
+  body,
+  id,
+  isImage,
+});
+
+export const updateParts = (params, body, id) => ({
+  type: actionTypes.parts.update,
+  body,
   id,
 });
 

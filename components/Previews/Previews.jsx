@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import IconRemoveImage from '../../assets/svg/removeImg.svg';
 import styles from './Previews.scss';
 import { deleteAuto } from '../../redux/actions/auto';
+import { deleteParts } from '../../redux/actions/parts';
 
 const Previews = ({
   setArrPics,
@@ -36,20 +37,25 @@ const Previews = ({
   });
 
   const handleRemoveItem = (link) => {
-    setArrPics(arrPics.filter(item => item.link !== link));
+    setArrPics(arrPics.filter(item => item.link || item.image !== link));
   };
 
   const dispatch = useDispatch();
 
   const thumbs = [...arrPics].map(pic => (
-    <div className={styles.thumb} key={pic.link}>
+    <div className={styles.thumb} key={pic.link || pic.image}>
       <div className={styles.thumbInner}>
-        <img id={pic.id} src={pic.link} className={styles.img} alt={pic.link} />
+        <img
+          id={pic.id}
+          src={pic.link || pic.image}
+          className={styles.img}
+          alt={pic.link || pic.image}
+        />
         <button
           type="button"
           className={styles.removeIcon}
           onClick={() => {
-            if (pic.id) {
+            if (pic.id && pic.link) {
               dispatch(
                 deleteAuto(
                   {},
@@ -60,7 +66,10 @@ const Previews = ({
                 ),
               );
             }
-            handleRemoveItem(pic.link);
+            if (pic.id && pic.image) {
+              dispatch(deleteParts({}, { ids: pic.id }, idAuto, true));
+            }
+            handleRemoveItem(pic.link || pic.image);
           }}
         >
           <IconRemoveImage />
@@ -102,7 +111,7 @@ Previews.propTypes = {
   customIconBlock: PropTypes.string,
   customThumbs: PropTypes.string,
   type: PropTypes.string,
-  idAuto: PropTypes.number,
+  idAuto: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Previews;

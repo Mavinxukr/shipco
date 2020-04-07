@@ -10,8 +10,9 @@ const initialState = {
 export const clientParts = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.clientParts.request
-    || actionTypes.clientParts.save
-    || actionTypes.clientParts.delete:
+      || actionTypes.clientParts.save
+      || actionTypes.clientParts.delete
+      || actionTypes.clientParts.update:
       return {
         ...state,
         isFetch: true,
