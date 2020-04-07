@@ -108,22 +108,9 @@ th:first-child {
   margin-right: 50px;
 }
 
-.auto {
-  position: relative;
-  display: block;
-  padding: 16px 0 16px 45px;
+.auto,
+.comment {
   max-width: 241px;
-
-  &:before {
-    position: absolute;
-    content: url("/images/tableClose.svg");
-    width: 14px;
-    height: 14px;
-    left: 15px;
-    z-index: 10;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 }
 
 .autoHeader {

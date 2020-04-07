@@ -11,7 +11,8 @@ export const parts = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.parts.request
       || actionTypes.parts.save
-      || actionTypes.parts.delete:
+      || actionTypes.parts.delete
+      || actionTypes.parts.update:
       return {
         ...state,
         isFetch: true,

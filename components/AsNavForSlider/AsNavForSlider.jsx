@@ -36,9 +36,16 @@ const AsNavForSlider = ({ sliderImages }) => {
   const settings = {
     // dots: true,
     beforeChange: (param, param2) => setIndex(param2),
-    nextArrow: <SampleNextArrow sliderImages={sliderImages.length} index={index} className={styles.ArrowR} />,
+    nextArrow: (
+      <SampleNextArrow
+        sliderImages={sliderImages.length}
+        index={index}
+        className={styles.ArrowR}
+      />
+    ),
     prevArrow: <SamplePrevArrow index={index} className={styles.ArrowL} />,
   };
+
   return (
     <>
       <Slider
@@ -49,7 +56,7 @@ const AsNavForSlider = ({ sliderImages }) => {
       >
         {sliderImages.map(item => (
           <div className={styles.parentSlider} key={item.id}>
-            <img src={item.src} alt="" />
+            <img src={item.image} alt="" />
           </div>
         ))}
       </Slider>
@@ -64,7 +71,7 @@ const AsNavForSlider = ({ sliderImages }) => {
       >
         {sliderImages.map(item => (
           <div className={styles.asNavFOr} key={item.id}>
-            <img src={item.src} alt="" />
+            <img src={item.image} alt="" />
           </div>
         ))}
       </Slider>
@@ -73,11 +80,7 @@ const AsNavForSlider = ({ sliderImages }) => {
 };
 
 AsNavForSlider.propTypes = {
-  sliderImages: PropTypes.shape({
-    id: PropTypes.number,
-    src: PropTypes.string,
-    length: PropTypes.number,
-  }),
+  sliderImages: PropTypes.array,
 };
 
 export default AsNavForSlider;

@@ -7,6 +7,7 @@ import {
   getClientParts,
   addNewClientParts,
   deleteClientParts,
+  updateClientParts,
 } from '../../../redux/actions/clientParts';
 import {
   clientPartsDataSelector,
@@ -24,7 +25,7 @@ import IconFilter from '../../../assets/svg/Group (5).svg';
 import IconSearch from '../../../assets/svg/Search_icon.svg';
 import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns, images } from './data';
+import { columns } from './data';
 import {
   composeValidators,
   mustBeNumber,
@@ -36,7 +37,14 @@ import Loader from '../../Loader/Loader';
 import Pagination from '../../Pagination/Pagination';
 import { getCurrentUser } from '../../../redux/actions/currentUser';
 
-const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
+const Table = ({
+  columns,
+  data,
+  setIsPopupPhotoOpen,
+  setSliderImages,
+  setIsPopupUpdateOpen,
+  setUpdateData,
+}) => {
   const dispatch = useDispatch();
 
   const {
@@ -78,7 +86,14 @@ const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
                 >
                   {cell.column.id === 'actions' ? (
                     <div className={styles.tdFlex}>
-                      <Button type="button" customBtn={styles.actionsButton}>
+                      <Button
+                        type="button"
+                        customBtn={styles.actionsButton}
+                        onClick={() => {
+                          setUpdateData(cell.row.original);
+                          setIsPopupUpdateOpen(true);
+                        }}
+                      >
                         <IconP />
                       </Button>
                       <Button
@@ -95,8 +110,13 @@ const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
                       {cell.column.id === 'photo' ? (
                         <Button
                           type="button"
-                          customBtn={cx(styles.background, styles.colorDec)}
-                          onClick={() => setIsPopupPhotoOpen(true)}
+                          customBtn={cx(styles.background, styles.colorDec, cell.row.original.images.length === 0 && styles.disabled)}
+                          onClick={() => {
+                            if (cell.row.original.images.length > 0) {
+                              setSliderImages(cell.row.original.images);
+                              setIsPopupPhotoOpen(true);
+                            }
+                          }}
                         >
                           View pics
                         </Button>
@@ -118,7 +138,10 @@ const Table = ({ columns, data, setIsPopupPhotoOpen }) => {
 const Parts = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupPhotoOpen, setIsPopupPhotoOpen] = useState(false);
+  const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
+  const [updateData, setUpdateData] = useState(null);
   const [initialPage, setInitialPage] = useState(0);
+  const [sliderImages, setSliderImages] = useState([]);
   const [countPagination, setCountPagination] = useState('10');
   const clientParts = useSelector(clientPartsDataSelector);
   const isDataReceived = useSelector(clientPartsDataReceivedSelector);
@@ -173,7 +196,20 @@ const Parts = () => {
     setIsPopupOpen(false);
   };
 
-  console.log(user);
+  const onSubmitUpdate = async (values) => {
+    dispatch(
+      updateClientParts(
+        {},
+        {
+          ...values,
+          vin: values.vin && values.vin.label,
+          catalog_number: values.catalog_number && values.catalog_number.label,
+        },
+        updateData.id,
+      ),
+    );
+    setIsPopupUpdateOpen(false);
+  };
 
   return (
     <MainLayout>
@@ -192,55 +228,170 @@ const Parts = () => {
               <IconFilter className={styles.filterIcon} />
               Filter
             </Button>
-            <Search />
+            <Search
+              onClick={() => dispatch(
+                getClientParts({
+                  search: document.querySelector('#search').value,
+                }),
+              )
+              }
+            />
           </div>
         </div>
-        <CustomTable>
-          <Pagination
-            params={clientParts.links}
-            countPagination={countPagination}
-            setInitialPage={setInitialPage}
-            initialPage={initialPage}
-            action={getClientParts}
-            onPageChange={(data) => {
-              dispatch(
-                getClientParts({
-                  page: data.selected + 1,
-                  countpage: countPagination,
-                }),
-              );
-              setInitialPage(data.selected);
-            }}
-          />
-          <Table
-            columns={columns}
-            data={clientParts.data}
-            setIsPopupPhotoOpen={setIsPopupPhotoOpen}
-          />
-          <Pagination
-            params={clientParts.links}
-            countPagination={countPagination}
-            setInitialPage={setInitialPage}
-            initialPage={initialPage}
-            action={getClientParts}
-            onPageChange={(data) => {
-              dispatch(
-                getClientParts({
-                  page: data.selected + 1,
-                  countpage: countPagination,
-                }),
-              );
-              setInitialPage(data.selected);
-            }}
-          />
-        </CustomTable>
+        {clientParts.data.length !== 0 ? (
+          <CustomTable>
+            <Pagination
+              params={clientParts.links}
+              countPagination={countPagination}
+              setInitialPage={setInitialPage}
+              initialPage={initialPage}
+              action={getClientParts}
+              onPageChange={(data) => {
+                dispatch(
+                  getClientParts({
+                    page: data.selected + 1,
+                    countpage: countPagination,
+                  }),
+                );
+                setInitialPage(data.selected);
+              }}
+            />
+            <div className={styles.scrollTable}>
+              <Table
+                columns={columns}
+                data={clientParts.data}
+                setIsPopupPhotoOpen={setIsPopupPhotoOpen}
+                setSliderImages={setSliderImages}
+                setIsPopupOpen={setIsPopupOpen}
+                setIsPopupUpdateOpen={setIsPopupUpdateOpen}
+                setUpdateData={setUpdateData}
+              />
+            </div>
+            <Pagination
+              params={clientParts.links}
+              countPagination={countPagination}
+              setInitialPage={setInitialPage}
+              initialPage={initialPage}
+              action={getClientParts}
+              onPageChange={(data) => {
+                dispatch(
+                  getClientParts({
+                    page: data.selected + 1,
+                    countpage: countPagination,
+                  }),
+                );
+                setInitialPage(data.selected);
+              }}
+            />
+          </CustomTable>
+        ) : (
+          <h1 className={styles.notFound}>nothing found</h1>
+        )}
       </div>
+      {isPopupUpdateOpen && (
+        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title="Update Part">
+          <Form
+            onSubmit={onSubmitUpdate}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <Field
+                  name="catalog_number"
+                  component={renderSelect({
+                    placeholder: updateData.catalog_number,
+                    label: 'Catalog number',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={catalogArr}
+                />
+                <Field
+                  name="name"
+                  type="text"
+                  defaultValue={updateData.name || ''}
+                >
+                  {renderInput({
+                    label: 'Name',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="auto"
+                  type="text"
+                  defaultValue={updateData.auto || ''}
+                >
+                  {renderInput({
+                    label: 'Auto',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="vin"
+                  isRequired
+                  component={renderSelect({
+                    placeholder: updateData.vin,
+                    label: 'VIN Number',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={vinArr}
+                />
+                <Field
+                  name="container"
+                  validate={mustBeNumber}
+                  type="text"
+                  defaultValue={updateData.container || ''}
+                >
+                  {renderInput({
+                    label: 'Container',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <Field
+                  name="quality"
+                  type="text"
+                  defaultValue={updateData.quality || ''}
+                >
+                  {renderInput({
+                    label: 'Quality',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
+                <div className={styles.popupFieldRow}>
+                  <label className={cx(styles.label, styles.colorDec)}>
+                    Comment
+                  </label>
+                  <Field
+                    className={cx(styles.widthInput, styles.customTextarea)}
+                    name="comment"
+                    component="textarea"
+                    placeholder=""
+                    defaultValue={updateData.comment || ''}
+                  />
+                </div>
+                <Button
+                  customBtn={styles.btnSubmit}
+                  type="submit"
+                  disabled={submitting || invalid}
+                >
+                  Update part
+                </Button>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
       {isPopupOpen && (
-        <Popup
-          isPopupOpen={isPopupOpen}
-          setIsPopupOpen={setIsPopupOpen}
-          title="Add New Part"
-        >
+        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Part">
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -336,7 +487,7 @@ const Parts = () => {
           title="Parts photo"
           customPopup={styles.paddingBottom}
         >
-          <AsNavForSlider sliderImages={images} />
+          <AsNavForSlider sliderImages={sliderImages} />
         </Popup>
       )}
     </MainLayout>

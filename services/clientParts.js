@@ -16,3 +16,10 @@ export const addNewClientPartsRequest = async (params, body) => {
   });
   return serverData;
 };
+
+export const updateClientPartsRequest = async (params, body, id) => {
+  const serverData = await Fetch.post(`update-part/${id}`, params, {
+    body: JSON.stringify(body),
+  });
+  return serverData;
+};
