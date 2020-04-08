@@ -75,7 +75,8 @@ const Header = ({ newLink, admin }) => {
               <li className={styles.menuItem}>
                 <ActiveLink
                   activeClassName={styles.active}
-                  href="/admin-parts">
+                  href="/admin-parts"
+                >
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
                     parts

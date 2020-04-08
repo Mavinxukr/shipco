@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import cx from 'classnames';
 import Button from '../Button/Button';
 import CustomStepper from '../CustomStepper/CustomStepper';
@@ -11,18 +12,36 @@ const CarInformation = ({
   item, disassembled, status, admin,
 }) => {
   const [switchOn, setSwitchOn] = useState(item.disassembled);
+
   return (
     <div className={styles.flexItems}>
       <div className={styles.image}>
-        <img src={item.src} alt="" />
+        <img
+          src={
+            (item.document
+              && item.document.length !== 0
+              && item.document[0].link)
+            || '/images/no-preview-available.png'
+          }
+          alt={item.model_name || '21321'}
+        />
       </div>
       <div className={styles.column}>
-        <p className={styles.colorText}>{item.name}</p>
-        <p>Lot # {item.lot}</p>
-        <p>VIN: {item.vin}</p>
-        <Button customBtn={styles.btn}>
-          <IconEdit className={styles.svg} /> Edit
-        </Button>
+        <p className={styles.colorText}>{item.model_name || '21321'}</p>
+        <p>Lot # {item.lot_info && item.lot_info.lot_number || '12312'}</p>
+        <p>VIN: {item.lot_info && item.lot_info.vin_code || '21321'}</p>
+        <Link
+          href={{
+            pathname: '/auto-open',
+            query: {
+              idAuto: item.id,
+            },
+          }}
+        >
+          <a className={styles.link}>
+            <IconEdit className={styles.svg} /> Edit
+          </a>
+        </Link>
       </div>
       <div className={cx(styles.column, styles.stepperContainer)}>
         <CustomStepper
@@ -35,12 +54,16 @@ const CarInformation = ({
       <div className={styles.column}>
         <p>
           Tracking id:{' '}
-          <span className={styles.colorText}>{item.tracking_id}</span>
+          <span className={styles.colorText}>
+            {item.ship_info && item.ship_info.tracking_id || '21321'}
+          </span>
         </p>
-        <p>Point of loading: {item.point}</p>
+        <p>Point of loading: {item.ship_info && item.ship_info.point_delivery[0] || '21321'}</p>
         <p>
           Container id:{' '}
-          <span className={styles.colorText}>{item.container_id}</span>
+          <span className={styles.colorText}>
+            {item.ship_info && item.ship_info.container_id || '21321'}
+          </span>
         </p>
         {disassembled && (
           <div className={styles.flex}>
@@ -65,17 +88,11 @@ const CarInformation = ({
             ) : (
               <ButtonGroup>
                 {switchOn ? (
-                  <Button
-                    customBtn={styles.btnYes}
-                    active={switchOn}
-                  >
+                  <Button customBtn={styles.btnYes} active={switchOn}>
                     Yes
                   </Button>
                 ) : (
-                  <Button
-                    customBtn={styles.btnNo}
-                    active={!switchOn}
-                  >
+                  <Button customBtn={styles.btnNo} active={!switchOn}>
                     No
                   </Button>
                 )}
@@ -85,13 +102,25 @@ const CarInformation = ({
         )}
       </div>
       <div className={styles.column}>
-        <a href={item.car_fax_href} download={item.car_fax_href} className={styles.colorText}>
+        <a
+          href={item.car_fax_href}
+          download={item.car_fax_href}
+          className={styles.colorText}
+        >
           CarFax report
         </a>
-        <a href={item.invoice_href} download={item.invoice_href} className={styles.colorText}>
+        <a
+          href={item.invoice_href}
+          download={item.invoice_href}
+          className={styles.colorText}
+        >
           Invoice
         </a>
-        <a href={item.notes_href} download={item.notes_href} className={styles.colorText}>
+        <a
+          href={item.notes_href}
+          download={item.notes_href}
+          className={styles.colorText}
+        >
           Adding notes
         </a>
       </div>

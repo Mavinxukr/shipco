@@ -25,7 +25,9 @@ import CustomTable from '../../CustomTable/CustomTable';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
 import styles from './Client.scss';
-import { columns, stateStatus, status, city } from './data';
+import {
+  columns, stateStatus, status, city,
+} from './data';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 import Loader from '../../Loader/Loader';
 import Popup from '../../Popup/Popup';
@@ -54,8 +56,6 @@ const Client = () => {
   const isDataReceived = useSelector(clientDataReceivedSelector);
   const isDataReceivedClient = useSelector(currentClientDataReceivedSelector);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [initialPage, setInitialPage] = useState(0);
-  const [countPagination, setCountPagination] = useState('10');
 
   const dispatch = useDispatch();
 
@@ -102,10 +102,13 @@ const Client = () => {
   }, [router.query.isClient]);
 
   useEffect(() => {
-    if (client) {
-      setCountPagination(`${client.links.per_page}`);
-    }
-  }, [client]);
+    dispatch(
+      getClient({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+      }),
+    );
+  }, [router.query]);
 
   if (router.query.idUser) {
     if (!isDataReceived || !isDataReceivedClient) {
@@ -180,19 +183,8 @@ const Client = () => {
             <CustomTable>
               <Pagination
                 params={client.links}
-                countPagination={countPagination}
-                setInitialPage={setInitialPage}
-                initialPage={initialPage}
-                action={getClient}
-                onPageChange={(data) => {
-                  dispatch(
-                    getClient({
-                      page: data.selected + 1,
-                      countpage: countPagination,
-                    }),
-                  );
-                  setInitialPage(data.selected);
-                }}
+                pathname="/client"
+                router={router}
               />
               <div className={styles.scrollTable}>
                 <Table
@@ -203,19 +195,8 @@ const Client = () => {
               </div>
               <Pagination
                 params={client.links}
-                countPagination={countPagination}
-                setInitialPage={setInitialPage}
-                initialPage={initialPage}
-                action={getClient}
-                onPageChange={(data) => {
-                  dispatch(
-                    getClient({
-                      page: data.selected + 1,
-                      countpage: countPagination,
-                    }),
-                  );
-                  setInitialPage(data.selected);
-                }}
+                pathname="/client"
+                router={router}
               />
             </CustomTable>
           ) : (

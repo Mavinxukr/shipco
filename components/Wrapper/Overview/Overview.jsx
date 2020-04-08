@@ -63,10 +63,10 @@ const Overview = () => {
                   </div>
                   <h6 className={styles.titleSlider}>{item.model_name}</h6>
                   <div className={styles.flex}>
-                    <span>{item.lot_info.lot_number}</span>
+                    <span>Lot# {item.lot_info.lot_number}</span>
                   </div>
                   <div className={styles.flex}>
-                    <span>{item.sale_info.location}</span>
+                    <span>Location: {item.sale_info.location}</span>
                     <span className={styles.circle}>e</span>
                   </div>
                   <div className={styles.bg}>

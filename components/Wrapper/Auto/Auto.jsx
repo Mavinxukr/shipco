@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Field, Form } from 'react-final-form';
 import cx from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { usePagination, useRowSelect, useTable } from 'react-table';
+import { useRouter } from 'next/router';
 import { getAutoClient } from '../../../redux/actions/autoClient';
 import {
   autoClientDataSelector,
@@ -10,22 +11,18 @@ import {
 } from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import InputNumber from '../../InputNumber/InputNumber';
-import { stateOptions, columns, filter } from './data';
+import { stateOptions, columns } from './data';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
-import Filter from '../../Filter/Filter';
 import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
 import styles from './Auto.scss';
 import Loader from '../../Loader/Loader';
-import { getBaseClient } from '../../../redux/actions/baseClient';
 
 const Auto = () => {
   const autoClient = useSelector(autoClientDataSelector);
   const isDataReceived = useSelector(autoClientDataReceivedSelector);
-
-  const [initialPage, setInitialPage] = useState(0);
-  const [countPagination, setCountPagination] = useState('10');
+  const router = useRouter();
 
   const dispatch = useDispatch();
 
@@ -34,10 +31,13 @@ const Auto = () => {
   }, []);
 
   useEffect(() => {
-    if (autoClient) {
-      setCountPagination(`${autoClient.links.per_page}`);
-    }
-  }, [autoClient]);
+    dispatch(
+      getAutoClient({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+      }),
+    );
+  }, [router.query]);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -141,75 +141,19 @@ const Auto = () => {
           )}
         />
         <div className={styles.row}>
-          <div className={styles.leftBlock}>
-            <Filter title="GA Warehouse">
-              {filter.map(item => (
-                <div className={styles.itemFilter} key={item.id}>
-                  <span className={styles.colorFilter}>{item.title}</span>
-                  <span>{item.num}</span>
-                </div>
-              ))}
-            </Filter>
-            <Filter title="GA Warehouse">
-              {filter.map(item => (
-                <div className={styles.itemFilter} key={item.id}>
-                  <span className={styles.colorFilter}>{item.title}</span>
-                  <span>{item.num}</span>
-                </div>
-              ))}
-            </Filter>
-            <Filter title="GA Warehouse">
-              {filter.map(item => (
-                <div className={styles.itemFilter} key={item.id}>
-                  <span className={styles.colorFilter}>{item.title}</span>
-                  <span>{item.num}</span>
-                </div>
-              ))}
-            </Filter>
-            <Filter title="GA Warehouse">
-              {filter.map(item => (
-                <div className={styles.itemFilter} key={item.id}>
-                  <span className={styles.colorFilter}>{item.title}</span>
-                  <span>{item.num}</span>
-                </div>
-              ))}
-            </Filter>
-          </div>
           <CustomTable title="">
             <Pagination
               params={autoClient.links}
-              countPagination={countPagination}
-              setInitialPage={setInitialPage}
-              initialPage={initialPage}
-              action={getAutoClient}
-              onPageChange={(data) => {
-                dispatch(
-                  getAutoClient({
-                    page: data.selected + 1,
-                    countpage: countPagination,
-                  }),
-                );
-                setInitialPage(data.selected);
-              }}
+              pathname="/auto"
+              router={router}
             />
             <div className={styles.scrollTable}>
               <Table columns={columns} data={autoClient.data} />
             </div>
             <Pagination
               params={autoClient.links}
-              countPagination={countPagination}
-              setInitialPage={setInitialPage}
-              initialPage={initialPage}
-              action={getAutoClient}
-              onPageChange={(data) => {
-                dispatch(
-                  getAutoClient({
-                    page: data.selected + 1,
-                    countpage: countPagination,
-                  }),
-                );
-                setInitialPage(data.selected);
-              }}
+              pathname="/auto"
+              router={router}
             />
           </CustomTable>
         </div>

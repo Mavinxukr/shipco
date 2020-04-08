@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTable } from 'react-table';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import cx from 'classnames';
 import { Field, Form } from 'react-final-form';
@@ -110,7 +111,12 @@ const Table = ({
                       {cell.column.id === 'photo' ? (
                         <Button
                           type="button"
-                          customBtn={cx(styles.background, styles.colorDec, cell.row.original.images.length === 0 && styles.disabled)}
+                          customBtn={cx(
+                            styles.background,
+                            styles.colorDec,
+                            cell.row.original.images.length === 0
+                              && styles.disabled,
+                          )}
                           onClick={() => {
                             if (cell.row.original.images.length > 0) {
                               setSliderImages(cell.row.original.images);
@@ -136,24 +142,17 @@ const Table = ({
 };
 
 const Parts = () => {
+  const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupPhotoOpen, setIsPopupPhotoOpen] = useState(false);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
   const [updateData, setUpdateData] = useState(null);
-  const [initialPage, setInitialPage] = useState(0);
   const [sliderImages, setSliderImages] = useState([]);
-  const [countPagination, setCountPagination] = useState('10');
   const clientParts = useSelector(clientPartsDataSelector);
   const isDataReceived = useSelector(clientPartsDataReceivedSelector);
   const user = useSelector(currentUserDataSelector);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (clientParts) {
-      setCountPagination(`${clientParts.links.per_page}`);
-    }
-  }, [clientParts]);
 
   useEffect(() => {
     dispatch(getCurrentUser({}));
@@ -162,6 +161,15 @@ const Parts = () => {
   useEffect(() => {
     dispatch(getClientParts({}));
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      getClientParts({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+      }),
+    );
+  }, [router.query]);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -242,19 +250,8 @@ const Parts = () => {
           <CustomTable>
             <Pagination
               params={clientParts.links}
-              countPagination={countPagination}
-              setInitialPage={setInitialPage}
-              initialPage={initialPage}
-              action={getClientParts}
-              onPageChange={(data) => {
-                dispatch(
-                  getClientParts({
-                    page: data.selected + 1,
-                    countpage: countPagination,
-                  }),
-                );
-                setInitialPage(data.selected);
-              }}
+              pathname="/parts"
+              router={router}
             />
             <div className={styles.scrollTable}>
               <Table
@@ -269,19 +266,8 @@ const Parts = () => {
             </div>
             <Pagination
               params={clientParts.links}
-              countPagination={countPagination}
-              setInitialPage={setInitialPage}
-              initialPage={initialPage}
-              action={getClientParts}
-              onPageChange={(data) => {
-                dispatch(
-                  getClientParts({
-                    page: data.selected + 1,
-                    countpage: countPagination,
-                  }),
-                );
-                setInitialPage(data.selected);
-              }}
+              pathname="/parts"
+              router={router}
             />
           </CustomTable>
         ) : (

@@ -1,4 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { getShipping } from '../../../redux/actions/shipping';
+import {
+  shippingDataSelector,
+  shippingDataReceivedSelector,
+} from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
 import SelectCustom from '../../SelectCustom/SelectCustom';
@@ -8,32 +15,71 @@ import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
 import IconFilter from '../../../assets/svg/Group (5).svg';
 import Search from '../../Search/Search';
-import { stateStatus, carInfo } from './data';
+import { stateStatus } from './data';
 import styles from './Shipping.scss';
+import Loader from '../../Loader/Loader';
 
-const Shipping = () => (
-  <MainLayout newLink admin>
-    <SubHeader />
-    <div className={styles.container}>
-      <div className={styles.flex}>
-        <SelectCustom classNameWrapper={styles.widthSelect} placeholder="All Status" options={stateStatus} />
-        <div className={styles.rightBlock}>
-          <Button customBtn={styles.filterText}>
-            <IconFilter className={styles.filterIcon} />
-            Filter
-          </Button>
-          <Search />
+const Shipping = () => {
+  const router = useRouter();
+
+  const shipping = useSelector(shippingDataSelector);
+  const isDataReceived = useSelector(shippingDataReceivedSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getShipping({}));
+  }, []);
+
+  useEffect(() => {
+    dispatch(
+      getShipping({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+      }),
+    );
+  }, [router.query]);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  return (
+    <MainLayout newLink admin>
+      <SubHeader />
+      <div className={styles.container}>
+        <div className={styles.flex}>
+          <SelectCustom
+            classNameWrapper={styles.widthSelect}
+            placeholder="All Status"
+            options={stateStatus}
+          />
+          <div className={styles.rightBlock}>
+            <Button customBtn={styles.filterText}>
+              <IconFilter className={styles.filterIcon} />
+              Filter
+            </Button>
+            <Search />
+          </div>
         </div>
+        <CustomTable>
+          <Pagination
+            params={shipping.links}
+            pathname="/admin-shipping"
+            router={router}
+          />
+          {shipping.data.map(item => (
+            <CarInformation key={item.id} item={item} status />
+          ))}
+          <Pagination
+            params={shipping.links}
+            pathname="/admin-shipping"
+            router={router}
+          />
+        </CustomTable>
       </div>
-      <CustomTable>
-        {/*<Pagination />*/}
-        {carInfo.map(item => (
-          <CarInformation key={item.id} item={item} status />
-        ))}
-        {/*<Pagination />*/}
-      </CustomTable>
-    </div>
-  </MainLayout>
-);
+    </MainLayout>
+  );
+};
 
 export default Shipping;

@@ -467,7 +467,7 @@ const AutoOpen = () => {
                         </div>
                       ))}
                       <div className={styles.items}>
-                        <span>Shipping Damage</span>
+                        <span>Shipping Damage:</span>
                         <div className={styles.position}>
                           <span className={styles.status}>
                             {values.damage_status || 'Case closed'}
