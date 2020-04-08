@@ -13,6 +13,8 @@ import {
   mustBeNumber,
   emailValidation,
   composeValidators,
+  lengthPhone,
+  lengthCart
 } from '../../../utils/validation';
 import IconEye from '../../../assets/svg/eye.svg';
 import { stateOptions } from './data';
@@ -124,7 +126,7 @@ const ProfileSettings = () => {
                 <div>
                   <Field
                     name="phone"
-                    validate={composeValidators(mustBeNumber)}
+                    validate={composeValidators(mustBeNumber, lengthPhone)}
                     type="text"
                     parse={formatStringByPattern('+9-9999-999-99-99')}
                     defaultValue={userData.phone || ''}
@@ -163,7 +165,7 @@ const ProfileSettings = () => {
                   </Field>
                   <Field
                     name="card_number"
-                    validate={composeValidators(mustBeNumber)}
+                    validate={composeValidators(mustBeNumber, lengthCart)}
                     type="text"
                     parse={formatStringByPattern('9999-9999-9999-9999')}
                     defaultValue={userData.card_number || ''}

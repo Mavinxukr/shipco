@@ -7,20 +7,21 @@ import IconClose from '../../assets/svg/close.svg';
 const Popup = ({
   title, children, subTitle, setIsPopupOpen, customPopup,
 }) => (
-  <div className={cx(styles.popup, customPopup)}>
-    <div className={styles.popupHeader}>
-      <h4 className={styles.popupTitle}>
-        {title} {subTitle && <span className={styles.popupSubTitle}>{subTitle}</span>}
-      </h4>
-      <button
-        type="button"
-        onClick={() => setIsPopupOpen(false)}
-      >
-        <IconClose />
-      </button>
+  <>
+    <div className={styles.popupBackground} />
+    <div className={cx(styles.popup, customPopup)}>
+      <div className={styles.popupHeader}>
+        <h4 className={styles.popupTitle}>
+          {title}{' '}
+          {subTitle && <span className={styles.popupSubTitle}>{subTitle}</span>}
+        </h4>
+        <button type="button" onClick={() => setIsPopupOpen(false)}>
+          <IconClose />
+        </button>
+      </div>
+      <div>{children}</div>
     </div>
-    <div>{children}</div>
-  </div>
+  </>
 );
 export default Popup;
 

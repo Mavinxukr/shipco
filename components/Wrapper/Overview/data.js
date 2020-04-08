@@ -13,7 +13,7 @@ export const columns = [
       },
       {
         Header: 'Auto',
-        accessor: 'auto.model_name',
+        accessor: 'name_car',
         Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {

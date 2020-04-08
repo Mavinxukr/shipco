@@ -13,13 +13,17 @@ import {
   emailValidation,
   mustBeNumber,
   required,
+  lengthCart,
+  lengthPhone,
 } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './SubHeader.scss';
 import { stateOptions } from './data';
 import { updateCurrentClient } from '../../../redux/actions/currentClient';
 
-const SubHeader = ({ hidden, currentClientId, currentClient, onClick }) => {
+const SubHeader = ({
+  hidden, currentClientId, currentClient, onClick,
+}) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -155,7 +159,7 @@ const SubHeader = ({ hidden, currentClientId, currentClient, onClick }) => {
                 </Field>
                 <Field
                   name="phone"
-                  validate={composeValidators(required, mustBeNumber)}
+                  validate={composeValidators(required, mustBeNumber, lengthPhone)}
                   type="text"
                   parse={formatStringByPattern('+9-9999-999-99-99')}
                   defaultValue={currentClient.data.phone || ''}
@@ -213,7 +217,7 @@ const SubHeader = ({ hidden, currentClientId, currentClient, onClick }) => {
                 </Field>
                 <Field
                   name="card_number"
-                  validate={composeValidators(required, mustBeNumber)}
+                  validate={composeValidators(required, mustBeNumber, lengthCart)}
                   type="text"
                   parse={formatStringByPattern('9999-9999-9999-9999')}
                   defaultValue={currentClient.data.card_number || ''}

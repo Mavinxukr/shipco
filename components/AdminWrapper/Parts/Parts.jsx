@@ -2,6 +2,7 @@ import React, {
   forwardRef, useRef, useEffect, useState,
 } from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
 import {
@@ -154,24 +155,26 @@ const Table = ({
 };
 
 const Parts = () => {
+  const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [arrPicsContainer, setArrPicsContainer] = useState([]);
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
   const [updateData, setUpdateData] = useState(null);
-  const [initialPage, setInitialPage] = useState(0);
-  const [countPagination, setCountPagination] = useState('10');
 
   const parts = useSelector(partsDataSelector);
   const isDataReceived = useSelector(partsDataReceivedSelector);
 
-  useEffect(() => {
-    if (parts) {
-      setCountPagination(`${parts.links.per_page}`);
-    }
-  }, [parts]);
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      getParts({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+      }),
+    );
+  }, [router.query]);
 
   useEffect(() => {
     dispatch(getParts({}));
@@ -267,19 +270,8 @@ const Parts = () => {
           <CustomTable>
             <Pagination
               params={parts.links}
-              countPagination={countPagination}
-              setInitialPage={setInitialPage}
-              initialPage={initialPage}
-              action={getParts}
-              onPageChange={(data) => {
-                dispatch(
-                  getParts({
-                    page: data.selected + 1,
-                    countpage: countPagination,
-                  }),
-                );
-                setInitialPage(data.selected);
-              }}
+              pathname="/admin-parts"
+              router={router}
             />
             <div className={styles.scrollTable}>
               <Table
@@ -291,19 +283,8 @@ const Parts = () => {
             </div>
             <Pagination
               params={parts.links}
-              countPagination={countPagination}
-              setInitialPage={setInitialPage}
-              initialPage={initialPage}
-              action={getParts}
-              onPageChange={(data) => {
-                dispatch(
-                  getParts({
-                    page: data.selected + 1,
-                    countpage: countPagination,
-                  }),
-                );
-                setInitialPage(data.selected);
-              }}
+              pathname="/admin-parts"
+              router={router}
             />
           </CustomTable>
         ) : (

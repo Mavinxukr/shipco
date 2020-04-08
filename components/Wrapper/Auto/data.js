@@ -31,7 +31,7 @@ export const columns = [
       {
         Header: 'Images',
         accessor: 'document[0].link',
-        Cell: ({ cell: { value } }) => <img src={value} alt={value} />,
+        Cell: ({ cell: { value } }) => <img src={value || '/images/no-preview-available.png'} alt={value} />,
       },
       {
         Header: 'Date',
@@ -45,7 +45,7 @@ export const columns = [
       {
         Header: 'Lot',
         accessor: 'lot_info.lot_number',
-        Cell: ({ cell: { value } }) =>  <span>{value}</span>,
+        Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
         Header: 'VIN id',

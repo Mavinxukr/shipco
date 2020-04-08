@@ -2,6 +2,7 @@ import React, {
   useEffect, useState, forwardRef, useRef,
 } from 'react';
 import cx from 'classnames';
+import { useRouter } from 'next/router';
 import { useRowSelect, useTable, useSortBy } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
@@ -31,6 +32,8 @@ import {
   emailValidation,
   required,
   passwordValidation,
+  lengthPhone,
+  lengthCart,
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
@@ -71,10 +74,9 @@ const finalDate = `${currDay}.${currMonth}.${currYear}`;
 const BaseClient = () => {
   const baseClient = useSelector(baseClientDataSelector);
   const isDataReceived = useSelector(baseClientDataReceivedSelector);
+  const router = useRouter();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [initialPage, setInitialPage] = useState(0);
-  const [countPagination, setCountPagination] = useState('10');
   const [image, setImage] = useState('/images/no-preview-available.png');
 
   const dispatch = useDispatch();
@@ -84,10 +86,13 @@ const BaseClient = () => {
   }, []);
 
   useEffect(() => {
-    if (baseClient) {
-      setCountPagination(`${baseClient.links.per_page}`);
-    }
-  }, [baseClient]);
+    dispatch(
+      getBaseClient({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+      }),
+    );
+  }, [router.query]);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -158,50 +163,28 @@ const BaseClient = () => {
           </div>
         </div>
         {baseClient.data.length !== 0 ? (
-        <CustomTable>
-          <Pagination
-            params={baseClient.links}
-            countPagination={countPagination}
-            setInitialPage={setInitialPage}
-            initialPage={initialPage}
-            action={getBaseClient}
-            onPageChange={(data) => {
-              dispatch(
-                getBaseClient({
-                  page: data.selected + 1,
-                  countpage: countPagination,
-                }),
-              );
-              setInitialPage(data.selected);
-            }}
-          />
-          <div className={styles.scrollTable}>
-            <Table
-              columns={columns}
-              data={baseClient.data}
-              arrClientsId={arrClientsId}
+          <CustomTable>
+            <Pagination
+              params={baseClient.links}
+              pathname="/base-client"
+              router={router}
             />
-          </div>
-          <Pagination
-            params={baseClient.links}
-            countPagination={countPagination}
-            setInitialPage={setInitialPage}
-            initialPage={initialPage}
-            action={getBaseClient}
-            onPageChange={(data) => {
-              dispatch(
-                getBaseClient({
-                  page: data.selected + 1,
-                  countpage: countPagination,
-                }),
-              );
-              setInitialPage(data.selected);
-            }}
-          />
-        </CustomTable>
-          ): (
+            <div className={styles.scrollTable}>
+              <Table
+                columns={columns}
+                data={baseClient.data}
+                arrClientsId={arrClientsId}
+              />
+            </div>
+            <Pagination
+              params={baseClient.links}
+              pathname="/base-client"
+              router={router}
+            />
+          </CustomTable>
+        ) : (
           <h1 className={styles.notFound}>nothing found</h1>
-          )}
+        )}
       </div>
       {isPopupOpen && (
         <Popup
@@ -244,7 +227,7 @@ const BaseClient = () => {
                 <Field
                   name="phone"
                   type="text"
-                  validate={required}
+                  validate={composeValidators(required, lengthPhone)}
                   parse={formatStringByPattern('+9-9999-999-99-99')}
                 >
                   {renderInput({
@@ -305,7 +288,7 @@ const BaseClient = () => {
                 <Field
                   name="card_number"
                   type="text"
-                  validate={required}
+                  validate={composeValidators(required, lengthCart)}
                   parse={formatStringByPattern('9999-9999-9999-9999')}
                 >
                   {renderInput({

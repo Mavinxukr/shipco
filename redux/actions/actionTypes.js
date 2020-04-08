@@ -18,3 +18,4 @@ export const autoClient = generateAction('autoClient');
 export const autoId = generateAction('autoId');
 export const parts = generateAction('parts');
 export const clientParts = generateAction('clientParts');
+export const shipping = generateAction('shipping');

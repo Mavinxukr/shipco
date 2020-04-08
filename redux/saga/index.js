@@ -24,6 +24,7 @@ import { watchClientParts } from './clientParts/getClientParts';
 import { watchAddNewClientParts } from './clientParts/addNewClientParts';
 import { watchDeleteClientParts } from './clientParts/deleteClietnParts';
 import { watchUpdateClientParts } from './clientParts/updateClientParts';
+import { watchShipping } from './shipping/getShipping';
 
 export function* rootSaga() {
   yield all([
@@ -52,5 +53,6 @@ export function* rootSaga() {
     watchAddNewClientParts(),
     watchDeleteClientParts(),
     watchUpdateClientParts(),
+    watchShipping(),
   ]);
 }
