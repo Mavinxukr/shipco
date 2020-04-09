@@ -14,7 +14,7 @@ import {
   emailValidation,
   composeValidators,
   lengthPhone,
-  lengthCart
+  lengthCart,
 } from '../../../utils/validation';
 import IconEye from '../../../assets/svg/eye.svg';
 import { stateOptions } from './data';

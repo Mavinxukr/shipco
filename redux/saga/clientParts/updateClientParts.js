@@ -16,7 +16,6 @@ function* updateClientParts({ params, body, id }) {
   if (response.status) {
     const idx = clientPartsData.data.findIndex(item => item.id === id);
     const newArr = [...clientPartsData.data.slice(0, idx), response.data.data, ...clientPartsData.data.slice(idx + 1)];
-    console.log(newArr);
     yield put(
       getClientPartsSuccess({
         data: newArr,

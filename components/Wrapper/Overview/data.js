@@ -19,14 +19,17 @@ export const columns = [
       {
         Header: 'Total',
         accessor: 'total_price',
+        Cell: ({ cell: { value } }) => <>$ {value}</>,
       },
       {
         Header: 'Paid',
         accessor: 'paid_price',
+        Cell: ({ cell: { value } }) => <>$ {value}</>,
       },
       {
         Header: 'Outstanding',
         accessor: 'outstanding_price',
+        Cell: ({ cell: { value } }) => <>$ {value}</>,
       },
       {
         Header: 'Status',

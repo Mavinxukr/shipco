@@ -26,6 +26,11 @@
   }
 }
 
+.imageWidth > div > div {
+  width: 100%!important;
+  margin: 0;
+}
+
 .ArrowL,
 .ArrowR {
   width: 30px;

@@ -6,6 +6,12 @@ export const getAutoId = (params, id) => ({
   id,
 });
 
+export const updateAutoId = (params, body) => ({
+  type: actionTypes.autoId.update,
+  params,
+  body,
+});
+
 export const getAutoIdSuccess = body => ({
   type: actionTypes.autoId.success,
   body,

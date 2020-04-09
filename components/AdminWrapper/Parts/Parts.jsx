@@ -5,6 +5,7 @@ import { usePagination, useRowSelect, useTable } from 'react-table';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
+import cx from 'classnames';
 import {
   getParts,
   deleteParts,
@@ -26,10 +27,8 @@ import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconUpload from '../../../assets/svg/uploadfile.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-// import IconSearch from '../../../assets/svg/Search_icon.svg';
-import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns } from './data';
+import { columns, status, statusSelect } from './data';
 import styles from './Parts.scss';
 import {
   required,
@@ -38,6 +37,7 @@ import {
 } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
+import HoverPopup from '../../HoverPopup/HoverPopup';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -158,6 +158,7 @@ const Parts = () => {
   const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [arrPicsContainer, setArrPicsContainer] = useState([]);
+  const [stepIndex, setStepIndex] = useState(0);
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
   const [updateData, setUpdateData] = useState(null);
@@ -168,17 +169,18 @@ const Parts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getParts({}));
+  }, []);
+
+  useEffect(() => {
     dispatch(
       getParts({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        status: router.query.status || '',
       }),
     );
   }, [router.query]);
-
-  useEffect(() => {
-    dispatch(getParts({}));
-  }, []);
 
   useEffect(() => {
     if (updateData && updateData.images) {
@@ -211,6 +213,7 @@ const Parts = () => {
         {
           ...values,
           vin: values.vin && values.vin.label,
+          status: values.status && values.status.value,
           catalog_number: values.catalog_number && values.catalog_number.label,
           image: newArrPicsContainer,
         },
@@ -226,6 +229,7 @@ const Parts = () => {
         {
           ...values,
           vin: values.vin && values.vin.label,
+          status: values.status && values.status.value,
           catalog_number: values.catalog_number && values.catalog_number.label,
           image: newArrPicsContainer,
         },
@@ -262,8 +266,40 @@ const Parts = () => {
           <div className={styles.rightBlock}>
             <Button customBtn={styles.filterText}>
               <IconFilter className={styles.filterIcon} />
-              Filter
+              Status
             </Button>
+            <HoverPopup>
+              {status.map((statusFilter, index) => {
+                const classNameForButton = cx(styles.btnStatus, {
+                  [styles.activeStatus]: stepIndex === index,
+                });
+
+                return (
+                  <Button
+                    onClick={() => {
+                      setStepIndex(index);
+                      router.push({
+                        pathname: '/admin-parts',
+                        query: {
+                          ...router.query,
+                          page: 1,
+                          status: statusFilter.value,
+                        },
+                      });
+                      dispatch(
+                        getParts({
+                          search: statusFilter.value,
+                        }),
+                      );
+                    }}
+                    customBtn={classNameForButton}
+                    key={statusFilter.id}
+                  >
+                    {statusFilter.label}
+                  </Button>
+                );
+              })}
+            </HoverPopup>
           </div>
         </div>
         {parts.data.length !== 0 ? (
@@ -320,16 +356,6 @@ const Parts = () => {
                   })}
                   options={catalogArr}
                 />
-                {/* <Field name="catalog_number" validate={required} type="text"> */}
-                {/*  {renderInput({ */}
-                {/*    label: 'Catalog number', */}
-                {/*    classNameWrapper: styles.popupFieldRow, */}
-                {/*    classNameWrapperLabel: styles.label, */}
-                {/*    widthInputBlock: styles.widthInput, */}
-                {/*    icon: <IconSearch />, */}
-                {/*    classNameWrapperForIcon: styles.positionIcon, */}
-                {/*  })} */}
-                {/* </Field> */}
                 <Field
                   name="name"
                   type="text"
@@ -364,6 +390,18 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                   options={vinArr}
+                />
+                <Field
+                  name="status"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: updateData.status.split('_').join(' '),
+                    label: 'Status',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={statusSelect}
                 />
                 <Field
                   name="quality"
@@ -440,16 +478,6 @@ const Parts = () => {
                   })}
                   options={catalogArr}
                 />
-                {/* <Field name="catalog_number" validate={required} type="text"> */}
-                {/*  {renderInput({ */}
-                {/*    label: 'Catalog number', */}
-                {/*    classNameWrapper: styles.popupFieldRow, */}
-                {/*    classNameWrapperLabel: styles.label, */}
-                {/*    widthInputBlock: styles.widthInput, */}
-                {/*    icon: <IconSearch />, */}
-                {/*    classNameWrapperForIcon: styles.positionIcon, */}
-                {/*  })} */}
-                {/* </Field> */}
                 <Field name="name" validate={required} type="text">
                   {renderInput({
                     label: 'Name',
@@ -477,6 +505,18 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                   options={vinArr}
+                />
+                <Field
+                  name="status"
+                  validate={required}
+                  component={renderSelect({
+                    placeholder: '',
+                    label: 'Status',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                  options={statusSelect}
                 />
                 <Field name="quality" validate={required} type="text">
                   {renderInput({

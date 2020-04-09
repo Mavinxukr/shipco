@@ -102,11 +102,6 @@
   }
 }
 
-.row {
-  display: flex;
-  align-items: flex-start;
-}
-
 .leftBlock {
   width: 12%;
   display: flex;
@@ -122,6 +117,12 @@
 .scrollTable {
   width: 100%;
   overflow: auto;
+}
+
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
 }
 
 .itemFilter {

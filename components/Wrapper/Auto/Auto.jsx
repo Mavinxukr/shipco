@@ -10,7 +10,7 @@ import {
   autoClientDataReceivedSelector,
 } from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
-import InputNumber from '../../InputNumber/InputNumber';
+// import InputNumber from '../../InputNumber/InputNumber';
 import { stateOptions, columns } from './data';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
@@ -35,6 +35,11 @@ const Auto = () => {
       getAutoClient({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        model_name: router.query.model_name || '',
+        point_load_city: router.query.point_load_city || '',
+        container: router.query.container || '',
+        lot_number: router.query.lot_number || '',
+        vin: router.query.vin || '',
       }),
     );
   }, [router.query]);
@@ -43,8 +48,33 @@ const Auto = () => {
     return <Loader />;
   }
 
+  const allModel = { id: 0, value: '', label: 'All' };
+  const model = autoClient.additional.model_name;
+  const modelArr = Object.keys(model).map((item, index = '1') => ({
+    id: index + 1,
+    label: model[index].model_name,
+    value: model[index].model_name,
+  }));
+  const newData = [allModel, ...modelArr];
+
   const onSubmit = async (values) => {
-    console.log(values);
+    router.push({
+      pathname: '/auto',
+      query: {
+        ...router.query,
+        page: 1,
+        container: values.container,
+        lot_number: values.lot_number,
+        vin: values.vin,
+      },
+    });
+    dispatch(
+      getAutoClient({
+        ...values,
+        model_name: values.model_name && values.model_name.value,
+        point_load_city: values.point_load_city && values.point_load_city.value,
+      }),
+    );
   };
 
   return (
@@ -58,25 +88,46 @@ const Auto = () => {
               <div className={styles.flex}>
                 <div className={styles.column}>
                   <div className={styles.flex}>
-                    <Field name="from" type="number">
-                      {({ input }) => (
-                        <InputNumber
-                          cassNameLabel={styles.firstLabel}
-                          title="Year from:"
-                          name="from"
-                          input={input}
-                        />
-                      )}
-                    </Field>
-                    <Field name="to" type="number">
-                      {({ input }) => (
-                        <InputNumber title="to:" name="to" input={input} />
-                      )}
-                    </Field>
+                    {/* <Field name="from" type="number"> */}
+                    {/*  {({ input }) => ( */}
+                    {/*    <InputNumber */}
+                    {/*      cassNameLabel={styles.firstLabel} */}
+                    {/*      title="Year from:" */}
+                    {/*      name="from" */}
+                    {/*      input={input} */}
+                    {/*    /> */}
+                    {/*  )} */}
+                    {/* </Field> */}
+                    {/* <Field name="to" type="number"> */}
+                    {/*  {({ input }) => ( */}
+                    {/*    <InputNumber title="to:" name="to" input={input} /> */}
+                    {/*  )} */}
+                    {/* </Field> */}
+                    <Field
+                      name="model_name"
+                      component={renderSelect({
+                        placeholder: router.query.model_name || '',
+                        label: 'Model:',
+                        classNameWrapper: styles.rowSelect,
+                        classNameLabel: styles.labelSelect,
+                        custonOnChange: (value) => {
+                          router.push({
+                            pathname: '/auto',
+                            query: {
+                              ...router.query,
+                              page: 1,
+                              model_name: value.value,
+                            },
+                          });
+                        },
+                      })}
+                      options={newData}
+                    />
                   </div>
-                  <Field name="Lot" type="text">
+                  <Field name="lot_number" type="text">
                     {renderInput({
                       label: 'Lot:',
+                      placeholder: router.query.lot_number || '',
                       classNameWrapper: styles.firstFlexInput,
                       classNameWrapperLabel: styles.customLabel,
                       classNameWrapperForInput: styles.customWidthInput,
@@ -84,19 +135,40 @@ const Auto = () => {
                   </Field>
                 </div>
                 <div className={cx(styles.column, styles.secondBlock)}>
+                  {/* <Field */}
+                  {/*  name="Model" */}
+                  {/*  component={renderSelect({ */}
+                  {/*    placeholder: '', */}
+                  {/*    label: 'Model:', */}
+                  {/*    classNameWrapper: styles.rowSelect, */}
+                  {/*    classNameLabel: styles.labelSelect, */}
+                  {/*  })} */}
+                  {/*  options={stateOptions} */}
+                  {/* /> */}
                   <Field
-                    name="Model"
+                    name="point_load_city"
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Model:',
+                      placeholder: router.query.point_load_city || '',
+                      label: 'Point of loading:',
                       classNameWrapper: styles.rowSelect,
                       classNameLabel: styles.labelSelect,
+                      custonOnChange: (value) => {
+                        router.push({
+                          pathname: '/auto',
+                          query: {
+                            ...router.query,
+                            page: 1,
+                            point_load_city: value.value,
+                          },
+                        });
+                      },
                     })}
                     options={stateOptions}
                   />
-                  <Field name="VIN" type="text">
+                  <Field name="vin" type="text">
                     {renderInput({
                       label: 'VIN:',
+                      placeholder: router.query.vin || '',
                       classNameWrapper: styles.flexInput,
                       classNameWrapperLabel: cx(
                         styles.customLabel,
@@ -107,19 +179,20 @@ const Auto = () => {
                   </Field>
                 </div>
                 <div className={cx(styles.column, styles.lastColumn)}>
-                  <Field
-                    name="Point"
-                    component={renderSelect({
-                      placeholder: '',
-                      label: 'Point of loading:',
-                      classNameWrapper: styles.rowSelect,
-                      classNameLabel: styles.labelSelect,
-                    })}
-                    options={stateOptions}
-                  />
+                  {/* <Field */}
+                  {/*  name="Point" */}
+                  {/*  component={renderSelect({ */}
+                  {/*    placeholder: '', */}
+                  {/*    label: 'Point of loading:', */}
+                  {/*    classNameWrapper: styles.rowSelect, */}
+                  {/*    classNameLabel: styles.labelSelect, */}
+                  {/*  })} */}
+                  {/*  options={stateOptions} */}
+                  {/* /> */}
                   <Field name="container" type="text">
                     {renderInput({
                       label: 'Сontainer:',
+                      placeholder: router.query.container || '',
                       classNameWrapper: styles.flexInput,
                       classNameWrapperLabel: cx(
                         styles.customLabel,
@@ -140,22 +213,26 @@ const Auto = () => {
             </form>
           )}
         />
-        <div className={styles.row}>
-          <CustomTable title="">
-            <Pagination
-              params={autoClient.links}
-              pathname="/auto"
-              router={router}
-            />
-            <div className={styles.scrollTable}>
-              <Table columns={columns} data={autoClient.data} />
-            </div>
-            <Pagination
-              params={autoClient.links}
-              pathname="/auto"
-              router={router}
-            />
-          </CustomTable>
+        <div>
+          {autoClient.data.length !== 0 ? (
+            <CustomTable title="">
+              <Pagination
+                params={autoClient.links}
+                pathname="/auto"
+                router={router}
+              />
+              <div className={styles.scrollTable}>
+                <Table columns={columns} data={autoClient.data} />
+              </div>
+              <Pagination
+                params={autoClient.links}
+                pathname="/auto"
+                router={router}
+              />
+            </CustomTable>
+          ) : (
+            <h1 className={styles.notFound}>nothing found</h1>
+          )}
         </div>
       </div>
     </MainLayout>

@@ -3,7 +3,8 @@ import cx from 'classnames';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { getAutoId } from '../../../redux/actions/autoId';
+import { Field, Form } from 'react-final-form';
+import { getAutoId, updateAutoId } from '../../../redux/actions/autoId';
 import MainLayout from '../../Layout/Global/Global';
 import {
   autoIdDataSelector,
@@ -41,6 +42,8 @@ const getArr = (items, arr) => items.map((item, index) => {
 
 const AutoNew = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isCommentPopupOpen, setIsCommentPopupOpen] = useState(false);
+  const [isHistoryPopupOpen, setIsHistoryPopupOpen] = useState(false);
   const [openSlide, setOpenSlide] = useState(0);
 
   const autoId = useSelector(autoIdDataSelector);
@@ -99,6 +102,19 @@ const AutoNew = () => {
   const autoContainer = autoData[2].images;
   const autoDamage = autoData[6].images;
 
+  const onSubmit = async (values) => {
+    dispatch(
+      updateAutoId(
+        {},
+        {
+          auto_id: autoId.id,
+          ...values,
+        },
+      ),
+    );
+    setIsCommentPopupOpen(false);
+  };
+
   return (
     <MainLayout>
       <div className={styles.container}>
@@ -141,9 +157,12 @@ const AutoNew = () => {
               >
                 Invoice
               </a>
-              <a className={styles.link} href="/">
+              <Button
+                customBtn={styles.link}
+                onClick={() => setIsCommentPopupOpen(true)}
+              >
                 Adding notes
-              </a>
+              </Button>
               <a
                 className={cx(
                   styles.link,
@@ -164,7 +183,7 @@ const AutoNew = () => {
             <InformationBlock>
               {lotArr.map(item => (
                 <div className={styles.items} key={`${item.id}${item.value}`}>
-                  <span>{item.title}</span>
+                  <span>{item.title}:</span>
                   <span>{item.value}</span>
                 </div>
               ))}
@@ -175,7 +194,7 @@ const AutoNew = () => {
               </div>
               {shipArr.map(item => (
                 <div className={styles.items} key={`${item.id}${item.title}`}>
-                  <span>{item.title}</span>
+                  <span>{item.title}:</span>
                   <span className={styles.rightText}>
                     {typeof item.value === 'object' ? (
                       <>
@@ -234,6 +253,69 @@ const AutoNew = () => {
               </ThumbSlider>
             </Popup>
           )}
+          {isCommentPopupOpen && (
+            <Popup
+              customPopup={styles.popupDamage}
+              title="Adding notes"
+              setIsPopupOpen={setIsCommentPopupOpen}
+            >
+              <Form
+                onSubmit={onSubmit}
+                render={({
+                  handleSubmit, submitting, form, values,
+                }) => (
+                  <form onSubmit={handleSubmit} className={styles.fullWidth}>
+                    <div className={styles.flex}>
+                      <label className={styles.label}>Comment</label>
+                      <Field
+                        className={styles.customTextarea}
+                        name="comment"
+                        component="textarea"
+                        placeholder=""
+                      />
+                    </div>
+                    <Button
+                      customBtn={styles.btnSubmit}
+                      type="submit"
+                      disabled={submitting}
+                    >
+                      Adding notes
+                    </Button>
+                  </form>
+                )}
+              />
+              <Button
+                customBtn={styles.btnSubmit}
+                type="button"
+                onClick={() => {
+                  setIsCommentPopupOpen(false);
+                  setIsHistoryPopupOpen(true);
+                }}
+              >
+                History
+              </Button>
+            </Popup>
+          )}
+          {isHistoryPopupOpen && (
+            <Popup
+              customPopup={styles.popupDamage}
+              title="Adding notes"
+              setIsPopupOpen={setIsHistoryPopupOpen}
+            >
+              {autoId.notes.length === 0 ? (
+                <p className={styles.noComment}>Not Comments</p>
+              ) : (
+                <>
+                  {autoId.notes.map((item, index) => (
+                    <div className={styles.blockComment} key={index}>
+                      <b className={styles.name}>{item.client.name}:</b>
+                      <p className={styles.comment}>{item.comment}</p>
+                    </div>
+                  ))}
+                </>
+              )}
+            </Popup>
+          )}
         </div>
         <h3 className={styles.title}>Popular Vehicles Right Now</h3>
         <div className={cx(styles.flex, styles.popularItems)}>
@@ -251,10 +333,10 @@ const AutoNew = () => {
               </div>
               <h6 className={styles.titlePopular}>{item.model_name}</h6>
               <div className={styles.flexPopular}>
-                <span>{item.lot_info.lot_number}</span>
+                <span>Lot# {item.lot_info.lot_number}</span>
               </div>
               <div className={styles.flexPopular}>
-                <span>{item.sale_info.location}</span>
+                <span>Location: {item.sale_info.location}</span>
                 <span className={styles.circle}>e</span>
               </div>
               <div className={styles.bg}>
@@ -266,9 +348,7 @@ const AutoNew = () => {
                     },
                   }}
                 >
-                  <a className={styles.link}>
-                    view
-                  </a>
+                  <a className={styles.link}>view</a>
                 </Link>
               </div>
             </div>

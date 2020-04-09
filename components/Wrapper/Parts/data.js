@@ -25,6 +25,7 @@ export const columns = [
       {
         Header: 'Status',
         accessor: 'status',
+        Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')}</>,
       },
       {
         Header: 'Parts photo',
@@ -35,5 +36,56 @@ export const columns = [
         accessor: 'actions',
       },
     ],
+  },
+];
+
+export const status = [
+  {
+    id: 1,
+    value: '',
+    label: 'all',
+  },
+  {
+    id: 2,
+    value: 'in_warehouse',
+    label: 'in warehouse',
+  },
+  {
+    id: 3,
+    value: 'in_the_sea',
+    label: 'in the sea',
+  },
+  {
+    id: 4,
+    value: 'at_the_port',
+    label: 'at the port',
+  },
+  {
+    id: 5,
+    value: 'delivered',
+    label: 'delivered',
+  },
+];
+
+export const statusSelect = [
+  {
+    id: 1,
+    value: 'in_warehouse',
+    label: 'in warehouse',
+  },
+  {
+    id: 2,
+    value: 'in_the_sea',
+    label: 'in the sea',
+  },
+  {
+    id: 3,
+    value: 'at_the_port',
+    label: 'at the port',
+  },
+  {
+    id: 4,
+    value: 'delivered',
+    label: 'delivered',
   },
 ];

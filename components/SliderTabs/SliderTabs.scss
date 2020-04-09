@@ -1,10 +1,10 @@
 .slid {
   margin: 0;
-  max-height: 480px;
-  height: 100%;
+  height: 480px;
 
   img {
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -45,10 +45,6 @@
 
 .customSlider {
   overflow: hidden;
-
-  ul {
-    height: 89px;
-  }
 }
 
 .itemTabs {

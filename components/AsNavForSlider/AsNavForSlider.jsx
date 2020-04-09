@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 import '../../public/slick/slick.css';
 import IconArrow from '../../assets/svg/Group (6).svg';
 import styles from './AsNavForSlider.scss';
+import cx from 'classnames';
 
 const SampleNextArrow = ({ onClick, index, sliderImages }) => (
   <Button
@@ -46,6 +47,10 @@ const AsNavForSlider = ({ sliderImages }) => {
     prevArrow: <SamplePrevArrow index={index} className={styles.ArrowL} />,
   };
 
+  const classNameForButton = cx(styles.widthSlider, {
+    [styles.imageWidth]: sliderImages.length < 4,
+  });
+
   return (
     <>
       <Slider
@@ -67,7 +72,7 @@ const AsNavForSlider = ({ sliderImages }) => {
         swipeToSlide
         focusOnSelect
         {...settings}
-        className={styles.widthSlider}
+        className={classNameForButton}
       >
         {sliderImages.map(item => (
           <div className={styles.asNavFOr} key={item.id}>

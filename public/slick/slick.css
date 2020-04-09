@@ -74,6 +74,7 @@
 }
 .slide img {
   display: block;
+  height: 100%;
 }
 .slide.loading img {
   display: none;
