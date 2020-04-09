@@ -22,6 +22,24 @@
 .rightBlock {
   display: flex;
   align-items: center;
+  position: relative;
+
+  &:hover div {
+    display: flex;
+    top: 24px;
+    min-width: 250px;
+  }
+}
+
+.btnStatus {
+  background: transparent;
+  color: $colorBackground;
+  text-transform: uppercase;
+  margin: 10px 0;
+}
+
+.activeStatus {
+  color: $colorContent;
 }
 
 .sort {

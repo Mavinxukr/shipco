@@ -23,10 +23,8 @@ import IconP from '../../../assets/svg/p.svg';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-import IconSearch from '../../../assets/svg/Search_icon.svg';
-import Search from '../../Search/Search';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns } from './data';
+import { columns, status } from './data';
 import {
   composeValidators,
   mustBeNumber,
@@ -37,6 +35,8 @@ import styles from './Parts.scss';
 import Loader from '../../Loader/Loader';
 import Pagination from '../../Pagination/Pagination';
 import { getCurrentUser } from '../../../redux/actions/currentUser';
+import HoverPopup from '../../HoverPopup/HoverPopup';
+import { getParts } from '../../../redux/actions/parts';
 
 const Table = ({
   columns,
@@ -147,6 +147,7 @@ const Parts = () => {
   const [isPopupPhotoOpen, setIsPopupPhotoOpen] = useState(false);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
   const [updateData, setUpdateData] = useState(null);
+  const [stepIndex, setStepIndex] = useState(0);
   const [sliderImages, setSliderImages] = useState([]);
   const clientParts = useSelector(clientPartsDataSelector);
   const isDataReceived = useSelector(clientPartsDataReceivedSelector);
@@ -167,6 +168,7 @@ const Parts = () => {
       getClientParts({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        status: router.query.status || '',
       }),
     );
   }, [router.query]);
@@ -234,16 +236,40 @@ const Parts = () => {
           <div className={styles.rightBlock}>
             <Button customBtn={styles.filterText}>
               <IconFilter className={styles.filterIcon} />
-              Filter
+              Status
             </Button>
-            <Search
-              onClick={() => dispatch(
-                getClientParts({
-                  search: document.querySelector('#search').value,
-                }),
-              )
-              }
-            />
+            <HoverPopup>
+              {status.map((statusFilter, index) => {
+                const classNameForButton = cx(styles.btnStatus, {
+                  [styles.activeStatus]: stepIndex === index,
+                });
+
+                return (
+                  <Button
+                    onClick={() => {
+                      setStepIndex(index);
+                      router.push({
+                        pathname: '/parts',
+                        query: {
+                          ...router.query,
+                          page: 1,
+                          status: statusFilter.value,
+                        },
+                      });
+                      dispatch(
+                        getParts({
+                          search: statusFilter.value,
+                        }),
+                      );
+                    }}
+                    customBtn={classNameForButton}
+                    key={statusFilter.id}
+                  >
+                    {statusFilter.label}
+                  </Button>
+                );
+              })}
+            </HoverPopup>
           </div>
         </div>
         {clientParts.data.length !== 0 ? (

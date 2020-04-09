@@ -33,6 +33,7 @@ import {
   required,
   passwordValidation,
   lengthPhone,
+  mustBeNumber,
   lengthCart,
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
@@ -227,7 +228,7 @@ const BaseClient = () => {
                 <Field
                   name="phone"
                   type="text"
-                  validate={composeValidators(required, lengthPhone)}
+                  validate={composeValidators(required, lengthPhone, mustBeNumber)}
                   parse={formatStringByPattern('+9-9999-999-99-99')}
                 >
                   {renderInput({
@@ -269,7 +270,7 @@ const BaseClient = () => {
                   })}
                   options={stateOptions}
                 />
-                <Field name="zip" type="text" validate={required}>
+                <Field name="zip" type="text" validate={composeValidators(required, mustBeNumber)}>
                   {renderInput({
                     label: 'Zip',
                     classNameWrapper: styles.popupFieldRow,
@@ -288,7 +289,7 @@ const BaseClient = () => {
                 <Field
                   name="card_number"
                   type="text"
-                  validate={composeValidators(required, lengthCart)}
+                  validate={composeValidators(required, lengthCart, mustBeNumber)}
                   parse={formatStringByPattern('9999-9999-9999-9999')}
                 >
                   {renderInput({

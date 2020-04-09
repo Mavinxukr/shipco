@@ -23,9 +23,11 @@
 }
 
 .link {
+  background: transparent;
   color: $colorBackground;
   margin-right: 52px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .disabled {
@@ -95,6 +97,10 @@
 .fullWidth {
   width: 100%;
   flex-wrap: wrap;
+
+  .flex {
+    flex-direction: column;
+  }
 }
 
 .items {
@@ -129,27 +135,25 @@
 
 .popupDamage {
   outline: none;
-  max-width: 80%;
+  max-width: 50%;
 }
 
 
 .displayNone {
-  max-width: 1305px;
-
   & > div {
-    height: 600px;
+    height: 500px;
 
     @media (max-width: 1601px) {
-      height: 400px;
+      height: 300px;
+    }
+
+    @media (max-width: 1401px) {
+      height: 200px;
     }
   }
 
   button {
     display: none;
-  }
-
-  @media (max-width: 1601px) {
-    max-width: 700px;
   }
 }
 
@@ -174,3 +178,39 @@
   }
 }
 
+.btnSubmit {
+  width: 360px;
+  margin-top: 10px;
+  height: 40px;
+  text-transform: uppercase;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}
+
+.customTextarea {
+  width: 360px;
+  height: 200px;
+  border: 1px solid $colorBorder;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.name {
+  margin-right: 15px;
+}
+
+.comment {
+  width: 300px;
+}
+
+.noComment {
+  margin: 20px 0;
+  width: 300px;
+}
+
+.blockComment {
+  margin-top: 10px;
+}

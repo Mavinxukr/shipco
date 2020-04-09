@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
 export const stateOptions = [
-  { value: '1', label: 'California' },
-  { value: '2', label: 'Texas' },
-  { value: '3', label: 'New Jersey' },
-  { value: '4', label: 'Savannah' },
-  { value: '5', label: 'Montreal' },
+  { value: '', label: 'All' },
+  { value: 'California', label: 'California' },
+  { value: 'Texas', label: 'Texas' },
+  { value: 'New Jersey', label: 'New Jersey' },
+  { value: 'Savannah', label: 'Savannah' },
+  { value: 'Montreal', label: 'Montreal' },
 ];
 
 export const columns = [
@@ -30,8 +31,10 @@ export const columns = [
       },
       {
         Header: 'Images',
-        accessor: 'document[0].link',
-        Cell: ({ cell: { value } }) => <img src={value || '/images/no-preview-available.png'} alt={value} />,
+        accessor: 'image.link',
+        Cell: ({ cell: { value } }) => (
+          <img src={value || '/images/no-preview-available.png'} alt={value} />
+        ),
       },
       {
         Header: 'Date',
