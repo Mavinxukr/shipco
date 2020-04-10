@@ -74,6 +74,7 @@ const AutoNew = () => {
   }));
 
   lotArr[0].title = 'Lot #  ';
+  lotArr[3].title = 'Highlights';
   lotArr[4].title = 'Primary Damage';
   lotArr[5].title = 'Secondary Damage';
   lotArr[6].title = 'Est. Retail Value';
@@ -85,6 +86,9 @@ const AutoNew = () => {
     title: item.split('_').join(' '),
     value: shipOgj[item],
   }));
+
+  shipArr[1].title = 'Point of loading';
+  shipArr[3].title = 'Point of delivery';
 
   shipArr.splice(4, 4);
   shipArr.splice(5, 1);

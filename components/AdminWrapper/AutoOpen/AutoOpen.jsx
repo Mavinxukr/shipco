@@ -107,6 +107,7 @@ const AutoOpen = () => {
   }));
 
   lotArr[0].title = 'Lot # ';
+  lotArr[3].title = 'Highlights';
   lotArr[4].title = 'Primary Damage';
   lotArr[5].title = 'Secondary Damage';
   lotArr[6].title = 'Est. Retail Value';

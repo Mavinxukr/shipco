@@ -106,7 +106,7 @@ const Auto = () => {
                     <Field
                       name="model_name"
                       component={renderSelect({
-                        placeholder: router.query.model_name || '',
+                        defaultInputValue: router.query.model_name || '',
                         label: 'Model:',
                         classNameWrapper: styles.rowSelect,
                         classNameLabel: styles.labelSelect,
@@ -148,7 +148,7 @@ const Auto = () => {
                   <Field
                     name="point_load_city"
                     component={renderSelect({
-                      placeholder: router.query.point_load_city || '',
+                      defaultInputValue: router.query.point_load_city || '',
                       label: 'Point of loading:',
                       classNameWrapper: styles.rowSelect,
                       classNameLabel: styles.labelSelect,
@@ -192,7 +192,7 @@ const Auto = () => {
                   <Field name="container" type="text">
                     {renderInput({
                       label: 'Сontainer:',
-                      placeholder: router.query.container || '',
+                      defaultInputValue: router.query.container || '',
                       classNameWrapper: styles.flexInput,
                       classNameWrapperLabel: cx(
                         styles.customLabel,
