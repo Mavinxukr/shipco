@@ -41,14 +41,14 @@
   background: $white;
 
   img {
-    height: 280px;
+    height: 280px!important;
 
     @media screen and (max-width: 1700px) {
-      height: 230px;
+      height: 230px!important;
     }
 
     @media screen and (max-width: 1500px) {
-      height: 200px;
+      height: 200px!important;
     }
   }
 }
