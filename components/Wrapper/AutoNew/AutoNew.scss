@@ -143,12 +143,8 @@
   & > div {
     height: 500px;
 
-    @media (max-width: 1601px) {
-      height: 300px;
-    }
-
-    @media (max-width: 1401px) {
-      height: 200px;
+    @media (max-width: 1501px) {
+      height: auto;
     }
   }
 
