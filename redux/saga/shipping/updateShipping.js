@@ -18,7 +18,6 @@ function* updateShipping({
   const updateShippingData = yield select(getUpdateShippingData);
   if (response.status) {
     const newArr = updateShippingData.data.map(item => item.id === body.auto_id ? response.data.data : item);
-
     yield put(
       getShippingSuccess({
         data: newArr,

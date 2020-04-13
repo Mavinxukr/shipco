@@ -29,6 +29,8 @@ import { watchUpdateShipping } from './shipping/updateShipping';
 import { watchUpdateAutoId } from './updateAutoId';
 import { watchClientShipping } from './clientShippimg/getClientShipping';
 import { watchClientUpdateShipping } from './clientShippimg/updateClientShipping';
+import { watchDismanting } from './dismanting/getDismanting';
+import { watchUpdateDismanting } from './dismanting/updateDismanting';
 
 export function* rootSaga() {
   yield all([
@@ -62,5 +64,7 @@ export function* rootSaga() {
     watchUpdateShipping(),
     watchClientShipping(),
     watchClientUpdateShipping(),
+    watchDismanting(),
+    watchUpdateDismanting(),
   ]);
 }

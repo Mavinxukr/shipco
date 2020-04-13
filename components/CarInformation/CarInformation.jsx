@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Button from '../Button/Button';
+import { updateDismanting } from '../../redux/actions/dismanting';
 import CustomStepper from '../CustomStepper/CustomStepper';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import IconEdit from '../../assets/svg/edit.svg';
@@ -41,10 +42,9 @@ const CarInformation = ({
 }) => {
   const [isCommentPopupOpen, setIsCommentPopupOpen] = useState(false);
   const [isHistoryPopupOpen, setIsHistoryPopupOpen] = useState(false);
-  const [switchOn, setSwitchOn] = useState(item.disassembled);
+  const [switchOn, setSwitchOn] = useState(item.ship_info.disassembly);
   const fileCarfac = getArr(arrTypes, item.document)[3].images;
   const fileInvoice = getArr(arrTypes, item.document)[4].images;
-
   const dispatch = useDispatch();
 
   const onSubmit = async (values) => {
@@ -127,15 +127,37 @@ const CarInformation = ({
               <ButtonGroup>
                 <Button
                   customBtn={styles.btnYes}
-                  onClick={() => setSwitchOn(true)}
                   active={switchOn}
+                  onClick={() => {
+                    dispatch(
+                      updateDismanting(
+                        {},
+                        {
+                          disassembly: 1,
+                        },
+                        item.id,
+                      ),
+                    );
+                    setSwitchOn(true);
+                  }}
                 >
                   Yes
                 </Button>
                 <Button
                   customBtn={styles.btnNo}
-                  onClick={() => setSwitchOn(false)}
                   active={!switchOn}
+                  onClick={() => {
+                    dispatch(
+                      updateDismanting(
+                        {},
+                        {
+                          disassembly: 0,
+                        },
+                        item.id,
+                      ),
+                    );
+                    setSwitchOn(false);
+                  }}
                 >
                   No
                 </Button>

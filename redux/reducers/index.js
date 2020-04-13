@@ -12,6 +12,7 @@ import { parts } from './parts';
 import { clientParts } from './clientParts';
 import { shipping } from './shipping';
 import { clientShipping } from './clientShipping';
+import { dismanting } from './dismanting';
 
 export default combineReducers({
   currentUser,
@@ -27,4 +28,5 @@ export default combineReducers({
   clientParts,
   shipping,
   clientShipping,
+  dismanting,
 });
