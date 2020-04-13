@@ -5,12 +5,19 @@ export const getDismanting = params => ({
   params,
 });
 
-export const getВismantingSuccess = body => ({
+export const updateDismanting = (params, body, id) => ({
+  type: actionTypes.dismanting.update,
+  params,
+  body,
+  id,
+});
+
+export const getDismantingSuccess = body => ({
   type: actionTypes.dismanting.success,
   body,
 });
 
-export const getВismantingError = error => ({
+export const getDismantingError = error => ({
   type: actionTypes.dismanting.error,
   error,
 });

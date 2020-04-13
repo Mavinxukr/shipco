@@ -128,3 +128,13 @@ export const clientShippingDataReceivedSelector = createSelector(
   state => state.clientShipping.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const dismantingDataSelector = createSelector(
+  state => state.dismanting.dismantingData,
+  dismantingData => dismantingData,
+);
+
+export const dismantingDataReceivedSelector = createSelector(
+  state => state.dismanting.isDataReceived,
+  isDataReceived => isDataReceived,
+);

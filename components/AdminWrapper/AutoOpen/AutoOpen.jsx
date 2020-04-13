@@ -382,7 +382,6 @@ const AutoOpen = () => {
                                   || auto.data.ship_info.disassembly
                                 }
                                 onChange={input.onChange}
-                                inputName="Yes"
                                 id="yes"
                               />
                               <Radio
@@ -394,7 +393,6 @@ const AutoOpen = () => {
                                   || !auto.data.ship_info.disassembly
                                 }
                                 onChange={input.onChange}
-                                inputName="No"
                                 id="no"
                               />
                             </div>
