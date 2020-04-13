@@ -12,4 +12,3 @@ export const getStatusInNumber = (status) => {
       return 0;
   }
 };
-

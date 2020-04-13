@@ -11,6 +11,7 @@ import { autoId } from './autoId';
 import { parts } from './parts';
 import { clientParts } from './clientParts';
 import { shipping } from './shipping';
+import { clientShipping } from './clientShipping';
 
 export default combineReducers({
   currentUser,
@@ -25,4 +26,5 @@ export default combineReducers({
   parts,
   clientParts,
   shipping,
+  clientShipping,
 });

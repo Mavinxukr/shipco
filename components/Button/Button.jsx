@@ -11,6 +11,7 @@ const Button = ({
   customBtn,
   disabled,
   active,
+  id,
   ...attrs
 }) => {
   const onClickAction = (e) => {
@@ -29,6 +30,7 @@ const Button = ({
         <Tag
           className={cx(styles.btn, customBtn, styles.active)}
           type={type}
+          id={id}
           disabled={disabled}
           onClick={onClickAction}
           {...attrs}
@@ -39,6 +41,7 @@ const Button = ({
         <Tag
           className={cx(styles.btn, customBtn)}
           type={type}
+          id={id}
           disabled={disabled}
           onClick={onClickAction}
           {...attrs}
@@ -54,6 +57,7 @@ Button.propTypes = {
   customBtn: PropTypes.string,
   children: PropTypes.node,
   type: PropTypes.string,
+  id: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   active: PropTypes.bool,

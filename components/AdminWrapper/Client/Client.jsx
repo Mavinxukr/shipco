@@ -106,6 +106,7 @@ const Client = () => {
       getClient({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        client_id: router.query.idUser || '',
       }),
     );
   }, [router.query]);

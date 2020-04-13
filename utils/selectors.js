@@ -118,3 +118,13 @@ export const shippingDataReceivedSelector = createSelector(
   state => state.shipping.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const clientShippingDataSelector = createSelector(
+  state => state.clientShipping.clientShippingData,
+  clientShippingData => clientShippingData,
+);
+
+export const clientShippingDataReceivedSelector = createSelector(
+  state => state.clientShipping.isDataReceived,
+  isDataReceived => isDataReceived,
+);

@@ -76,7 +76,7 @@ function ColorlibStepIcon({ active, completed }) {
 const getSteps = () => ['', '', '', ''];
 
 const CustomStepper = ({
-  item, customBlock, paddingBottom, status,
+  item, customBlock, paddingBottom, status, updateStatus
 }) => {
   const steps = getSteps();
   const [isOpenStatusPanel, setIsOpenStatusPanel] = useState(false);
@@ -152,15 +152,17 @@ const CustomStepper = ({
 
               return (
                 <Button
-                  onClick={() => {
+                  onClick={(el) => {
                     setStepIndex(index);
                     setIsOpenStatusPanel(false);
+                    updateStatus(el);
                   }}
                   customBtn={classNameForButton}
                   key={`${carStatus.id}${item.id}`}
+                  id={carStatus.label}
                 >
                   {carStatus.text}
-                  <span className={styles.circle} />
+                  <span id={carStatus.label} className={styles.circle} />
                 </Button>
               );
             })}
@@ -187,6 +189,7 @@ const CustomStepper = ({
 
 CustomStepper.propTypes = {
   status: PropTypes.bool,
+  updateStatus: PropTypes.func,
   paddingBottom: PropTypes.string,
   customBlock: PropTypes.string,
   item: PropTypes.shape({
