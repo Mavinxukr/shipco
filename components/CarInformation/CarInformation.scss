@@ -67,6 +67,9 @@
 
 .colorText {
   color: $colorBackground;
+  background: transparent;
+  text-align: left;
+  font-size: 16px;
 }
 
 .paddingBlock {
@@ -88,4 +91,59 @@
   display: flex;
   align-items: center;
   color: $colorBackground;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: .7;
+}
+
+.fullWidth {
+  width: 100%;
+  flex-wrap: wrap;
+
+  .flex {
+    flex-direction: column;
+  }
+}
+
+.label {
+  width: 100%;
+}
+
+.customTextarea {
+  width: 360px;
+  height: 200px;
+  border: 1px solid $colorBorder;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.name {
+  margin-right: 15px;
+}
+
+.comment {
+  width: 300px;
+}
+
+.noComment {
+  margin: 20px 0;
+  width: 300px;
+}
+
+.blockComment {
+  margin-top: 10px;
+}
+
+.btnSubmit {
+  width: 360px;
+  margin-top: 10px;
+  height: 40px;
+  text-transform: uppercase;
+  transition: all .3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
 }

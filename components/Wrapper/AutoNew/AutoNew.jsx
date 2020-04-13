@@ -270,7 +270,7 @@ const AutoNew = () => {
                 }) => (
                   <form onSubmit={handleSubmit} className={styles.fullWidth}>
                     <div className={styles.flex}>
-                      <label className={styles.label}>Comment</label>
+                      <label className={styles.label}>Comment:</label>
                       <Field
                         className={styles.customTextarea}
                         name="comment"
@@ -303,7 +303,7 @@ const AutoNew = () => {
           {isHistoryPopupOpen && (
             <Popup
               customPopup={styles.popupDamage}
-              title="Adding notes"
+              title="History notes"
               setIsPopupOpen={setIsHistoryPopupOpen}
             >
               {autoId.notes.length === 0 ? (

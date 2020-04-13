@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { getShipping } from '../../../redux/actions/shipping';
+import { getShipping, updateShipping } from '../../../redux/actions/shipping';
 import {
   shippingDataSelector,
   shippingDataReceivedSelector,
@@ -14,7 +14,6 @@ import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-import Search from '../../Search/Search';
 import { stateStatus } from './data';
 import styles from './Shipping.scss';
 import Loader from '../../Loader/Loader';
@@ -36,6 +35,7 @@ const Shipping = () => {
       getShipping({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        port: router.query.port || '',
       }),
     );
   }, [router.query]);
@@ -51,32 +51,61 @@ const Shipping = () => {
         <div className={styles.flex}>
           <SelectCustom
             classNameWrapper={styles.widthSelect}
-            placeholder="All Status"
+            placeholder="All Ports"
             options={stateStatus}
+            custonOnChange={(value) => {
+              router.push({
+                pathname: '/admin-shipping',
+                query: {
+                  ...router.query,
+                  port: value.value,
+                },
+              });
+              dispatch(getShipping({ port: value.value }));
+            }}
           />
           <div className={styles.rightBlock}>
             <Button customBtn={styles.filterText}>
               <IconFilter className={styles.filterIcon} />
               Filter
             </Button>
-            <Search />
           </div>
         </div>
-        <CustomTable>
-          <Pagination
-            params={shipping.links}
-            pathname="/admin-shipping"
-            router={router}
-          />
-          {shipping.data.map(item => (
-            <CarInformation key={item.id} item={item} status />
-          ))}
-          <Pagination
-            params={shipping.links}
-            pathname="/admin-shipping"
-            router={router}
-          />
-        </CustomTable>
+        {shipping.data.length === 0 ? (
+          <h1 className={styles.notFound}>nothing found</h1>
+        ) : (
+          <CustomTable>
+            <Pagination
+              params={shipping.links}
+              pathname="/admin-shipping"
+              router={router}
+            />
+            {shipping.data.map(item => (
+              <CarInformation
+                key={item.id}
+                item={item}
+                status
+                admin
+                updateShipping={updateShipping}
+                updateStatus={el => dispatch(
+                  updateShipping(
+                    {},
+                    {
+                      status: el.target.id,
+                    },
+                    item.id,
+                  ),
+                )
+                }
+              />
+            ))}
+            <Pagination
+              params={shipping.links}
+              pathname="/admin-shipping"
+              router={router}
+            />
+          </CustomTable>
+        )}
       </div>
     </MainLayout>
   );

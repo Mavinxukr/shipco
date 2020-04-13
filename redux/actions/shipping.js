@@ -5,6 +5,14 @@ export const getShipping = params => ({
   params,
 });
 
+export const updateShipping = (params, body, id, isNote) => ({
+  type: actionTypes.shipping.update,
+  params,
+  body,
+  id,
+  isNote,
+});
+
 export const getShippingSuccess = body => ({
   type: actionTypes.shipping.success,
   body,
