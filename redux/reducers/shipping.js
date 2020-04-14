@@ -9,7 +9,9 @@ const initialState = {
 
 export const shipping = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.shipping.request || actionTypes.shipping.update:
+    case actionTypes.shipping.request
+      || actionTypes.shipping.update
+      || actionTypes.shipping.save:
       return {
         ...state,
         isFetch: true,

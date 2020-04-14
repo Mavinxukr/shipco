@@ -416,6 +416,7 @@ const Parts = () => {
                   name="quality"
                   type="text"
                   defaultValue={updateData.quality || ''}
+                  validate={mustBeNumber}
                 >
                   {renderInput({
                     label: 'Quantity',
@@ -527,7 +528,11 @@ const Parts = () => {
                   })}
                   options={statusSelect}
                 />
-                <Field name="quality" validate={required} type="text">
+                <Field
+                  name="quality"
+                  validate={composeValidators(required, mustBeNumber)}
+                  type="text"
+                >
                   {renderInput({
                     label: 'Quantity',
                     classNameWrapper: styles.popupFieldRow,

@@ -25,6 +25,7 @@ import IconUser from '../../../assets/svg/Vector (1).svg';
 import styles from './Header.scss';
 import { getCurrentUser } from '../../../redux/actions/currentUser';
 import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
+import { storeShipping } from '../../../redux/actions/shipping';
 
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
@@ -157,7 +158,18 @@ const Header = ({ newLink, admin }) => {
                           <p className={styles.id}>{autoBycontainer.data.to}</p>
                         </div>
                         <Button
-                          onClick={() => window.location.reload()}
+                          onClick={() => {
+                            dispatch(
+                              storeShipping(
+                                {},
+                                {
+                                  auto_id: JSON.stringify(
+                                    autoBycontainer.data.auto_id,
+                                  ),
+                                },
+                              ),
+                            );
+                          }}
                           customBtn={styles.addContainer}
                         >
                           Add Shipping container
