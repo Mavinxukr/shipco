@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import {
   getClientShipping,
-  updateClientShipping
+  updateClientShipping,
 } from '../../../redux/actions/clientShipping';
 import {
   clientShippingDataSelector,
-  clientShippingDataReceivedSelector
+  clientShippingDataReceivedSelector,
 } from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import SelectCustom from '../../SelectCustom/SelectCustom';
@@ -38,8 +38,9 @@ const Shipping = () => {
       getClientShipping({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
-        port: router.query.port || ''
-      })
+        port: router.query.port || '',
+        search: router.query.search || '',
+      }),
     );
   }, [router.query]);
 
@@ -56,13 +57,13 @@ const Shipping = () => {
             classNameWrapper={styles.widthSelect}
             placeholder="All Ports"
             options={stateStatus}
-            custonOnChange={value => {
+            custonOnChange={(value) => {
               router.push({
                 pathname: '/shipping',
                 query: {
                   ...router.query,
-                  port: value.value
-                }
+                  port: value.value,
+                },
               });
               dispatch(getClientShipping({ port: value.value }));
             }}
@@ -72,7 +73,23 @@ const Shipping = () => {
               <IconFilter className={styles.filterIcon} />
               Filter
             </Button>
-            <Search />
+            <Search
+              onClick={() => {
+                router.push({
+                  pathname: '/shipping',
+                  query: {
+                    ...router.query,
+                    page: 1,
+                    search: document.querySelector('#search').value,
+                  },
+                });
+                dispatch(
+                  getClientShipping({
+                    search: document.querySelector('#search').value,
+                  }),
+                );
+              }}
+            />
           </div>
         </div>
         {clientShipping.data.length === 0 ? (

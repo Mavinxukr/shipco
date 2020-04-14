@@ -108,6 +108,7 @@ const Client = () => {
         countpage: router.query.countpage || '10',
         client_id: router.query.idUser || '',
         status: router.query.status || '',
+        search: router.query.search || '',
       }),
     );
   }, [router.query]);
@@ -128,12 +129,21 @@ const Client = () => {
         hidden
         currentClient={currentClient}
         currentClientId={router.query.idUser}
-        onClick={() => dispatch(
-          getClient({
-            search: document.querySelector('#search').value,
-          }),
-        )
-        }
+        onClick={() => {
+          router.push({
+            pathname: '/auto-admin',
+            query: {
+              ...router.query,
+              page: 1,
+              search: document.querySelector('#search').value,
+            },
+          });
+          dispatch(
+            getClient({
+              search: document.querySelector('#search').value,
+            }),
+          );
+        }}
       />
       <div className={styles.container}>
         <div className={styles.flex}>

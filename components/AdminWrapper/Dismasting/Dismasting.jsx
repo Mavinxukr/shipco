@@ -37,6 +37,7 @@ const Dismasting = () => {
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
         port: router.query.port || '',
+        search: router.query.search || '',
       }),
     );
   }, [router.query]);
@@ -47,7 +48,23 @@ const Dismasting = () => {
 
   return (
     <MainLayout newLink admin>
-      <SubHeader />
+      <SubHeader
+        onClick={() => {
+          router.push({
+            pathname: '/auto-admin/dismanting',
+            query: {
+              ...router.query,
+              page: 1,
+              search: document.querySelector('#search').value,
+            },
+          });
+          dispatch(
+            getDismanting({
+              search: document.querySelector('#search').value,
+            }),
+          );
+        }}
+      />
       <div className={styles.container}>
         <div className={styles.flex}>
           <SelectCustom
