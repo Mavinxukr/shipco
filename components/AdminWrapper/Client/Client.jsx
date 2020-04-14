@@ -52,6 +52,7 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 
 const Client = () => {
   const client = useSelector(clientDataSelector);
+  const error = useSelector(state => state.client.error);
   const currentClient = useSelector(currentClientDataSelector);
   const isDataReceived = useSelector(clientDataReceivedSelector);
   const isDataReceivedClient = useSelector(currentClientDataReceivedSelector);
@@ -82,8 +83,13 @@ const Client = () => {
         },
       ),
     );
-    setIsPopupOpen(false);
   };
+
+  useEffect(() => {
+    if (!error) {
+      setIsPopupOpen(false);
+    }
+  }, [error]);
 
   useEffect(() => {
     const params = router.query.isClient
@@ -118,6 +124,8 @@ const Client = () => {
       return <Loader />;
     }
   }
+
+  console.log(router);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -478,6 +486,7 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
+                  {error && <p className={styles.error}>Client not found</p>}
                   <div className={styles.submitPopup}>
                     <Button
                       customBtn={styles.btnSubmit}

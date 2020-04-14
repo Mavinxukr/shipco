@@ -144,6 +144,11 @@ export const clientDismantingDataSelector = createSelector(
   clientDismantingData => clientDismantingData,
 );
 
+export const autoByContainerDataSelector = createSelector(
+  state => state.autoByContainer.autoByContainerData,
+  autoByContainerData => autoByContainerData,
+);
+
 export const clientDismantingDataReceivedSelector = createSelector(
   state => state.clientDismanting.isDataReceived,
   isDataReceived => isDataReceived,
