@@ -55,7 +55,7 @@ const Shipping = () => {
             options={stateStatus}
             custonOnChange={(value) => {
               router.push({
-                pathname: '/admin-shipping',
+                pathname: '/auto-admin/shipping',
                 query: {
                   ...router.query,
                   port: value.value,
@@ -77,7 +77,7 @@ const Shipping = () => {
           <CustomTable>
             <Pagination
               params={shipping.links}
-              pathname="/admin-shipping"
+              pathname="/auto-admin/shipping"
               router={router}
             />
             {shipping.data.map(item => (
@@ -101,7 +101,7 @@ const Shipping = () => {
             ))}
             <Pagination
               params={shipping.links}
-              pathname="/admin-shipping"
+              pathname="/auto-admin/shipping"
               router={router}
             />
           </CustomTable>

@@ -106,7 +106,7 @@ const Auto = () => {
                     <Field
                       name="model_name"
                       component={renderSelect({
-                        defaultInputValue: router.query.model_name || '',
+                        placeholder: router.query.model_name || '',
                         label: 'Model:',
                         classNameWrapper: styles.rowSelect,
                         classNameLabel: styles.labelSelect,
@@ -148,7 +148,7 @@ const Auto = () => {
                   <Field
                     name="point_load_city"
                     component={renderSelect({
-                      defaultInputValue: router.query.point_load_city || '',
+                      placeholder: router.query.point_load_city || '',
                       label: 'Point of loading:',
                       classNameWrapper: styles.rowSelect,
                       classNameLabel: styles.labelSelect,
