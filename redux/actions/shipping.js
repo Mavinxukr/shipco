@@ -13,6 +13,12 @@ export const updateShipping = (params, body, id, isNote) => ({
   isNote,
 });
 
+export const storeShipping = (params, body) => ({
+  type: actionTypes.shipping.save,
+  params,
+  body,
+});
+
 export const getShippingSuccess = body => ({
   type: actionTypes.shipping.success,
   body,
