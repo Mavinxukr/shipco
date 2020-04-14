@@ -72,7 +72,7 @@ const Overview = () => {
                   <div className={styles.bg}>
                     <Link
                       href={{
-                        pathname: '/auto-new',
+                        pathname: '/auto/auto-new',
                         query: {
                           idAuto: item.id,
                         },

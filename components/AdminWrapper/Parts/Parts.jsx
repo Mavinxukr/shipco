@@ -279,7 +279,7 @@ const Parts = () => {
                     onClick={() => {
                       setStepIndex(index);
                       router.push({
-                        pathname: '/admin-parts',
+                        pathname: '/auto-admin/parts',
                         query: {
                           ...router.query,
                           page: 1,
@@ -306,7 +306,7 @@ const Parts = () => {
           <CustomTable>
             <Pagination
               params={parts.links}
-              pathname="/admin-parts"
+              pathname="/auto-admin/parts"
               router={router}
             />
             <div className={styles.scrollTable}>
@@ -319,7 +319,7 @@ const Parts = () => {
             </div>
             <Pagination
               params={parts.links}
-              pathname="/admin-parts"
+              pathname="/auto-admin/parts"
               router={router}
             />
           </CustomTable>

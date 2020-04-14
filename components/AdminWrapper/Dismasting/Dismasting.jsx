@@ -56,7 +56,7 @@ const Dismasting = () => {
             options={stateStatus}
             custonOnChange={(value) => {
               router.push({
-                pathname: '/admin-dismanting',
+                pathname: '/auto-admin/dismanting',
                 query: {
                   ...router.query,
                   port: value.value,
@@ -78,7 +78,7 @@ const Dismasting = () => {
           <CustomTable>
             <Pagination
               params={dismanting.links}
-              pathname="/admin-dismanting"
+              pathname="/auto-admin/dismanting"
               router={router}
             />
             {dismanting.data.map(item => (
@@ -102,7 +102,7 @@ const Dismasting = () => {
             ))}
             <Pagination
               params={dismanting.links}
-              pathname="/admin-dismanting"
+              pathname="/auto-admin/dismanting"
               router={router}
             />
           </CustomTable>

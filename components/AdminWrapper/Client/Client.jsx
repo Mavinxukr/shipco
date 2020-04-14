@@ -107,6 +107,7 @@ const Client = () => {
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
         client_id: router.query.idUser || '',
+        status: router.query.status || '',
       }),
     );
   }, [router.query]);
@@ -171,12 +172,21 @@ const Client = () => {
           <SelectCustom
             placeholder="All Status"
             options={stateStatus}
-            onChange={value => dispatch(
-              getClient({
-                status: value.value,
-              }),
-            )
-            }
+            onChange={(value) => {
+              router.push({
+                pathname: '/auto-admin',
+                query: {
+                  ...router.query,
+                  page: 1,
+                  status: value.value,
+                },
+              });
+              dispatch(
+                getClient({
+                  status: value.value,
+                }),
+              );
+            }}
           />
         </div>
         <>
@@ -184,7 +194,7 @@ const Client = () => {
             <CustomTable>
               <Pagination
                 params={client.links}
-                pathname="/client"
+                pathname="/auto-admin"
                 router={router}
               />
               <div className={styles.scrollTable}>
@@ -196,7 +206,7 @@ const Client = () => {
               </div>
               <Pagination
                 params={client.links}
-                pathname="/client"
+                pathname="/auto-admin"
                 router={router}
               />
             </CustomTable>
