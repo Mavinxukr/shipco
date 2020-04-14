@@ -21,6 +21,7 @@ import IconBell from '../../../assets/svg/Group (4).svg';
 import IconUser from '../../../assets/svg/Vector (1).svg';
 import styles from './Header.scss';
 import { getCurrentUser } from '../../../redux/actions/currentUser';
+import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
 
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
@@ -36,6 +37,10 @@ const Header = ({ newLink, admin }) => {
 
   useEffect(() => {
     dispatch(getCurrentUser({}));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAutoByContainer());
   }, []);
 
   const classNameForLink = cx(styles.menuLink, {
@@ -115,9 +120,18 @@ const Header = ({ newLink, admin }) => {
                       <InputFormWrapper
                         notForm
                         label="Tracking ID"
+                        id="tracking_id"
                         classNameWrapper={styles.flexInput}
                         classNameWrapperLabel={styles.customLabel}
                         customInput={styles.customInput}
+                        onKeyUp={() => dispatch(
+                          getAutoByContainer({
+                            tracking_id: document.querySelector(
+                              '#tracking_id',
+                            ).value,
+                          }),
+                        )
+                        }
                       />
                     </div>
                     <div className={styles.containerCar}>

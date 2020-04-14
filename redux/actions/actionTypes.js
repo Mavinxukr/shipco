@@ -22,3 +22,4 @@ export const shipping = generateAction('shipping');
 export const clientShipping = generateAction('clientShipping');
 export const dismanting = generateAction('dismanting');
 export const clientDismanting = generateAction('clientDismanting');
+export const autoByContainer = generateAction('autoByContainer');
