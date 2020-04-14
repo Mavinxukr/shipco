@@ -178,6 +178,7 @@ const Parts = () => {
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
         status: router.query.status || '',
+        search: router.query.search || '',
       }),
     );
   }, [router.query]);
@@ -244,12 +245,21 @@ const Parts = () => {
   return (
     <MainLayout admin>
       <SubHeader
-        onClick={() => dispatch(
-          getParts({
-            search: document.querySelector('#search').value,
-          }),
-        )
-        }
+        onClick={() => {
+          router.push({
+            pathname: '/auto-admin/parts',
+            query: {
+              ...router.query,
+              page: 1,
+              search: document.querySelector('#search').value,
+            },
+          });
+          dispatch(
+            getParts({
+              search: document.querySelector('#search').value,
+            }),
+          );
+        }}
       />
       <div className={styles.container}>
         <div className={styles.flex}>

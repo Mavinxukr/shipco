@@ -92,6 +92,7 @@ const BaseClient = () => {
       getBaseClient({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        search: router.query.search || '',
       }),
     );
   }, [router.query]);
@@ -123,12 +124,21 @@ const BaseClient = () => {
         <div className={styles.flex}>
           <h4 className={styles.title}>Base client</h4>
           <Search
-            onClick={() => dispatch(
-              getBaseClient({
-                search: document.querySelector('#search').value,
-              }),
-            )
-            }
+            onClick={() => {
+              router.push({
+                pathname: '/base-client',
+                query: {
+                  ...router.query,
+                  page: 1,
+                  search: document.querySelector('#search').value,
+                },
+              });
+              dispatch(
+                getBaseClient({
+                  search: document.querySelector('#search').value,
+                }),
+              );
+            }}
           />
         </div>
         <div className={styles.flex}>
