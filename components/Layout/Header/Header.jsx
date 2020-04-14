@@ -93,13 +93,13 @@ const Header = ({ newLink, admin }) => {
                 </Link>
               </li>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/admin-parts">
+                <Link href={{ pathname: '/auto-admin/parts' }}>
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
                     parts
                     <p className={styles.menuDot} />
                   </a>
-                </ActiveLink>
+                </Link>
               </li>
               <li className={styles.menuItem}>
                 <ActiveLink activeClassName={styles.active} href="/base-client">
