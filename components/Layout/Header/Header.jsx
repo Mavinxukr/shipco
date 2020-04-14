@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
 import PropsType from 'prop-types';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { currentUserDataSelector } from '../../../utils/selectors';
 import ActiveLink from '../ActiveLink/ActiveLink';
@@ -27,6 +28,8 @@ const Header = ({ newLink, admin }) => {
     [styles.activePopup]: isOpenContainerPanel,
   });
 
+  const router = useRouter();
+
   const user = useSelector(currentUserDataSelector);
 
   const dispatch = useDispatch();
@@ -34,6 +37,14 @@ const Header = ({ newLink, admin }) => {
   useEffect(() => {
     dispatch(getCurrentUser({}));
   }, []);
+
+  const classNameForLink = cx(styles.menuLink, {
+    [styles.active]: router.pathname.split('/')[1] === 'auto-admin',
+  });
+
+  const classNameForLinkAuto = cx(styles.menuLink, {
+    [styles.active]: router.pathname.split('/')[1] === 'auto',
+  });
 
   return (
     <header className={styles.header}>
@@ -61,22 +72,18 @@ const Header = ({ newLink, admin }) => {
           {admin ? (
             <ul className={cx(styles.menuItems, styles.adminMenu)}>
               <li className={styles.menuItem}>
-                <ActiveLink
-                  activeClassName={styles.active}
-                  href={{ pathname: '/client', query: { isClient: false } }}
+                <Link
+                  href={{ pathname: '/auto-admin', query: { isClient: false } }}
                 >
-                  <a className={styles.menuLink}>
+                  <a className={classNameForLink}>
                     <IconAuto className={styles.menuIcon} />
                     Auto
                     <p className={styles.menuDot} />
                   </a>
-                </ActiveLink>
+                </Link>
               </li>
               <li className={styles.menuItem}>
-                <ActiveLink
-                  activeClassName={styles.active}
-                  href="/admin-parts"
-                >
+                <ActiveLink activeClassName={styles.active} href="/admin-parts">
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
                     parts
@@ -148,13 +155,13 @@ const Header = ({ newLink, admin }) => {
           ) : (
             <ul className={styles.menuItems}>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/auto">
-                  <a className={styles.menuLink}>
+                <Link href={{ pathname: '/auto' }}>
+                  <a className={classNameForLinkAuto}>
                     <IconAuto className={styles.menuIcon} />
                     Auto
                     <p className={styles.menuDot} />
                   </a>
-                </ActiveLink>
+                </Link>
               </li>
               <li className={styles.menuItem}>
                 <ActiveLink activeClassName={styles.active} href="/dismanting">

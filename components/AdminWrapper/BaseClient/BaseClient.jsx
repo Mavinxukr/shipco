@@ -35,6 +35,7 @@ import {
   lengthPhone,
   mustBeNumber,
   lengthCart,
+  snpValidation,
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
@@ -197,7 +198,11 @@ const BaseClient = () => {
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
-                <Field name="name" validate={required} type="text">
+                <Field
+                  name="name"
+                  validate={composeValidators(required, snpValidation)}
+                  type="text"
+                >
                   {renderInput({
                     label: 'Name',
                     classNameWrapper: styles.popupFieldRow,
@@ -228,7 +233,11 @@ const BaseClient = () => {
                 <Field
                   name="phone"
                   type="text"
-                  validate={composeValidators(required, lengthPhone, mustBeNumber)}
+                  validate={composeValidators(
+                    required,
+                    lengthPhone,
+                    mustBeNumber,
+                  )}
                   parse={formatStringByPattern('+9-9999-999-99-99')}
                 >
                   {renderInput({
@@ -270,7 +279,11 @@ const BaseClient = () => {
                   })}
                   options={stateOptions}
                 />
-                <Field name="zip" type="text" validate={composeValidators(required, mustBeNumber)}>
+                <Field
+                  name="zip"
+                  type="text"
+                  validate={composeValidators(required, mustBeNumber)}
+                >
                   {renderInput({
                     label: 'Zip',
                     classNameWrapper: styles.popupFieldRow,
@@ -289,7 +302,11 @@ const BaseClient = () => {
                 <Field
                   name="card_number"
                   type="text"
-                  validate={composeValidators(required, lengthCart, mustBeNumber)}
+                  validate={composeValidators(
+                    required,
+                    lengthCart,
+                    mustBeNumber,
+                  )}
                   parse={formatStringByPattern('9999-9999-9999-9999')}
                 >
                   {renderInput({

@@ -19,7 +19,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <Link
             href={{
-              pathname: '/auto-new',
+              pathname: '/auto/auto-new',
               query: {
                 idAuto: value,
               },

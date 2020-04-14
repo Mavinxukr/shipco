@@ -45,7 +45,7 @@ const SubHeader = ({
   return (
     <div className={styles.subHeader}>
       <div className={styles.container}>
-        {currentClientId && (
+        {currentClientId ? (
           <div className={styles.flex}>
             <h4 className={styles.title}>
               {currentClient.data.name}{' '}
@@ -63,13 +63,26 @@ const SubHeader = ({
               </Button>
             )}
           </div>
+        ) : (
+          <>
+            {currentClient && (
+              <div className={styles.flex}>
+                <h4 className={styles.title}>
+                  {currentClient.name}{' '}
+                  <span className={styles.titleColor}>
+                    (ID {currentClient.id})
+                  </span>
+                </h4>
+              </div>
+            )}
+          </>
         )}
         <nav>
           <ul className={styles.menuItems}>
             <li>
               <ActiveLink
                 activeClassName={styles.active}
-                href={{ pathname: '/client', query: { isClient: false } }}
+                href={{ pathname: '/auto-admin', query: { isClient: false } }}
               >
                 <a className={styles.menuLink}>
                   Auto
@@ -80,7 +93,7 @@ const SubHeader = ({
             <li>
               <ActiveLink
                 activeClassName={styles.active}
-                href="/admin-dismanting"
+                href="/auto-admin/dismanting"
               >
                 <a className={styles.menuLink}>
                   Auto for dismanting
@@ -91,7 +104,7 @@ const SubHeader = ({
             <li>
               <ActiveLink
                 activeClassName={styles.active}
-                href="/admin-invoices"
+                href="/auto-admin/invoices"
               >
                 <a className={styles.menuLink} href="/">
                   Invoice
@@ -100,7 +113,10 @@ const SubHeader = ({
               </ActiveLink>
             </li>
             <li>
-              <ActiveLink activeClassName={styles.active} href="/admin-parts">
+              <ActiveLink
+                activeClassName={styles.active}
+                href="/auto-admin/parts"
+              >
                 <a className={styles.menuLink}>
                   Parts
                   <span className={styles.dotActive} />
@@ -110,7 +126,7 @@ const SubHeader = ({
             <li>
               <ActiveLink
                 activeClassName={styles.active}
-                href="/admin-shipping"
+                href="/auto-admin/shipping"
               >
                 <a className={styles.menuLink}>
                   Shipping
@@ -159,7 +175,11 @@ const SubHeader = ({
                 </Field>
                 <Field
                   name="phone"
-                  validate={composeValidators(required, mustBeNumber, lengthPhone)}
+                  validate={composeValidators(
+                    required,
+                    mustBeNumber,
+                    lengthPhone,
+                  )}
                   type="text"
                   parse={formatStringByPattern('+9-9999-999-99-99')}
                   defaultValue={currentClient.data.phone || ''}
@@ -217,7 +237,11 @@ const SubHeader = ({
                 </Field>
                 <Field
                   name="card_number"
-                  validate={composeValidators(required, mustBeNumber, lengthCart)}
+                  validate={composeValidators(
+                    required,
+                    mustBeNumber,
+                    lengthCart,
+                  )}
                   type="text"
                   parse={formatStringByPattern('9999-9999-9999-9999')}
                   defaultValue={currentClient.data.card_number || ''}

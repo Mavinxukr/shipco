@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import {
   getClientShipping,
-  updateClientShipping,
+  updateClientShipping
 } from '../../../redux/actions/clientShipping';
 import {
   clientShippingDataSelector,
-  clientShippingDataReceivedSelector,
+  clientShippingDataReceivedSelector
 } from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import SelectCustom from '../../SelectCustom/SelectCustom';
@@ -38,8 +38,8 @@ const Shipping = () => {
       getClientShipping({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
-        port: router.query.port || '',
-      }),
+        port: router.query.port || ''
+      })
     );
   }, [router.query]);
 
@@ -56,13 +56,13 @@ const Shipping = () => {
             classNameWrapper={styles.widthSelect}
             placeholder="All Ports"
             options={stateStatus}
-            custonOnChange={(value) => {
+            custonOnChange={value => {
               router.push({
                 pathname: '/shipping',
                 query: {
                   ...router.query,
-                  port: value.value,
-                },
+                  port: value.value
+                }
               });
               dispatch(getClientShipping({ port: value.value }));
             }}
@@ -75,25 +75,29 @@ const Shipping = () => {
             <Search />
           </div>
         </div>
-        <CustomTable>
-          <Pagination
-            params={clientShipping.links}
-            pathname="/shipping"
-            router={router}
-          />
-          {clientShipping.data.map(item => (
-            <CarInformation
-              key={item.id}
-              item={item}
-              updateShipping={updateClientShipping}
+        {clientShipping.data.length === 0 ? (
+          <h1 className={styles.notFound}>nothing found</h1>
+        ) : (
+          <CustomTable>
+            <Pagination
+              params={clientShipping.links}
+              pathname="/shipping"
+              router={router}
             />
-          ))}
-          <Pagination
-            params={clientShipping.links}
-            pathname="/shipping"
-            router={router}
-          />
-        </CustomTable>
+            {clientShipping.data.map(item => (
+              <CarInformation
+                key={item.id}
+                item={item}
+                updateShipping={updateClientShipping}
+              />
+            ))}
+            <Pagination
+              params={clientShipping.links}
+              pathname="/shipping"
+              router={router}
+            />
+          </CustomTable>
+        )}
       </div>
     </MainLayout>
   );

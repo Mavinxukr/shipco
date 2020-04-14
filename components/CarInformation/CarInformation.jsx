@@ -82,7 +82,7 @@ const CarInformation = ({
         {admin && (
           <Link
             href={{
-              pathname: '/auto-open',
+              pathname: '/auto-admin/auto-open',
               query: {
                 idAuto: item.id,
               },
@@ -181,7 +181,7 @@ const CarInformation = ({
       <div className={styles.column}>
         <a
           href={(fileCarfac.length !== 0 && fileCarfac[0].link) || ''}
-          download={(fileCarfac.length !== 0 && fileCarfac[0].link) || ''}
+          download
           className={cx(
             styles.colorText,
             fileCarfac.length === 0 && styles.disabled,
@@ -191,7 +191,7 @@ const CarInformation = ({
         </a>
         <a
           href={(fileInvoice.length !== 0 && fileInvoice[0].link) || ''}
-          download={(fileInvoice.length !== 0 && fileInvoice[0].link) || ''}
+          download
           className={cx(
             styles.colorText,
             fileInvoice.length === 0 && styles.disabled,
