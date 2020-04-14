@@ -18,7 +18,7 @@ export const client = (state = initialState, action) => {
 
     case actionTypes.client.success:
       return {
-        ...state,
+        error: null,
         isFetch: false,
         isDataReceived: true,
         clientData: action.body,
@@ -28,7 +28,7 @@ export const client = (state = initialState, action) => {
       return {
         ...state,
         isFetch: false,
-        isDataReceived: false,
+        isDataReceived: true,
         error: action.error,
       };
 

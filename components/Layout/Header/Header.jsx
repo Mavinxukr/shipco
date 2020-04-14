@@ -4,7 +4,10 @@ import Link from 'next/link';
 import PropsType from 'prop-types';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { currentUserDataSelector } from '../../../utils/selectors';
+import {
+  currentUserDataSelector,
+  autoByContainerDataSelector,
+} from '../../../utils/selectors';
 import ActiveLink from '../ActiveLink/ActiveLink';
 import Button from '../../Button/Button';
 import HoverPopup from '../../HoverPopup/HoverPopup';
@@ -32,6 +35,7 @@ const Header = ({ newLink, admin }) => {
   const router = useRouter();
 
   const user = useSelector(currentUserDataSelector);
+  const autoBycontainer = useSelector(autoByContainerDataSelector);
 
   const dispatch = useDispatch();
 
@@ -134,34 +138,32 @@ const Header = ({ newLink, admin }) => {
                         }
                       />
                     </div>
-                    <div className={styles.containerCar}>
-                      <div className={styles.flexCar}>
-                        <p className={styles.carId}>Car 1 ID </p>
-                        <p className={styles.id}>20 4001 3813 4902</p>
+                    {autoBycontainer && autoBycontainer.data && (
+                      <div className={styles.containerCar}>
+                        {autoBycontainer.data.auto_id.map((item, index) => (
+                          <div key={index} className={styles.flexCar}>
+                            <p className={styles.carId}>Car {index + 1} ID </p>
+                            <p className={styles.id}>{item}</p>
+                          </div>
+                        ))}
+                        <div className={styles.flexCar}>
+                          <p className={styles.carId}>From</p>
+                          <p className={styles.id}>
+                            {autoBycontainer.data.from}
+                          </p>
+                        </div>
+                        <div className={styles.flexCar}>
+                          <p className={styles.carId}>To</p>
+                          <p className={styles.id}>{autoBycontainer.data.to}</p>
+                        </div>
+                        <Button
+                          onClick={() => window.location.reload()}
+                          customBtn={styles.addContainer}
+                        >
+                          Add Shipping container
+                        </Button>
                       </div>
-                      <div className={styles.flexCar}>
-                        <p className={styles.carId}>Car 2 ID </p>
-                        <p className={styles.id}>20 4001 3813 4902</p>
-                      </div>
-                      <div className={styles.flexCar}>
-                        <p className={styles.carId}>Car 3 ID </p>
-                        <p className={styles.id}>20 4001 3813 4902</p>
-                      </div>
-                      <div className={styles.flexCar}>
-                        <p className={styles.carId}>From</p>
-                        <p className={styles.id}>CA - Los Angeles</p>
-                      </div>
-                      <div className={styles.flexCar}>
-                        <p className={styles.carId}>To</p>
-                        <p className={styles.id}>CA - Los Angeles</p>
-                      </div>
-                      <Button
-                        onClick={() => window.location.reload()}
-                        customBtn={styles.addContainer}
-                      >
-                        Add Shipping container
-                      </Button>
-                    </div>
+                    )}
                   </HoverPopup>
                 </div>
               ) : null}
