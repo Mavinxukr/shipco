@@ -19,13 +19,18 @@
   }
 }
 
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
+}
+
 .filterText {
   color: $colorBackground;
   background: $white;
   display: flex;
   align-items: center;
   font-size: 16px;
-  margin-right: 61px;
 }
 
 .rightBlock {

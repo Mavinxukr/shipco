@@ -144,6 +144,7 @@ const AutoNew = () => {
                     ? autoData[3].images[0].link
                     : '/'
                 }
+                download
               >
                 CarFax report
               </a>
@@ -158,6 +159,7 @@ const AutoNew = () => {
                     ? autoData[4].images[0].link
                     : '/'
                 }
+                download
               >
                 Invoice
               </a>
@@ -178,6 +180,7 @@ const AutoNew = () => {
                     ? autoData[5].images[0].link
                     : '/'
                 }
+                download
               >
                 Checklist report
               </a>

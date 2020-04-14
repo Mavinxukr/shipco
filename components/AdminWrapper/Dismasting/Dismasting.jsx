@@ -14,7 +14,6 @@ import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
 import IconFilter from '../../../assets/svg/Group (5).svg';
-import Search from '../../Search/Search';
 import { stateStatus } from './data';
 import styles from './Dismasting.scss';
 import Loader from '../../Loader/Loader';
@@ -71,40 +70,43 @@ const Dismasting = () => {
               <IconFilter className={styles.filterIcon} />
               Filter
             </Button>
-            <Search />
           </div>
         </div>
-        <CustomTable>
-          <Pagination
-            params={dismanting.links}
-            pathname="/admin-dismanting"
-            router={router}
-          />
-          {dismanting.data.map(item => (
-            <CarInformation
-              key={item.id}
-              item={item}
-              disassembled
-              status
-              admin
-              updateStatus={el => dispatch(
-                updateShipping(
-                  {},
-                  {
-                    status: el.target.id,
-                  },
-                  item.id,
-                ),
-              )
-              }
+        {dismanting.data.length === 0 ? (
+          <h1 className={styles.notFound}>nothing found</h1>
+        ) : (
+          <CustomTable>
+            <Pagination
+              params={dismanting.links}
+              pathname="/admin-dismanting"
+              router={router}
             />
-          ))}
-          <Pagination
-            params={dismanting.links}
-            pathname="/admin-dismanting"
-            router={router}
-          />
-        </CustomTable>
+            {dismanting.data.map(item => (
+              <CarInformation
+                key={item.id}
+                item={item}
+                disassembled
+                status
+                admin
+                updateStatus={el => dispatch(
+                  updateShipping(
+                    {},
+                    {
+                      status: el.target.id,
+                    },
+                    item.id,
+                  ),
+                )
+                }
+              />
+            ))}
+            <Pagination
+              params={dismanting.links}
+              pathname="/admin-dismanting"
+              router={router}
+            />
+          </CustomTable>
+        )}
       </div>
     </MainLayout>
   );

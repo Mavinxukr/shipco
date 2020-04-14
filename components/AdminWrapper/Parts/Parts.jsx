@@ -393,7 +393,6 @@ const Parts = () => {
                 />
                 <Field
                   name="status"
-                  validate={required}
                   component={renderSelect({
                     placeholder: updateData.status.split('_').join(' '),
                     label: 'Status',

@@ -185,7 +185,7 @@ const AutoOpen = () => {
 
   return (
     <MainLayout admin>
-      <SubHeader />
+      <SubHeader currentClient={auto.data.client} />
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, values }) => (
@@ -370,17 +370,14 @@ const AutoOpen = () => {
                       </div>
                       <div className={styles.flexRadio}>
                         <p className={styles.label}>Disassembly</p>
-                        <Field name="disassembly">
+                        <Field defaultValue={`${Number(auto.data.ship_info.disassembly)}`} name="disassembly">
                           {({ input }) => (
-                            <div>
+                            <>
                               <Radio
                                 name={input.name}
                                 title="Yes"
                                 value="1"
-                                checked={
-                                  input.value === '1'
-                                  || auto.data.ship_info.disassembly
-                                }
+                                checked={input.value === '1'}
                                 onChange={input.onChange}
                                 id="yes"
                               />
@@ -388,14 +385,11 @@ const AutoOpen = () => {
                                 name={input.name}
                                 title="No"
                                 value="0"
-                                checked={
-                                  input.value === '0'
-                                  || !auto.data.ship_info.disassembly
-                                }
+                                checked={input.value === '0'}
                                 onChange={input.onChange}
                                 id="no"
                               />
-                            </div>
+                            </>
                           )}
                         </Field>
                       </div>

@@ -18,7 +18,7 @@ export const columns = [
         accessor: 'id',
         Cell: ({ cell: { value } }) => (
           <Link href={{
-            pathname: '/auto-open',
+            pathname: '/auto-admin/auto-open',
             query: {
               idAuto: value,
             },

@@ -8,12 +8,14 @@ export const columns = [
         Header: 'ID',
         accessor: 'id',
         Cell: ({ cell: { value } }) => (
-          <Link href={{
-            pathname: '/client',
-            query: {
-              idUser: value,
-            },
-          }}>
+          <Link
+            href={{
+              pathname: '/auto-admin',
+              query: {
+                idUser: value,
+              },
+            }}
+          >
             <a>
               <span>{value}</span>
             </a>
