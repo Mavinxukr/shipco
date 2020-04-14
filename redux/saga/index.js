@@ -32,6 +32,7 @@ import { watchClientUpdateShipping } from './clientShippimg/updateClientShipping
 import { watchDismanting } from './dismanting/getDismanting';
 import { watchUpdateDismanting } from './dismanting/updateDismanting';
 import { watchClientDismanting } from './getClientDismanting';
+import { watchautoByContainer } from './autoByContainer';
 
 export function* rootSaga() {
   yield all([
@@ -68,5 +69,6 @@ export function* rootSaga() {
     watchDismanting(),
     watchUpdateDismanting(),
     watchClientDismanting(),
+    watchautoByContainer(),
   ]);
 }

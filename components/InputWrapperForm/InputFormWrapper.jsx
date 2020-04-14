@@ -19,6 +19,8 @@ const InputFormWrapper = ({
   notForm,
   accept,
   customInput,
+  onKeyUp,
+  id,
 }) => (
   <div className={cx(styles.wrapper, classNameWrapper)}>
     {label === '' ? null : (
@@ -28,12 +30,14 @@ const InputFormWrapper = ({
       placeholder={placeholder}
       addInputProps={inputProps}
       widthInputBlock={widthInputBlock}
+      id={id}
       classNameWrapper={cx(styles.inputWrapper, classNameWrapperForInput)}
       icon={icon}
       customInput={customInput}
       accept={accept}
       classNameWrapperForIcon={classNameWrapperForIcon}
       onClickForIcon={onClickForIcon}
+      onKeyUp={onKeyUp}
     />
     {notForm ? null : (
       <>
@@ -52,6 +56,7 @@ InputFormWrapper.propTypes = {
   widthInputBlock: PropTypes.string,
   inputProps: PropTypes.object,
   onClickForIcon: PropTypes.func,
+  onKeyUp: PropTypes.func,
   meta: PropTypes.object,
   notForm: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -60,6 +65,7 @@ InputFormWrapper.propTypes = {
   classNameWrapperForInput: PropTypes.string,
   classNameWrapper: PropTypes.string,
   accept: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default InputFormWrapper;

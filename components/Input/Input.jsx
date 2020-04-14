@@ -16,6 +16,7 @@ const Input = ({
   file,
   id,
   fileValue,
+  onKeyUp,
 }) => (
   <div className={cx(styles.inputBlock, widthInputBlock)}>
     <input
@@ -24,6 +25,7 @@ const Input = ({
       id={id}
       {...addInputProps}
       accept={accept}
+      onKeyUp={onKeyUp}
     />
     {icon && (
     <Button
@@ -60,6 +62,7 @@ Input.propTypes = {
   addInputProps: PropTypes.object,
   accept: PropTypes.string,
   file: PropTypes.bool,
+  onKeyUp: PropTypes.func,
 };
 
 export default Input;

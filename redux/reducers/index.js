@@ -13,7 +13,8 @@ import { clientParts } from './clientParts';
 import { shipping } from './shipping';
 import { clientShipping } from './clientShipping';
 import { dismanting } from './dismanting';
-import { clientDismanting } from './clientDismanting'
+import { clientDismanting } from './clientDismanting';
+import { autoByContainer } from './autoByContainer';
 
 export default combineReducers({
   currentUser,
@@ -31,4 +32,5 @@ export default combineReducers({
   clientShipping,
   dismanting,
   clientDismanting,
+  autoByContainer,
 });
