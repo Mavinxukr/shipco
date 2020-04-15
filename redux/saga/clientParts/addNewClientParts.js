@@ -1,5 +1,5 @@
 import {
-  call, put, takeLatest, select,
+  call, put, takeLatest,
 } from 'redux-saga/effects';
 import {
   getClientPartsSuccess,
@@ -8,17 +8,10 @@ import {
 import { addNewClientPartsRequest } from '../../../services/clientParts';
 import * as actionTypes from '../../actions/actionTypes';
 
-const getClientPartsData = state => state.clientParts.clientPartsData;
-
 function* addNewClientParts({ params, body }) {
   const response = yield call(addNewClientPartsRequest, params, body);
-  const clientPartsData = yield select(getClientPartsData);
   if (response.status) {
-    yield put(getClientPartsSuccess({
-      data: [response.data.data, ...clientPartsData.data],
-      links: clientPartsData.links,
-      additional: response.data.additional,
-    }));
+    yield put(getClientPartsSuccess(response.data));
   } else {
     yield put(getClientPartsError('error'));
   }

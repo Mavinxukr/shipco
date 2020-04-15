@@ -23,3 +23,4 @@ export const clientShipping = generateAction('clientShipping');
 export const dismanting = generateAction('dismanting');
 export const clientDismanting = generateAction('clientDismanting');
 export const autoByContainer = generateAction('autoByContainer');
+export const invoices = generateAction('invoices');

@@ -177,7 +177,7 @@ const Parts = () => {
       getParts({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
-        status: router.query.status || '',
+        part_status: router.query.part_status || '',
         search: router.query.search || '',
       }),
     );
@@ -293,7 +293,7 @@ const Parts = () => {
                         query: {
                           ...router.query,
                           page: 1,
-                          status: statusFilter.value,
+                          part_status: statusFilter.value,
                         },
                       });
                       dispatch(

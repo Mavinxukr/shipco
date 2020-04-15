@@ -94,7 +94,7 @@ const Client = () => {
   useEffect(() => {
     const params = router.query.isClient
       ? {}
-      : { client_id: +router.query.idUser };
+      : { client: +router.query.idUser };
     if (router.query.idUser) {
       dispatch(getCurrentClient({}, +router.query.idUser));
     }
@@ -112,8 +112,8 @@ const Client = () => {
       getClient({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
-        client_id: router.query.idUser || '',
-        status: router.query.status || '',
+        client: router.query.idUser || '',
+        auto_status: router.query.auto_status || '',
         search: router.query.search || '',
       }),
     );
@@ -196,7 +196,7 @@ const Client = () => {
                 query: {
                   ...router.query,
                   page: 1,
-                  status: value.value,
+                  auto_status: value.value,
                 },
               });
               dispatch(

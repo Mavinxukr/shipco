@@ -1,5 +1,5 @@
 import {
-  call, put, takeLatest, select,
+  call, put, takeLatest,
 } from 'redux-saga/effects';
 import {
   getBaseClientSuccess,
@@ -8,14 +8,10 @@ import {
 import { deleteBaseClientRequest } from '../../../services/baseClient';
 import * as actionTypes from '../../actions/actionTypes';
 
-const getBaseClientData = state => state.baseClient.baseClientData;
-
 function* deleteBaseClient({ params, body }) {
   const response = yield call(deleteBaseClientRequest, params, body);
-  const baseClientData = yield select(getBaseClientData);
   if (response.status) {
-    const newArr = baseClientData.data.filter(item => body.client_id.every(itemChild => itemChild !== item.id));
-    yield put(getBaseClientSuccess({ data: newArr, links: baseClientData.links }));
+    yield put(getBaseClientSuccess(response.data));
   } else {
     yield put(getBaseClientError('error'));
   }

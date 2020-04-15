@@ -5,10 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
 import { getAutoId, updateAutoId } from '../../../redux/actions/autoId';
+import { getCurrentUser } from '../../../redux/actions/currentUser';
 import MainLayout from '../../Layout/Global/Global';
 import {
   autoIdDataSelector,
   autoIdDataReceivedSelector,
+  currentUserDataSelector,
 } from '../../../utils/selectors';
 import SliderTabs from '../../SliderTabs/SliderTabs';
 import Button from '../../Button/Button';
@@ -48,6 +50,7 @@ const AutoNew = () => {
 
   const autoId = useSelector(autoIdDataSelector);
   const isDataReceived = useSelector(autoIdDataReceivedSelector);
+  const user = useSelector(currentUserDataSelector);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -165,7 +168,11 @@ const AutoNew = () => {
               </a>
               <Button
                 customBtn={styles.link}
-                onClick={() => setIsCommentPopupOpen(true)}
+                onClick={() => {
+                  if (autoId.client.id === user.id) {
+                    setIsCommentPopupOpen(true);
+                  }
+                }}
               >
                 Adding notes
               </Button>

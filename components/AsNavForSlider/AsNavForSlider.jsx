@@ -36,6 +36,7 @@ const AsNavForSlider = ({ sliderImages }) => {
 
   const settings = {
     // dots: true,
+    infinite: false,
     beforeChange: (param, param2) => setIndex(param2),
     nextArrow: (
       <SampleNextArrow

@@ -39,7 +39,7 @@ export const updateAutoRequest = async (params, body, id) => {
       mode: 'cors',
       method: 'POST',
       headers: {
-        Authorization: cookies.get('token'),
+        Authorization: cookies.get('tokenShipco'),
         Accept: 'application/json',
       },
       body: formData,
