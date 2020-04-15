@@ -114,7 +114,9 @@ const Overview = () => {
         <>
           {overviews.latest_invoices && (
             <CustomTable title="Invoices">
-              <Table columns={columns} data={overviews.latest_invoices} />
+              <div className={styles.scrollTable}>
+                <Table columns={columns} data={overviews.latest_invoices} />
+              </div>
             </CustomTable>
           )}
         </>

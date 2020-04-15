@@ -25,6 +25,17 @@
   margin-right: 61px;
 }
 
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
+}
+
+.scrollTable {
+  width: 100%;
+  overflow: auto;
+}
+
 .rightBlock {
   display: flex;
   align-items: center;

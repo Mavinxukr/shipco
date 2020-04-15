@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSortBy, useTable } from 'react-table';
 import { Field, Form } from 'react-final-form';
-import { getInvoices } from '../../../redux/actions/invoices';
+import { getInvoices, updateInvoices } from '../../../redux/actions/invoices';
 import {
   invoicesDataSelector,
   invoicesDataReceivedSelector,
@@ -17,10 +17,9 @@ import IconSortTable from '../../../assets/svg/SortTable.svg';
 import { renderInputFile } from '../../../utils/renderInputs';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import styles from './Invoices.scss';
-import { getParts } from '../../../redux/actions/parts';
 import Loader from '../../Loader/Loader';
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, dispatch }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -35,8 +34,8 @@ const Table = ({ columns, data }) => {
     useSortBy,
   );
 
-  const onSubmit = async (values) => {
-    console.log(values);
+  const onSubmit = async () => {
+    console.log('we');
   };
 
   return (
@@ -67,43 +66,59 @@ const Table = ({ columns, data }) => {
                     className={`Invoices-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {/*{cell.column.id === 'paiment' ? (*/}
-                    {/*  <>*/}
-                    {/*    {cell.row.original.paiment[1] === '' ? (*/}
-                    {/*      <>*/}
-                    {/*        <p>{cell.row.original.paiment[0]}</p>*/}
-                    {/*        <Form*/}
-                    {/*          onSubmit={onSubmit}*/}
-                    {/*          render={({ handleSubmit }) => (*/}
-                    {/*            <form onSubmit={handleSubmit}>*/}
-                    {/*              <Field type="file" name="invoice">*/}
-                    {/*                {renderInputFile({*/}
-                    {/*                  classNameWrapper: styles.fieldRow,*/}
-                    {/*                  customInput: styles.customInputFile,*/}
-                    {/*                  customLabel: styles.customLabel,*/}
-                    {/*                  classNameWrapperForIcon: styles.iconPlus,*/}
-                    {/*                  widthInputBlock: styles.widthInputBlock,*/}
-                    {/*                  file: true,*/}
-                    {/*                  accept:*/}
-                    {/*                    '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',*/}
-                    {/*                  icon: <IconPlus />,*/}
-                    {/*                })}*/}
-                    {/*              </Field>*/}
-                    {/*            </form>*/}
-                    {/*          )}*/}
-                    {/*        />*/}
-                    {/*      </>*/}
-                    {/*    ) : (*/}
-                    {/*      <>*/}
-                    {/*        <p>{cell.row.original.paiment[0]}</p>*/}
-                    {/*        <p>{cell.row.original.paiment[1]}</p>*/}
-                    {/*      </>*/}
-                    {/*    )}*/}
-                    {/*  </>*/}
-                    {/*) : (*/}
-                    {/*  <>{cell.render('Cell')}</>*/}
-                    {/*)}*/}
-                    <>{cell.render('Cell')}</>
+                    {cell.column.id === 'paiment_for' ? (
+                      <>
+                        {cell.row.original.documents.length <= 1 ? (
+                          <>
+                            <p>{cell.row.original.paiment_for[0]}</p>
+                            <Form
+                              onSubmit={onSubmit}
+                              render={({ handleSubmit }) => (
+                                <form onSubmit={handleSubmit}>
+                                  <Field type="file" name="invoice">
+                                    {renderInputFile({
+                                      classNameWrapper: styles.fieldRow,
+                                      customInput: styles.customInputFile,
+                                      customLabel: styles.customLabel,
+                                      classNameWrapperForIcon: styles.iconPlus,
+                                      widthInputBlock: styles.widthInputBlock,
+                                      id: 'invoices',
+                                      file: true,
+                                      accept:
+                                        '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                                      icon: <IconPlus />,
+                                      onChange: () => dispatch(
+                                        updateInvoices(
+                                          {},
+                                          {
+                                            document: [
+                                              {
+                                                type: 'invoices',
+                                                file: document.querySelector(
+                                                  '#invoices',
+                                                ).files,
+                                              },
+                                            ],
+                                          },
+                                          cell.row.original.id,
+                                        ),
+                                      ),
+                                    })}
+                                  </Field>
+                                </form>
+                              )}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <p>{cell.row.original.paiment_for[0]}</p>
+                            <p>{cell.row.original.paiment_for[1]}</p>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>{cell.render('Cell')} </>
+                    )}
                   </td>
                 ))}
               </tr>
@@ -124,7 +139,7 @@ const Invoices = () => {
 
   useEffect(() => {
     dispatch(
-      getParts({
+      getInvoices({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
         search: router.query.search || '',
@@ -140,8 +155,6 @@ const Invoices = () => {
     return <Loader />;
   }
 
-  console.log(invoices);
-
   return (
     <MainLayout admin>
       <SubHeader
@@ -155,7 +168,7 @@ const Invoices = () => {
             },
           });
           dispatch(
-            getParts({
+            getInvoices({
               search: document.querySelector('#search').value,
             }),
           );
@@ -169,7 +182,9 @@ const Invoices = () => {
               pathname="/auto-admin/invoices"
               router={router}
             />
-            <Table columns={columns} data={invoices.data} />
+            <div className={styles.scrollTable}>
+              <Table dispatch={dispatch} columns={columns} data={invoices.data} />
+            </div>
             <Pagination
               params={invoices.links}
               pathname="/auto-admin/invoices"

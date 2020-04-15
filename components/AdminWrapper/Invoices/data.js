@@ -20,7 +20,13 @@ export const columns = [
       },
       {
         Header: 'Paiment for',
-        accessor: 'paiment',
+        accessor: 'paiment_for',
+        Cell: ({ cell: { value } }) => (
+          <>
+            <p>{value[0]}</p>
+            <p>{value[1]}</p>
+          </>
+        ),
       },
       {
         Header: 'Total',
@@ -58,32 +64,40 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            <p>{value[0]}</p>
+            <p>{value[1] || '-'}</p>
           </>
         ),
       },
       {
         Header: '',
-        accessor: 'view',
-        // Cell: ({ cell: { value } }) => (
-        //   <>
-        //     <Button target="_blank" href={value[0]} customBtn="Invoices-viewBtn">
-        //       <IconStar className="Invoices-star" />
-        //       View Invoice
-        //     </Button>
-        //     {value[1] === '' ? (
-        //       <Button disabled target="_blank" href={value[1]} customBtn="Invoices-viewBtn">
-        //         <IconStarDisabled className="Invoices-star" />
-        //         View Invoice
-        //       </Button>
-        //     ) : (
-        //       <Button target="_blank" href={value[1]} customBtn="Invoices-viewBtn">
-        //         <IconStar className="Invoices-star" />
-        //         View Invoice
-        //       </Button>
-        //     )}
-        //   </>
-        // ),
+        accessor: 'documents',
+        Cell: ({ cell: { value } }) => (
+          <>
+            <Button
+              target="_blank"
+              href={value[0].link}
+              customBtn="Invoices-viewBtn"
+            >
+              <IconStar className="Invoices-star" />
+              View Invoice
+            </Button>
+            {value.length <= 1 ? (
+              <Button disabled target="_blank" customBtn="Invoices-viewBtn">
+                <IconStarDisabled className="Invoices-star" />
+                View Invoice
+              </Button>
+            ) : (
+              <Button
+                target="_blank"
+                href={value[1].link}
+                customBtn="Invoices-viewBtn"
+              >
+                <IconStar className="Invoices-star" />
+                View Invoice
+              </Button>
+            )}
+          </>
+        ),
       },
     ],
   },

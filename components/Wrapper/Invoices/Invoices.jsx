@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSortBy, useTable } from 'react-table';
+import {
+  clientInvoicesDataSelector,
+  clientInvoicesDataReceivedSelector,
+} from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
+import { getClientInvoices } from '../../../redux/actions/clientInvoices';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconFilter from '../../../assets/svg/Group (5).svg';
 import Search from '../../Search/Search';
 import Button from '../../Button/Button';
-import { columns, dataTable } from './data';
+import { columns } from './data';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
-import IconStar from '../../../assets/svg/viewStar.svg';
 import styles from './Invoices.scss';
+import Loader from '../../Loader/Loader';
 
 const Table = ({ columns, data }) => {
   const {
@@ -66,26 +73,82 @@ const Table = ({ columns, data }) => {
   );
 };
 
-const Invoices = () => (
-  <MainLayout>
-    <div className={styles.container}>
-      <div className={styles.flex}>
-        <h3 className={styles.title}>Invoices</h3>
-        <div className={styles.rightBlock}>
-          <Button customBtn={styles.filterText}>
-            <IconFilter className={styles.filterIcon} />
-            Filter
-          </Button>
-          <Search />
+const Invoices = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const clientInvoices = useSelector(clientInvoicesDataSelector);
+  const isDataReceived = useSelector(clientInvoicesDataReceivedSelector);
+
+  useEffect(() => {
+    dispatch(
+      getClientInvoices({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+        search: router.query.search || '',
+      }),
+    );
+  }, [router.query]);
+
+  useEffect(() => {
+    dispatch(getClientInvoices({}));
+  }, []);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  return (
+    <MainLayout>
+      <div className={styles.container}>
+        <div className={styles.flex}>
+          <h3 className={styles.title}>Invoices</h3>
+          <div className={styles.rightBlock}>
+            <Button customBtn={styles.filterText}>
+              <IconFilter className={styles.filterIcon} />
+              Filter
+            </Button>
+            <Search
+              onClick={() => {
+                router.push({
+                  pathname: '/invoices',
+                  query: {
+                    ...router.query,
+                    page: 1,
+                    search: document.querySelector('#search').value,
+                  },
+                });
+                dispatch(
+                  getClientInvoices({
+                    search: document.querySelector('#search').value,
+                  }),
+                );
+              }}
+            />
+          </div>
         </div>
+        {clientInvoices.data.length !== 0 ? (
+          <CustomTable>
+            <Pagination
+              params={clientInvoices.links}
+              pathname="/invoices"
+              router={router}
+            />
+            <div className={styles.scrollTable}>
+              <Table columns={columns} data={clientInvoices.data} />
+            </div>
+            <Pagination
+              params={clientInvoices.links}
+              pathname="/invoices"
+              router={router}
+            />
+          </CustomTable>
+        ) : (
+          <h1 className={styles.notFound}>nothing found</h1>
+        )}
       </div>
-      <CustomTable>
-        {/*<Pagination />*/}
-        <Table columns={columns} data={dataTable} />
-        {/*<Pagination />*/}
-      </CustomTable>
-    </div>
-  </MainLayout>
-);
+    </MainLayout>
+  );
+};
 
 export default Invoices;

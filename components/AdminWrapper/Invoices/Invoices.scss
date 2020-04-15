@@ -11,12 +11,16 @@
   justify-content: space-between;
 }
 
+.scrollTable {
+  width: 100%;
+  overflow: auto;
+}
+
 .notFound {
   text-align: center;
   text-transform: uppercase;
   margin: 130px 0;
 }
-
 
 .title {
   color: $colorBackground;
@@ -73,14 +77,14 @@
 }
 
 td.id,
-td.paiment,
-td.auto {
+td.paiment_for,
+td.name_car {
   color: $colorBackground;
 }
 
-.paiment,
-.total,
 .paid,
+.total,
+.paiment_for,
 .outstanding,
 .status {
   position: relative;
@@ -160,6 +164,11 @@ td.auto {
 
 td.id,
 td.date,
-td.auto {
+td.name_car {
   padding-bottom: 65px;
+}
+
+th:first-child {
+  width: 60px;
+  text-align: center;
 }

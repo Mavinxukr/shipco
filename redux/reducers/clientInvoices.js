@@ -2,28 +2,28 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   isFetch: false,
-  invoicesData: null,
+  clientInvoicesData: null,
   isDataReceived: false,
   error: null,
 };
 
-export const invoices = (state = initialState, action) => {
+export const clientInvoices = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.invoices.request || actionTypes.invoices.update:
+    case actionTypes.clientInvoices.request:
       return {
         ...state,
         isFetch: true,
       };
 
-    case actionTypes.invoices.success:
+    case actionTypes.clientInvoices.success:
       return {
         ...state,
         isFetch: false,
         isDataReceived: true,
-        invoicesData: action.body,
+        clientInvoicesData: action.body,
       };
 
-    case actionTypes.invoices.error:
+    case actionTypes.clientInvoices.error:
       return {
         ...state,
         isFetch: false,
