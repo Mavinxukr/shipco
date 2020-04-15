@@ -153,3 +153,13 @@ export const clientDismantingDataReceivedSelector = createSelector(
   state => state.clientDismanting.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const invoicesDataSelector = createSelector(
+  state => state.invoices.invoicesData,
+  invoicesData => invoicesData,
+);
+
+export const invoicesDataReceivedSelector = createSelector(
+  state => state.invoices.isDataReceived,
+  isDataReceived => isDataReceived,
+);

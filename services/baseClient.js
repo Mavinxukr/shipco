@@ -25,7 +25,7 @@ export const addNewBaseClientRequest = async (params, body) => {
   const serverData = await fetch('http://167.172.214.80/api-admin/store-client', {
     method: 'POST',
     headers: {
-      Authorization: cookies.get('token'),
+      Authorization: cookies.get('tokenShipco'),
       Accept: 'application/json',
     },
     redirect: 'follow',

@@ -34,6 +34,7 @@ import { watchUpdateDismanting } from './dismanting/updateDismanting';
 import { watchClientDismanting } from './getClientDismanting';
 import { watchautoByContainer } from './autoByContainer';
 import { watchStoreShipping } from './shipping/storeShipping';
+import { watchInvoices } from './invoices/getInvoices';
 
 export function* rootSaga() {
   yield all([
@@ -72,5 +73,6 @@ export function* rootSaga() {
     watchClientDismanting(),
     watchautoByContainer(),
     watchStoreShipping(),
+    watchInvoices(),
   ]);
 }

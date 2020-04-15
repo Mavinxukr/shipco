@@ -2,7 +2,10 @@ import {
   call, put, select, takeLatest,
 } from 'redux-saga/effects';
 import { getPartsSuccess, getPartsError } from '../../actions/parts';
-import { deletePartsRequest, deletePartsImageRequest } from '../../../services/parts';
+import {
+  deletePartsRequest,
+  deletePartsImageRequest,
+} from '../../../services/parts';
 import * as actionTypes from '../../actions/actionTypes';
 
 const getParts = state => state.parts.partsData;
@@ -14,11 +17,15 @@ function* deleteParts({
   const response = yield call(func, body, params, id);
   const partsData = yield select(getParts);
   if (response.status) {
-    const data = {
-      ...partsData,
-      data: partsData.data.filter(item => item.id !== id),
-    };
-    yield put(getPartsSuccess(data));
+    if (isImage) {
+      const data = {
+        ...partsData,
+        data: partsData.data.filter(item => item.id !== id),
+      };
+      yield put(getPartsSuccess(data));
+    } else {
+      yield put(getPartsSuccess(response.data));
+    }
   } else {
     yield put(getPartsError('error'));
   }

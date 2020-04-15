@@ -8,7 +8,7 @@ export const generalOptions = co => ({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: co.get('token'),
+    Authorization: co.get('tokenShipco'),
   },
 });
 

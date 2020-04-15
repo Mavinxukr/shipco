@@ -20,7 +20,7 @@ const Admin = () => {
   const onSubmit = async (values, isUserAdmin) => {
     const response = await loginAdmin({}, values, isUserAdmin);
     if (response.status) {
-      cookies.set('token', response.data.data.auth.token);
+      cookies.set('tokenShipco', response.data.data.auth.token);
       router.push('/base-client');
     } else {
       setErrorMessage(response.message);

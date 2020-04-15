@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSortBy, useTable } from 'react-table';
 import { Field, Form } from 'react-final-form';
+import { getInvoices } from '../../../redux/actions/invoices';
+import {
+  invoicesDataSelector,
+  invoicesDataReceivedSelector,
+} from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns, dataTable } from './data';
+import { columns } from './data';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
 import { renderInputFile } from '../../../utils/renderInputs';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import styles from './Invoices.scss';
+import { getParts } from '../../../redux/actions/parts';
+import Loader from '../../Loader/Loader';
 
 const Table = ({ columns, data }) => {
   const {
@@ -26,11 +35,8 @@ const Table = ({ columns, data }) => {
     useSortBy,
   );
 
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
   const onSubmit = async (values) => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
+    console.log(values);
   };
 
   return (
@@ -61,42 +67,43 @@ const Table = ({ columns, data }) => {
                     className={`Invoices-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.column.id === 'paiment' ? (
-                      <>
-                        {cell.row.original.paiment[1] === '' ? (
-                          <>
-                            <p>{cell.row.original.paiment[0]}</p>
-                            <Form
-                              onSubmit={onSubmit}
-                              render={({ handleSubmit }) => (
-                                <form onSubmit={handleSubmit}>
-                                  <Field type="file" name="invoice">
-                                    {renderInputFile({
-                                      classNameWrapper: styles.fieldRow,
-                                      customInput: styles.customInputFile,
-                                      customLabel: styles.customLabel,
-                                      classNameWrapperForIcon: styles.iconPlus,
-                                      widthInputBlock: styles.widthInputBlock,
-                                      file: true,
-                                      accept:
-                                        '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
-                                      icon: <IconPlus />,
-                                    })}
-                                  </Field>
-                                </form>
-                              )}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <p>{cell.row.original.paiment[0]}</p>
-                            <p>{cell.row.original.paiment[1]}</p>
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <>{cell.render('Cell')}</>
-                    )}
+                    {/*{cell.column.id === 'paiment' ? (*/}
+                    {/*  <>*/}
+                    {/*    {cell.row.original.paiment[1] === '' ? (*/}
+                    {/*      <>*/}
+                    {/*        <p>{cell.row.original.paiment[0]}</p>*/}
+                    {/*        <Form*/}
+                    {/*          onSubmit={onSubmit}*/}
+                    {/*          render={({ handleSubmit }) => (*/}
+                    {/*            <form onSubmit={handleSubmit}>*/}
+                    {/*              <Field type="file" name="invoice">*/}
+                    {/*                {renderInputFile({*/}
+                    {/*                  classNameWrapper: styles.fieldRow,*/}
+                    {/*                  customInput: styles.customInputFile,*/}
+                    {/*                  customLabel: styles.customLabel,*/}
+                    {/*                  classNameWrapperForIcon: styles.iconPlus,*/}
+                    {/*                  widthInputBlock: styles.widthInputBlock,*/}
+                    {/*                  file: true,*/}
+                    {/*                  accept:*/}
+                    {/*                    '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',*/}
+                    {/*                  icon: <IconPlus />,*/}
+                    {/*                })}*/}
+                    {/*              </Field>*/}
+                    {/*            </form>*/}
+                    {/*          )}*/}
+                    {/*        />*/}
+                    {/*      </>*/}
+                    {/*    ) : (*/}
+                    {/*      <>*/}
+                    {/*        <p>{cell.row.original.paiment[0]}</p>*/}
+                    {/*        <p>{cell.row.original.paiment[1]}</p>*/}
+                    {/*      </>*/}
+                    {/*    )}*/}
+                    {/*  </>*/}
+                    {/*) : (*/}
+                    {/*  <>{cell.render('Cell')}</>*/}
+                    {/*)}*/}
+                    <>{cell.render('Cell')}</>
                   </td>
                 ))}
               </tr>
@@ -108,17 +115,73 @@ const Table = ({ columns, data }) => {
   );
 };
 
-const Invoices = () => (
-  <MainLayout admin>
-    <SubHeader />
-    <div className={styles.container}>
-      <CustomTable>
-        {/*<Pagination />*/}
-        <Table columns={columns} data={dataTable} />
-        {/*<Pagination />*/}
-      </CustomTable>
-    </div>
-  </MainLayout>
-);
+const Invoices = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const invoices = useSelector(invoicesDataSelector);
+  const isDataReceived = useSelector(invoicesDataReceivedSelector);
+
+  useEffect(() => {
+    dispatch(
+      getParts({
+        page: router.query.page || 1,
+        countpage: router.query.countpage || '10',
+        search: router.query.search || '',
+      }),
+    );
+  }, [router.query]);
+
+  useEffect(() => {
+    dispatch(getInvoices({}));
+  }, []);
+
+  if (!isDataReceived) {
+    return <Loader />;
+  }
+
+  console.log(invoices);
+
+  return (
+    <MainLayout admin>
+      <SubHeader
+        onClick={() => {
+          router.push({
+            pathname: '/auto-admin/invoices',
+            query: {
+              ...router.query,
+              page: 1,
+              search: document.querySelector('#search').value,
+            },
+          });
+          dispatch(
+            getParts({
+              search: document.querySelector('#search').value,
+            }),
+          );
+        }}
+      />
+      <div className={styles.container}>
+        {invoices.data.length !== 0 ? (
+          <CustomTable>
+            <Pagination
+              params={invoices.links}
+              pathname="/auto-admin/invoices"
+              router={router}
+            />
+            <Table columns={columns} data={invoices.data} />
+            <Pagination
+              params={invoices.links}
+              pathname="/auto-admin/invoices"
+              router={router}
+            />
+          </CustomTable>
+        ) : (
+          <h1 className={styles.notFound}>nothing found</h1>
+        )}
+      </div>
+    </MainLayout>
+  );
+};
 
 export default Invoices;

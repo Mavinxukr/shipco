@@ -72,7 +72,7 @@ const Home = () => {
   const onSubmit = async (values, funcAuth) => {
     const response = await funcAuth({}, values);
     if (response.status) {
-      cookies.set('token', response.data.data.auth.token, { maxAge: 60 * 60 * 24 * 30 });
+      cookies.set('tokenShipco', response.data.data.auth.token, { maxAge: 60 * 60 * 24 * 30 });
       router.push('/overview');
     } else {
       setErrorMessage(response.message);

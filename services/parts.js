@@ -33,7 +33,7 @@ export const addNewPartsRequest = async (params, body) => {
     {
       method: 'POST',
       headers: {
-        Authorization: cookies.get('token'),
+        Authorization: cookies.get('tokenShipco'),
         Accept: 'application/json',
       },
       redirect: 'follow',
@@ -65,7 +65,7 @@ export const updatePartsRequest = async (params, body, id) => {
     {
       method: 'POST',
       headers: {
-        Authorization: cookies.get('token'),
+        Authorization: cookies.get('tokenShipco'),
         Accept: 'application/json',
       },
       redirect: 'follow',
