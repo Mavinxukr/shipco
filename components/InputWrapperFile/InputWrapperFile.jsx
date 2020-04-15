@@ -21,6 +21,7 @@ const InputWrapperFile = ({
   widthInputBlock,
   customLabel,
   fileValue,
+  onChange,
 }) => (
   <div className={cx(styles.wrapper, classNameWrapper)}>
     <>
@@ -30,6 +31,7 @@ const InputWrapperFile = ({
       <label className={cx(styles.fileLabel, customLabel)}>
         <Input
           id={id}
+          onChange={onChange}
           fileValue={fileValue}
           addInputProps={inputProps}
           widthInputBlock={widthInputBlock}
@@ -72,6 +74,7 @@ InputWrapperFile.propTypes = {
   classNameWrapper: PropTypes.string,
   accept: PropTypes.string,
   customLabel: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default InputWrapperFile;

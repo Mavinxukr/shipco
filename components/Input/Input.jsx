@@ -17,34 +17,47 @@ const Input = ({
   id,
   fileValue,
   onKeyUp,
+  onChange,
 }) => (
   <div className={cx(styles.inputBlock, widthInputBlock)}>
-    <input
-      className={cx(styles.input, customInput)}
-      placeholder={placeholder}
-      id={id}
-      {...addInputProps}
-      accept={accept}
-      onKeyUp={onKeyUp}
-    />
+    {onChange ? (
+      <input
+        className={cx(styles.input, customInput)}
+        placeholder={placeholder}
+        id={id}
+        {...addInputProps}
+        accept={accept}
+        onKeyUp={onKeyUp}
+        onChange={onChange}
+      />
+    ) : (
+      <input
+        className={cx(styles.input, customInput)}
+        placeholder={placeholder}
+        id={id}
+        {...addInputProps}
+        accept={accept}
+        onKeyUp={onKeyUp}
+      />
+    )}
     {icon && (
-    <Button
-      type="button"
-      className={classNameWrapperForIcon}
-      onClick={onClickForIcon}
-    >
-      {icon}
-    </Button>
+      <Button
+        type="button"
+        className={classNameWrapperForIcon}
+        onClick={onClickForIcon}
+      >
+        {icon}
+      </Button>
     )}
     <>
       {file && (
-      <>
-        {addInputProps.value === '' ? (
-          <p className={styles.chosenFile}>{fileValue || 'No file chosen'}</p>
-        ) : (
-          <p className={styles.chosenFileValue}>{addInputProps.value}</p>
-        )}
-      </>
+        <>
+          {addInputProps.value === '' ? (
+            <p className={styles.chosenFile}>{fileValue || 'No file chosen'}</p>
+          ) : (
+            <p className={styles.chosenFileValue}>{addInputProps.value}</p>
+          )}
+        </>
       )}
     </>
   </div>
@@ -63,6 +76,7 @@ Input.propTypes = {
   accept: PropTypes.string,
   file: PropTypes.bool,
   onKeyUp: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 export default Input;

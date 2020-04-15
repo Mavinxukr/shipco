@@ -5,6 +5,13 @@ export const getInvoices = params => ({
   params,
 });
 
+export const updateInvoices = (params, body, id) => ({
+  type: actionTypes.invoices.update,
+  params,
+  body,
+  id,
+});
+
 export const getInvoicesSuccess = body => ({
   type: actionTypes.invoices.success,
   body,
