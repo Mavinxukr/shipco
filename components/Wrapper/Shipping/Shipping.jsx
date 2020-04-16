@@ -16,11 +16,10 @@ import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
 import Search from '../../Search/Search';
-import { stateStatus } from './data';
+import { stateStatus, status } from './data';
 import styles from './Shipping.scss';
 import Loader from '../../Loader/Loader';
 import { renderSelect, renderInput } from '../../../utils/renderInputs';
-import { date, status } from '../../AdminWrapper/Shipping/data';
 
 const Shipping = () => {
   const router = useRouter();

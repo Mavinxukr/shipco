@@ -11,19 +11,15 @@ import {
   clientDismantingDataSelector,
 } from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
-import SelectCustom from '../../SelectCustom/SelectCustom';
 import CustomTable from '../../CustomTable/CustomTable';
 import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
-import IconFilter from '../../../assets/svg/Group (5).svg';
 import Search from '../../Search/Search';
-import { stateStatus } from './data';
+import { stateStatus, status } from './data';
 import styles from './Dismasting.scss';
 import Loader from '../../Loader/Loader';
-
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
-import { date, status } from '../../AdminWrapper/Dismasting/data';
 
 const Dismasting = () => {
   const router = useRouter();
