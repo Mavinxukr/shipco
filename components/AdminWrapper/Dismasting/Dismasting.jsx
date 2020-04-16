@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
-import { getDismanting, updateDismanting } from '../../../redux/actions/dismanting';
+import {
+  getDismanting,
+  updateDismanting,
+} from '../../../redux/actions/dismanting';
 import {
   dismantingDataSelector,
   dismantingDataReceivedSelector,
@@ -13,13 +16,11 @@ import CustomTable from '../../CustomTable/CustomTable';
 import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
-import {
-  stateStatus, status, date, year,
-} from './data';
+import { stateStatus, status } from './data';
 import styles from './Dismasting.scss';
 import Loader from '../../Loader/Loader';
 import { updateShipping } from '../../../redux/actions/shipping';
-import { renderSelect } from '../../../utils/renderInputs';
+import { renderSelect, renderInput } from '../../../utils/renderInputs';
 
 const Dismasting = () => {
   const router = useRouter();
@@ -44,6 +45,7 @@ const Dismasting = () => {
         auto_name: router.query.auto_name || '',
         auto_year: router.query.auto_year || '',
         auto_make: router.query.auto_make || '',
+        date: router.query.date || '',
       }),
     );
   }, [router.query]);
@@ -57,6 +59,7 @@ const Dismasting = () => {
       pathname: '/auto-admin/dismanting',
       query: {
         ...router.query,
+        date: values.date,
         port: values.port && values.port.value,
         shipping_status: values.status && values.status.value,
         auto_name: values.model && values.model.value,
@@ -136,12 +139,14 @@ const Dismasting = () => {
                 />
                 <Field
                   name="date"
-                  component={renderSelect({
+                  type="text"
+                  defaultValue={router.query.date || ''}
+                >
+                  {renderInput({
                     placeholder: router.query.date || 'All Date',
                     classNameWrapper: styles.widthSelect,
                   })}
-                  options={date}
-                />
+                </Field>
                 <Field
                   name="years"
                   component={renderSelect({

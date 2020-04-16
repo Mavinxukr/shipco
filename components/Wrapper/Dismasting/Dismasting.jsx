@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
-import { getClientDismanting, updateClientDismanting } from '../../../redux/actions/clientDismanting';
+import {
+  getClientDismanting,
+  updateClientDismanting,
+} from '../../../redux/actions/clientDismanting';
 import {
   clientDismantingDataReceivedSelector,
   clientDismantingDataSelector,
@@ -19,7 +22,7 @@ import { stateStatus } from './data';
 import styles from './Dismasting.scss';
 import Loader from '../../Loader/Loader';
 
-import { renderSelect } from '../../../utils/renderInputs';
+import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import { date, status } from '../../AdminWrapper/Dismasting/data';
 
 const Dismasting = () => {
@@ -40,6 +43,11 @@ const Dismasting = () => {
         countpage: router.query.countpage || '10',
         port: router.query.port || '',
         search: router.query.search || '',
+        shipping_status: router.query.shipping_status || '',
+        auto_name: router.query.auto_name || '',
+        auto_year: router.query.auto_year || '',
+        auto_make: router.query.auto_make || '',
+        date: router.query.date || '',
       }),
     );
   }, [router.query]);
@@ -53,6 +61,7 @@ const Dismasting = () => {
       pathname: '/shipping',
       query: {
         ...router.query,
+        date: values.date,
         port: values.port && values.port.value,
         shipping_status: values.status && values.status.value,
         auto_name: values.model && values.model.value,
@@ -116,12 +125,14 @@ const Dismasting = () => {
                 />
                 <Field
                   name="date"
-                  component={renderSelect({
+                  type="text"
+                  defaultValue={router.query.date || ''}
+                >
+                  {renderInput({
                     placeholder: router.query.date || 'All Date',
                     classNameWrapper: styles.widthSelect,
                   })}
-                  options={date}
-                />
+                </Field>
                 <Field
                   name="years"
                   component={renderSelect({
