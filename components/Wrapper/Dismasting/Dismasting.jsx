@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import formatStringByPattern from 'format-string-by-pattern';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
 import {
@@ -123,6 +124,7 @@ const Dismasting = () => {
                   name="date"
                   type="text"
                   defaultValue={router.query.date || ''}
+                  parse={formatStringByPattern('99-99-9999')}
                 >
                   {renderInput({
                     placeholder: router.query.date || 'All Date',
