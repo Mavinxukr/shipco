@@ -12,11 +12,11 @@ import SubHeader from '../../Layout/SubHeader/SubHeader';
 import CustomTable from '../../CustomTable/CustomTable';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
-import { stateStatus, status, date } from './data';
+import { stateStatus, status } from './data';
 import Button from '../../Button/Button';
 import styles from './Shipping.scss';
 import Loader from '../../Loader/Loader';
-import { renderSelect } from '../../../utils/renderInputs';
+import { renderSelect, renderInput } from '../../../utils/renderInputs';
 
 const Shipping = () => {
   const router = useRouter();
@@ -41,6 +41,7 @@ const Shipping = () => {
         auto_name: router.query.auto_name || '',
         auto_year: router.query.auto_year || '',
         auto_make: router.query.auto_make || '',
+        date: router.query.date || '',
       }),
     );
   }, [router.query]);
@@ -54,6 +55,7 @@ const Shipping = () => {
       pathname: '/auto-admin/shipping',
       query: {
         ...router.query,
+        date: values.date,
         port: values.port && values.port.value,
         shipping_status: values.status && values.status.value,
         auto_name: values.model && values.model.value,
@@ -133,12 +135,14 @@ const Shipping = () => {
                 />
                 <Field
                   name="date"
-                  component={renderSelect({
+                  type="text"
+                  defaultValue={router.query.date || ''}
+                >
+                  {renderInput({
                     placeholder: router.query.date || 'All Date',
                     classNameWrapper: styles.widthSelect,
                   })}
-                  options={date}
-                />
+                </Field>
                 <Field
                   name="years"
                   component={renderSelect({
@@ -192,8 +196,7 @@ const Shipping = () => {
                 updateShipping={updateShipping}
                 updateStatus={el => dispatch(
                   updateShipping(
-                    {
-                    },
+                    {},
                     {
                       status: el.target.id,
                       port: router.query.port || '',

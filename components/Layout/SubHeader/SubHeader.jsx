@@ -45,9 +45,6 @@ const SubHeader = ({
     );
   };
 
-  console.log('currentClientId', currentClientId);
-  console.log('currentClient', currentClient);
-
   return (
     <div className={styles.subHeader}>
       <div className={styles.container}>
