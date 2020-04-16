@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { getClientDismanting } from '../../../redux/actions/clientDismanting';
+import { Field, Form } from 'react-final-form';
+import { getClientDismanting, updateClientDismanting } from '../../../redux/actions/clientDismanting';
 import {
   clientDismantingDataReceivedSelector,
   clientDismantingDataSelector,
@@ -17,6 +18,9 @@ import Search from '../../Search/Search';
 import { stateStatus } from './data';
 import styles from './Dismasting.scss';
 import Loader from '../../Loader/Loader';
+
+import { renderSelect } from '../../../utils/renderInputs';
+import { date, status } from '../../AdminWrapper/Dismasting/data';
 
 const Dismasting = () => {
   const router = useRouter();
@@ -44,31 +48,115 @@ const Dismasting = () => {
     return <Loader />;
   }
 
+  const onSubmit = async (values) => {
+    router.push({
+      pathname: '/shipping',
+      query: {
+        ...router.query,
+        port: values.port && values.port.value,
+        shipping_status: values.status && values.status.value,
+        auto_name: values.model && values.model.value,
+        auto_year: values.years && values.years.value,
+        auto_make: values.makes && values.makes.value,
+      },
+    });
+  };
+
+  const allModel = { id: 0, value: '', label: 'All Model' };
+  const model = clientDismanting.additional.models;
+  const modelArr = Object.keys(model).map((item, index = '1') => ({
+    id: index + 1,
+    label: model[index].model_name,
+    value: model[index].model_name,
+  }));
+  const newModel = [allModel, ...modelArr];
+
+  const allYear = { id: 0, value: '', label: 'All Years' };
+  const years = clientDismanting.additional.years;
+  const yearArr = Object.keys(years).map((item, index = '1') => ({
+    id: index + 1,
+    label: years[index].year,
+    value: years[index].year,
+  }));
+  const newYear = [allYear, ...yearArr];
+
+  const allMakes = { id: 0, value: '', label: 'All Makes' };
+  const makes = clientDismanting.additional.makes;
+  const makeArr = Object.keys(makes).map((item, index = '1') => ({
+    id: index + 1,
+    label: makes[index].make_name,
+    value: makes[index].make_name,
+  }));
+  const newMakes = [allMakes, ...makeArr];
+
   return (
     <MainLayout>
       <div className={styles.container}>
         <h3 className={styles.title}>Auto for dismanting</h3>
         <div className={styles.flex}>
-          <SelectCustom
-            classNameWrapper={styles.widthSelect}
-            placeholder="All Ports"
-            options={stateStatus}
-            custonOnChange={(value) => {
-              router.push({
-                pathname: '/dismanting',
-                query: {
-                  ...router.query,
-                  port: value.value,
-                },
-              });
-              dispatch(getClientDismanting({ port: value.value }));
-            }}
+          <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form className={styles.fullWidth} onSubmit={handleSubmit}>
+                <Field
+                  name="port"
+                  component={renderSelect({
+                    placeholder: router.query.port || 'All Ports',
+                    classNameWrapper: styles.widthSelect,
+                  })}
+                  options={stateStatus}
+                />
+                <Field
+                  name="status"
+                  component={renderSelect({
+                    placeholder: router.query.status || 'All Status',
+                    classNameWrapper: styles.widthSelect,
+                  })}
+                  options={status}
+                />
+                <Field
+                  name="date"
+                  component={renderSelect({
+                    placeholder: router.query.date || 'All Date',
+                    classNameWrapper: styles.widthSelect,
+                  })}
+                  options={date}
+                />
+                <Field
+                  name="years"
+                  component={renderSelect({
+                    placeholder: router.query.year || 'All Years',
+                    classNameWrapper: styles.widthSelect,
+                  })}
+                  options={newYear}
+                />
+                <Field
+                  name="makes"
+                  component={renderSelect({
+                    placeholder: router.query.year || 'All Makes',
+                    classNameWrapper: styles.widthSelect,
+                  })}
+                  options={newMakes}
+                />
+                <Field
+                  name="model"
+                  component={renderSelect({
+                    placeholder: router.query.model || 'All Model',
+                    classNameWrapper: styles.widthSelect,
+                  })}
+                  options={newModel}
+                />
+                <Button
+                  customBtn={styles.btnSubmit}
+                  type="submit"
+                  disabled={submitting || invalid}
+                >
+                  Ok
+                </Button>
+              </form>
+            )}
           />
           <div className={styles.rightBlock}>
-            <Button customBtn={styles.filterText}>
-              <IconFilter className={styles.filterIcon} />
-              Filter
-            </Button>
             <Search
               onClick={() => {
                 router.push({
@@ -98,7 +186,12 @@ const Dismasting = () => {
               router={router}
             />
             {clientDismanting.data.map(item => (
-              <CarInformation key={item.id} item={item} disassembled />
+              <CarInformation
+                key={item.id}
+                item={item}
+                disassembled
+                updateShipping={updateClientDismanting}
+              />
             ))}
             <Pagination
               params={clientDismanting.links}

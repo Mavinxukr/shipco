@@ -5,6 +5,12 @@ export const getClientDismanting = params => ({
   params,
 });
 
+export const updateClientDismanting = (params, body) => ({
+  type: actionTypes.clientDismanting.update,
+  params,
+  body,
+});
+
 export const getClientDismantingSuccess = body => ({
   type: actionTypes.clientDismanting.success,
   body,

@@ -37,6 +37,7 @@ import { watchStoreShipping } from './shipping/storeShipping';
 import { watchInvoices } from './invoices/getInvoices';
 import { watchUpdateInvoices } from './invoices/updateInvoices';
 import { watchClientInvoices } from './getClientInvoices';
+import { watchClientUpdateDismanting } from './updateClientDismanting'
 
 export function* rootSaga() {
   yield all([
@@ -78,5 +79,6 @@ export function* rootSaga() {
     watchInvoices(),
     watchUpdateInvoices(),
     watchClientInvoices(),
+    watchClientUpdateDismanting(),
   ]);
 }

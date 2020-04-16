@@ -28,6 +28,7 @@ import IckonTw from '../../../assets/svg/Vector.svg';
 import IconYoutube from '../../../assets/svg/Vector(2).svg';
 import IconArrow from '../../../assets/svg/Group (6).svg';
 import styles from './Home.scss';
+import IconMenu from '../../../assets/svg/menu.svg';
 
 const SampleNextArrow = ({ onClick, index }) => (
   <button
@@ -72,7 +73,9 @@ const Home = () => {
   const onSubmit = async (values, funcAuth) => {
     const response = await funcAuth({}, values);
     if (response.status) {
-      cookies.set('tokenShipco', response.data.data.auth.token, { maxAge: 60 * 60 * 24 * 30 });
+      cookies.set('tokenShipco', response.data.data.auth.token, {
+        maxAge: 60 * 60 * 24 * 30,
+      });
       router.push('/overview');
     } else {
       setErrorMessage(response.message);
@@ -97,7 +100,7 @@ const Home = () => {
           <a href="/">
             <Image src="/images/Shipco.png" alt="logo" />
           </a>
-          <nav>
+          <nav className={styles.menuItems}>
             <ul className={styles.headerMenuItems}>
               <li className={styles.headerMenuItem}>
                 <a className={styles.headerMenuLink} href="/">
@@ -126,13 +129,18 @@ const Home = () => {
               </li>
             </ul>
           </nav>
-          <Button
-            onClick={() => setIsLoginPopupOpen(true)}
-            customBtn={styles.btnLogin}
-            type="button"
-          >
-            Login
-          </Button>
+          <div className={styles.flexBtn}>
+            <Button
+              onClick={() => setIsLoginPopupOpen(true)}
+              customBtn={styles.btnLogin}
+              type="button"
+            >
+              Login
+            </Button>
+            <Button type="button" customBtn={styles.menu}>
+              <IconMenu className={styles.burger} />
+            </Button>
+          </div>
         </div>
         <h1 className={styles.headerTitle}>
           The{' '}

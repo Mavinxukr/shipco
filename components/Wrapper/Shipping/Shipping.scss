@@ -14,14 +14,29 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .widthSelect {
-  max-width: 240px;
+  max-width: 200px;
+  margin: 15px 15px 15px 0;
 
   label {
     display: none;
   }
+}
+
+.btnSubmit {
+  padding: 10px;
+  height: 46px;
+  margin: 15px 15px 15px 0;
+}
+
+.fullWidth {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .notFound {

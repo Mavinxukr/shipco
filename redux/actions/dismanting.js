@@ -5,11 +5,12 @@ export const getDismanting = params => ({
   params,
 });
 
-export const updateDismanting = (params, body, id) => ({
+export const updateDismanting = (params, body, id, isNote) => ({
   type: actionTypes.dismanting.update,
   params,
   body,
   id,
+  isNote,
 });
 
 export const getDismantingSuccess = body => ({

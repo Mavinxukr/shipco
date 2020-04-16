@@ -238,6 +238,22 @@ const Client = () => {
               onSubmit={onSubmit}
               render={({ handleSubmit, invalid, submitting }) => (
                 <form onSubmit={handleSubmit}>
+                  <Field name="make_name" validate={required} type="text">
+                    {renderInput({
+                      label: 'Make',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field name="year" validate={required} type="text">
+                    {renderInput({
+                      label: 'Year',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
                   <Field name="model_name" validate={required} type="text">
                     {renderInput({
                       label: 'Model',

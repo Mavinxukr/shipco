@@ -19,6 +19,7 @@ function* updateClientShipping({ params, body }) {
       getClientShippingSuccess({
         data: newArr,
         links: updateClientShippingData.links,
+        additional: updateClientShippingData.additional,
       }),
     );
   } else {
