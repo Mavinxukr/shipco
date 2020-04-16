@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import formatStringByPattern from 'format-string-by-pattern';
@@ -24,6 +25,8 @@ import { updateCurrentClient } from '../../../redux/actions/currentClient';
 const SubHeader = ({
   hidden, currentClientId, currentClient, onClick,
 }) => {
+  const router = useRouter();
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -41,6 +44,9 @@ const SubHeader = ({
       ),
     );
   };
+
+  console.log('currentClientId', currentClientId);
+  console.log('currentClient', currentClient);
 
   return (
     <div className={styles.subHeader}>
@@ -65,7 +71,7 @@ const SubHeader = ({
           </div>
         ) : (
           <>
-            {currentClient && (
+            {currentClient && router.pathname !== '/auto-admin' && (
               <div className={styles.flex}>
                 <h4 className={styles.title}>
                   {currentClient.name}{' '}
