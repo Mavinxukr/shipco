@@ -1,6 +1,6 @@
 //@import "scss/core/mixins";
 //@import "scss/core/vars";
-@import "scss/index";
+@import 'scss/index';
 
 .header {
   height: 100vh;
@@ -46,24 +46,23 @@
   max-width: 1205px;
 }
 
-.container{
+.container {
   margin: auto;
   max-width: 1544px;
 
-  @media screen and (max-width: 1544px){
+  @media screen and (max-width: 1544px) {
     margin: 0 20px;
   }
 }
 
 .mediaWidth {
-  @media screen and (max-width: 1400px){
+  @media screen and (max-width: 1400px) {
     margin: 0 auto;
     max-width: 90%;
   }
 }
 
-
-.containerHeader{
+.containerHeader {
   align-items: center;
   padding-top: 18px;
   display: flex;
@@ -99,7 +98,7 @@
 }
 
 .cars {
-  background: #FAFAFA;
+  background: #fafafa;
   padding: 100px 0;
 }
 
@@ -115,7 +114,7 @@
   margin-left: -40px;
   margin-right: -40px;
 
-  @media screen and (max-width: 1544px){
+  @media screen and (max-width: 1544px) {
     margin-left: -20px;
     margin-right: -20px;
   }
@@ -154,6 +153,10 @@
   flex-direction: column;
   margin-left: 66px;
 
+  @media screen and (max-width: 991px) {
+    margin: 10px 0;
+  }
+
   p {
     margin-bottom: 10px;
   }
@@ -175,7 +178,6 @@
   text-decoration: none;
   margin-right: 20px;
 }
-
 
 .footer {
   background: $colorContent;
@@ -218,6 +220,7 @@
 .footerContainer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .column {
@@ -226,7 +229,15 @@
 }
 
 .slider {
-  display: flex!important;
+  display: flex !important;
+
+  @media screen and (max-width: 991px) {
+    flex-wrap: wrap;
+
+    img {
+      width: 100%;
+    }
+  }
 }
 
 .sliderImg {
@@ -238,6 +249,12 @@
   max-width: 1285px;
   margin: 0 auto 200px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+
+  @media screen and (max-width: 991px) {
+    & > div {
+      max-height: 100%;
+    }
+  }
 }
 
 .sliderRight {
@@ -248,10 +265,23 @@
   display: flex;
   align-items: center;
   margin-bottom: 33px;
+
+  @media screen and (max-width: 991px) {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    img {
+      width: 100px;
+    }
+  }
 }
 
 .sliderUser {
   margin-left: 40px;
+
+  @media screen and (max-width: 991px) {
+    margin: 10px 0 0;
+  }
 
   h4 {
     margin-bottom: 20px;
@@ -262,7 +292,11 @@
 .ArrowR {
   width: 30px;
   height: 30px;
-  background: #D73E45;
+  background: #d73e45;
+
+  @media screen and (max-width: 991px) {
+    display: none;
+  }
 
   svg {
     margin-bottom: 2px;
@@ -297,6 +331,10 @@
   padding: 16px 74px;
   font-size: 16px;
   text-transform: uppercase;
+
+  @media screen and (max-width: 991px) {
+    padding: 16px;
+  }
 }
 
 .customTitle {
@@ -318,31 +356,31 @@
     margin-top: 40px;
   }
 
-   @media screen and (max-width: 1650px) {
+  @media screen and (max-width: 1650px) {
     padding: 35px;
 
-     h5 {
-       margin: 0;
-     }
+    h5 {
+      margin: 0;
+    }
   }
 }
 
 .widthForm {
   width: 435px;
 
-  input{
+  input {
     margin-top: 40px;
   }
 }
 
-.btnSubmit{
+.btnSubmit {
   margin-top: 40px;
   text-transform: uppercase;
   height: 40px;
   width: 100%;
 
   &:disabled {
-    opacity: .7;
+    opacity: 0.7;
   }
 }
 
@@ -356,7 +394,6 @@
   color: blue;
   font-size: 16px;
 }
-
 
 .checkedLogin {
   flex-direction: row-reverse;
@@ -385,8 +422,33 @@
   align-items: baseline;
   display: flex;
 
-  a{
+  a {
     margin-top: 30px;
     color: blue;
   }
+}
+
+.menu {
+  padding: 10px;
+  margin: 0 0 0 15px;
+  display: none;
+
+  @media screen and (max-width: 1180px) {
+    display: block;
+  }
+}
+
+.burger {
+  width: 29px;
+  height: 29px;
+}
+
+.menuItems {
+  @media screen and (max-width: 1180px) {
+    display: none;
+  }
+}
+
+.flexBtn {
+  display: flex;
 }

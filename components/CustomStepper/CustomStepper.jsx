@@ -76,12 +76,16 @@ function ColorlibStepIcon({ active, completed }) {
 const getSteps = () => ['', '', '', ''];
 
 const CustomStepper = ({
-  item, customBlock, paddingBottom, status, updateStatus
+  item,
+  customBlock,
+  paddingBottom,
+  status,
+  updateStatus,
 }) => {
   const steps = getSteps();
   const [isOpenStatusPanel, setIsOpenStatusPanel] = useState(false);
   const [stepIndex, setStepIndex] = useState(
-    item.shipping && getStatusInNumber(item.shipping.status) || 0,
+    (item.shipping && getStatusInNumber(item.shipping.status)) || 0,
   );
   const classNameForOpenStatus = cx(styles.status, {
     [styles.active]: isOpenStatusPanel,

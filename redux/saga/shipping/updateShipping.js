@@ -17,13 +17,18 @@ function* updateShipping({
   const response = yield call(func, params, body, id, isNote);
   const updateShippingData = yield select(getUpdateShippingData);
   if (response.status) {
-    const newArr = updateShippingData.data.map(item => item.id === body.auto_id ? response.data.data : item);
-    yield put(
-      getShippingSuccess({
-        data: newArr,
-        links: updateShippingData.links,
-      }),
-    );
+    if (isNote) {
+      const newArr = updateShippingData.data.map(item => item.id === body.auto_id ? response.data.data : item);
+      yield put(
+        getShippingSuccess({
+          data: newArr,
+          links: updateShippingData.links,
+          additional: updateShippingData.additional,
+        }),
+      );
+    } else {
+      yield put(getShippingSuccess(response.data));
+    }
   } else {
     yield put(getShippingError('error'));
   }

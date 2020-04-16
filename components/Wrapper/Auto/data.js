@@ -42,7 +42,7 @@ export const columns = [
       },
       {
         Header: 'Model',
-        accessor: 'model_name',
+        accessor: 'auto',
         Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {

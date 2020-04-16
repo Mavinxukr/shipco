@@ -39,6 +39,7 @@ const CarInformation = ({
   admin,
   updateStatus,
   updateShipping,
+  router,
 }) => {
   const [isCommentPopupOpen, setIsCommentPopupOpen] = useState(false);
   const [isHistoryPopupOpen, setIsHistoryPopupOpen] = useState(false);
@@ -76,7 +77,7 @@ const CarInformation = ({
         />
       </div>
       <div className={styles.column}>
-        <p className={styles.colorText}>{item.model_name || '21321'}</p>
+        <p className={styles.colorText}>{item.auto || '21321'}</p>
         <p>Lot # {(item.lot_info && item.lot_info.lot_number) || '12312'}</p>
         <p>VIN: {(item.lot_info && item.lot_info.vin_code) || '21321'}</p>
         {admin && (
@@ -134,6 +135,12 @@ const CarInformation = ({
                         {},
                         {
                           disassembly: 1,
+                          port: router.query.port || '',
+                          search: router.query.search || '',
+                          shipping_status: router.query.shipping_status || '',
+                          auto_name: router.query.auto_name || '',
+                          auto_year: router.query.auto_year || '',
+                          auto_make: router.query.auto_make || '',
                         },
                         item.id,
                       ),
@@ -152,6 +159,12 @@ const CarInformation = ({
                         {},
                         {
                           disassembly: 0,
+                          port: router.query.port || '',
+                          search: router.query.search || '',
+                          shipping_status: router.query.shipping_status || '',
+                          auto_name: router.query.auto_name || '',
+                          auto_year: router.query.auto_year || '',
+                          auto_make: router.query.auto_make || '',
                         },
                         item.id,
                       ),

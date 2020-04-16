@@ -16,3 +16,15 @@ export const updateDismantingRequest = async (params, body, id) => {
   );
   return serverData;
 };
+
+export const addNoteRequest = async (params, body) => {
+  const serverData = await Fetch.post(
+    'store-note',
+    params,
+    {
+      body: JSON.stringify(body),
+    },
+    true,
+  );
+  return serverData;
+};

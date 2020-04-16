@@ -43,7 +43,6 @@ export const stateOptions = [
   { value: '5', label: 'Montreal' },
 ];
 
-
 export const stateOptionsDelivery = [
   { value: '1', label: 'Alexandria, Egypt' },
   { value: '2', label: 'Aqaba, Jordan' },

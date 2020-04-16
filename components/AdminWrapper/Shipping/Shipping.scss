@@ -12,11 +12,22 @@
 }
 
 .widthSelect {
-  max-width: 240px;
+  max-width: 200px;
+  margin-right: 15px;
 
   label {
     display: none;
   }
+}
+
+.btnSubmit {
+  padding: 10px;
+}
+
+.fullWidth {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .notFound {
