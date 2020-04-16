@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import formatStringByPattern from 'format-string-by-pattern';
 import { Field, Form } from 'react-final-form';
 import {
   getClientShipping,
@@ -124,6 +125,7 @@ const Shipping = () => {
                   name="date"
                   type="text"
                   defaultValue={router.query.date || ''}
+                  parse={formatStringByPattern('99-99-9999')}
                 >
                   {renderInput({
                     placeholder: router.query.date || 'All Date',
