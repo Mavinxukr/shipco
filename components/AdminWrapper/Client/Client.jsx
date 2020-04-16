@@ -125,8 +125,6 @@ const Client = () => {
     }
   }
 
-  console.log(router);
-
   if (!isDataReceived) {
     return <Loader />;
   }
