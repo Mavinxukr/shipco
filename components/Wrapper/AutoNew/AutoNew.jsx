@@ -144,7 +144,7 @@ const AutoNew = () => {
                 rel="noopener noreferrer"
                 href={
                   autoData[3].images.length !== 0
-                    ? autoData[3].images[0].link
+                    ? autoData[3].images[0].link_for_download
                     : '/'
                 }
                 download
@@ -159,7 +159,7 @@ const AutoNew = () => {
                 rel="noopener noreferrer"
                 href={
                   autoData[4].images.length !== 0
-                    ? autoData[4].images[0].link
+                    ? autoData[4].images[0].link_for_download
                     : '/'
                 }
                 download
@@ -184,7 +184,7 @@ const AutoNew = () => {
                 rel="noopener noreferrer"
                 href={
                   autoData[5].images.length !== 0
-                    ? autoData[5].images[0].link
+                    ? autoData[5].images[0].link_for_download
                     : '/'
                 }
                 download

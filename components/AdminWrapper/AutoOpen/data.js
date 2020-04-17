@@ -35,6 +35,17 @@ export const status = [
   },
 ];
 
+export const statusRadio = [
+  {
+    id: 1,
+    text: 'Yes',
+  },
+  {
+    id: 0,
+    text: 'No'
+  },
+];
+
 export const stateOptions = [
   { value: '1', label: 'California' },
   { value: '2', label: 'Texas' },

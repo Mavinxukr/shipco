@@ -193,7 +193,7 @@ const CarInformation = ({
       </div>
       <div className={styles.column}>
         <a
-          href={(fileCarfac.length !== 0 && fileCarfac[0].link) || ''}
+          href={(fileCarfac.length !== 0 && fileCarfac[0].link_for_download) || ''}
           download
           className={cx(
             styles.colorText,
@@ -203,7 +203,7 @@ const CarInformation = ({
           CarFax report
         </a>
         <a
-          href={(fileInvoice.length !== 0 && fileInvoice[0].link) || ''}
+          href={(fileInvoice.length !== 0 && fileInvoice[0].link_for_download) || ''}
           download
           className={cx(
             styles.colorText,
