@@ -35,8 +35,8 @@ const Auto = () => {
       getAutoClient({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
-        model_name: router.query.model_name || '',
-        point_load_city: router.query.point_load_city || '',
+        auto_name: router.query.auto_name || '',
+        port: router.query.port || '',
         container: router.query.container || '',
         lot_number: router.query.lot_number || '',
         vin: router.query.vin || '',
@@ -106,7 +106,7 @@ const Auto = () => {
                     <Field
                       name="model_name"
                       component={renderSelect({
-                        placeholder: router.query.model_name || '',
+                        placeholder: router.query.auto_name || '',
                         label: 'Model:',
                         classNameWrapper: styles.rowSelect,
                         classNameLabel: styles.labelSelect,
@@ -116,7 +116,7 @@ const Auto = () => {
                             query: {
                               ...router.query,
                               page: 1,
-                              model_name: value.value,
+                              auto_name: value.value,
                             },
                           });
                         },
@@ -148,7 +148,7 @@ const Auto = () => {
                   <Field
                     name="point_load_city"
                     component={renderSelect({
-                      placeholder: router.query.point_load_city || '',
+                      placeholder: router.query.port || '',
                       label: 'Point of loading:',
                       classNameWrapper: styles.rowSelect,
                       classNameLabel: styles.labelSelect,
@@ -158,7 +158,7 @@ const Auto = () => {
                           query: {
                             ...router.query,
                             page: 1,
-                            point_load_city: value.value,
+                            port: value.value,
                           },
                         });
                       },

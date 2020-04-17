@@ -20,7 +20,7 @@ import Radio from '../../Radio/Radio';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import styles from './AutoOpen.scss';
 import {
-  stateOptions, damage, status, stateOptionsDelivery,
+  stateOptions, damage, status, stateOptionsDelivery, statusRadio,
 } from './data';
 import {
   renderInput,
@@ -67,6 +67,7 @@ const AutoOpen = () => {
   const [newArrPicsWarehouses, setNewArrPicsWarehouses] = useState([]);
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
   const [newArrPicsDamage, setNewArrPicsDamage] = useState([]);
+  const [stepIndex, setStepIndex] = useState(0);
 
   const router = useRouter();
 
@@ -83,6 +84,9 @@ const AutoOpen = () => {
       setArrPicsActions(getArr(arrTypes, auto.data.document)[0].images);
       setArrPicsWarehouses(getArr(arrTypes, auto.data.document)[1].images);
       setArrPicsContainer(getArr(arrTypes, auto.data.document)[2].images);
+    }
+    if (auto) {
+      setStepIndex(auto.data.offsite);
     }
   }, [auto]);
 
@@ -126,6 +130,8 @@ const AutoOpen = () => {
   const imagesData = getArr(arrTypes, auto.data.document);
   const idAuto = auto.data.id;
 
+  console.log('stepIndex', stepIndex);
+
   const onSubmit = async (values) => {
     dispatch(
       updateAuto(
@@ -143,6 +149,7 @@ const AutoOpen = () => {
             values.damage_status
             && values.damage_status.toLowerCase().replace(' ', '_'),
           disassembly: values.disassembly,
+          offsite: stepIndex || '0',
           document: [
             {
               type: 'car_fax_report',
@@ -182,6 +189,8 @@ const AutoOpen = () => {
     setNewArrPicsDamage([]);
     setNewArrPicsActions([]);
   };
+
+  console.log('stepIndex', stepIndex);
 
   return (
     <MainLayout admin>
@@ -393,6 +402,40 @@ const AutoOpen = () => {
                           )}
                         </Field>
                       </div>
+                      <div className={styles.flexRadio}>
+                        <p className={styles.label}>Offsite</p>
+                        {statusRadio.map((statusFilter) => {
+                          const classNameForButton = cx(styles.btnStatus, {
+                            [styles.activeStatus]: stepIndex === statusFilter.id,
+                          });
+
+                          return (
+                            <Button
+                              type="button"
+                              onClick={() => setStepIndex(statusFilter.id)}
+                              customBtn={classNameForButton}
+                              key={statusFilter.id}
+                            >
+                              {statusFilter.text}
+                            </Button>
+                          );
+                        })}
+                      </div>
+                      {stepIndex === 1 && (
+                        <Field
+                          name="offsite_price"
+                          validate={composeValidators(required, mustBeNumber)}
+                          type="text"
+                          defaultValue={auto.data.offsite_price || ''}
+                        >
+                          {renderInput({
+                            label: 'Offsite price:',
+                            classNameWrapper: styles.popupFieldRow,
+                            customInput: styles.color,
+                            classNameWrapperLabel: styles.blackLabel,
+                          })}
+                        </Field>
+                      )}
                       <div className={styles.submit}>
                         <Button
                           onClick={handleSubmit}
