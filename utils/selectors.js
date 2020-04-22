@@ -183,3 +183,13 @@ export const groupsDataReceivedSelector = createSelector(
   state => state.groups.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const pricesDataSelector = createSelector(
+  state => state.prices.pricesData,
+  pricesData => pricesData,
+);
+
+export const pricesDataReceivedSelector = createSelector(
+  state => state.prices.isDataReceived,
+  isDataReceived => isDataReceived,
+);
