@@ -22,13 +22,18 @@ export const renderInputFile = props => ({
 );
 
 export const renderSelect = props => ({
-  input, meta, validation, ...rest
+  input,
+  meta,
+  validation,
+  defaultInputValue,
+  ...rest
 }) => (
   <SelectCustom
     {...props}
     {...input}
     meta={meta}
     {...rest}
+    defaultInputValue={defaultInputValue}
     validation={validation}
   />
 );

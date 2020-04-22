@@ -37,7 +37,11 @@ import { watchStoreShipping } from './shipping/storeShipping';
 import { watchInvoices } from './invoices/getInvoices';
 import { watchUpdateInvoices } from './invoices/updateInvoices';
 import { watchClientInvoices } from './getClientInvoices';
-import { watchClientUpdateDismanting } from './updateClientDismanting'
+import { watchClientUpdateDismanting } from './updateClientDismanting';
+import { watchGetGroups } from './groups/getGroups';
+import { watchDeleteGroups } from './groups/deleteGroups';
+import { watchAddGroups } from './groups/addGroups';
+import { watchUpdateGroups } from './groups/updateGroups';
 
 export function* rootSaga() {
   yield all([
@@ -80,5 +84,9 @@ export function* rootSaga() {
     watchUpdateInvoices(),
     watchClientInvoices(),
     watchClientUpdateDismanting(),
+    watchGetGroups(),
+    watchDeleteGroups(),
+    watchAddGroups(),
+    watchUpdateGroups(),
   ]);
 }

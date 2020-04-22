@@ -25,3 +25,4 @@ export const clientDismanting = generateAction('clientDismanting');
 export const autoByContainer = generateAction('autoByContainer');
 export const invoices = generateAction('invoices');
 export const clientInvoices = generateAction('clientInvoices');
+export const groups = generateAction('groups');

@@ -101,7 +101,12 @@ const SelectCustom = ({
 );
 
 SelectCustom.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
   defaultInputValue: PropTypes.string,
   onChange: PropTypes.func,
   label: PropTypes.string,
@@ -110,6 +115,7 @@ SelectCustom.propTypes = {
   meta: PropTypes.object,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
+  defaultValue: PropTypes.array,
   onFocusCustom: PropTypes.func,
   isRequired: PropTypes.bool,
   custonOnChange: PropTypes.func,

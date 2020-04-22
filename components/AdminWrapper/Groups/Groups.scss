@@ -1,0 +1,146 @@
+@import '../../../scss/core/mixins';
+@import '../../../scss/core/vars';
+
+.container {
+  @include container();
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  color: $colorBackground;
+  margin: 60px 0 40px;
+  text-transform: uppercase;
+}
+
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
+}
+
+.plus {
+  width: 40px;
+  height: 40px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.groupBtn {
+  display: flex;
+  align-items: center;
+}
+
+.btnIcon {
+  background: $white;
+  color: $colorBackground;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-right: 33px;
+}
+
+.rightBtn {
+  font-weight: 500;
+  font-size: 18px;
+  color: $white;
+  background: $colorBorder;
+  padding: 10px;
+  min-width: 131px;
+  margin-left: 20px;
+}
+
+.pagination {
+  padding: 18px 15px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $colorTable;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.paginationBtn {
+  color: $colorBackground;
+  background: $white;
+  border: 1px solid $colorBorder;
+  padding: 8px 10px;
+}
+
+.paginationSelect {
+  padding: 8px 11px;
+  border: 1px solid $colorBorder;
+  font-size: 12px;
+  color: $colorTable;
+  border-radius: 2px;
+  background: $white;
+  margin: 0 10px;
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}
+
+.submitPopup {
+  padding-left: 167px;
+  width: 100%;
+}
+
+.widthInputBlock {
+  width: 360px;
+}
+
+.actionsButton {
+  background: transparent;
+  width: 28px;
+  height: 28px;
+  margin-right: 30px;
+}
+
+.scrollTable {
+  width: 100%;
+  overflow: auto;
+}
+
+.price:before {
+  content: '$ ';
+}
+
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: auto;
+
+  .label {
+    margin: 0 31px 0 0;
+  }
+}
+
+.popupBtn {
+  width: 70px;
+  margin-top: 10px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.groupPopupBtn {
+  display: flex;
+  justify-content: space-evenly;
+}
