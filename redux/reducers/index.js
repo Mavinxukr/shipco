@@ -18,6 +18,7 @@ import { autoByContainer } from './autoByContainer';
 import { invoices } from './invoices';
 import { clientInvoices } from './clientInvoices';
 import { groups } from './groups';
+import { prices } from './prices';
 
 export default combineReducers({
   currentUser,
@@ -39,4 +40,5 @@ export default combineReducers({
   invoices,
   clientInvoices,
   groups,
+  prices,
 });

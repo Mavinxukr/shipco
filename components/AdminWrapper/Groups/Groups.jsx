@@ -134,7 +134,11 @@ const Table = ({
                     ) : (
                       <>
                         {cell.column.id === 'client' ? (
-                          <>{cell.row.original.clients.length}</>
+                          <>
+                            {(cell.row.original.clients
+                              && cell.row.original.clients.length)
+                              || '0'}
+                          </>
                         ) : (
                           <>{cell.render('Cell')}</>
                         )}
@@ -282,7 +286,7 @@ const Groups = () => {
     <MainLayout admin>
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h4 className={styles.title}>Base client</h4>
+          <h4 className={styles.title}>Groups</h4>
         </div>
         <div className={styles.flex}>
           <div className={styles.groupBtn}>

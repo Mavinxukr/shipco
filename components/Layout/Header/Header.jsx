@@ -119,6 +119,15 @@ const Header = ({ newLink, admin }) => {
                   </a>
                 </ActiveLink>
               </li>
+              <li className={styles.menuItem}>
+                <ActiveLink activeClassName={styles.active} href="/prices">
+                  <a className={styles.menuLink}>
+                    <IconSetting className={styles.menuIcon} />
+                    Prices
+                    <p className={styles.menuDot} />
+                  </a>
+                </ActiveLink>
+              </li>
               {newLink ? (
                 <div className={classNameForOpenContainer}>
                   <Button
