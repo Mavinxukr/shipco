@@ -35,7 +35,7 @@
     "format-string-by-pattern": "^1.1.1",
     "google-map-react": "^1.1.5",
     "lodash": "^4.17.15",
-    "next": "^9.3.5",
+    "next": "^9.3.2",
     "next-images": "^1.2.0",
     "next-redux-wrapper": "^5.0.0",
     "node-sass": "^4.13.1",
