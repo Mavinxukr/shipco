@@ -363,7 +363,7 @@ const Table = ({ columns, data, arrClientsId }) => {
     useSortBy,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumnsvisibleColumns.push(columns => [
+      hooks.flatColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
