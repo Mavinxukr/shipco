@@ -182,3 +182,15 @@ td p span:before {
   width: 100%;
   overflow: auto;
 }
+
+.btnPrint {
+  width: 100%;
+  background: transparent;
+  color: $colorContent;
+  padding: 10px 0;
+}
+
+.checked {
+  background: $colorBackground;
+  color: $white;
+}
