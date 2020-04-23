@@ -10,7 +10,9 @@ const initialState = {
 export const prices = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.prices.request
-    || actionTypes.prices.save:
+      || actionTypes.prices.delete
+      || actionTypes.prices.save
+      || actionTypes.prices.update:
       return {
         ...state,
         isFetch: true,

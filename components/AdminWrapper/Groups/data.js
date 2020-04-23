@@ -19,6 +19,10 @@ export const columns = [
         accessor: 'client',
       },
       {
+        Header: 'Due day',
+        accessor: 'due_day',
+      },
+      {
         Header: 'Actions',
         accessor: 'actions',
       },

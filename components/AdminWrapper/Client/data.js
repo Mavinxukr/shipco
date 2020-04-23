@@ -118,6 +118,10 @@ export const columns = [
         Cell: ({ cell: { value } }) => <p>{value && (<span>{value}</span>)}</p>,
       },
       {
+        Header: 'Due day',
+        accessor: 'client.due_day',
+      },
+      {
         Header: 'Status',
         accessor: 'status',
         Cell: ({ cell: { value } }) => <>{value.replace('_', ' ')}</>,
