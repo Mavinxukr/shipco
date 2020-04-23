@@ -6,6 +6,7 @@ import cx from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import {
   getClient,
   deleteClient,
@@ -538,7 +539,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.visibleColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -628,7 +629,30 @@ const Table = ({ columns, data, arrAutoId }) => {
                         </a>
                       </>
                     ) : (
-                      <>{cell.render('Cell')}</>
+                      <>
+                        {cell.column.id === 'client.due_day' ? (
+                          <Link
+                            href={{
+                              pathname: '/prices',
+                              query: {
+                                idClient: cell.row.original.client.price_id,
+                              },
+                            }}
+                          >
+                            <a
+                              className={
+                                cell.row.original.client.is_finish
+                                  ? styles.red
+                                  : undefined
+                              }
+                            >
+                              {cell.render('Cell')}
+                            </a>
+                          </Link>
+                        ) : (
+                          <>{cell.render('Cell')}</>
+                        )}
+                      </>
                     )}
                   </td>
                 ))}

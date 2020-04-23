@@ -120,7 +120,10 @@ const Header = ({ newLink, admin }) => {
                 </ActiveLink>
               </li>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/prices">
+                <ActiveLink
+                  activeClassName={styles.active}
+                  href={{ pathname: '/prices', query: { isClient: false } }}
+                >
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
                     Prices

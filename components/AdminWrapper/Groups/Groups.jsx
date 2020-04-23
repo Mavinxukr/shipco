@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -111,10 +112,12 @@ const Table = ({
                             setItemGroup(cell.row.original);
                             setIsPopupUpdate(true);
                             setSelected(
-                              cell.row.original.clients.map(item => ({
-                                value: item.clients.id,
-                                label: item.clients.name,
-                              })),
+                              cell.row.original.clients
+                                ? cell.row.original.clients.map(item => ({
+                                  value: item.clients.id,
+                                  label: item.clients.name,
+                                }))
+                                : selected,
                             );
                           }}
                         >
@@ -140,7 +143,30 @@ const Table = ({
                               || '0'}
                           </>
                         ) : (
-                          <>{cell.render('Cell')}</>
+                          <>
+                            {cell.column.id === 'due_day' ? (
+                              <Link
+                                href={{
+                                  pathname: '/prices',
+                                  query: {
+                                    idClient: cell.row.original.price_id,
+                                  },
+                                }}
+                              >
+                                <a
+                                  className={
+                                    cell.row.original.is_finish
+                                      ? styles.red
+                                      : undefined
+                                  }
+                                >
+                                  {cell.render('Cell')}
+                                </a>
+                              </Link>
+                            ) : (
+                              <>{cell.render('Cell')}</>
+                            )}
+                          </>
                         )}
                       </>
                     )}

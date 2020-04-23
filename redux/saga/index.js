@@ -43,6 +43,9 @@ import { watchDeleteGroups } from './groups/deleteGroups';
 import { watchAddGroups } from './groups/addGroups';
 import { watchUpdateGroups } from './groups/updateGroups';
 import { watchGetPrices } from './prices/getPrices';
+import { watchAddPrices } from './prices/addPrices';
+import { watchDeletePrices } from './prices/deletePrices';
+import { watchUpdatePrices } from './prices/updatePrices';
 
 export function* rootSaga() {
   yield all([
@@ -90,5 +93,8 @@ export function* rootSaga() {
     watchAddGroups(),
     watchUpdateGroups(),
     watchGetPrices(),
+    watchAddPrices(),
+    watchDeletePrices(),
+    watchUpdatePrices(),
   ]);
 }

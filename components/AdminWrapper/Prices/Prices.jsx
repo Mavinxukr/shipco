@@ -4,12 +4,18 @@ import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTable } from 'react-table';
-import { getPrices } from '../../../redux/actions/prices';
+import formatStringByPattern from 'format-string-by-pattern';
+import {
+  getPrices,
+  addNewPrices,
+  deletePrices,
+  updatePrices,
+} from '../../../redux/actions/prices';
 import {
   pricesDataSelector,
   pricesDataReceivedSelector,
 } from '../../../utils/selectors';
-import { renderInput } from '../../../utils/renderInputs';
+import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
 import Popup from '../../Popup/Popup';
 import MainLayout from '../../Layout/Global/Global';
@@ -21,11 +27,23 @@ import {
   mustBeNumber,
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
-import { columns } from './data';
 import Loader from '../../Loader/Loader';
 import styles from './Prices.scss';
+import IconP from '../../../assets/svg/p.svg';
+import IconTrash from '../../../assets/svg/Trash.svg';
+import { columns, city, type } from './data';
 
-const Table = ({ columns, data }) => {
+const Table = ({
+  columns,
+  data,
+  dispatch,
+  priceableData,
+  setPriceableData,
+  prices,
+}) => {
+  const [isPopupUpdate, setIsPopupUpdate] = useState(false);
+  const [itemGroup, setItemGroup] = useState(null);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -37,6 +55,24 @@ const Table = ({ columns, data }) => {
     data,
     initialState: { pageIndex: 0 },
   });
+
+  const onSubmit = (values) => {
+    dispatch(
+      updatePrices(
+        {},
+        {
+          ...values,
+          cities:
+            (values.cities && values.cities.value) || itemGroup.cities[0].id,
+          priceable_type: values.priceable_type && values.priceable_type.value,
+          priceable_id: values.priceable_id && values.priceable_id.value,
+          due_day: `${values.due_day} 23:59:59`,
+        },
+        itemGroup.id,
+      ),
+    );
+    setIsPopupUpdate(false);
+  };
 
   return (
     <>
@@ -65,10 +101,32 @@ const Table = ({ columns, data }) => {
                     className={`Groups-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.column.id === 'client' ? (
-                      <>{cell.row.original.clients.length}</>
+                    {cell.column.id === 'actions' ? (
+                      <>
+                        <Button
+                          type="button"
+                          customBtn={styles.actionsButton}
+                          onClick={() => {
+                            setItemGroup(cell.row.original);
+                            setIsPopupUpdate(true);
+                          }}
+                        >
+                          <IconP />
+                        </Button>
+                        <Button
+                          type="button"
+                          customBtn={styles.actionsButton}
+                          onClick={() => {
+                            dispatch(deletePrices({}, cell.row.original.id));
+                          }}
+                        >
+                          <IconTrash />
+                        </Button>
+                      </>
                     ) : (
-                      <>{cell.render('Cell')}</>
+                      <>
+                        <>{cell.render('Cell')}</>
+                      </>
                     )}
                   </td>
                 ))}
@@ -77,12 +135,112 @@ const Table = ({ columns, data }) => {
           })}
         </tbody>
       </table>
+      {isPopupUpdate && (
+        <Popup setIsPopupOpen={setIsPopupUpdate} title="Update Price ">
+          <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.submitPopup}>
+                  <Field
+                    name="name"
+                    validate={required}
+                    type="text"
+                    defaultValue={itemGroup.name || ''}
+                  >
+                    {renderInput({
+                      label: 'Name',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field
+                    name="price"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                    defaultValue={itemGroup.price || ''}
+                  >
+                    {renderInput({
+                      label: 'Price',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field
+                    name="cities"
+                    component={renderSelect({
+                      label: 'Cities',
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                      placeholder: itemGroup.cities[0].name || '',
+                    })}
+                    options={city}
+                  />
+                  <Field
+                    name="priceable_type"
+                    component={renderSelect({
+                      placeholder: itemGroup.priceable_type || '',
+                      label: 'Priceable type',
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                      custonOnChange: (value) => {
+                        const key =
+                          value.label === 'clients' ? 'clients' : 'groups';
+                        setPriceableData(prices.additional[key]);
+                      },
+                    })}
+                    options={type}
+                  />
+                  <Field
+                    name="priceable_id"
+                    component={renderSelect({
+                      placeholder: itemGroup.priceable.name || '',
+                      label: 'Priceable id',
+                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                    })}
+                    options={
+                      (priceableData
+                        && priceableData.map(item => ({
+                          value: item.id,
+                          label: item.name,
+                        })))
+                      || []
+                    }
+                  />
+                  <Field
+                    name="due_day"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                    parse={formatStringByPattern('9999-99-99')}
+                    defaultValue={itemGroup.due_day || ''}
+                  >
+                    {renderInput({
+                      label: 'Due day',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Update Price
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
     </>
   );
 };
 
 const Groups = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [priceableData, setPriceableData] = useState(null);
 
   const prices = useSelector(pricesDataSelector);
   const isDataReceived = useSelector(pricesDataReceivedSelector);
@@ -91,23 +249,45 @@ const Groups = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPrices({}));
-  }, []);
-
-  useEffect(() => {
     dispatch(
       getPrices({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
+        client: +router.query.idClient || '',
       }),
     );
   }, [router.query]);
+
+  useEffect(() => {
+    const params = router.query.isClient
+      ? {}
+      : { client: +router.query.idClient };
+    if (router.query.idClient) {
+      dispatch(getPrices({}, +router.query.idClient));
+    } else {
+      dispatch(getPrices(params));
+    }
+  }, []);
 
   if (!isDataReceived) {
     return <Loader />;
   }
 
-  const onSubmit = values => console.log(values);
+  const onSubmit = (values) => {
+    dispatch(
+      addNewPrices(
+        {},
+        {
+          ...values,
+          cities: values.cities && values.cities.value,
+          priceable_type: values.priceable_type && values.priceable_type.value,
+          priceable_id: values.priceable_id && values.priceable_id.value,
+          due_day: `${values.due_day} 23:59:59`,
+        },
+      ),
+    );
+    setIsPopupOpen(!isPopupOpen);
+  };
 
   return (
     <MainLayout admin>
@@ -133,24 +313,33 @@ const Groups = () => {
         </div>
         {prices.data.length !== 0 ? (
           <CustomTable>
-            <Pagination
-              params={prices.links}
-              pathname="/prices"
-              router={router}
-            />
+            {typeof prices.data !== 'object' && (
+              <Pagination
+                params={prices.links}
+                pathname="/prices"
+                router={router}
+              />
+            )}
             <div className={styles.scrollTable}>
               <Table
                 columns={columns}
-                data={prices.data}
+                data={
+                  (Array.isArray(prices.data) && prices.data) || [prices.data]
+                }
                 dispatch={dispatch}
                 groupsArr={prices.additional.clients}
+                setPriceableData={setPriceableData}
+                priceableData={priceableData}
+                prices={prices}
               />
             </div>
-            <Pagination
-              params={prices.links}
-              pathname="/prices"
-              router={router}
-            />
+            {typeof prices.data !== 'object' && (
+              <Pagination
+                params={prices.links}
+                pathname="/prices"
+                router={router}
+              />
+            )}
           </CustomTable>
         ) : (
           <h1 className={styles.notFound}>nothing found</h1>
@@ -176,7 +365,59 @@ const Groups = () => {
                   type="text"
                 >
                   {renderInput({
-                    label: 'Price plan',
+                    label: 'Price',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="cities"
+                  component={renderSelect({
+                    placeholder: '',
+                    label: 'Cities',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                  })}
+                  options={city}
+                />
+                <Field
+                  name="priceable_type"
+                  component={renderSelect({
+                    placeholder: '',
+                    label: 'Priceable type',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    custonOnChange: (value) => {
+                      const key =
+                        value.label === 'clients' ? 'clients' : 'groups';
+                      setPriceableData(prices.additional[key]);
+                    },
+                  })}
+                  options={type}
+                />
+                <Field
+                  name="priceable_id"
+                  component={renderSelect({
+                    placeholder: '',
+                    label: 'Priceable id',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                  })}
+                  options={
+                    (priceableData
+                      && priceableData.map(item => ({
+                        value: item.id,
+                        label: item.name,
+                      })))
+                    || []
+                  }
+                />
+                <Field
+                  name="due_day"
+                  validate={composeValidators(required, mustBeNumber)}
+                  type="text"
+                  parse={formatStringByPattern('9999-99-99')}
+                >
+                  {renderInput({
+                    label: 'Due day',
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,

@@ -1,10 +1,10 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getPricesSuccess, getPricesError } from '../../actions/prices';
-import { getPricesRequest } from '../../../services/prices';
+import { addPricesRequest } from '../../../services/prices';
 import * as actionTypes from '../../actions/actionTypes';
 
-function* getPrices({ params, id }) {
-  const response = yield call(getPricesRequest, params, id);
+function* addPrices({ params, body }) {
+  const response = yield call(addPricesRequest, params, body);
   if (response.status) {
     yield put(getPricesSuccess(response.data));
   } else {
@@ -12,6 +12,6 @@ function* getPrices({ params, id }) {
   }
 }
 
-export function* watchGetPrices() {
-  yield takeLatest(actionTypes.prices.request, getPrices);
+export function* watchAddPrices() {
+  yield takeLatest(actionTypes.prices.save, addPrices);
 }
