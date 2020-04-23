@@ -25,9 +25,8 @@ import SubHeader from '../../Layout/SubHeader/SubHeader';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
-import styles from './Client.scss';
 import {
-  columns, stateStatus, status, city,
+  columns, stateStatus, status, city, print,
 } from './data';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 import Loader from '../../Loader/Loader';
@@ -35,6 +34,8 @@ import Popup from '../../Popup/Popup';
 import { required } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
+import MultiSelect from '../../Multi/Multi';
+import styles from './Client.scss';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -58,6 +59,8 @@ const Client = () => {
   const isDataReceived = useSelector(clientDataReceivedSelector);
   const isDataReceivedClient = useSelector(currentClientDataReceivedSelector);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [printPopup, setPrintPopup] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -130,6 +133,10 @@ const Client = () => {
     return <Loader />;
   }
 
+  const onSubmitPrint = (values) => {
+    console.log(values);
+  };
+
   return (
     <MainLayout admin>
       <SubHeader
@@ -181,7 +188,12 @@ const Client = () => {
             </Button>
           </div>
           <div className={styles.groupBtn}>
-            <Button customBtn={styles.rightBtn}>Print</Button>
+            <Button
+              customBtn={styles.rightBtn}
+              onClick={() => setPrintPopup(true)}
+            >
+              Print
+            </Button>
             <Button customBtn={styles.rightBtn}>Import</Button>
           </div>
         </div>
@@ -509,6 +521,31 @@ const Client = () => {
                       disabled={submitting || invalid}
                     >
                       ADD New offers
+                    </Button>
+                  </div>
+                </form>
+              )}
+            />
+          </Popup>
+        )}
+        {printPopup && (
+          <Popup setIsPopupOpen={setPrintPopup} title="Print">
+            <Form
+              onSubmit={onSubmitPrint}
+              render={({ handleSubmit, invalid, submitting }) => (
+                <form onSubmit={handleSubmit}>
+                  <div className={styles.submitPopup}>
+                    <MultiSelect
+                      options={print}
+                      setSelected={setSelected}
+                      value={selected}
+                    />
+                    <Button
+                      customBtn={styles.btnSubmit}
+                      type="submit"
+                      disabled={submitting || invalid}
+                    >
+                      Submit
                     </Button>
                   </div>
                 </form>

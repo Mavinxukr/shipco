@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './Checkbox.scss';
 
 const Checkbox = ({
-  title, checked, onChange, classNameWrapper, name,
+  title, checked, onChange, classNameWrapper, name, value,
 }) => {
   const onChangeCallback = ev => onChange(!checked, ev);
 
@@ -14,6 +14,7 @@ const Checkbox = ({
         type="checkbox"
         name={name}
         checked={checked}
+        value={value}
         id={name}
         className={styles.field}
         onChange={onChangeCallback}
@@ -27,6 +28,7 @@ const Checkbox = ({
 
 Checkbox.propTypes = {
   name: PropTypes.string,
+  value: PropTypes.string,
   title: PropTypes.string,
   checked: PropTypes.bool,
   onChange: PropTypes.func,

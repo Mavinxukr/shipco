@@ -9,10 +9,6 @@
 
   &:nth-child(odd) {
     background: $colorInput;
-
-    div {
-      z-index: 1!important;
-    }
   }
 }
 

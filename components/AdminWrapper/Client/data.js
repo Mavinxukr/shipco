@@ -17,12 +17,13 @@ export const columns = [
         Header: 'ID',
         accessor: 'id',
         Cell: ({ cell: { value } }) => (
-          <Link href={{
-            pathname: '/auto-admin/auto-open',
-            query: {
-              idAuto: value,
-            },
-          }}
+          <Link
+            href={{
+              pathname: '/auto-admin/auto-open',
+              query: {
+                idAuto: value,
+              },
+            }}
           >
             <a>
               <span>{value}</span>
@@ -87,8 +88,12 @@ export const columns = [
           <>
             {value ? (
               <>
-                <p><span>{value[0]}</span></p>
-                <p><span>{value[1]}</span></p>
+                <p>
+                  <span>{value[0]}</span>
+                </p>
+                <p>
+                  <span>{value[1]}</span>
+                </p>
               </>
             ) : (
               <>{value}</>
@@ -103,8 +108,12 @@ export const columns = [
           <>
             {value ? (
               <>
-                <p><span>{value[0]}</span></p>
-                <p><span>{value[1]}</span></p>
+                <p>
+                  <span>{value[0]}</span>
+                </p>
+                <p>
+                  <span>{value[1]}</span>
+                </p>
               </>
             ) : (
               <>{value}</>
@@ -115,7 +124,7 @@ export const columns = [
       {
         Header: 'Outstanding',
         accessor: 'invoice.outstanding_price',
-        Cell: ({ cell: { value } }) => <p>{value && (<span>{value}</span>)}</p>,
+        Cell: ({ cell: { value } }) => <p>{value && <span>{value}</span>}</p>,
       },
       {
         Header: 'Due day',
@@ -178,4 +187,12 @@ export const status = [
     value: 'delivered',
     label: 'Delivered',
   },
+];
+
+export const print = [
+  { label: 'Date', value: 'created_at' },
+  { label: 'Product', value: 'product' },
+  { label: 'Id', value: 'id' },
+  { label: 'Model', value: 'auto' },
+  { label: 'Lot', value: 'lot_info.lot_number' },
 ];
