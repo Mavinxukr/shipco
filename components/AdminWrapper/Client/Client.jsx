@@ -12,6 +12,7 @@ import {
   deleteClient,
   addNewClient,
 } from '../../../redux/actions/client';
+import { parser } from '../../../redux/actions/parser';
 import {
   clientDataSelector,
   clientDataReceivedSelector,
@@ -133,8 +134,26 @@ const Client = () => {
     return <Loader />;
   }
 
-  const onSubmitPrint = (values) => {
-    console.log(values);
+  const onSubmitPrint = () => {
+    const id = selected;
+    const arrId = Object.keys(id).map((item, index) => ({
+      value: Object.values(id)[index].value,
+    }));
+    const submitId = [];
+    arrId.forEach((item) => {
+      submitId.push(Object.values(item));
+    });
+    dispatch(
+      parser(
+        {},
+        {
+          fields: submitId.join(),
+        },
+        'client',
+      ),
+    );
+    setSelected([]);
+    setPrintPopup(false);
   };
 
   return (
@@ -534,7 +553,7 @@ const Client = () => {
               onSubmit={onSubmitPrint}
               render={({ handleSubmit, invalid, submitting }) => (
                 <form onSubmit={handleSubmit}>
-                  <div className={styles.submitPopup}>
+                  <div>
                     <MultiSelect
                       options={print}
                       setSelected={setSelected}
@@ -576,7 +595,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.visibleColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
