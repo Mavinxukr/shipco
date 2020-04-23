@@ -190,9 +190,18 @@ export const status = [
 ];
 
 export const print = [
-  { label: 'Date', value: 'created_at' },
-  { label: 'Product', value: 'product' },
-  { label: 'Id', value: 'id' },
-  { label: 'Model', value: 'auto' },
-  { label: 'Lot', value: 'lot_info.lot_number' },
+  { name: 'Date', id: 'created_at' },
+  { name: 'Product', id: 'product' },
+  { name: 'Id', id: 'id' },
+  { name: 'Model', id: 'auto' },
+  { name: 'Lot', id: 'lot_infos.lot_number' },
+  { name: 'Point of loading', id: 'ship_infos.point_load_city' },
+  { name: 'Container ID', id: 'ship_infos.container_id' },
+  { name: 'Point of delivery', id: 'ship_infos.point_delivery_city' },
+  { name: 'Paiment for', id: 'paiment' },
+  { name: 'Total', id: 'invoices.total' },
+  { name: 'Paid', id: 'invoices.paid' },
+  { name: 'Outstanding', id: 'invoices.outstanding_price' },
+  { name: 'Due day', id: 'clients.due_day' },
+  { name: 'Status', id: 'status' },
 ];

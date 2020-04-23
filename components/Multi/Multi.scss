@@ -49,13 +49,14 @@
 .activeOption {
   display: block;
   position: absolute;
-  top: 48px;
+  top: 45px;
   left: 167px;
   z-index: 99999999;
   background: $colorInput;
   border: 1px solid $colorBorder;
   border-radius: 2px;
   border-top: 0;
+  width: 360px;
 }
 
 .item {
@@ -63,8 +64,9 @@
 
   button {
     background: $colorBackground;
-    padding: 2px 5px;
+    padding: 5px 5px;
     color: $white;
+    font-size: 15px;
     margin-left: 2px;
   }
 }
