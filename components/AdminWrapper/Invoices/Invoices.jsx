@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSortBy, useTable } from 'react-table';
@@ -12,12 +12,16 @@ import MainLayout from '../../Layout/Global/Global';
 import SubHeader from '../../Layout/SubHeader/SubHeader';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns } from './data';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
 import { renderInputFile } from '../../../utils/renderInputs';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import styles from './Invoices.scss';
 import Loader from '../../Loader/Loader';
+import Button from '../../Button/Button';
+import { printData, getIdsArr } from '../../../utils/helpers';
+import Popup from '../../Popup/Popup';
+import MultiSelect from '../../Multi/Multi';
+import { print, columns } from './data';
 
 const Table = ({ columns, data, dispatch }) => {
   const {
@@ -134,6 +138,9 @@ const Invoices = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const [printPopup, setPrintPopup] = useState(false);
+  const [selected, setSelected] = useState([]);
+
   const invoices = useSelector(invoicesDataSelector);
   const isDataReceived = useSelector(invoicesDataReceivedSelector);
 
@@ -155,6 +162,19 @@ const Invoices = () => {
     return <Loader />;
   }
 
+  const onSubmitPrint = () => {
+    const idsArr = getIdsArr(selected);
+    printData({
+      params: {
+        fields: idsArr,
+      },
+      table: 'invoices',
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
+    });
+  };
+
   return (
     <MainLayout admin>
       <SubHeader
@@ -175,6 +195,15 @@ const Invoices = () => {
         }}
       />
       <div className={styles.container}>
+        <div className={styles.flex}>
+          <h4 className={styles.title}>Invoices</h4>
+          <Button
+            customBtn={styles.rightBtn}
+            onClick={() => setPrintPopup(true)}
+          >
+            Print
+          </Button>
+        </div>
         {invoices.data.length !== 0 ? (
           <CustomTable>
             <Pagination
@@ -183,7 +212,11 @@ const Invoices = () => {
               router={router}
             />
             <div className={styles.scrollTable}>
-              <Table dispatch={dispatch} columns={columns} data={invoices.data} />
+              <Table
+                dispatch={dispatch}
+                columns={columns}
+                data={invoices.data}
+              />
             </div>
             <Pagination
               params={invoices.links}
@@ -195,6 +228,36 @@ const Invoices = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
+      {printPopup && (
+        <Popup
+          customPopup={styles.heightPopup}
+          setIsPopupOpen={setPrintPopup}
+          title="Print"
+        >
+          <Form
+            onSubmit={onSubmitPrint}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.columnSelect}>
+                  <MultiSelect
+                    options={print}
+                    setSelected={setSelected}
+                    value={selected}
+                    label="Select the fields Print"
+                  />
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
     </MainLayout>
   );
 };

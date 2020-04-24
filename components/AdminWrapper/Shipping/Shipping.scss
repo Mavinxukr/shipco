@@ -63,3 +63,56 @@
 .filterIcon {
   margin-right: 17px;
 }
+
+.columnSelect {
+
+  & > div {
+    flex-direction: column;
+
+    label {
+      width: 100%;
+      margin: 10px;
+    }
+
+    div + div {
+      left: 0;
+      top: 80px;
+      max-height: 133px;
+    }
+  }
+
+  .btnSubmit {
+    width: 100%;
+    font-weight: 500;
+    margin-top: 40px;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 10px;
+    transition: all .3s;
+
+    &:hover {
+      background: $colorBackgroundHover;
+    }
+  }
+}
+
+.heightPopup {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  overflow: hidden;
+}
+
+.title {
+  color: $colorBackground;
+  margin: 60px 0;
+}
+
+.rightBtn {
+  font-weight: 500;
+  font-size: 18px;
+  color: $white;
+  background: $colorBorder;
+  padding: 10px;
+  min-width: 131px;
+  margin-left: 20px;
+}

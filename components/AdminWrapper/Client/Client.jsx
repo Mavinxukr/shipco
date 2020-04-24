@@ -12,7 +12,6 @@ import {
   deleteClient,
   addNewClient,
 } from '../../../redux/actions/client';
-import { parser } from '../../../redux/actions/parser';
 import {
   clientDataSelector,
   clientDataReceivedSelector,
@@ -26,14 +25,23 @@ import SubHeader from '../../Layout/SubHeader/SubHeader';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
+import { printData, getIdsArr } from '../../../utils/helpers';
 import {
   columns, stateStatus, status, city, print,
 } from './data';
 import SelectCustom from '../../SelectCustom/SelectCustom';
 import Loader from '../../Loader/Loader';
 import Popup from '../../Popup/Popup';
-import { required } from '../../../utils/validation';
-import { renderInput, renderSelect } from '../../../utils/renderInputs';
+import {
+  required,
+  mustBeNumber,
+  composeValidators,
+} from '../../../utils/validation';
+import {
+  renderInput,
+  renderSelect,
+  renderInputFile,
+} from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
 import MultiSelect from '../../Multi/Multi';
 import styles from './Client.scss';
@@ -85,6 +93,17 @@ const Client = () => {
           sale: 1,
           feature: 1,
           disassembly: 0,
+          invoice: 1,
+          invoice_document: [
+            {
+              type: 'invoice',
+              file: document.querySelector('#car_fax_report').files,
+            },
+            {
+              type: 'invoices',
+              file: document.querySelector('#invoice').files,
+            },
+          ],
         },
       ),
     );
@@ -135,25 +154,23 @@ const Client = () => {
   }
 
   const onSubmitPrint = () => {
-    const id = selected;
-    const arrId = Object.keys(id).map((item, index) => ({
-      value: Object.values(id)[index].value,
-    }));
-    const submitId = [];
-    arrId.forEach((item) => {
-      submitId.push(Object.values(item));
+    const idsArr = getIdsArr(selected);
+    const paramsClient = router.query.isClient
+      ? {
+        fields: idsArr,
+      }
+      : {
+        client_id: +router.query.idUser || '',
+        fields: idsArr,
+      };
+    const tableClient = router.query.isClient ? 'autos' : 'client';
+    printData({
+      params: paramsClient,
+      table: tableClient,
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
     });
-    dispatch(
-      parser(
-        {},
-        {
-          fields: submitId.join(),
-        },
-        'client',
-      ),
-    );
-    setSelected([]);
-    setPrintPopup(false);
   };
 
   return (
@@ -276,7 +293,11 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="year" validate={required} type="text">
+                  <Field
+                    name="year"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
                     {renderInput({
                       label: 'Year',
                       classNameWrapper: styles.popupFieldRow,
@@ -292,7 +313,11 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="client_id" validate={required} type="text">
+                  <Field
+                    name="client_id"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
                     {renderInput({
                       label: 'Client id',
                       classNameWrapper: styles.popupFieldRow,
@@ -310,7 +335,11 @@ const Client = () => {
                     })}
                     options={status}
                   />
-                  <Field name="tracking_id" validate={required} type="text">
+                  <Field
+                    name="tracking_id"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
                     {renderInput({
                       label: 'Tracking id',
                       classNameWrapper: styles.popupFieldRow,
@@ -318,7 +347,11 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="container_id" validate={required} type="text">
+                  <Field
+                    name="container_id"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
                     {renderInput({
                       label: 'Container id',
                       classNameWrapper: styles.popupFieldRow,
@@ -364,7 +397,11 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="lot_number" validate={required} type="text">
+                  <Field
+                    name="lot_number"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
                     {renderInput({
                       label: 'Lot number',
                       classNameWrapper: styles.popupFieldRow,
@@ -532,6 +569,72 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
+                  <Field
+                    name="invoice_total_price"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
+                    {renderInput({
+                      label: 'Total Price',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field
+                    name="invoice_paid_price"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
+                    {renderInput({
+                      label: 'Paid Price',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field
+                    name="invoice_outstanding_price"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                  >
+                    {renderInput({
+                      label: 'Invoice Price',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field name=" invoice_status" validate={required} type="text">
+                    {renderInput({
+                      label: 'Invoice Status',
+                      classNameWrapper: styles.popupFieldRow,
+                      widthInputBlock: styles.widthInputBlock,
+                      classNameWrapperLabel: styles.label,
+                    })}
+                  </Field>
+                  <Field name="car_fax_report" type="file" validate={required}>
+                    {renderInputFile({
+                      label: 'CarFax report',
+                      classNameWrapper: styles.popupFieldRow,
+                      customInput: styles.customInputFile,
+                      widthInputBlock: styles.noFiles,
+                      file: true,
+                      id: 'car_fax_report',
+                      accept: '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                    })}
+                  </Field>
+                  <Field name="invoice" type="file" validate={required}>
+                    {renderInputFile({
+                      label: 'Invoice',
+                      classNameWrapper: styles.popupFieldRow,
+                      customInput: styles.customInputFile,
+                      widthInputBlock: styles.noFiles,
+                      id: 'invoice',
+                      file: true,
+                      accept: '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                    })}
+                  </Field>
                   {error && <p className={styles.error}>Client not found</p>}
                   <div className={styles.submitPopup}>
                     <Button
@@ -548,16 +651,21 @@ const Client = () => {
           </Popup>
         )}
         {printPopup && (
-          <Popup setIsPopupOpen={setPrintPopup} title="Print">
+          <Popup
+            customPopup={styles.heightPopup}
+            setIsPopupOpen={setPrintPopup}
+            title="Print"
+          >
             <Form
               onSubmit={onSubmitPrint}
               render={({ handleSubmit, invalid, submitting }) => (
                 <form onSubmit={handleSubmit}>
-                  <div>
+                  <div className={styles.columnSelect}>
                     <MultiSelect
                       options={print}
                       setSelected={setSelected}
                       value={selected}
+                      label="Select the fields Print"
                     />
                     <Button
                       customBtn={styles.btnSubmit}

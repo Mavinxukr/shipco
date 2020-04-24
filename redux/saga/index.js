@@ -46,7 +46,6 @@ import { watchGetPrices } from './prices/getPrices';
 import { watchAddPrices } from './prices/addPrices';
 import { watchDeletePrices } from './prices/deletePrices';
 import { watchUpdatePrices } from './prices/updatePrices';
-import { watchParser } from './parser';
 
 export function* rootSaga() {
   yield all([
@@ -97,6 +96,5 @@ export function* rootSaga() {
     watchAddPrices(),
     watchDeletePrices(),
     watchUpdatePrices(),
-    watchParser(),
   ]);
 }

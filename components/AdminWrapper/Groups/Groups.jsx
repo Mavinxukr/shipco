@@ -16,6 +16,7 @@ import {
   groupsDataSelector,
   groupsDataReceivedSelector,
 } from '../../../utils/selectors';
+import { printData, getIdsArr } from '../../../utils/helpers';
 import Button from '../../Button/Button';
 import Popup from '../../Popup/Popup';
 import MainLayout from '../../Layout/Global/Global';
@@ -28,7 +29,7 @@ import {
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
 import { renderInput } from '../../../utils/renderInputs';
-import { columns } from './data';
+import { columns, print } from './data';
 import Loader from '../../Loader/Loader';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import styles from './Groups.scss';
@@ -262,6 +263,7 @@ const Table = ({
 
 const Groups = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
 
   const groups = useSelector(groupsDataSelector);
@@ -288,24 +290,30 @@ const Groups = () => {
   }
 
   const onSubmit = (values) => {
-    const id = selected;
-    const arrId = Object.keys(id).map((item, index) => ({
-      value: Object.values(id)[index].value,
-    }));
-    const submitId = [];
-    arrId.forEach((item) => {
-      submitId.push(Object.values(item));
-    });
+    const arrId = selected.map(item => item.value);
     dispatch(
       addNewGroups(
         {},
         {
           ...values,
-          clients: submitId.join(),
+          clients: arrId.join(),
         },
       ),
     );
     setIsPopupOpen(false);
+  };
+
+  const onSubmitPrint = () => {
+    const idsArr = getIdsArr(selected);
+    printData({
+      params: {
+        fields: idsArr,
+      },
+      table: 'groups',
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
+    });
   };
 
   return (
@@ -326,7 +334,12 @@ const Groups = () => {
             </Button>
           </div>
           <div className={styles.groupBtn}>
-            <Button customBtn={styles.rightBtn}>Print</Button>
+            <Button
+              customBtn={styles.rightBtn}
+              onClick={() => setPrintPopup(true)}
+            >
+              Print
+            </Button>
             <Button customBtn={styles.rightBtn}>Import</Button>
           </div>
         </div>
@@ -393,6 +406,36 @@ const Groups = () => {
                     disabled={submitting || invalid}
                   >
                     ADD New Group
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
+      {printPopup && (
+        <Popup
+          customPopup={styles.heightPopup}
+          setIsPopupOpen={setPrintPopup}
+          title="Print"
+        >
+          <Form
+            onSubmit={onSubmitPrint}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.columnSelect}>
+                  <Example
+                    options={print}
+                    setSelected={setSelected}
+                    value={selected}
+                    label="Select the fields Print"
+                  />
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Submit
                   </Button>
                 </div>
               </form>

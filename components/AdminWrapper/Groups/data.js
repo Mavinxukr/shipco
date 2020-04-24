@@ -29,3 +29,9 @@ export const columns = [
     ],
   },
 ];
+
+export const print = [
+  { name: 'Id', id: 'id' },
+  { name: 'Name', id: 'name' },
+  { name: 'Price', id: 'price' },
+];

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import formatStringByPattern from 'format-string-by-pattern';
@@ -13,14 +13,20 @@ import SubHeader from '../../Layout/SubHeader/SubHeader';
 import CustomTable from '../../CustomTable/CustomTable';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
-import { stateStatus, status } from './data';
+import { stateStatus, status, print } from './data';
+import { printData, getIdsArr } from '../../../utils/helpers';
 import Button from '../../Button/Button';
 import styles from './Shipping.scss';
 import Loader from '../../Loader/Loader';
 import { renderSelect, renderInput } from '../../../utils/renderInputs';
+import Popup from '../../Popup/Popup';
+import MultiSelect from '../../Multi/Multi';
 
 const Shipping = () => {
   const router = useRouter();
+
+  const [printPopup, setPrintPopup] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const shipping = useSelector(shippingDataSelector);
   const isDataReceived = useSelector(shippingDataReceivedSelector);
@@ -93,6 +99,19 @@ const Shipping = () => {
   }));
   const newMakes = [allMakes, ...makeArr];
 
+  const onSubmitPrint = () => {
+    const idsArr = getIdsArr(selected);
+    printData({
+      params: {
+        fields: idsArr,
+      },
+      table: 'shippings',
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
+    });
+  };
+
   return (
     <MainLayout newLink admin>
       <SubHeader
@@ -113,6 +132,15 @@ const Shipping = () => {
         }}
       />
       <div className={styles.container}>
+        <div className={styles.flex}>
+          <h4 className={styles.title}>Shipping</h4>
+          <Button
+            customBtn={styles.rightBtn}
+            onClick={() => setPrintPopup(true)}
+          >
+            Print
+          </Button>
+        </div>
         <div className={styles.flex}>
           <Form
             onSubmit={onSubmit}
@@ -222,6 +250,36 @@ const Shipping = () => {
           </CustomTable>
         )}
       </div>
+      {printPopup && (
+        <Popup
+          customPopup={styles.heightPopup}
+          setIsPopupOpen={setPrintPopup}
+          title="Print"
+        >
+          <Form
+            onSubmit={onSubmitPrint}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.columnSelect}>
+                  <MultiSelect
+                    options={print}
+                    setSelected={setSelected}
+                    value={selected}
+                    label="Select the fields Print"
+                  />
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
     </MainLayout>
   );
 };

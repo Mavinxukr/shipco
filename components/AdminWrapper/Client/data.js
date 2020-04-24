@@ -190,18 +190,17 @@ export const status = [
 ];
 
 export const print = [
-  { name: 'Date', id: 'created_at' },
-  { name: 'Product', id: 'product' },
-  { name: 'Id', id: 'id' },
-  { name: 'Model', id: 'auto' },
+  { name: 'Date', id: 'autos.created_at' },
+  { name: 'Id', id: 'autos.id' },
+  { name: 'Model', id: 'autos.model_name' },
+  { name: 'Year', id: 'autos.year' },
+  { name: 'Make name', id: 'autos.make_name' },
   { name: 'Lot', id: 'lot_infos.lot_number' },
   { name: 'Point of loading', id: 'ship_infos.point_load_city' },
   { name: 'Container ID', id: 'ship_infos.container_id' },
   { name: 'Point of delivery', id: 'ship_infos.point_delivery_city' },
-  { name: 'Paiment for', id: 'paiment' },
-  { name: 'Total', id: 'invoices.total' },
-  { name: 'Paid', id: 'invoices.paid' },
+  { name: 'Total', id: 'invoices.total_price' },
+  { name: 'Paid', id: 'invoices.paid_price' },
   { name: 'Outstanding', id: 'invoices.outstanding_price' },
-  { name: 'Due day', id: 'clients.due_day' },
-  { name: 'Status', id: 'status' },
+  { name: 'Status', id: 'autos.status' },
 ];

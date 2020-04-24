@@ -51,3 +51,16 @@ export const columns = [
     ],
   },
 ];
+
+export const print = [
+  { name: 'Id', id: 'clients.id' },
+  { name: 'Name', id: 'clients.name' },
+  { name: 'Email', id: 'clients.email' },
+  { name: 'Phone', id: 'clients.phone' },
+  { name: 'Payment Information', id: 'clients.card_number' },
+  { name: 'Date of registration', id: 'clients.created_at' },
+  { name: 'Country', id: 'countries.name' },
+  { name: 'City', id: 'cities.name' },
+  { name: 'Zip', id: 'zips.name' },
+  { name: 'Address', id: 'addresses.name' },
+];
