@@ -28,7 +28,10 @@ import IconPlus from '../../../assets/svg/Plus.svg';
 import IconUpload from '../../../assets/svg/uploadfile.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
 import CustomTable from '../../CustomTable/CustomTable';
-import { columns, status, statusSelect } from './data';
+import { printData, getIdsArr } from '../../../utils/helpers';
+import {
+  columns, status, statusSelect, print,
+} from './data';
 import styles from './Parts.scss';
 import {
   required,
@@ -38,6 +41,7 @@ import {
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
 import HoverPopup from '../../HoverPopup/HoverPopup';
+import MultiSelect from '../../Multi/Multi';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -162,6 +166,8 @@ const Parts = () => {
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
   const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
   const [updateData, setUpdateData] = useState(null);
+  const [printPopup, setPrintPopup] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const parts = useSelector(partsDataSelector);
   const isDataReceived = useSelector(partsDataReceivedSelector);
@@ -242,6 +248,19 @@ const Parts = () => {
     setIsPopupUpdateOpen(false);
   };
 
+  const onSubmitPrint = () => {
+    const idsArr = getIdsArr(selected);
+    printData({
+      params: {
+        fields: idsArr,
+      },
+      table: 'parts',
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
+    });
+  };
+
   return (
     <MainLayout admin>
       <SubHeader
@@ -262,6 +281,15 @@ const Parts = () => {
         }}
       />
       <div className={styles.container}>
+        <div className={styles.flex}>
+          <h4 className={styles.title}>Parts</h4>
+          <Button
+            customBtn={styles.rightBtn}
+            onClick={() => setPrintPopup(true)}
+          >
+            Print
+          </Button>
+        </div>
         <div className={styles.flex}>
           <Button
             customBtn={styles.btnIcon}
@@ -570,6 +598,36 @@ const Parts = () => {
                 >
                   Add New part
                 </Button>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
+      {printPopup && (
+        <Popup
+          customPopup={styles.heightPopup}
+          setIsPopupOpen={setPrintPopup}
+          title="Print"
+        >
+          <Form
+            onSubmit={onSubmitPrint}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.columnSelect}>
+                  <MultiSelect
+                    options={print}
+                    setSelected={setSelected}
+                    value={selected}
+                    label="Select the fields Print"
+                  />
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Submit
+                  </Button>
+                </div>
               </form>
             )}
           />

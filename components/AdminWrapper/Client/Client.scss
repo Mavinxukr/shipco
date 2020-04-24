@@ -1,5 +1,5 @@
-@import "../../../scss/core/mixins";
-@import "../../../scss/core/vars";
+@import '../../../scss/core/mixins';
+@import '../../../scss/core/vars';
 
 .container {
   @include container();
@@ -96,7 +96,6 @@ th:first-child {
   width: 240px;
 }
 
-
 .new,
 .pending,
 .delivered,
@@ -113,13 +112,13 @@ th:first-child {
 }
 
 .delivered {
-  color:$colorContent;
+  color: $colorContent;
 }
 
 .id,
 td span,
 .not,
-.not_approved{
+.not_approved {
   color: $colorBackground;
 }
 
@@ -135,7 +134,7 @@ td span,
   font-size: 18px;
   text-transform: uppercase;
   padding: 10px;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:disabled {
     opacity: 0.6;
@@ -193,4 +192,38 @@ td p span:before {
 .checked {
   background: $colorBackground;
   color: $white;
+}
+
+.columnSelect {
+
+  & > div {
+    flex-direction: column;
+
+    label {
+      width: 100%;
+      margin: 10px;
+    }
+
+    div + div {
+      left: 0;
+      top: 80px;
+      max-height: 133px;
+    }
+  }
+}
+
+.heightPopup {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  overflow: hidden;
+}
+
+.customInputFile {
+  border: 1px solid $colorBorder;
+}
+
+.noFiles {
+  p {
+    display: none;
+  }
 }

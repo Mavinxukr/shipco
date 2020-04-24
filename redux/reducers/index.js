@@ -19,7 +19,6 @@ import { invoices } from './invoices';
 import { clientInvoices } from './clientInvoices';
 import { groups } from './groups';
 import { prices } from './prices';
-import { parser } from './parser';
 
 export default combineReducers({
   currentUser,
@@ -42,5 +41,4 @@ export default combineReducers({
   clientInvoices,
   groups,
   prices,
-  parser,
 });

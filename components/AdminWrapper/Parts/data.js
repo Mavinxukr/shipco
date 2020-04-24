@@ -87,3 +87,11 @@ export const statusSelect = [
   },
 ];
 
+export const print = [
+  { name: 'Catalog number', id: 'parts.catalog_number' },
+  { name: 'Name', id: 'parts.name' },
+  { name: 'Auto', id: 'parts.auto' },
+  { name: 'Comment', id: 'parts.comment' },
+  { name: 'Quality', id: 'parts.quality' },
+  { name: 'Status', id: 'parts.status' },
+];

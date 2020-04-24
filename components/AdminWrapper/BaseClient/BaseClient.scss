@@ -142,3 +142,27 @@ form .flex {
   width: 100%;
   overflow: auto;
 }
+
+.columnSelect {
+
+  & > div {
+    flex-direction: column;
+
+    label {
+      width: 100%;
+      margin: 10px;
+    }
+
+    div + div {
+      left: 0;
+      top: 80px;
+      max-height: 133px;
+    }
+  }
+}
+
+.heightPopup {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  overflow: hidden;
+}

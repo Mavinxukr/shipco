@@ -109,7 +109,7 @@ const SubHeader = ({
                 activeClassName={styles.active}
                 href="/auto-admin/invoices"
               >
-                <a className={styles.menuLink} href="/">
+                <a className={styles.menuLink}>
                   Invoice
                   <span className={styles.dotActive} />
                 </a>

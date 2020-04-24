@@ -24,7 +24,7 @@ import Popup from '../../Popup/Popup';
 import MainLayout from '../../Layout/Global/Global';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
-import { columns } from './data';
+import { columns, print } from './data';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
 import {
@@ -42,6 +42,8 @@ import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './BaseClient.scss';
 import { stateOptions } from '../../Wrapper/ProfileSettings/data';
 import Loader from '../../Loader/Loader';
+import MultiSelect from '../../Multi/Multi';
+import { printData, getIdsArr } from '../../../utils/helpers';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -79,6 +81,9 @@ const BaseClient = () => {
   const router = useRouter();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [printPopup, setPrintPopup] = useState(false);
+  const [selected, setSelected] = useState([]);
+
   const [image, setImage] = useState('/images/no-preview-available.png');
 
   const dispatch = useDispatch();
@@ -116,6 +121,19 @@ const BaseClient = () => {
       ),
     );
     setIsPopupOpen(false);
+  };
+
+  const onSubmitPrint = () => {
+    const idsArr = getIdsArr(selected);
+    printData({
+      params: {
+        fields: idsArr,
+      },
+      table: 'base_clients',
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
+    });
   };
 
   return (
@@ -170,7 +188,12 @@ const BaseClient = () => {
             </Button>
           </div>
           <div className={styles.groupBtn}>
-            <Button customBtn={styles.rightBtn}>Print</Button>
+            <Button
+              customBtn={styles.rightBtn}
+              onClick={() => setPrintPopup(true)}
+            >
+              Print
+            </Button>
             <Button customBtn={styles.rightBtn}>Import</Button>
           </div>
         </div>
@@ -334,6 +357,36 @@ const BaseClient = () => {
                     disabled={submitting || invalid}
                   >
                     ADD New Client
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
+      {printPopup && (
+        <Popup
+          customPopup={styles.heightPopup}
+          setIsPopupOpen={setPrintPopup}
+          title="Print"
+        >
+          <Form
+            onSubmit={onSubmitPrint}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.columnSelect}>
+                  <MultiSelect
+                    options={print}
+                    setSelected={setSelected}
+                    value={selected}
+                    label="Select the fields Print"
+                  />
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Submit
                   </Button>
                 </div>
               </form>

@@ -102,3 +102,13 @@ export const columns = [
     ],
   },
 ];
+
+export const print = [
+  { name: 'Date', id: 'invoices.created_at' },
+  { name: 'Id', id: 'invoices.id' },
+  { name: 'Auto', id: 'invoices.name_car' },
+  { name: 'Total', id: 'invoices.total_price' },
+  { name: 'Paid', id: 'invoices.paid_price' },
+  { name: 'Outstanding', id: 'invoices.outstanding_price' },
+  { name: 'Status', id: 'invoices.status_shipping' },
+];

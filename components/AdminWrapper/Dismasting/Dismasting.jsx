@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import formatStringByPattern from 'format-string-by-pattern';
 import { useRouter } from 'next/router';
@@ -17,14 +17,20 @@ import CustomTable from '../../CustomTable/CustomTable';
 import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CarInformation from '../../CarInformation/CarInformation';
-import { stateStatus, status } from './data';
+import { stateStatus, status, print } from './data';
 import styles from './Dismasting.scss';
 import Loader from '../../Loader/Loader';
 import { updateShipping } from '../../../redux/actions/shipping';
 import { renderSelect, renderInput } from '../../../utils/renderInputs';
+import { printData, getIdsArr } from '../../../utils/helpers';
+import Popup from '../../Popup/Popup';
+import MultiSelect from '../../Multi/Multi';
 
 const Dismasting = () => {
   const router = useRouter();
+
+  const [printPopup, setPrintPopup] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const dismanting = useSelector(dismantingDataSelector);
   const isDataReceived = useSelector(dismantingDataReceivedSelector);
@@ -97,6 +103,19 @@ const Dismasting = () => {
   }));
   const newMakes = [allMakes, ...makeArr];
 
+  const onSubmitPrint = () => {
+    const idsArr = getIdsArr(selected);
+    printData({
+      params: {
+        fields: idsArr,
+      },
+      table: 'dismantings',
+      selected: idsArr,
+      setSelected,
+      setPrintPopup,
+    });
+  };
+
   return (
     <MainLayout newLink admin>
       <SubHeader
@@ -117,6 +136,15 @@ const Dismasting = () => {
         }}
       />
       <div className={styles.container}>
+        <div className={styles.flex}>
+          <h4 className={styles.title}>Dismantings</h4>
+          <Button
+            customBtn={styles.rightBtn}
+            onClick={() => setPrintPopup(true)}
+          >
+            Print
+          </Button>
+        </div>
         <div className={styles.flex}>
           <Form
             onSubmit={onSubmit}
@@ -222,6 +250,36 @@ const Dismasting = () => {
           </CustomTable>
         )}
       </div>
+      {printPopup && (
+        <Popup
+          customPopup={styles.heightPopup}
+          setIsPopupOpen={setPrintPopup}
+          title="Print"
+        >
+          <Form
+            onSubmit={onSubmitPrint}
+            render={({ handleSubmit, invalid, submitting }) => (
+              <form onSubmit={handleSubmit}>
+                <div className={styles.columnSelect}>
+                  <MultiSelect
+                    options={print}
+                    setSelected={setSelected}
+                    value={selected}
+                    label="Select the fields Print"
+                  />
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={submitting || invalid}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            )}
+          />
+        </Popup>
+      )}
     </MainLayout>
   );
 };
