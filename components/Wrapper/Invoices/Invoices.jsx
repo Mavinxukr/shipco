@@ -104,10 +104,10 @@ const Invoices = () => {
         <div className={styles.flex}>
           <h3 className={styles.title}>Invoices</h3>
           <div className={styles.rightBlock}>
-            <Button customBtn={styles.filterText}>
-              <IconFilter className={styles.filterIcon} />
-              Filter
-            </Button>
+            {/*<Button customBtn={styles.filterText}>*/}
+            {/*  <IconFilter className={styles.filterIcon} />*/}
+            {/*  Filter*/}
+            {/*</Button>*/}
             <Search
               onClick={() => {
                 router.push({

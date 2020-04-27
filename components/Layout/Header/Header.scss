@@ -85,12 +85,17 @@
 
 .logo {
   @include styleForText(48px, $fontMain, $white);
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+  }
 }
 
 .bottomLanguages {
   display: flex;
   color: $white;
   position: relative;
+  margin-right: 20px;
 }
 
 .bottomLanguagesIcon {
@@ -233,4 +238,73 @@
   margin: 20px 30px;
   height: 40px;
   text-transform: uppercase;
+}
+
+.flexBtn {
+  display: flex;
+
+  @media screen and (max-width: 1180px) {
+    a {
+      padding-left: 40px;
+    }
+  }
+}
+
+.menuBtn {
+  padding: 10px;
+  margin: 0 15px 0 0;
+  height: 40px;
+  display: none;
+
+  @media screen and (max-width: 1180px) {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    z-index: 20;
+  }
+
+  @media screen and (max-width: 768px) {
+    top: 8px;
+  }
+}
+
+.burger {
+  width: 30px;
+  height: 30px;
+}
+
+.menuItems {
+  @media screen and (max-width: 1180px) {
+    display: none;
+  }
+}
+
+.openMenu {
+  display: block;
+  position: absolute;
+  width: 320px;
+  height: 100vh;
+  top: 50px;
+  left: 0;
+  background: $colorBackground;
+  z-index: 9;
+
+  @media screen and (min-width: 768px) {
+    top: 80px;
+  }
+
+  .menuItems {
+    display: grid;
+    padding-top: 50px;
+
+    .menuItem {
+      margin: 10px;
+    }
+  }
+}
+
+.rigthItemsHeader {
+  display: flex;
+  align-items: center;
 }

@@ -10,6 +10,10 @@
   margin-left: 15px;
   height: max-content;
 
+  @media screen and (max-width: 1120px) {
+    margin-left: 0;
+  }
+
   span {
     text-transform: capitalize;
   }

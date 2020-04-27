@@ -19,16 +19,26 @@
   & > div {
     margin-top: 20px;
   }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .secondBlock {
   max-width: 309px;
   margin-left: 40px;
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+    margin-left: 0;
+  }
 }
 
 .flex {
   display: flex;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .firstLabel {
@@ -44,6 +54,10 @@
   > .rowSelect {
     margin: 0;
   }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 
 .labelSelect {
@@ -57,12 +71,20 @@
   flex-direction: row;
   align-items: center;
   max-width: 309px;
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 
 .firstFlexInput {
   flex-direction: row;
   align-items: center;
   max-width: 325px;
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 
 .customLabel {
@@ -77,14 +99,26 @@
 
 .secondLabel {
   margin-right: 34px;
+
+  @media screen and (max-width: 768px) {
+    margin-right: 15px;
+  }
 }
 
 .lastColumn {
   margin-left: 40px;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
+  }
 }
 
 .labelContainer {
   margin-right: 57px;
+
+  @media screen and (max-width: 768px) {
+    margin-right: 15px;
+  }
 }
 
 .btnSubmit {
@@ -99,6 +133,10 @@
 
   &:hover {
     background: $colorBackgroundHover;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
   }
 }
 

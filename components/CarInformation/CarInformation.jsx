@@ -9,8 +9,8 @@ import { updateDismanting } from '../../redux/actions/dismanting';
 import CustomStepper from '../CustomStepper/CustomStepper';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import IconEdit from '../../assets/svg/edit.svg';
-import styles from './CarInformation.scss';
 import Popup from '../Popup/Popup';
+import styles from './CarInformation.scss';
 import { required } from '../../utils/validation';
 
 const arrTypes = [
@@ -220,7 +220,7 @@ const CarInformation = ({
         </Button>
       </div>
       {isCommentPopupOpen && (
-        <Popup title="Adding notes" setIsPopupOpen={setIsCommentPopupOpen}>
+        <Popup customPopup={styles.popupDamage} title="Adding notes" setIsPopupOpen={setIsCommentPopupOpen}>
           <Form
             onSubmit={onSubmit}
             render={({
@@ -260,7 +260,7 @@ const CarInformation = ({
         </Popup>
       )}
       {isHistoryPopupOpen && (
-        <Popup title="History notes" setIsPopupOpen={setIsHistoryPopupOpen}>
+        <Popup customPopup={styles.popupDamage} title="History notes" setIsPopupOpen={setIsHistoryPopupOpen}>
           {item.notes.length === 0 ? (
             <p className={styles.noComment}>Not Comments</p>
           ) : (
@@ -285,6 +285,7 @@ CarInformation.propTypes = {
   status: PropTypes.bool,
   admin: PropTypes.bool,
   item: PropTypes.object,
+  router: PropTypes.object,
   updateShipping: PropTypes.func,
 };
 

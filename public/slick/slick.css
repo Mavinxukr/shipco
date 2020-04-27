@@ -69,6 +69,13 @@
   height: 100%;
   min-height: 1px;
 }
+
+@media (max-width: 768px) {
+  .slide {
+    margin-right: 18px;
+  }
+}
+
 [dir='rtl'] .slide {
   float: right;
 }
@@ -116,7 +123,7 @@
 }
 
 .dots {
-  display: flex!important;
+  display: flex !important;
   position: absolute;
   bottom: -40px;
   left: 50%;
@@ -134,7 +141,7 @@
 }
 
 .thumb .active img {
-  border: 2px solid #D73E3E;
+  border: 2px solid #d73e3e;
 }
 
 .thumb li {

@@ -67,6 +67,7 @@ const Home = () => {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const router = useRouter();
 
@@ -93,14 +94,27 @@ const Home = () => {
     prevArrow: <SamplePrevArrow index={index} />,
   };
 
+  const navClass = cx(styles.menuItems, {
+    [styles.openMenu]: isMenuOpen,
+  });
+
   return (
     <>
       <header className={styles.header}>
         <div className={cx(styles.container, styles.containerHeader)}>
-          <a href="/">
-            <Image src="/images/Shipco.png" alt="logo" />
-          </a>
-          <nav className={styles.menuItems}>
+          <div className={styles.flexBtn}>
+            <Button
+              type="button"
+              customBtn={styles.menu}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <IconMenu className={styles.burger} />
+            </Button>
+            <a href="/">
+              <Image src="/images/Shipco.png" alt="logo" />
+            </a>
+          </div>
+          <nav className={navClass}>
             <ul className={styles.headerMenuItems}>
               <li className={styles.headerMenuItem}>
                 <a className={styles.headerMenuLink} href="/">
@@ -129,18 +143,13 @@ const Home = () => {
               </li>
             </ul>
           </nav>
-          <div className={styles.flexBtn}>
-            <Button
-              onClick={() => setIsLoginPopupOpen(true)}
-              customBtn={styles.btnLogin}
-              type="button"
-            >
-              Login
-            </Button>
-            <Button type="button" customBtn={styles.menu}>
-              <IconMenu className={styles.burger} />
-            </Button>
-          </div>
+          <Button
+            onClick={() => setIsLoginPopupOpen(true)}
+            customBtn={styles.btnLogin}
+            type="button"
+          >
+            Login
+          </Button>
         </div>
         <h1 className={styles.headerTitle}>
           The{' '}
