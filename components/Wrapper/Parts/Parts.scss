@@ -17,8 +17,8 @@
 }
 
 .filterText {
-  color: $colorBackground;
-  background: $white;
+  color: $colorBackground!important;
+  background: $white!important;
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -37,14 +37,14 @@
 }
 
 .btnStatus {
-  background: transparent;
-  color: $colorBackground;
+  background: transparent!important;
+  color: $colorBackground!important;
   text-transform: uppercase;
   margin: 10px 0;
 }
 
 .activeStatus {
-  color: $colorContent;
+  color: $colorContent!important;
 }
 
 .notFound {
@@ -63,8 +63,8 @@
 }
 
 .btnIcon {
-  background: $white;
-  color: $colorBackground;
+  background: $white!important;
+  color: $colorBackground!important;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -115,7 +115,7 @@
 }
 
 .actionsButton {
-  background: transparent;
+  background: transparent!important;
   width: 28px;
   height: 28px;
   margin-right: 30px;
@@ -126,7 +126,7 @@
 }
 
 .background {
-  background: transparent;
+  background: transparent!important;
   margin-right: 18px;
 }
 
@@ -235,7 +235,7 @@
 }
 
 .colorDec {
-  color: $colorBackground;
+  color: $colorBackground!important;
 }
 
 .disabled {
