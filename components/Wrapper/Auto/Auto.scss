@@ -48,7 +48,7 @@
 .rowSelect {
   display: flex;
   max-width: 309px;
-  flex-direction: row;
+  flex-direction: row!important;
   align-items: center;
 
   & > .rowSelect {
@@ -61,8 +61,8 @@
 }
 
 .labelSelect {
-  color: $colorTable;
-  margin: 0 15px 0 0;
+  color: $colorTable!important;
+  margin: 0 15px 0 0!important;
   white-space: nowrap;
   position: relative;
 }
@@ -78,7 +78,7 @@
 }
 
 .firstFlexInput {
-  flex-direction: row;
+  flex-direction: row!important;
   align-items: center;
   max-width: 325px;
 
@@ -88,9 +88,9 @@
 }
 
 .customLabel {
-  color: $colorTable;
-  margin: 0 15px 0 0;
-  min-width: auto;
+  color: $colorTable!important;
+  margin: 0 15px 0 0!important;
+  min-width: auto!important;
 }
 
 .customWidthInput {
@@ -98,10 +98,10 @@
 }
 
 .secondLabel {
-  margin-right: 34px;
+  margin-right: 34px!important;
 
   @media screen and (max-width: 768px) {
-    margin-right: 15px;
+    margin-right: 15px!important;
   }
 }
 

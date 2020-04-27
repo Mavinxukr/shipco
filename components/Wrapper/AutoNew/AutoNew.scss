@@ -48,8 +48,8 @@
 }
 
 .link {
-  background: transparent;
-  color: $colorBackground;
+  background: transparent!important;
+  color: $colorBackground!important;
   margin-right: 52px;
   cursor: pointer;
   font-size: 16px;
@@ -131,7 +131,7 @@
   text-transform: uppercase;
 
   a {
-    color: $white;
+    color: $white!important;
     margin: 0;
   }
 }
