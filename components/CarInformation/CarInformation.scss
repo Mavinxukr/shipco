@@ -79,8 +79,8 @@
 }
 
 .colorText {
-  color: $colorBackground;
-  background: transparent;
+  color: $colorBackground!important;
+  background: transparent!important;
   text-align: left;
   font-size: 16px;
 }
