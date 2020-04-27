@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { usePagination, useRowSelect, useTable } from 'react-table';
 import { useRouter } from 'next/router';
+import styles from './Auto.scss';
 import { getAutoClient } from '../../../redux/actions/autoClient';
 import {
   autoClientDataSelector,
@@ -16,7 +17,6 @@ import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
-import styles from './Auto.scss';
 import Loader from '../../Loader/Loader';
 
 const Auto = () => {
