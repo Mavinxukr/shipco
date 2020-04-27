@@ -19,7 +19,10 @@ import {
 import IconEye from '../../../assets/svg/eye.svg';
 import { stateOptions } from './data';
 import styles from './ProfileSettings.scss';
-import { currentUserDataSelector, isAuthSelector } from '../../../utils/selectors';
+import {
+  currentUserDataSelector,
+  isAuthSelector,
+} from '../../../utils/selectors';
 import { editCurrentUser } from '../../../redux/actions/currentUser';
 
 const ProfileSettings = () => {
@@ -40,12 +43,17 @@ const ProfileSettings = () => {
   }
 
   const onSubmit = (values) => {
-    dispatch(editCurrentUser({}, {
-      ...values,
-      country: values.country && values.country.label,
-      city: values.city && values.city.label,
-      image: _.isObject(image) ? image : null,
-    }));
+    dispatch(
+      editCurrentUser(
+        {},
+        {
+          ...values,
+          country: values.country && values.country.label,
+          city: values.city && values.city.label,
+          image: _.isObject(image) ? image : null,
+        },
+      ),
+    );
   };
 
   return (
@@ -57,15 +65,18 @@ const ProfileSettings = () => {
           validate={(values) => {
             const errors = {};
             if (values.password_confirmation !== values.password) {
-              errors.password_confirmation = 'The password was entered incorrectly';
+              errors.password_confirmation =
+                'The password was entered incorrectly';
             }
             return errors;
           }}
-          render={({
-            handleSubmit, submitting, invalid,
-          }) => (
+          render={({ handleSubmit, submitting, invalid }) => (
             <form onSubmit={handleSubmit} className={styles.form}>
-              <ImageUpload customImageUpload={styles.heightBlock} image={image} setImage={setImage} />
+              <ImageUpload
+                customImageUpload={styles.heightBlock}
+                image={image}
+                setImage={setImage}
+              />
               <div className={styles.flex}>
                 <div>
                   <Field
@@ -76,6 +87,7 @@ const ProfileSettings = () => {
                   >
                     {renderInput({
                       label: 'Name',
+                      classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
                   <Field
@@ -83,7 +95,10 @@ const ProfileSettings = () => {
                     type="text"
                     defaultValue={userData.username || ''}
                   >
-                    {renderInput({ label: 'Username' })}
+                    {renderInput({
+                      label: 'Username',
+                      classNameWrapper: styles.mediaFullWidth,
+                    })}
                   </Field>
                   <Field
                     name="email"
@@ -91,7 +106,10 @@ const ProfileSettings = () => {
                     type="email"
                     defaultValue={userData.email || ''}
                   >
-                    {renderInput({ label: 'E-mail adress' })}
+                    {renderInput({
+                      label: 'E-mail adress',
+                      classNameWrapper: styles.mediaFullWidth,
+                    })}
                   </Field>
                   <div className={styles.password}>
                     <Field
@@ -102,23 +120,20 @@ const ProfileSettings = () => {
                         label: 'Old password',
                         icon: <IconEye />,
                         classNameWrapperForIcon: styles.showPassword,
+                        classNameWrapper: styles.mediaFullWidth,
                         onClickForIcon: () => setIsChangeType(!isChangeType),
                       })}
                     </Field>
-                    <Field
-                      name="password"
-                      type="password"
-                    >
+                    <Field name="password" type="password">
                       {renderInput({
                         label: 'New password',
+                        classNameWrapper: styles.mediaFullWidth,
                       })}
                     </Field>
-                    <Field
-                      name="password_confirmation"
-                      type="password"
-                    >
+                    <Field name="password_confirmation" type="password">
                       {renderInput({
                         label: 'Confirm password',
+                        classNameWrapper: styles.mediaFullWidth,
                       })}
                     </Field>
                   </div>
@@ -131,7 +146,10 @@ const ProfileSettings = () => {
                     parse={formatStringByPattern('+9-9999-999-99-99')}
                     defaultValue={userData.phone || ''}
                   >
-                    {renderInput({ label: 'Phone number' })}
+                    {renderInput({
+                      label: 'Phone number',
+                      classNameWrapper: styles.mediaFullWidth,
+                    })}
                   </Field>
                   <Field
                     name="country"
@@ -154,14 +172,20 @@ const ProfileSettings = () => {
                     type="text"
                     defaultValue={userData.zip || ''}
                   >
-                    {renderInput({ label: 'Zip' })}
+                    {renderInput({
+                      label: 'Zip',
+                      classNameWrapper: styles.mediaFullWidth,
+                    })}
                   </Field>
                   <Field
                     name="address"
                     type="text"
                     defaultValue={userData.address || ''}
                   >
-                    {renderInput({ label: 'Adress' })}
+                    {renderInput({
+                      label: 'Adress',
+                      classNameWrapper: styles.mediaFullWidth,
+                    })}
                   </Field>
                   <Field
                     name="card_number"
@@ -170,7 +194,10 @@ const ProfileSettings = () => {
                     parse={formatStringByPattern('9999-9999-9999-9999')}
                     defaultValue={userData.card_number || ''}
                   >
-                    {renderInput({ label: 'Card number' })}
+                    {renderInput({
+                      label: 'Card number',
+                      classNameWrapper: styles.mediaFullWidth,
+                    })}
                   </Field>
                 </div>
                 <div className={styles.submit}>

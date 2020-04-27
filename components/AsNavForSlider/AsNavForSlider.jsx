@@ -1,30 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
+import cx from 'classnames';
 import Button from '../Button/Button';
 import '../../public/slick/slick.css';
 import IconArrow from '../../assets/svg/Group (6).svg';
 import styles from './AsNavForSlider.scss';
-import cx from 'classnames';
 
-const SampleNextArrow = ({ onClick, index, sliderImages }) => (
-  <Button
-    type="button"
-    onClick={onClick}
-    className={styles.ArrowR}
-    disabled={index === sliderImages - 1}
-  >
+const SampleNextArrow = ({ onClick }) => (
+  <Button type="button" onClick={onClick} className={styles.ArrowR}>
     <IconArrow />
   </Button>
 );
 
-const SamplePrevArrow = ({ onClick, index }) => (
-  <Button
-    type="button"
-    disabled={index === 0}
-    onClick={onClick}
-    className={styles.ArrowL}
-  >
+const SamplePrevArrow = ({ onClick }) => (
+  <Button type="button" onClick={onClick} className={styles.ArrowL}>
     <IconArrow />
   </Button>
 );
@@ -36,7 +26,7 @@ const AsNavForSlider = ({ sliderImages }) => {
 
   const settings = {
     // dots: true,
-    infinite: false,
+    infinite: true,
     beforeChange: (param, param2) => setIndex(param2),
     nextArrow: (
       <SampleNextArrow

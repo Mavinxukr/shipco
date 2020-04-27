@@ -42,6 +42,10 @@
 .accordion {
   padding-left: 48px !important;
   padding-right: 72px !important;
+
+  @media screen and (max-width: 768px) {
+    padding: 0 15px!important;
+  }
 }
 
 .accordionWrapper {
@@ -130,6 +134,10 @@
   padding-bottom: 24px;
   margin-left: 48px;
   margin-right: 72px;
+
+  @media screen and (max-width: 768px) {
+    margin: 0 15px;
+  }
 }
 
 .accordionContentItemWrapperBorder {
@@ -144,6 +152,10 @@
 
 .accordionContentTextAfter{
   margin-right: 100px;
+
+  @media screen and (max-width: 768px) {
+    margin-right: 20px;
+  }
 
   &::after {
     content: "";
@@ -162,6 +174,10 @@
 .accordionContentTime {
   @include styleForText(14px);
   white-space: nowrap;
+
+  @media screen and (max-width: 768px) {
+   display: none;
+  }
 }
 
 .arrowIcon {

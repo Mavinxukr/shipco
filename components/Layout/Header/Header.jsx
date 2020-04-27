@@ -26,9 +26,12 @@ import styles from './Header.scss';
 import { getCurrentUser } from '../../../redux/actions/currentUser';
 import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
 import { storeShipping } from '../../../redux/actions/shipping';
+import IconMenu from '../../../assets/svg/menuWhite.svg';
 
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const classNameForOpenContainer = cx(styles.menuItem, {
     [styles.activePopup]: isOpenContainerPanel,
   });
@@ -56,6 +59,10 @@ const Header = ({ newLink, admin }) => {
     [styles.active]: router.pathname.split('/')[1] === 'auto',
   });
 
+  const navClass = cx(styles.menu, {
+    [styles.openMenu]: isMenuOpen,
+  });
+
   return (
     <header className={styles.header}>
       <div className={styles.top}>
@@ -75,10 +82,19 @@ const Header = ({ newLink, admin }) => {
         </div>
       </div>
       <div className={styles.bottom}>
-        <a href={admin ? '/base-client' : '/overview'}>
-          <h1 className={styles.logo}>Shipco</h1>
-        </a>
-        <nav className={styles.menu}>
+        <div className={styles.flexBtn}>
+          <Button
+            type="button"
+            customBtn={styles.menuBtn}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <IconMenu className={styles.burger} />
+          </Button>
+          <a href={admin ? '/base-client' : '/overview'}>
+            <h1 className={styles.logo}>Shipco</h1>
+          </a>
+        </div>
+        <nav className={navClass}>
           {admin ? (
             <ul className={cx(styles.menuItems, styles.adminMenu)}>
               <li className={styles.menuItem}>
@@ -251,35 +267,38 @@ const Header = ({ newLink, admin }) => {
             </ul>
           )}
         </nav>
-        {admin ? null : (
-          <div className={styles.bottomLanguages}>
-            <button type="button" className={styles.bottomLanguagesItem}>
-              Ru
-            </button>{' '}
-            /
-            <button type="button" className={styles.bottomLanguagesItem}>
-              Uk
-            </button>
-            <IconArrow className={styles.bottomLanguagesIcon} />
-          </div>
-        )}
-
-        <div className={styles.bottomIconsItems}>
-          {!admin && (
-            <Link href="/notification">
+        <div className={styles.rigthItemsHeader}>
+          {admin ? null : (
+            <div className={styles.bottomLanguages}>
+              <button type="button" className={styles.bottomLanguagesItem}>
+                Ru
+              </button>{' '}
+              /
+              <button type="button" className={styles.bottomLanguagesItem}>
+                Uk
+              </button>
+              <IconArrow className={styles.bottomLanguagesIcon} />
+            </div>
+          )}
+          <div className={styles.bottomIconsItems}>
+            {!admin && (
+              <Link href="/notification">
+                <a className={styles.bottomIconsLink}>
+                  <IconBell />
+                  {user && user.new_notification > 0 && (
+                    <span className={styles.count}>
+                      {user.new_notification}
+                    </span>
+                  )}
+                </a>
+              </Link>
+            )}
+            <Link href={admin ? '/' : '/profile-settings'}>
               <a className={styles.bottomIconsLink}>
-                <IconBell />
-                {user && user.new_notification > 0 && (
-                  <span className={styles.count}>{user.new_notification}</span>
-                )}
+                <IconUser />
               </a>
             </Link>
-          )}
-          <Link href={admin ? '/' : '/profile-settings'}>
-            <a className={styles.bottomIconsLink}>
-              <IconUser />
-            </a>
-          </Link>
+          </div>
         </div>
       </div>
     </header>

@@ -22,10 +22,19 @@
   @media (max-width: 1600px) {
     padding: 0 80px 30px;
   }
+
+  @media screen and (max-width: 850px) {
+    padding: 0 20px 10px;
+  }
 }
 
 .heightBlock{
   min-height: 600px;
+
+  @media (max-width: 850px) {
+    text-align: center;
+    min-height: auto;
+  }
 }
 
 .column {
@@ -36,6 +45,16 @@
 
   @media (max-width: 1600px) {
     width: 300px;
+  }
+
+  @media screen and (max-width: 850px) {
+    width: 100%;
+  }
+}
+
+.mediaFullWidth {
+  @media screen and (max-width: 850px) {
+    width: 100%;
   }
 }
 
@@ -61,6 +80,14 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 850px) {
+    width: 100%;
+
+    & > div {
+      width: 100%;
+    }
+  }
 }
 
 .submit {

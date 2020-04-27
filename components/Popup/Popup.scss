@@ -12,6 +12,14 @@
   z-index: 999;
   max-height: 97vh;
   overflow-y: auto;
+
+  @media screen and (max-width: 768px) {
+    max-height: 100vh;
+    top: 49%;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
 }
 
 .popupBackground {

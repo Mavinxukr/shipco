@@ -166,10 +166,22 @@
     margin: 0 31px 0 0;
     min-width: 155px;
   }
+
+  @media screen and (max-width: 606px) {
+    flex-direction: column;
+
+    .label {
+      margin: 10px 0;
+    }
+  }
 }
 
 .widthInput {
   width: 360px;
+
+  @media screen and (max-width: 606px) {
+   width: 100%;
+  }
 }
 
 .btnSubmit {
@@ -182,6 +194,11 @@
 
   &:hover {
     background: $colorBackgroundHover;
+  }
+
+  @media screen and (max-width: 606px) {
+    width: 100%;
+    margin: 10px 0;
   }
 }
 
@@ -235,6 +252,10 @@
 
 .paddingBottom {
   padding-bottom: 60px;
+
+  @media screen and (max-width: 768px) {
+    height: auto;
+  }
 }
 
 .status {

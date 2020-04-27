@@ -9,15 +9,30 @@
   color: $colorTable;
   font-weight: normal;
   font-size: 12px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    padding: 18px 8px 12px;
+  }
 }
 
 .margitRight {
   margin-right: 15px;
+
+  @media (max-width: 768px) {
+    margin: 15px 0;
+  }
 }
 
 .paginationFlex {
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    & + .paginationFlex {
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .paginationBtn {

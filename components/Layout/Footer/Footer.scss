@@ -5,6 +5,10 @@
   background: $colorBackground;
   padding-top: 61px;
   padding-bottom: 19px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 30px;
+  }
 }
 
 .container {
@@ -12,6 +16,14 @@
 
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    div {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
 }
 
 .footerLogo {
@@ -46,6 +58,11 @@
   display: flex;
   justify-content: center;
   margin-top: 50px;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    margin: 15px;
+  }
 }
 
 .footerLink {

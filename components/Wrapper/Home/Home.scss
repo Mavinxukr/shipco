@@ -17,6 +17,10 @@
   text-align: center;
   text-transform: uppercase;
   max-width: 550px;
+
+  @media screen and (max-width: 800px) {
+    font-size: 56px;
+  }
 }
 .headerTitleBg {
   background: $colorBackground;
@@ -67,6 +71,10 @@
   padding-top: 18px;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    align-items: end;
+  }
 }
 
 .infoTitle {
@@ -130,6 +138,10 @@
 .testimonialsIcon {
   margin-right: -35px;
   padding-bottom: 10px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 .contactTitle {
@@ -243,6 +255,10 @@
 .sliderImg {
   width: 40%;
   padding: 30px;
+
+  @media screen and (max-width: 768px) {
+    display: none!important;
+  }
 }
 
 .sliderContainer {
@@ -334,6 +350,10 @@
 
   @media screen and (max-width: 991px) {
     padding: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 10px;
   }
 }
 
@@ -430,17 +450,22 @@
 
 .menu {
   padding: 10px;
-  margin: 0 0 0 15px;
+  margin: 0 15px 0 0;
+  height: 40px;
   display: none;
 
   @media screen and (max-width: 1180px) {
     display: block;
+    position: absolute;
+    top: 17px;
+    left: 20px;
+    z-index: 20;
   }
 }
 
 .burger {
-  width: 29px;
-  height: 29px;
+  width: 20px;
+  height: 20px;
 }
 
 .menuItems {
@@ -451,4 +476,29 @@
 
 .flexBtn {
   display: flex;
+
+  @media screen and (max-width: 1180px) {
+    a {
+      padding-left: 50px;
+    }
+  }
+}
+
+.openMenu {
+  display: block;
+  position: absolute;
+  width: 320px;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: $colorBackground;
+
+  .headerMenuItems {
+    display: grid;
+    padding-top: 50px;
+
+    .headerMenuItem {
+      margin: 20px;
+    }
+  }
 }

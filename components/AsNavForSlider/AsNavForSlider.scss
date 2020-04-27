@@ -14,6 +14,10 @@
   border: 1px solid $colorBorder;
   overflow: hidden;
   height: 294px;
+
+  @media screen and (max-width: 420px) {
+    height: 170px;
+  }
 }
 
 .widthSlider {
@@ -23,6 +27,16 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 550px) {
+    & + .widthSlider div {
+      display: none;
+    }
   }
 }
 
@@ -63,4 +77,11 @@
   position: absolute;
   right: 0;
   top: 120px;
+}
+
+.ArrowL,
+.ArrowR {
+  @media screen and (max-width: 550px) {
+    top: 0;
+  }
 }
