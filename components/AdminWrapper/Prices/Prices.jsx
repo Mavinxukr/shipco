@@ -44,6 +44,8 @@ const Table = ({
 }) => {
   const [isPopupUpdate, setIsPopupUpdate] = useState(false);
   const [itemGroup, setItemGroup] = useState(null);
+  const [priceable, setPriceable] = useState('');
+
 
   const {
     getTableProps,
@@ -109,6 +111,7 @@ const Table = ({
                           customBtn={styles.actionsButton}
                           onClick={() => {
                             setItemGroup(cell.row.original);
+                            setPriceable(cell.row.original.priceable.name);
                             setIsPopupUpdate(true);
                           }}
                         >
@@ -184,6 +187,7 @@ const Table = ({
                     label: 'Priceable type',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                     custonOnChange: (value) => {
+                      setPriceable('');
                       const key =
                         value.label === 'clients' ? 'clients' : 'groups';
                       setPriceableData(prices.additional[key]);
@@ -194,7 +198,7 @@ const Table = ({
                 <Field
                   name="priceable_id"
                   component={renderSelect({
-                    placeholder: itemGroup.priceable.name || '',
+                    placeholder: priceable,
                     label: 'Priceable id',
                     id: 'priceable_id',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
@@ -210,7 +214,11 @@ const Table = ({
                 />
                 <Field
                   name="due_day"
-                  validate={composeValidators(required, mustBeNumber, lengthDueDay)}
+                  validate={composeValidators(
+                    required,
+                    mustBeNumber,
+                    lengthDueDay,
+                  )}
                   type="text"
                   parse={formatStringByPattern('9999-99-99')}
                   defaultValue={itemGroup.due_day || ''}
@@ -410,7 +418,11 @@ const Groups = () => {
                 />
                 <Field
                   name="due_day"
-                  validate={composeValidators(required, mustBeNumber, lengthDueDay)}
+                  validate={composeValidators(
+                    required,
+                    mustBeNumber,
+                    lengthDueDay,
+                  )}
                   type="text"
                   parse={formatStringByPattern('9999-99-99')}
                 >
