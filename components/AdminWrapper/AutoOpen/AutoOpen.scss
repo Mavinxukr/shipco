@@ -14,6 +14,12 @@
   @media screen and (max-width: 1120px) {
     flex-direction: column-reverse;
   }
+
+  @media screen and (min-width: 1121px) {
+    & > div:last-child{
+      max-width: 428px;
+    }
+  }
 }
 
 .widthItems {
@@ -225,8 +231,8 @@ input[type="file"] {
   display: inline-block;
   width: auto;
   margin-right: 20px;
-  background: transparent;
-  color: $colorContent;
+  background: transparent!important;
+  color: $colorContent!important;
   font-size: 16px;
 }
 
@@ -286,10 +292,10 @@ input[type="file"] {
 }
 
 .blackLabel {
-  color: $colorContent;
+  color: $colorContent!important;
   font-size: 16px;
   min-width: 136px;
-  margin: 0 31px 0 0;
+  margin: 0 31px 0 0!important;
 }
 
 .selectFieldRow {
