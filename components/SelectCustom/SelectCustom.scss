@@ -42,6 +42,15 @@
   .blackLabel {
     color: $colorContent;
   }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+
+    .label {
+      margin: 10px 0;
+      width: 100%;
+    }
+  }
 }
 
 .widthFieldRow {

@@ -43,6 +43,15 @@
     color: $colorContent;
     font-size: 14px;
   }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+
+    .label {
+      margin: 10px 0;
+      width: 100%;
+    }
+  }
 }
 
 .widthInputBlock {
