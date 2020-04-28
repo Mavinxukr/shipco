@@ -32,4 +32,6 @@ export const lengthPhone = value => value.length < 17 ? 'Not enough numbers' : '
 
 export const lengthCart = value => value.length < 19 ? 'Not enough numbers' : '';
 
+export const lengthDueDay = value => value.length < 10 ? 'Not enough numbers' : '';
+
 export const composeValidators = (...validators) => value => validators.reduce((acc, current) => acc || current(value), undefined);

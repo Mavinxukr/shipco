@@ -33,7 +33,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            <p>{value[1]}</p>
+            {!value[1] ? <span>-</span> : <p>{value[1]}</p>}
           </>
         ),
       },
@@ -43,7 +43,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            <p>{value[1]}</p>
+            {!value[1] ? <span>-</span> : <p>{value[1]}</p>}
           </>
         ),
       },
@@ -53,7 +53,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => (
           <>
             <p>{value[0]}</p>
-            <p>{value[1]}</p>
+            {!value[1] ? <span>-</span> : <p>{value[1]}</p>}
           </>
         ),
       },
