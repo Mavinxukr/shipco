@@ -141,86 +141,86 @@ const Table = ({
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
+                <Field
+                  name="name"
+                  validate={required}
+                  type="text"
+                  defaultValue={itemGroup.name || ''}
+                >
+                  {renderInput({
+                    label: 'Name',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="price"
+                  validate={composeValidators(required, mustBeNumber)}
+                  type="text"
+                  defaultValue={itemGroup.price || ''}
+                >
+                  {renderInput({
+                    label: 'Price',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
+                <Field
+                  name="cities"
+                  component={renderSelect({
+                    label: 'Cities',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    placeholder: itemGroup.cities[0].name || '',
+                  })}
+                  options={city}
+                />
+                <Field
+                  name="priceable_type"
+                  component={renderSelect({
+                    placeholder: itemGroup.priceable_type || '',
+                    label: 'Priceable type',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    custonOnChange: (value) => {
+                      const key =
+                        value.label === 'clients' ? 'clients' : 'groups';
+                      setPriceableData(prices.additional[key]);
+                    },
+                  })}
+                  options={type}
+                />
+                <Field
+                  name="priceable_id"
+                  component={renderSelect({
+                    placeholder: itemGroup.priceable.name || '',
+                    label: 'Priceable id',
+                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                  })}
+                  options={
+                    (priceableData
+                      && priceableData.map(item => ({
+                        value: item.id,
+                        label: item.name,
+                      })))
+                    || []
+                  }
+                />
+                <Field
+                  name="due_day"
+                  validate={composeValidators(required, mustBeNumber)}
+                  type="text"
+                  parse={formatStringByPattern('9999-99-99')}
+                  defaultValue={itemGroup.due_day || ''}
+                >
+                  {renderInput({
+                    label: 'Due day',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
                 <div className={styles.submitPopup}>
-                  <Field
-                    name="name"
-                    validate={required}
-                    type="text"
-                    defaultValue={itemGroup.name || ''}
-                  >
-                    {renderInput({
-                      label: 'Name',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="price"
-                    validate={composeValidators(required, mustBeNumber)}
-                    type="text"
-                    defaultValue={itemGroup.price || ''}
-                  >
-                    {renderInput({
-                      label: 'Price',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="cities"
-                    component={renderSelect({
-                      label: 'Cities',
-                      classNameWrapper: 'SelectCustom-popupFieldRow',
-                      placeholder: itemGroup.cities[0].name || '',
-                    })}
-                    options={city}
-                  />
-                  <Field
-                    name="priceable_type"
-                    component={renderSelect({
-                      placeholder: itemGroup.priceable_type || '',
-                      label: 'Priceable type',
-                      classNameWrapper: 'SelectCustom-popupFieldRow',
-                      custonOnChange: (value) => {
-                        const key =
-                          value.label === 'clients' ? 'clients' : 'groups';
-                        setPriceableData(prices.additional[key]);
-                      },
-                    })}
-                    options={type}
-                  />
-                  <Field
-                    name="priceable_id"
-                    component={renderSelect({
-                      placeholder: itemGroup.priceable.name || '',
-                      label: 'Priceable id',
-                      classNameWrapper: 'SelectCustom-popupFieldRow',
-                    })}
-                    options={
-                      (priceableData
-                        && priceableData.map(item => ({
-                          value: item.id,
-                          label: item.name,
-                        })))
-                      || []
-                    }
-                  />
-                  <Field
-                    name="due_day"
-                    validate={composeValidators(required, mustBeNumber)}
-                    type="text"
-                    parse={formatStringByPattern('9999-99-99')}
-                    defaultValue={itemGroup.due_day || ''}
-                  >
-                    {renderInput({
-                      label: 'Due day',
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
