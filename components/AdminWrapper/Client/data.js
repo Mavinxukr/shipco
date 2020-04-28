@@ -89,10 +89,10 @@ export const columns = [
             {value ? (
               <>
                 <p>
-                  <span>{value[0]}</span>
+                  <span>$ {value[0]}</span>
                 </p>
                 <p>
-                  <span>{value[1]}</span>
+                  {value[1] && <span>$ {value[1]}</span>}
                 </p>
               </>
             ) : (
@@ -109,10 +109,10 @@ export const columns = [
             {value ? (
               <>
                 <p>
-                  <span>{value[0]}</span>
+                  <span>$ {value[0]}</span>
                 </p>
                 <p>
-                  <span>{value[1]}</span>
+                  {value[1] && <span>$ {value[1]}</span>}
                 </p>
               </>
             ) : (
@@ -124,7 +124,7 @@ export const columns = [
       {
         Header: 'Outstanding',
         accessor: 'invoice.outstanding_price',
-        Cell: ({ cell: { value } }) => <p>{value && <span>{value}</span>}</p>,
+        Cell: ({ cell: { value } }) => <p>{value && <span>$ {value}</span>}</p>,
       },
       {
         Header: 'Due day',

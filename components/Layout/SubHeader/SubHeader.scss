@@ -6,12 +6,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .subHeader {
   background: #efefef;
   padding: 38px 0;
   margin-bottom: 15px;
+
+  @media screen and (max-width: 950px) {
+    nav{
+      margin: 10px 0;
+    }
+  }
 }
 
 .flex {
@@ -32,6 +39,7 @@
 .menuItems {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .menuLink {
@@ -49,6 +57,11 @@
 
   @media screen and (max-width: 1544px){
     margin: 0 19px;
+  }
+
+  @media screen and (max-width: 950px) {
+    margin-left: 0;
+    margin-bottom: 10px;
   }
 
 }

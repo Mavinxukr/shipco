@@ -298,7 +298,7 @@ const BaseClient = () => {
                   component={renderSelect({
                     placeholder: '',
                     label: 'Country',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    classNameWrapper: styles.popupFieldRow,
                   })}
                   options={stateOptions}
                 />
@@ -307,7 +307,7 @@ const BaseClient = () => {
                   validate={required}
                   component={renderSelect({
                     placeholder: '',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    classNameWrapper: styles.popupFieldRow,
                     label: 'City',
                   })}
                   options={stateOptions}
