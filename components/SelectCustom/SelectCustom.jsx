@@ -66,6 +66,7 @@ const SelectCustom = ({
   isRequired,
   custonOnChange,
   defaultInputValue,
+  id,
 }) => (
   <div className={cx(styles.select, classNameWrapper)}>
     <div className={cx(styles.select, classNameWrapper)}>
@@ -73,6 +74,7 @@ const SelectCustom = ({
         <label className={cx(styles.label, classNameLabel)}>{label}</label>
       )}
       <Select
+        id={id}
         value={value}
         onChange={(e) => {
           if (onChange) {
@@ -110,6 +112,7 @@ SelectCustom.propTypes = {
   defaultInputValue: PropTypes.string,
   onChange: PropTypes.func,
   label: PropTypes.string,
+  id: PropTypes.string,
   classNameLabel: PropTypes.string,
   classNameWrapper: PropTypes.string,
   meta: PropTypes.object,

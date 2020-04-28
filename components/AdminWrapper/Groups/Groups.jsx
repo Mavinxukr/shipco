@@ -327,7 +327,10 @@ const Groups = () => {
             <Button
               type="button"
               customBtn={styles.btnIcon}
-              onClick={() => setIsPopupOpen(true)}
+              onClick={() => {
+                setSelected([]);
+                setIsPopupOpen(true);
+              }}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
               Add New Groups

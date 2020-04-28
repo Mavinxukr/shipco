@@ -25,6 +25,7 @@ import {
   composeValidators,
   required,
   mustBeNumber,
+  lengthDueDay,
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
 import Loader from '../../Loader/Loader';
@@ -195,6 +196,7 @@ const Table = ({
                   component={renderSelect({
                     placeholder: itemGroup.priceable.name || '',
                     label: 'Priceable id',
+                    id: 'priceable_id',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                   })}
                   options={
@@ -208,7 +210,7 @@ const Table = ({
                 />
                 <Field
                   name="due_day"
-                  validate={composeValidators(required, mustBeNumber)}
+                  validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                   type="text"
                   parse={formatStringByPattern('9999-99-99')}
                   defaultValue={itemGroup.due_day || ''}
@@ -408,7 +410,7 @@ const Groups = () => {
                 />
                 <Field
                   name="due_day"
-                  validate={composeValidators(required, mustBeNumber)}
+                  validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                   type="text"
                   parse={formatStringByPattern('9999-99-99')}
                 >
