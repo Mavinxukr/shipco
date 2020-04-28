@@ -5,6 +5,11 @@
   color: $colorBackground;
   min-width: 136px;
   margin: 0 31px 0 0;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 10px 0;
+  }
 }
 
 .flexSelect {
@@ -12,6 +17,10 @@
   align-items: center;
   position: relative;
   z-index: 1;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .select {
@@ -27,7 +36,7 @@
   border: 1px solid $colorBorder;
   border-radius: 2px;
 
-  @media screen and (max-width: 430px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
   }
 }
@@ -62,8 +71,10 @@
   border-top: 0;
   width: 360px;
 
-  @media screen and (max-width: 430px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
+    left: 0;
+    top: 82px;
   }
 }
 

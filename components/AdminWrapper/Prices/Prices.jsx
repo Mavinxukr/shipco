@@ -372,7 +372,7 @@ const Groups = () => {
                   component={renderSelect({
                     placeholder: '',
                     label: 'Cities',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    classNameWrapper: styles.popupFieldRow,
                   })}
                   options={city}
                 />
@@ -381,7 +381,7 @@ const Groups = () => {
                   component={renderSelect({
                     placeholder: '',
                     label: 'Priceable type',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    classNameWrapper: styles.popupFieldRow,
                     custonOnChange: (value) => {
                       const key =
                         value.label === 'clients' ? 'clients' : 'groups';
@@ -395,7 +395,7 @@ const Groups = () => {
                   component={renderSelect({
                     placeholder: '',
                     label: 'Priceable id',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    classNameWrapper: styles.popupFieldRow,
                   })}
                   options={
                     (priceableData

@@ -38,6 +38,11 @@
   font-weight: 500;
   font-size: 16px;
 
+  @media screen and (max-width: 600px) {
+    max-width: 200px;
+    min-width: 200px;
+  }
+
   &:before{
     right: 95%;
   }
@@ -48,8 +53,8 @@
 }
 
 .update {
-  background: transparent;
-  color: $colorBackground;
+  background: transparent!important;
+  color: $colorBackground!important;
   display: flex;
   font-weight: 700;
   align-items: center;
@@ -68,8 +73,8 @@
 }
 
 .btn {
-  background: $colorInput;
-  color: $colorContent;
+  background: $colorInput!important;
+  color: $colorContent!important;
   border-top: 1px solid #e9e9e9;
   padding: 18px 30px;
   font-size: 14px;
@@ -84,8 +89,8 @@
 }
 
 .activeStatus {
-  color: $colorBackground;
-  background: $white;
+  color: $colorBackground!important;
+  background: $white!important;
 
   .circle {
     opacity: 1;

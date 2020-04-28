@@ -231,7 +231,7 @@ const Table = ({
       )}
       {isPopupDelete && (
         <Popup setIsPopupOpen={setIsPopupDelete} title="Delete this group">
-          <p>You sure that you want to delete this group</p>
+          <p>Are you sure that you want to delete this group?</p>
           <div className={styles.groupPopupBtn}>
             <Button
               type="button"

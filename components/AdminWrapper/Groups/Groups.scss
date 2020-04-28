@@ -38,8 +38,8 @@
 }
 
 .btnIcon {
-  background: $white;
-  color: $colorBackground;
+  background: $white!important;
+  color: $colorBackground!important;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@
   font-weight: 500;
   font-size: 18px;
   color: $white;
-  background: $colorBorder;
+  background: $colorBorder!important;
   padding: 10px;
   min-width: 131px;
   margin-left: 20px;
@@ -100,14 +100,14 @@
 .submitPopup {
   padding-left: 167px;
   width: 100%;
-}
 
-.widthInputBlock {
-  width: 360px;
+  @media screen and (max-width: 768px) {
+    padding-left: 0;
+  }
 }
 
 .actionsButton {
-  background: transparent;
+  background: transparent!important;
   width: 28px;
   height: 28px;
   margin-right: 30px;
@@ -123,13 +123,32 @@
 }
 
 .popupFieldRow {
-  flex-direction: row;
+  flex-direction: row!important;
   align-items: center;
   padding: 10px 0;
-  width: auto;
+  width: 100%!important;
 
-  .label {
-    margin: 0 31px 0 0;
+  label {
+    margin: 0 31px 0 0!important;
+    min-width: 136px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column !important;
+
+    label {
+      margin: 10px 0 !important;
+      width: 100% !important;
+      min-width: 100%;
+    }
+  }
+}
+
+.widthInputBlock {
+  width: 360px!important;
+
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
   }
 }
 
@@ -174,6 +193,7 @@
       left: 0;
       top: 80px;
       max-height: 133px;
+      min-height: 8px;
     }
   }
 }
