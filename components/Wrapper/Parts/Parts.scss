@@ -156,22 +156,22 @@
 }
 
 .popupFieldRow {
-  display: flex;
-  flex-direction: row;
+  display: flex!important;
+  flex-direction: row!important;
   align-items: baseline;
   padding: 10px 0;
-  width: 100%;
+  width: 100%!important;
 
   .label {
-    margin: 0 31px 0 0;
-    min-width: 155px;
+    margin: 0 31px 0 0!important;
+    min-width: 155px!important;
   }
 
   @media screen and (max-width: 606px) {
-    flex-direction: column;
+    flex-direction: column!important;
 
     .label {
-      margin: 10px 0;
+      margin: 10px 0!important;
     }
   }
 }

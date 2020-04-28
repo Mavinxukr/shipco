@@ -130,8 +130,6 @@ const AutoOpen = () => {
   const imagesData = getArr(arrTypes, auto.data.document);
   const idAuto = auto.data.id;
 
-  console.log('stepIndex', stepIndex);
-
   const onSubmit = async (values) => {
     dispatch(
       updateAuto(
@@ -189,8 +187,6 @@ const AutoOpen = () => {
     setNewArrPicsDamage([]);
     setNewArrPicsActions([]);
   };
-
-  console.log('stepIndex', stepIndex);
 
   return (
     <MainLayout admin>
@@ -491,6 +487,15 @@ const AutoOpen = () => {
                       ))}
                     </>
                   </InformationBlock>
+                  <div className={styles.submitMob}>
+                    <Button
+                      onClick={handleSubmit}
+                      customBtn={styles.btnSubmit}
+                      type="submit"
+                    >
+                      save
+                    </Button>
+                  </div>
                   <InformationBlock>
                     <>
                       {damage.map(item => (

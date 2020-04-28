@@ -36,8 +36,8 @@ const Previews = ({
     },
   });
 
-  const handleRemoveItem = (link) => {
-    setArrPics(arrPics.filter(item => item.link || item.image !== link));
+  const handleRemoveItem = (link, image) => {
+    setArrPics(arrPics.filter(item => item.link !== link || item.image !== image));
   };
 
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const Previews = ({
           type="button"
           className={styles.removeIcon}
           onClick={() => {
+            handleRemoveItem(pic.link || pic.image);
             if (pic.id && pic.link) {
               dispatch(
                 deleteAuto(
@@ -69,7 +70,6 @@ const Previews = ({
             if (pic.id && pic.image) {
               dispatch(deleteParts({}, { ids: pic.id }, idAuto, true));
             }
-            handleRemoveItem(pic.link || pic.image);
           }}
         >
           <IconRemoveImage />

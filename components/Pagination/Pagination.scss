@@ -41,6 +41,10 @@
   border: 1px solid $colorBorder;
   padding: 9px 10px;
 
+  @media screen and (max-width: 500px) {
+    padding: 5px;
+  }
+
   a {
     color: $colorBackground;
   }
@@ -86,6 +90,10 @@
     background: $white;
     border: 1px solid $colorBorder;
     padding: 8px 10px;
+
+    @media screen and (max-width: 500px) {
+      padding: 4px;
+    }
 
     a {
       color: $colorBackground;

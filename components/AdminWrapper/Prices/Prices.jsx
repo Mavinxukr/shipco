@@ -306,10 +306,6 @@ const Groups = () => {
               Add New Prices
             </Button>
           </div>
-          <div className={styles.groupBtn}>
-            <Button customBtn={styles.rightBtn}>Print</Button>
-            <Button customBtn={styles.rightBtn}>Import</Button>
-          </div>
         </div>
         {prices.data.length !== 0 ? (
           <CustomTable>

@@ -331,7 +331,7 @@ const Client = () => {
                     component={renderSelect({
                       placeholder: '',
                       label: 'Status',
-                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                      classNameWrapper: styles.popupFieldRow,
                     })}
                     options={status}
                   />
@@ -364,7 +364,7 @@ const Client = () => {
                     component={renderSelect({
                       placeholder: '',
                       label: 'Point of loading',
-                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                      classNameWrapper: styles.popupFieldRow,
                     })}
                     options={city}
                   />
@@ -381,7 +381,7 @@ const Client = () => {
                     component={renderSelect({
                       placeholder: '',
                       label: 'Delivery City',
-                      classNameWrapper: 'SelectCustom-popupFieldRow',
+                      classNameWrapper: styles.popupFieldRow,
                     })}
                     options={city}
                   />

@@ -53,4 +53,8 @@
   font-size: 14px;
   font-weight: normal;
   width: 66%;
+
+  @media screen and (max-width: 768px) {
+    width: 88%;
+  }
 }
