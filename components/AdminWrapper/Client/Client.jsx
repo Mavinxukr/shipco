@@ -709,7 +709,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.visibleColumns.push(columns => [
+      hooks.flatColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
