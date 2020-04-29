@@ -210,6 +210,10 @@ input[type="file"] {
 
   &:hover div {
     display: flex;
+
+    @media screen and (max-width: 768px) {
+      min-width: 261px!important;
+    }
   }
 }
 
@@ -273,9 +277,9 @@ input[type="file"] {
 
 .statusPopup[type="radio"]:checked + label:after,
 .statusPopup[type="radio"]:not(:checked) + label:after {
-  top: 50%;
-  left: 90%;
-  transform: translateY(-50%);
+  top: 50%!important;
+  left: 90%!important;
+  transform: translateY(-50%)!important;
 }
 
 .color {

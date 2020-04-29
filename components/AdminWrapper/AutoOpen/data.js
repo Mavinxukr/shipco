@@ -24,14 +24,17 @@ export const status = [
   {
     id: 1,
     text: 'Case closed',
+    textValue: 'case_closed',
   },
   {
     id: 2,
     text: 'Under unvestigation',
+    textValue: 'under_unvestigation',
   },
   {
     id: 3,
     text: 'Compensation given',
+    textValue: 'compensation_given',
   },
 ];
 

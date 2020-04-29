@@ -20,7 +20,7 @@ function* deleteParts({
     if (isImage) {
       const data = {
         ...partsData,
-        data: partsData.data.filter(item => item.id !== id),
+        data: partsData.data.map(item => item.id === id ? response.data.data : item),
       };
       yield put(getPartsSuccess(data));
     } else {
