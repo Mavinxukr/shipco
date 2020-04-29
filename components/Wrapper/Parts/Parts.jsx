@@ -258,7 +258,7 @@ const Parts = () => {
                       });
                       dispatch(
                         getParts({
-                          search: statusFilter.value,
+                          part_status: statusFilter.value,
                         }),
                       );
                     }}
