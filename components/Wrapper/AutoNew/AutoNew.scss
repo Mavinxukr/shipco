@@ -36,7 +36,9 @@
       }
     }
 
-    header + div > div {
+    header + div > div,
+    header + div + div > div,
+    header + div + div + div > div{
       padding: 20px 0!important;
     }
   }
