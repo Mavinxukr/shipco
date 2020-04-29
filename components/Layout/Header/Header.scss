@@ -207,6 +207,7 @@
   @media screen and (max-width: 1180px) {
     left: -5px;
     position: relative;
+    min-width: 200px;
 
     &:before, &:after{
       display: none;
