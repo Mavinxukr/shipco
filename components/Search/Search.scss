@@ -24,6 +24,10 @@
   position: absolute;
   left: 17px;
   top: 9px;
+
+  @media screen and (max-width:768px) {
+    display: none;
+  }
 }
 
 .inputHeight {
