@@ -77,6 +77,12 @@ const Table = ({
     setIsPopupUpdate(false);
   };
 
+  if (isPopupUpdate === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
+
   return (
     <>
       <table {...getTableProps()}>
@@ -315,6 +321,12 @@ const Groups = () => {
       setPrintPopup,
     });
   };
+
+  if (isPopupOpen === true || printPopup === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
 
   return (
     <MainLayout admin>

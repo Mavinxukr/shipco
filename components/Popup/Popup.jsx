@@ -13,7 +13,9 @@ const Popup = ({
       <div className={styles.popupHeader}>
         <h4 className={styles.popupTitle}>
           {title}{' '}
-          {subTitle && <span className={styles.popupSubTitle}>{subTitle}</span>}
+          {subTitle && (
+          <span className={styles.popupSubTitle}>{subTitle}</span>
+          )}
         </h4>
         <button type="button" onClick={() => setIsPopupOpen(false)}>
           <IconClose />
@@ -23,7 +25,6 @@ const Popup = ({
     </div>
   </>
 );
-export default Popup;
 
 Popup.propTypes = {
   subTitle: PropTypes.string,
@@ -32,3 +33,5 @@ Popup.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
 };
+
+export default Popup;

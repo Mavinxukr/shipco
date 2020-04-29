@@ -90,3 +90,10 @@ td {
 tbody tr:nth-child(2n) {
   background: $colorInput;
 }
+
+.overflow {
+  @media screen and (max-width: 768px) {
+    overflow: hidden;
+    height: 100vh;
+  }
+}
