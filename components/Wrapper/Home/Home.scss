@@ -73,7 +73,7 @@
   justify-content: space-between;
 
   @media screen and (max-width: 768px) {
-    align-items: end;
+    align-items: flex-start;
   }
 }
 
