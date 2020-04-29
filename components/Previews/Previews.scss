@@ -21,6 +21,10 @@
   width: 18%;
   height: 89px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    height: auto;
+  }
 }
 
 .thumbInner {
