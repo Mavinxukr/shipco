@@ -221,3 +221,7 @@ th:first-child {
     background: $colorBackgroundHover;
   }
 }
+
+th.documents svg {
+  display: none
+}
