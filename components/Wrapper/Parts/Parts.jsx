@@ -168,7 +168,7 @@ const Parts = () => {
       getClientParts({
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
-        part_status: router.query.status || '',
+        part_status: router.query.part_status || '',
       }),
     );
   }, [router.query]);
