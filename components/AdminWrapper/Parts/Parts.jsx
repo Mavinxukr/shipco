@@ -195,6 +195,12 @@ const Parts = () => {
     }
   }, [updateData]);
 
+  useEffect(() => {
+    if (updateData) {
+      setArrPicsContainer(parts.data.find(item => item.id === updateData.id).images);
+    }
+  }, [parts]);
+
   if (!isDataReceived) {
     return <Loader />;
   }

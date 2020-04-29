@@ -20,7 +20,11 @@ import Radio from '../../Radio/Radio';
 import IconTrash from '../../../assets/svg/Trash.svg';
 import styles from './AutoOpen.scss';
 import {
-  stateOptions, damage, status, stateOptionsDelivery, statusRadio,
+  stateOptions,
+  damage,
+  status,
+  stateOptionsDelivery,
+  statusRadio,
 } from './data';
 import {
   renderInput,
@@ -375,7 +379,12 @@ const AutoOpen = () => {
                       </div>
                       <div className={styles.flexRadio}>
                         <p className={styles.label}>Disassembly</p>
-                        <Field defaultValue={`${Number(auto.data.ship_info.disassembly)}`} name="disassembly">
+                        <Field
+                          defaultValue={`${Number(
+                            auto.data.ship_info.disassembly,
+                          )}`}
+                          name="disassembly"
+                        >
                           {({ input }) => (
                             <>
                               <Radio
@@ -511,7 +520,11 @@ const AutoOpen = () => {
                         <span>Shipping Damage:</span>
                         <div className={styles.position}>
                           <span className={styles.status}>
-                            {values.damage_status || 'Case closed'}
+                            {(values.damage_status
+                              && values.damage_status.split('_').join(' '))
+                              || auto.data.ship_info.damage_status
+                                .split('_')
+                                .join(' ')}
                           </span>
                           <HoverPopup>
                             <Field name="damage_status">
@@ -520,16 +533,16 @@ const AutoOpen = () => {
                                   {status.map(item => (
                                     <Radio
                                       key={item.id}
-                                      value={item.text}
+                                      value={item.textValue}
                                       id={item.text}
                                       name={input.name}
                                       customRadio={styles.statusPopup}
                                       title={item.text}
                                       onChange={input.onChange}
                                       checked={
-                                        (item.text === 'case_closed'
+                                        (item.textValue === 'case_closed'
                                           && input.value === '')
-                                        || input.value === item.text
+                                        || input.value === item.textValue
                                       }
                                     />
                                   ))}
