@@ -46,7 +46,6 @@ const Table = ({
   const [itemGroup, setItemGroup] = useState(null);
   const [priceable, setPriceable] = useState('');
 
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -76,6 +75,12 @@ const Table = ({
     );
     setIsPopupUpdate(false);
   };
+
+  if (isPopupUpdate === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
 
   return (
     <>
@@ -298,6 +303,12 @@ const Groups = () => {
     );
     setIsPopupOpen(!isPopupOpen);
   };
+
+  if (isPopupOpen === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
 
   return (
     <MainLayout admin>

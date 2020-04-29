@@ -197,7 +197,9 @@ const Parts = () => {
 
   useEffect(() => {
     if (updateData) {
-      setArrPicsContainer(parts.data.find(item => item.id === updateData.id).images);
+      setArrPicsContainer(
+        parts.data.find(item => item.id === updateData.id).images,
+      );
     }
   }, [parts]);
 
@@ -266,6 +268,16 @@ const Parts = () => {
       setPrintPopup,
     });
   };
+
+  if (
+    isPopupOpen === true
+    || printPopup === true
+    || isPopupUpdateOpen === true
+  ) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
 
   return (
     <MainLayout admin>

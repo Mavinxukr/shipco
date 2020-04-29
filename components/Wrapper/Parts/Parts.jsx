@@ -221,6 +221,12 @@ const Parts = () => {
     setIsPopupUpdateOpen(false);
   };
 
+  if (isPopupOpen === true || isPopupUpdateOpen === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
+
   return (
     <MainLayout>
       <div className={styles.container}>

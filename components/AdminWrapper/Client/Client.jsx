@@ -153,6 +153,12 @@ const Client = () => {
     return <Loader />;
   }
 
+  if (isPopupOpen === true || printPopup === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
+
   const onSubmitPrint = () => {
     const idsArr = getIdsArr(selected);
     const paramsClient = router.query.isClient
@@ -703,7 +709,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.visibleColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (

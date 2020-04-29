@@ -136,6 +136,12 @@ const BaseClient = () => {
     });
   };
 
+  if (isPopupOpen === true || printPopup === true) {
+    document.querySelector('#__next').classList.add('Global-overflow');
+  } else {
+    document.querySelector('#__next').classList.remove('Global-overflow');
+  }
+
   return (
     <MainLayout admin>
       <div className={styles.container}>
