@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 const Global = ({ children, newLink, admin }) => (
   <>
     <Head>
-      <title>Home</title>
+      <title>Shipco</title>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       {process.env.NODE_ENV !== 'production' && (
