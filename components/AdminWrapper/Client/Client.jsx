@@ -2,6 +2,7 @@ import React, {
   useEffect, forwardRef, useState, useRef,
 } from 'react';
 import { usePagination, useTable, useRowSelect } from 'react-table';
+import formatStringByPattern from 'format-string-by-pattern';
 import cx from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
@@ -374,7 +375,12 @@ const Client = () => {
                     })}
                     options={city}
                   />
-                  <Field name="point_load_date" validate={required} type="text">
+                  <Field
+                    name="point_load_date"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                    parse={formatStringByPattern('99-99-9999')}
+                  >
                     {renderInput({
                       label: 'Load date',
                       classNameWrapper: styles.popupFieldRow,
@@ -393,8 +399,9 @@ const Client = () => {
                   />
                   <Field
                     name="point_delivery_date"
-                    validate={required}
+                    validate={composeValidators(required, mustBeNumber)}
                     type="text"
+                    parse={formatStringByPattern('99-99-9999')}
                   >
                     {renderInput({
                       label: 'Delivery date',
@@ -495,7 +502,12 @@ const Client = () => {
                       classNameWrapperLabel: styles.label,
                     })}
                   </Field>
-                  <Field name="ret_date" validate={required} type="text">
+                  <Field
+                    name="ret_date"
+                    validate={composeValidators(required, mustBeNumber)}
+                    type="text"
+                    parse={formatStringByPattern('99-99-9999')}
+                  >
                     {renderInput({
                       label: 'Retail date',
                       classNameWrapper: styles.popupFieldRow,
