@@ -380,7 +380,7 @@ const Client = () => {
                     name="point_load_date"
                     validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                     type="text"
-                    parse={formatStringByPattern('99-99-9999')}
+                    parse={formatStringByPattern('9999-99-99')}
                   >
                     {renderInput({
                       label: 'Load date',
@@ -402,7 +402,7 @@ const Client = () => {
                     name="point_delivery_date"
                     validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                     type="text"
-                    parse={formatStringByPattern('99-99-9999')}
+                    parse={formatStringByPattern('9999-99-99')}
                   >
                     {renderInput({
                       label: 'Delivery date',
@@ -507,7 +507,7 @@ const Client = () => {
                     name="ret_date"
                     validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                     type="text"
-                    parse={formatStringByPattern('99-99-9999')}
+                    parse={formatStringByPattern('9999-99-99')}
                   >
                     {renderInput({
                       label: 'Retail date',
@@ -722,7 +722,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.visibleColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
