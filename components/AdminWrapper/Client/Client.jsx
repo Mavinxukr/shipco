@@ -37,6 +37,7 @@ import {
   required,
   mustBeNumber,
   composeValidators,
+  lengthDueDay,
 } from '../../../utils/validation';
 import {
   renderInput,
@@ -377,7 +378,7 @@ const Client = () => {
                   />
                   <Field
                     name="point_load_date"
-                    validate={composeValidators(required, mustBeNumber)}
+                    validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                     type="text"
                     parse={formatStringByPattern('99-99-9999')}
                   >
@@ -399,7 +400,7 @@ const Client = () => {
                   />
                   <Field
                     name="point_delivery_date"
-                    validate={composeValidators(required, mustBeNumber)}
+                    validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                     type="text"
                     parse={formatStringByPattern('99-99-9999')}
                   >
@@ -504,7 +505,7 @@ const Client = () => {
                   </Field>
                   <Field
                     name="ret_date"
-                    validate={composeValidators(required, mustBeNumber)}
+                    validate={composeValidators(required, mustBeNumber, lengthDueDay)}
                     type="text"
                     parse={formatStringByPattern('99-99-9999')}
                   >
