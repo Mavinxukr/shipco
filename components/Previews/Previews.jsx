@@ -8,6 +8,8 @@ import styles from './Previews.scss';
 import { deleteAuto } from '../../redux/actions/auto';
 import { deleteParts } from '../../redux/actions/parts';
 
+const filterExistPics = (arrMain, arrPics) => arrMain.filter(item => arrPics.every(itemChild => itemChild.path !== item.path));
+
 const Previews = ({
   setArrPics,
   setNewArrPics,
@@ -25,19 +27,20 @@ const Previews = ({
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      setNewArrPics([...newArrPics, ...acceptedFiles]);
+      setNewArrPics([...newArrPics, ...filterExistPics(acceptedFiles, newArrPics)]);
       setArrPics([
         ...arrPics,
-        ...acceptedFiles.map(pic => ({
+        ...filterExistPics(acceptedFiles.map(pic => ({
           ...pic,
           link: URL.createObjectURL(pic),
-        })),
+        })), arrPics),
       ]);
     },
   });
 
-  const handleRemoveItem = (link, image) => {
-    setArrPics(arrPics.filter(item => item.link !== link || item.image !== image));
+  const handleRemoveItem = (pic) => {
+    setArrPics(arrPics.filter(item => item.link !== pic.link || item.image !== pic.image));
+    setNewArrPics(newArrPics.filter(item => item.path !== pic.path));
   };
 
   const dispatch = useDispatch();
@@ -55,7 +58,7 @@ const Previews = ({
           type="button"
           className={styles.removeIcon}
           onClick={() => {
-            handleRemoveItem(pic.link || pic.image);
+            handleRemoveItem(pic);
             if (pic.id && pic.link) {
               dispatch(
                 deleteAuto(
@@ -100,6 +103,7 @@ const Previews = ({
 
 Previews.propTypes = {
   setArrPics: PropTypes.func,
+  newArrPics: PropTypes.array,
   arrPics: PropTypes.arrayOf(PropTypes.object),
   setNewArrPics: PropTypes.func,
   newarrPics: PropTypes.arrayOf(PropTypes.object),
