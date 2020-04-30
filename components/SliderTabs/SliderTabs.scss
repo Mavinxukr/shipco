@@ -78,6 +78,11 @@
 
 .customSlider {
   overflow: hidden;
+  min-width: 736px;
+
+  @media screen and (max-width: 781px) {
+    min-width: 100%;
+  }
 }
 
 .itemTabs {
