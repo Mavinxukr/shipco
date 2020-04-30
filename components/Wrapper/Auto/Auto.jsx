@@ -127,7 +127,7 @@ const Auto = () => {
                   <Field name="lot_number" type="text">
                     {renderInput({
                       label: 'Lot:',
-                      placeholder: router.query.lot_number || '',
+                      defaultInputValue: router.query.lot_number || '',
                       classNameWrapper: styles.firstFlexInput,
                       classNameWrapperLabel: styles.customLabel,
                       classNameWrapperForInput: styles.customWidthInput,
@@ -168,7 +168,7 @@ const Auto = () => {
                   <Field name="vin" type="text">
                     {renderInput({
                       label: 'VIN:',
-                      placeholder: router.query.vin || '',
+                      defaultInputValue: router.query.vin || '',
                       classNameWrapper: styles.flexInput,
                       classNameWrapperLabel: cx(
                         styles.customLabel,

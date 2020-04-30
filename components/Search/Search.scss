@@ -31,7 +31,7 @@
 }
 
 .inputHeight {
-  padding: 11px 0 11px 40px;
+  padding: 11px 0 11px 40px!important;
   width: 360px;
 
   @media screen and (max-width: 1544px){
@@ -48,5 +48,6 @@
 
   @media screen and (max-width: 768px){
     max-width: 215px;
+    padding: 11px 0 11px 15px!important;
   }
 }
