@@ -40,7 +40,7 @@ const ThumbSlider = ({ children, customArrow, initialSlide }) => {
     },
     dots: true,
     dotsClass: 'slick-dots slick-thumb',
-    infinite: true,
+    infinite: false,
     initialSlide: `${initialSlide}`,
     speed: 500,
     slidesToShow: 1,
