@@ -310,6 +310,8 @@ const Prices = () => {
     document.querySelector('#__next').classList.remove('Global-overflow');
   }
 
+  console.log(prices);
+
   return (
     <MainLayout admin>
       <div className={styles.container}>
@@ -330,7 +332,7 @@ const Prices = () => {
         </div>
         {prices.data.length !== 0 ? (
           <CustomTable>
-            {typeof prices.data === 'object' && prices.data.length > 1 && (
+            {typeof prices.data === 'object' && prices.links && (
               <Pagination
                 params={prices.links}
                 pathname="/prices"
@@ -350,7 +352,7 @@ const Prices = () => {
                 prices={prices}
               />
             </div>
-            {typeof prices.data === 'object' && prices.data.length > 1 && (
+            {typeof prices.data === 'object' && prices.links && (
               <Pagination
                 params={prices.links}
                 pathname="/prices"
