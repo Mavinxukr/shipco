@@ -310,8 +310,6 @@ const Prices = () => {
     document.querySelector('#__next').classList.remove('Global-overflow');
   }
 
-  console.log(prices);
-
   return (
     <MainLayout admin>
       <div className={styles.container}>
