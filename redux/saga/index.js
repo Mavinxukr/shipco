@@ -46,6 +46,7 @@ import { watchGetPrices } from './prices/getPrices';
 import { watchAddPrices } from './prices/addPrices';
 import { watchDeletePrices } from './prices/deletePrices';
 import { watchUpdatePrices } from './prices/updatePrices';
+import { watchLogout } from './userData/logout';
 
 export function* rootSaga() {
   yield all([
@@ -96,5 +97,6 @@ export function* rootSaga() {
     watchAddPrices(),
     watchDeletePrices(),
     watchUpdatePrices(),
+    watchLogout(),
   ]);
 }

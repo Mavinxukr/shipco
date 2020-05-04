@@ -5,6 +5,13 @@ export const getCurrentUser = params => ({
   params,
 });
 
+export const logoutCurrentUser = (params, co, isUserLogOut) => ({
+  type: actionTypes.currentUser.delete,
+  params,
+  co,
+  isUserLogOut,
+});
+
 export const editCurrentUser = (params, body) => ({
   type: actionTypes.currentUser.update,
   params,

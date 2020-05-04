@@ -54,3 +54,13 @@ export const updateClientById = async (params, body, id) => {
   }, true);
   return serverData;
 };
+
+export const logoutRequest = async (params) => {
+  const serverData = await Fetch.post('logout', params, {});
+  return serverData;
+};
+
+export const logoutAdminRequest = async (params) => {
+  const serverData = await Fetch.post('logout', params, {}, true);
+  return serverData;
+};

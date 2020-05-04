@@ -9,7 +9,9 @@ const initialState = {
 
 export const currentUser = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.currentUser.request || actionTypes.currentUser.update:
+    case actionTypes.currentUser.request
+    || actionTypes.currentUser.update
+    || actionTypes.currentUser.delete:
       return {
         ...state,
         isFetch: true,

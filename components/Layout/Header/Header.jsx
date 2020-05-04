@@ -4,6 +4,7 @@ import Link from 'next/link';
 import PropsType from 'prop-types';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
+import { cookies } from '../../../utils/getCookies';
 import {
   currentUserDataSelector,
   autoByContainerDataSelector,
@@ -22,8 +23,9 @@ import IconContainer from '../../../assets/svg/AddContainerIcon.svg';
 import IconClients from '../../../assets/svg/Clients.svg';
 import IconBell from '../../../assets/svg/Group (4).svg';
 import IconUser from '../../../assets/svg/Vector (1).svg';
+import IconLogOut from '../../../assets/svg/signs.svg';
 import styles from './Header.scss';
-import { getCurrentUser } from '../../../redux/actions/currentUser';
+import { getCurrentUser, logoutCurrentUser } from '../../../redux/actions/currentUser';
 import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
 import { storeShipping } from '../../../redux/actions/shipping';
 import IconMenu from '../../../assets/svg/menuWhite.svg';
@@ -298,6 +300,18 @@ const Header = ({ newLink, admin }) => {
                 <IconUser />
               </a>
             </Link>
+            <Button onClick={() => {
+              if (!admin) {
+                dispatch(logoutCurrentUser({}, cookies, true));
+                setTimeout(() => router.push('/'), 800);
+              } else {
+                dispatch(logoutCurrentUser({}, cookies));
+                setTimeout(() => router.push('/'), 800);
+              }
+            }}
+            >
+              <IconLogOut className={styles.logOut} />
+            </Button>
           </div>
         </div>
       </div>
