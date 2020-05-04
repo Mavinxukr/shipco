@@ -253,7 +253,7 @@ const Table = ({
   );
 };
 
-const Groups = () => {
+const Prices = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [priceableData, setPriceableData] = useState(null);
 
@@ -310,6 +310,8 @@ const Groups = () => {
     document.querySelector('#__next').classList.remove('Global-overflow');
   }
 
+  console.log(prices.data)
+
   return (
     <MainLayout admin>
       <div className={styles.container}>
@@ -330,7 +332,7 @@ const Groups = () => {
         </div>
         {prices.data.length !== 0 ? (
           <CustomTable>
-            {typeof prices.data !== 'object' && (
+            {typeof prices.data === 'object' && prices.data.length > 1 && (
               <Pagination
                 params={prices.links}
                 pathname="/prices"
@@ -350,7 +352,7 @@ const Groups = () => {
                 prices={prices}
               />
             </div>
-            {typeof prices.data !== 'object' && (
+            {typeof prices.data === 'object' && prices.data.length > 1  && (
               <Pagination
                 params={prices.links}
                 pathname="/prices"
@@ -462,4 +464,4 @@ const Groups = () => {
   );
 };
 
-export default Groups;
+export default Prices;
