@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import qs from 'query-string';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
 
@@ -36,7 +37,7 @@ export const addNewClientRequest = async (params, body) => {
     }
     formData.append(key, value);
   });
-  const serverData = await fetch('http://167.172.214.80/api-admin/store-auto', {
+  const serverData = await fetch(`http://167.172.214.80/api-admin/store-auto?${qs.stringify(params)}`, {
     mode: 'cors',
     method: 'POST',
     headers: {

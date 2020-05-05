@@ -68,9 +68,8 @@ const CarInformation = ({
       <div className={styles.image}>
         <img
           src={
-            (item.document
-              && item.document.length !== 0
-              && item.document[0].link)
+            (item.image
+              && item.image.link)
             || '/images/no-preview-available.png'
           }
           alt={item.model_name || '21321'}

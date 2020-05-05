@@ -10,6 +10,13 @@
   margin-right: -7.5px;
 }
 
+.index {
+  @media screen and (max-width: 991px) {
+    position: relative;
+    z-index: -1!important;
+  }
+}
+
 .flex{
   display: flex;
   justify-content: space-between;
