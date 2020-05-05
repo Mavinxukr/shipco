@@ -82,7 +82,9 @@ const Client = () => {
   const onSubmit = (values) => {
     dispatch(
       addNewClient(
-        {},
+        {
+          client: +router.query.idUser || '',
+        },
         {
           ...values,
           status: values.status && values.status.value,
@@ -219,7 +221,9 @@ const Client = () => {
               onClick={() => {
                 dispatch(
                   deleteClient(
-                    {},
+                    {
+                      client: +router.query.idUser,
+                    },
                     {
                       auto_id: arrAutoId,
                     },
