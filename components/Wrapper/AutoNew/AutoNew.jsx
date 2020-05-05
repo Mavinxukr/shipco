@@ -122,12 +122,6 @@ const AutoNew = () => {
     setIsCommentPopupOpen(false);
   };
 
-  // if (isPopupOpen) {
-  //   document.querySelector('.AutoNew-popularItems').classList.add('AutoNew-index');
-  // } else {
-  //   // document.querySelector('.AutoNew-popularItems').classList.remove('AutoNew-index');
-  // }
-
   return (
     <MainLayout>
       <div className={styles.container}>
