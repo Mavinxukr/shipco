@@ -122,6 +122,12 @@ const AutoNew = () => {
     setIsCommentPopupOpen(false);
   };
 
+  // if (isPopupOpen) {
+  //   document.querySelector('.AutoNew-popularItems').classList.add('AutoNew-index');
+  // } else {
+  //   // document.querySelector('.AutoNew-popularItems').classList.remove('AutoNew-index');
+  // }
+
   return (
     <MainLayout>
       <div className={styles.container}>
@@ -332,7 +338,7 @@ const AutoNew = () => {
           )}
         </div>
         <h3 className={styles.title}>Popular Vehicles Right Now</h3>
-        <div className={cx(styles.flex, styles.popularItems)}>
+        <div className={cx(styles.flex, styles.popularItems, { [styles.index]: isPopupOpen })}>
           {autoId.vehicles.map(item => (
             <div className={styles.popular} key={item.id}>
               <div>
