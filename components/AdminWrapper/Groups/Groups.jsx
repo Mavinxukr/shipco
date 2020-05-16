@@ -154,7 +154,7 @@ const Table = ({
                             {cell.column.id === 'due_day' ? (
                               <Link
                                 href={{
-                                  pathname: '/prices',
+                                  pathname: '/payments',
                                   query: {
                                     idClient: cell.row.original.price_id,
                                   },
@@ -208,19 +208,6 @@ const Table = ({
                   setSelected={setSelected}
                   value={selected}
                 />
-                <Field
-                  name="price"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                  defaultValue={itemGroup.price}
-                >
-                  {renderInput({
-                    label: 'Price plan',
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
                 <div className={styles.submitPopup}>
                   <Button
                     customBtn={styles.btnSubmit}
@@ -402,18 +389,6 @@ const Groups = () => {
                   setSelected={setSelected}
                   value={selected}
                 />
-                <Field
-                  name="price"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                >
-                  {renderInput({
-                    label: 'Price plan',
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
                 <div className={styles.submitPopup}>
                   <Button
                     customBtn={styles.btnSubmit}

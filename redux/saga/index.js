@@ -47,6 +47,10 @@ import { watchAddPrices } from './prices/addPrices';
 import { watchDeletePrices } from './prices/deletePrices';
 import { watchUpdatePrices } from './prices/updatePrices';
 import { watchLogout } from './userData/logout';
+import { watchGetPayments } from './payments/getPayments';
+import { watchAddPayments } from './payments/addPayments';
+import { watchDeletePaymants } from './payments/deletePayments';
+import { watchUpdatePayments } from './payments/updatePayments';
 
 export function* rootSaga() {
   yield all([
@@ -98,5 +102,9 @@ export function* rootSaga() {
     watchDeletePrices(),
     watchUpdatePrices(),
     watchLogout(),
+    watchGetPayments(),
+    watchAddPayments(),
+    watchDeletePaymants(),
+    watchUpdatePayments(),
   ]);
 }

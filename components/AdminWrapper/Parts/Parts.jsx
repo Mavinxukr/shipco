@@ -78,7 +78,7 @@ const Table = ({
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.visibleColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -358,7 +358,7 @@ const Parts = () => {
             </HoverPopup>
           </div>
         </div>
-        {parts.data.length !== 0 ? (
+        {parts && parts.data.length !== 0 ? (
           <CustomTable>
             <Pagination
               params={parts.links}
