@@ -78,7 +78,7 @@ const Table = ({
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.visibleColumns.push(columns => [
+      hooks.flatColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
