@@ -183,6 +183,8 @@ const Client = () => {
     });
   };
 
+  console.log(client);
+
   return (
     <MainLayout admin>
       <SubHeader
@@ -267,7 +269,7 @@ const Client = () => {
           />
         </div>
         <>
-          {client.data.length !== 0 ? (
+          {client && client.data.length !== 0 ? (
             <CustomTable>
               <Pagination
                 params={client.links}
@@ -726,7 +728,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.visibleColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -820,7 +822,7 @@ const Table = ({ columns, data, arrAutoId }) => {
                         {cell.column.id === 'client.due_day' ? (
                           <Link
                             href={{
-                              pathname: '/prices',
+                              pathname: '/payments',
                               query: {
                                 idClient: cell.row.original.client.price_id,
                               },

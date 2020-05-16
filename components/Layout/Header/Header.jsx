@@ -61,6 +61,10 @@ const Header = ({ newLink, admin }) => {
     [styles.active]: router.pathname.split('/')[1] === 'auto',
   });
 
+  const classNameForLinkPrices = cx(styles.menuLink, {
+    [styles.active]: router.pathname.split('/')[1] === 'prices',
+  });
+
   const navClass = cx(styles.menu, {
     [styles.openMenu]: isMenuOpen,
   });
@@ -142,9 +146,21 @@ const Header = ({ newLink, admin }) => {
                   activeClassName={styles.active}
                   href={{ pathname: '/prices', query: { isClient: false } }}
                 >
-                  <a className={styles.menuLink}>
+                  <a className={classNameForLinkPrices}>
                     <IconSetting className={styles.menuIcon} />
                     Prices
+                    <p className={styles.menuDot} />
+                  </a>
+                </ActiveLink>
+              </li>
+              <li className={styles.menuItem}>
+                <ActiveLink
+                  activeClassName={styles.active}
+                  href={{ pathname: '/payments', query: { isClient: false } }}
+                >
+                  <a className={styles.menuLink}>
+                    <IconSetting className={styles.menuIcon} />
+                    Payments
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>

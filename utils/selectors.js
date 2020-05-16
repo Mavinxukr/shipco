@@ -193,3 +193,13 @@ export const pricesDataReceivedSelector = createSelector(
   state => state.prices.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const paymentsDataSelector = createSelector(
+  state => state.payments.paymentsData,
+  paymentsData => paymentsData,
+);
+
+export const paymentsDataReceivedSelector = createSelector(
+  state => state.payments.isDataReceived,
+  isDataReceived => isDataReceived,
+);

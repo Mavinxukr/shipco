@@ -127,7 +127,7 @@ export const columns = [
         Cell: ({ cell: { value } }) => <p>{value && <span>$ {value}</span>}</p>,
       },
       {
-        Header: 'Due day',
+        Header: 'Days to pay',
         accessor: 'client.due_day',
       },
       {

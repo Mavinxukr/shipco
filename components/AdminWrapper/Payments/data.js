@@ -11,20 +11,16 @@ export const columns = [
         accessor: 'name',
       },
       {
-        Header: 'Priceable type',
-        accessor: 'priceable_type',
+        Header: 'Applicable type',
+        accessor: 'applicable_type',
       },
       {
-        Header: 'State',
-        accessor: 'country[0].name',
+        Header: 'Applicable name',
+        accessor: 'applicable.name',
       },
       {
-        Header: 'Cities',
-        accessor: 'cities[0].name',
-      },
-      {
-        Header: 'Price',
-        accessor: 'cities[0].price',
+        Header: 'Days to pay',
+        accessor: 'due_day',
       },
       {
         Header: 'Actions',
@@ -32,6 +28,14 @@ export const columns = [
       },
     ],
   },
+];
+
+export const city = [
+  { value: '1', label: 'California' },
+  { value: '2', label: 'Texas' },
+  { value: '3', label: 'New Jersey' },
+  { value: '4', label: 'Savannah' },
+  { value: '5', label: 'Montreal' },
 ];
 
 export const type = [
