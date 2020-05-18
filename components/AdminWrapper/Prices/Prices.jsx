@@ -21,6 +21,8 @@ import IconPlus from '../../../assets/svg/Plus.svg';
 import CustomTable from '../../CustomTable/CustomTable';
 import {
   required,
+  composeValidators,
+  mustBeNumber,
 } from '../../../utils/validation';
 import Pagination from '../../Pagination/Pagination';
 import Loader from '../../Loader/Loader';
@@ -220,6 +222,19 @@ const Table = ({
                     }))
                   }
                 />
+                <Field
+                  name="price"
+                  validate={composeValidators(required, mustBeNumber)}
+                  type="text"
+                  defaultValue={itemGroup.price || ''}
+                >
+                  {renderInput({
+                    label: 'Price',
+                    classNameWrapper: styles.popupFieldRow,
+                    widthInputBlock: styles.widthInputBlock,
+                    classNameWrapperLabel: styles.label,
+                  })}
+                </Field>
                 <div className={styles.submitPopup}>
                   <Button
                     customBtn={styles.btnSubmit}

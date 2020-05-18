@@ -24,7 +24,7 @@ export const columns = [
       },
       {
         Header: 'Price',
-        accessor: 'cities[0].price',
+        accessor: 'price',
       },
       {
         Header: 'Actions',
