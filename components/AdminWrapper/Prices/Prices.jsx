@@ -164,7 +164,7 @@ const Table = ({
                   name="priceable_type"
                   component={renderSelect({
                     placeholder: itemGroup.priceable_type || '',
-                    label: 'Priceable type',
+                    label: 'Applicable type',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                     custonOnChange: (value) => {
                       setPriceable('');
@@ -179,7 +179,7 @@ const Table = ({
                   name="priceable_id"
                   component={renderSelect({
                     placeholder: priceable,
-                    label: 'Priceable id',
+                    label: 'Applicable id',
                     id: 'priceable_id',
                     classNameWrapper: 'SelectCustom-popupFieldRow',
                   })}

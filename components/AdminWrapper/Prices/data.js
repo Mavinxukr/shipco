@@ -11,7 +11,7 @@ export const columns = [
         accessor: 'name',
       },
       {
-        Header: 'Priceable type',
+        Header: 'Applicable type',
         accessor: 'priceable_type',
       },
       {
