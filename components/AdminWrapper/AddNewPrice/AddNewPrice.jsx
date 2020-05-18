@@ -69,7 +69,7 @@ const AddNewPrice = () => {
               name="priceable_type"
               component={renderSelect({
                 placeholder: '',
-                label: 'Priceable type',
+                label: 'Applicable type',
                 custonOnChange: (value) => {
                   const key =
                     value.label === 'clients' ? 'clients' : 'groups';
@@ -82,7 +82,7 @@ const AddNewPrice = () => {
               name="priceable_id"
               component={renderSelect({
                 placeholder: '',
-                label: 'Priceable id',
+                label: 'Applicable id',
               })}
               options={
                 (priceableData
@@ -110,7 +110,7 @@ const AddNewPrice = () => {
               name="cities"
               component={renderSelect({
                 placeholder: '',
-                label: 'Citie',
+                label: 'City',
               })}
               options={
                 prices.additional.cities.map(item => ({

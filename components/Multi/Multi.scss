@@ -64,7 +64,7 @@
 .activeOption {
   display: block;
   position: absolute;
-  top: 100%;
+  top: 100%!important;
   left: 167px;
   z-index: 99999999;
   background: $colorInput;
