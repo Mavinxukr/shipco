@@ -15,6 +15,8 @@ import Button from '../../Button/Button';
 import MainLayout from '../../Layout/Global/Global';
 import {
   required,
+  mustBeNumber,
+  composeValidators,
 } from '../../../utils/validation';
 import styles from './AddNewPrice.scss';
 import { type } from './data';
@@ -119,6 +121,11 @@ const AddNewPrice = () => {
                 }))
               }
             />
+            <Field name="price" validate={composeValidators(required, mustBeNumber)} type="text">
+              {renderInput({
+                label: 'Price',
+              })}
+            </Field>
             <div className={styles.submitPopup}>
               <Button
                 customBtn={styles.btnSubmit}
