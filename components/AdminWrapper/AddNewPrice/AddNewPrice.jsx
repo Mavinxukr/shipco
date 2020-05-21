@@ -127,7 +127,7 @@ const AddNewPrice = () => {
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, invalid, submitting }) => (
-          <form onSubmit={handleSubmit}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <Field name="name" validate={required} type="text">
               {renderInput({
                 label: 'Name',
