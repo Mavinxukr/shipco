@@ -168,7 +168,6 @@ const Table = ({
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => (
                   <td
-                    className={`Groups-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
                     {cell.column.id === 'actions' ? (
