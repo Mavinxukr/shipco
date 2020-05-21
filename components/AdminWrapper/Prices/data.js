@@ -16,15 +16,30 @@ export const columns = [
       },
       {
         Header: 'State',
-        accessor: 'country[0].name',
+        accessor: 'state',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value.map(item => <p key={item.id}>{item.state}</p>)}
+          </>
+        ),
       },
       {
         Header: 'Cities',
-        accessor: 'cities[0].name',
+        accessor: 'cities',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value.map(item => <p key={item.id}>{item.name}</p>)}
+          </>
+        ),
       },
       {
         Header: 'Price',
         accessor: 'price',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value.map(item => <p key={item.id}>{item.pivot.price_value}</p>)}
+          </>
+        ),
       },
       {
         Header: 'Actions',
@@ -37,4 +52,24 @@ export const columns = [
 export const type = [
   { value: 'group', label: 'groups' },
   { value: 'client', label: 'clients' },
+];
+
+export const columnsPrice = [
+  {
+    Header: 'Table',
+    columns: [
+      {
+        Header: 'Cities',
+        accessor: 'name',
+      },
+      {
+        Header: 'State',
+        accessor: 'state',
+      },
+      {
+        Header: 'Price',
+        accessor: 'price',
+      },
+    ],
+  },
 ];
