@@ -65,6 +65,7 @@ const Table = ({
                     <Field
                       name={`price_${cell.row.original.id}`}
                       type="number"
+                      defaultValue="0"
                     >
                       {renderInput({
                         classNameWrapper: styles.widthInput,

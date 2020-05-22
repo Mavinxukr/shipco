@@ -73,7 +73,7 @@ const TableUpdate = ({
                     <Field
                       name={`price_${cell.row.original.id}`}
                       type="number"
-                      defaultValue={cell.row.original.pivot.price_value|| ''}
+                      defaultValue={cell.row.original.pivot.price_value || '0'}
                     >
                       {renderInput({
                         classNameWrapper: styles.widthInput,
