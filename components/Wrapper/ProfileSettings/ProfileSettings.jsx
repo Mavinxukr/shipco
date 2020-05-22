@@ -17,7 +17,7 @@ import {
   lengthCart,
 } from '../../../utils/validation';
 import IconEye from '../../../assets/svg/eye.svg';
-import { stateOptions } from './data';
+import { stateOptions, state } from './data';
 import styles from './ProfileSettings.scss';
 import {
   currentUserDataSelector,
@@ -157,7 +157,7 @@ const ProfileSettings = () => {
                       label: 'Country',
                       placeholder: userData.country || '',
                     })}
-                    options={stateOptions}
+                    options={state}
                   />
                   <Field
                     name="city"

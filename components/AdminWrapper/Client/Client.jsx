@@ -183,11 +183,11 @@ const Client = () => {
     });
   };
 
-  console.log(client);
 
   return (
     <MainLayout admin>
       <SubHeader
+        client={client}
         hidden
         currentClient={currentClient}
         currentClientId={router.query.idUser}
