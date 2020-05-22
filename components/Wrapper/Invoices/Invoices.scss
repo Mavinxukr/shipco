@@ -77,22 +77,28 @@
   & + .viewBtn {
     margin-top: 20px;
   }
+
+  &[disabled] {
+    opacity: .3;
+    border-color: $colorContent!important;
+    color: $colorContent!important;
+  }
 }
 
 td.id,
-td.paiment,
-td.auto {
-  color: $colorBackground;
+td.paiment_for,
+td.name_car {
+  color: $colorBackground!important;
 }
 
-.paiment,
+.paiment_for,
 .total,
 .paid,
 .outstanding,
 .status {
   position: relative;
   p + p {
-    margin-top: 26px;
+    margin-top: 26px!important;
   }
 }
 
@@ -108,7 +114,7 @@ td.auto {
 
 td.id,
 td.date,
-td.auto {
+td.name_car {
   padding-bottom: 65px;
 }
 

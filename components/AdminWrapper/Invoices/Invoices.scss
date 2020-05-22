@@ -71,8 +71,8 @@
 
   &[disabled] {
     opacity: .3;
-    border-color: $colorContent;
-    color: $colorContent;
+    border-color: $colorContent!important;
+    color: $colorContent!important;
   }
 }
 

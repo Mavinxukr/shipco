@@ -1,5 +1,6 @@
 import Button from '../../Button/Button';
 import IconStar from '../../../assets/svg/viewStar.svg';
+import IconStarDisabled from '../../../assets/svg/viewStarDisabled.svg';
 
 export const columns = [
   {
@@ -80,14 +81,21 @@ export const columns = [
               <IconStar className="Invoices-star" />
               View Invoice
             </Button>
-            <Button
-              target="_blank"
-              href={value[1].link}
-              customBtn="Invoices-viewBtn"
-            >
-              <IconStar className="Invoices-star" />
-              View Invoice
-            </Button>
+            {value.length <= 1 ? (
+              <Button disabled target="_blank" customBtn="Invoices-viewBtn">
+                <IconStarDisabled className="Invoices-star" />
+                View Invoice
+              </Button>
+            ) : (
+              <Button
+                target="_blank"
+                href={value[1].link}
+                customBtn="Invoices-viewBtn"
+              >
+                <IconStar className="Invoices-star" />
+                View Invoice
+              </Button>
+            )}
           </>
         ),
       },
