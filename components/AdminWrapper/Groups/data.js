@@ -12,11 +12,11 @@ export const columns = [
       },
       {
         Header: 'Price',
-        accessor: 'price',
+        accessor: 'price[0].pivot.price_value',
       },
       {
         Header: 'Clients in the group',
-        accessor: 'client',
+        accessor: 'clients[0].clients.name',
       },
       {
         Header: 'Days to pay',
