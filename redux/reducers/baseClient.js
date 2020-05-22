@@ -19,7 +19,7 @@ export const baseClient = (state = initialState, action) => {
 
     case actionTypes.baseClient.success:
       return {
-        ...state,
+        error: null,
         isFetch: false,
         isDataReceived: true,
         baseClientData: action.body,
@@ -29,7 +29,7 @@ export const baseClient = (state = initialState, action) => {
       return {
         ...state,
         isFetch: false,
-        isDataReceived: false,
+        isDataReceived: true,
         error: action.error,
       };
 

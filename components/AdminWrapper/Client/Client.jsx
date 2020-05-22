@@ -183,7 +183,6 @@ const Client = () => {
     });
   };
 
-
   return (
     <MainLayout admin>
       <SubHeader
