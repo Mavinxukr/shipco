@@ -16,7 +16,12 @@ export const columns = [
       },
       {
         Header: 'Clients in the group',
-        accessor: 'clients[0].clients.name',
+        accessor: 'clients',
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value.map(itemName => <span key={itemName.clients.id}>{itemName.clients.name},{' '}</span>)}
+          </>
+        ),
       },
       {
         Header: 'Days to pay',
