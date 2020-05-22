@@ -136,6 +136,15 @@ const BaseClient = () => {
     });
   };
 
+
+  const stateObj = baseClient.additional.states;
+  const stateArr = Object.values(stateObj).map((item, index) => ({
+    id: index + 1,
+    label: item.state,
+    value: item.state,
+  }));
+
+  console.log(stateArr);
   if (isPopupOpen === true || printPopup === true) {
     document.querySelector('#__next').classList.add('Global-overflow');
   } else {
@@ -306,7 +315,7 @@ const BaseClient = () => {
                     label: 'Country',
                     classNameWrapper: styles.popupFieldRow,
                   })}
-                  options={stateOptions}
+                  options={stateArr}
                 />
                 <Field
                   name="city"
@@ -316,7 +325,14 @@ const BaseClient = () => {
                     classNameWrapper: styles.popupFieldRow,
                     label: 'City',
                   })}
-                  options={stateOptions}
+                  options={
+                    (baseClient
+                      && baseClient.additional.cities.map(item => ({
+                        value: item.name,
+                        label: item.name,
+                      })))
+                    || []
+                  }
                 />
                 <Field
                   name="zip"

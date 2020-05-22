@@ -23,7 +23,7 @@ import { stateOptions } from './data';
 import { updateCurrentClient } from '../../../redux/actions/currentClient';
 
 const SubHeader = ({
-  hidden, currentClientId, currentClient, onClick,
+  hidden, currentClientId, currentClient, onClick, client
 }) => {
   const router = useRouter();
 
@@ -44,6 +44,13 @@ const SubHeader = ({
       ),
     );
   };
+
+  const stateObj = client.additional.states;
+  const stateArr = Object.values(stateObj).map((item, index) => ({
+    id: index + 1,
+    label: item.state,
+    value: item.state,
+  }));
 
   return (
     <div className={styles.subHeader}>
@@ -201,7 +208,7 @@ const SubHeader = ({
                     classNameLabel: 'SelectCustom-blackLabel',
                     placeholder: currentClient.data.country || '',
                   })}
-                  options={stateOptions}
+                  options={stateArr}
                 />
                 <Field
                   name="city"
@@ -211,7 +218,13 @@ const SubHeader = ({
                     classNameLabel: 'SelectCustom-blackLabel',
                     placeholder: currentClient.data.city || '',
                   })}
-                  options={stateOptions}
+                  options={
+                    (client
+                      && client.additional.cities.map(item => ({
+                        value: item.name,
+                        label: item.name,
+                      })))
+                    || []}
                 />
                 <Field
                   name="zip"
