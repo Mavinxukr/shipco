@@ -148,16 +148,16 @@ td.name_car {
   z-index: 1;
 
   &:before {
-    background: transparent;
-    border: none;
-    content: 'Shipping charge invoice';
-    font-weight: 500;
-    font-size: 14px;
-    width: 180px;
-    left: -14px;
-    height: auto;
-    top: -1px;
-    cursor: pointer;
+    background: transparent!important;
+    border: none!important;
+    content: 'Shipping charge invoice'!important;
+    font-weight: 500!important;
+    font-size: 14px!important;
+    width: 180px!important;
+    left: -14px!important;
+    height: auto!important;
+    top: -1px!important;
+    cursor: pointer!important;
     z-index: -2;
   }
 }
