@@ -66,7 +66,6 @@ const Table = ({
           ...values,
           applicable_type: values.applicable_type && values.applicable_type.value,
           applicable_id: values.applicable_id && values.applicable_id.value,
-          due_day: `${values.due_day} 23:59:59`,
         },
         itemGroup.id,
       ),
@@ -199,14 +198,12 @@ const Table = ({
                   validate={composeValidators(
                     required,
                     mustBeNumber,
-                    lengthDueDay,
                   )}
                   type="text"
-                  parse={formatStringByPattern('9999-99-99')}
                   defaultValue={itemGroup.due_day || ''}
                 >
                   {renderInput({
-                    label: 'Due day',
+                    label: 'Days to pay',
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -274,7 +271,6 @@ const Payments = () => {
           cities: values.cities && values.cities.value,
           applicable_type: values.applicable_type && values.applicable_type.value,
           applicable_id: values.applicable_id && values.applicable_id.value,
-          due_day: `${values.due_day} 23:59:59`,
         },
       ),
     );
@@ -388,13 +384,11 @@ const Payments = () => {
                   validate={composeValidators(
                     required,
                     mustBeNumber,
-                    lengthDueDay,
                   )}
                   type="text"
-                  parse={formatStringByPattern('9999-99-99')}
                 >
                   {renderInput({
-                    label: 'Due day',
+                    label: 'Days to pay',
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,

@@ -64,10 +64,11 @@
 .menuItems {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .menuLink {
-  margin: 0 55px 0 70px;
+  margin: 0 40px;
   color: $white;
   text-transform: uppercase;
   display: flex;
