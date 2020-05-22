@@ -40,7 +40,6 @@ import {
 import Pagination from '../../Pagination/Pagination';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './BaseClient.scss';
-import { stateOptions } from '../../Wrapper/ProfileSettings/data';
 import Loader from '../../Loader/Loader';
 import MultiSelect from '../../Multi/Multi';
 import { printData, getIdsArr } from '../../../utils/helpers';
@@ -78,6 +77,7 @@ const finalDate = `${currDay}.${currMonth}.${currYear}`;
 const BaseClient = () => {
   const baseClient = useSelector(baseClientDataSelector);
   const isDataReceived = useSelector(baseClientDataReceivedSelector);
+  const error = useSelector(state => state.baseClient.error);
   const router = useRouter();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -120,7 +120,6 @@ const BaseClient = () => {
         },
       ),
     );
-    setIsPopupOpen(false);
   };
 
   const onSubmitPrint = () => {
@@ -144,7 +143,6 @@ const BaseClient = () => {
     value: item.state,
   }));
 
-  console.log(stateArr);
   if (isPopupOpen === true || printPopup === true) {
     document.querySelector('#__next').classList.add('Global-overflow');
   } else {
@@ -372,6 +370,7 @@ const BaseClient = () => {
                   })}
                 </Field>
                 <ImageUpload baseClient image={image} setImage={setImage} />
+                {error && <p className={styles.error}>customer data must be unique</p>}
                 <div className={styles.submitPopup}>
                   <Button
                     customBtn={styles.btnSubmit}
