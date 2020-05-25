@@ -11,10 +11,6 @@ export const columns = [
         accessor: 'name',
       },
       {
-        Header: 'Price',
-        accessor: 'price[0].pivot.price_value',
-      },
-      {
         Header: 'Clients in the group',
         accessor: 'clients',
         Cell: ({ cell: { value } }) => (
