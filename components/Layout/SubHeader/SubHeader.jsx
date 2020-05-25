@@ -19,7 +19,7 @@ import {
 } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import styles from './SubHeader.scss';
-import { stateOptions } from './data';
+import { state } from './data';
 import { updateCurrentClient } from '../../../redux/actions/currentClient';
 
 const SubHeader = ({
@@ -44,13 +44,6 @@ const SubHeader = ({
       ),
     );
   };
-
-  const stateObj = client.additional.states;
-  const stateArr = Object.values(stateObj).map((item, index) => ({
-    id: index + 1,
-    label: item.state,
-    value: item.state,
-  }));
 
   return (
     <div className={styles.subHeader}>
@@ -208,7 +201,7 @@ const SubHeader = ({
                     classNameLabel: 'SelectCustom-blackLabel',
                     placeholder: currentClient.data.country || '',
                   })}
-                  options={stateArr}
+                  options={state}
                 />
                 <Field
                   name="city"
