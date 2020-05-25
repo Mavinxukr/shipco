@@ -210,8 +210,8 @@ const Parts = () => {
   const vinNumbers = parts.additional.vin_numbers;
   const vinArr = Object.keys(vinNumbers).map((item, index) => ({
     id: index + 1,
-    label: vinNumbers[index].vin,
-    value: vinNumbers[index].vin,
+    label: vinNumbers[index].vin_code,
+    value: vinNumbers[index].vin_code,
   }));
 
   const catalogNumbers = parts.additional.catalog_numbers;
@@ -229,7 +229,7 @@ const Parts = () => {
           ...values,
           vin: values.vin && values.vin.label,
           status: values.status && values.status.value,
-          catalog_number: values.catalog_number && values.catalog_number.label,
+          catalog_number: values.catalog_numberInput || values.catalog_number && values.catalog_number.label,
           image: newArrPicsContainer,
         },
       ),
@@ -522,12 +522,19 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
+                <Field name="catalog_numberInput" type="number">
+                  {renderInput({
+                    label: 'Catalog number',
+                    classNameWrapper: styles.popupFieldRow,
+                    classNameWrapperLabel: styles.label,
+                    widthInputBlock: styles.widthInput,
+                  })}
+                </Field>
                 <Field
                   name="catalog_number"
-                  validate={required}
                   component={renderSelect({
                     placeholder: '',
-                    label: 'Catalog number',
+                    label: 'or',
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
