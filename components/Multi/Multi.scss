@@ -45,7 +45,8 @@
 
 .options {
   display: none;
-  max-height: 150px;
+  max-height: 89px;
+  min-height: 8px;
   overflow: auto;
 
   button {
