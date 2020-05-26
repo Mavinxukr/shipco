@@ -559,7 +559,6 @@ const Parts = () => {
                 </Field>
                 <Field
                   name="vin"
-                  validate={required}
                   component={renderSelect({
                     placeholder: '',
                     label: 'VIN Number',
