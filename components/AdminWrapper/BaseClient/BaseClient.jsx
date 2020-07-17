@@ -281,10 +281,10 @@ const BaseClient = () => {
                   type="text"
                   validate={composeValidators(
                     required,
-                    lengthPhone,
+                    // lengthPhone,
                     mustBeNumber,
                   )}
-                  parse={formatStringByPattern('+9-9999-999-99-99')}
+                  // parse={formatStringByPattern('+9-9999-999-99-99')}
                 >
                   {renderInput({
                     label: 'Phone number',
@@ -332,43 +332,6 @@ const BaseClient = () => {
                     || []
                   }
                 />
-                <Field
-                  name="zip"
-                  type="text"
-                  validate={composeValidators(required, mustBeNumber)}
-                >
-                  {renderInput({
-                    label: 'Zip',
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <Field validate={required} name="address" type="text">
-                  {renderInput({
-                    label: 'Address',
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <Field
-                  name="card_number"
-                  type="text"
-                  validate={composeValidators(
-                    required,
-                    lengthCart,
-                    mustBeNumber,
-                  )}
-                  parse={formatStringByPattern('9999-9999-9999-9999')}
-                >
-                  {renderInput({
-                    label: 'Cart number',
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
                 <ImageUpload baseClient image={image} setImage={setImage} />
                 {error && <p className={styles.error}>customer data must be unique</p>}
                 <div className={styles.submitPopup}>

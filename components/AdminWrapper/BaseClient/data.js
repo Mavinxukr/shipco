@@ -40,11 +40,6 @@ export const columns = [
         accessor: 'full_address',
       },
       {
-        Header: 'Payment Information',
-        accessor: 'card_number',
-      },
-
-      {
         Header: 'Date of registration',
         accessor: 'date_register',
       },
