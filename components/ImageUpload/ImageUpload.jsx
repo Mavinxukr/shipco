@@ -20,7 +20,7 @@ const ImageUpload = ({
     <>
       {baseClient ? (
         <div className={styles.flex}>
-          <p className={styles.label}>Add photo</p>
+          <p className={styles.label}>Add ID photo</p>
           <label
             className={styles.labelFileInputNoPreview}
             htmlFor="upload-photo"
