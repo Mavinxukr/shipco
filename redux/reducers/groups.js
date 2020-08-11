@@ -9,10 +9,10 @@ const initialState = {
 
 export const groups = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.groups.request
-      || actionTypes.groups.delete
-      || actionTypes.groups.save
-      || actionTypes.groups.update:
+    case actionTypes.groups.request:
+    case actionTypes.groups.delete:
+    case actionTypes.groups.save:
+    case actionTypes.groups.update:
       return {
         ...state,
         isFetch: true,

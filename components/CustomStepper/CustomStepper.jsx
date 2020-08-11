@@ -79,6 +79,7 @@ const CustomStepper = ({
   item,
   customBlock,
   paddingBottom,
+  disassembled,
   status,
   updateStatus,
 }) => {
@@ -95,14 +96,18 @@ const CustomStepper = ({
     <>
       {item.ship_info ? (
         <>
-          <div className={styles.flex}>
-            <span>{item.ship_info.point_load_date}</span>
-            <span>{item.ship_info.point_delivery_date}</span>
-          </div>
-          <div className={cx(styles.flex, paddingBottom)}>
-            <b>{item.ship_info.point_load_city}</b>
-            <b>{item.ship_info.point_delivery_city}</b>
-          </div>
+          {!disassembled && (
+            <>
+              <div className={styles.flex}>
+                <span>{item.ship_info.point_load_date}</span>
+                <span>{item.ship_info.point_delivery_date}</span>
+              </div>
+              <div className={cx(styles.flex, paddingBottom)}>
+                <b>{item.ship_info.point_load_city}</b>
+                <b>{item.ship_info.point_delivery_city}</b>
+              </div>
+            </>
+          )}
         </>
       ) : (
         <>
@@ -193,6 +198,7 @@ const CustomStepper = ({
 
 CustomStepper.propTypes = {
   status: PropTypes.bool,
+  disassembled: PropTypes.bool,
   updateStatus: PropTypes.func,
   paddingBottom: PropTypes.string,
   customBlock: PropTypes.string,

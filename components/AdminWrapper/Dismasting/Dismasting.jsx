@@ -25,6 +25,8 @@ import { renderSelect, renderInput } from '../../../utils/renderInputs';
 import { printData, getIdsArr } from '../../../utils/helpers';
 import Popup from '../../Popup/Popup';
 import MultiSelect from '../../Multi/Multi';
+import cx from 'classnames';
+import Pickers from '../../Pickers/Pickers';
 
 const Dismasting = () => {
   const router = useRouter();
@@ -49,10 +51,11 @@ const Dismasting = () => {
         port: router.query.port || '',
         search: router.query.search || '',
         shipping_status: router.query.shipping_status || '',
-        auto_name: router.query.auto_name || '',
         auto_year: router.query.auto_year || '',
         auto_make: router.query.auto_make || '',
         date: router.query.date || '',
+        date_from: router.query.date_from || '',
+        date_to: router.query.date_to || '',
       }),
     );
   }, [router.query]);
@@ -69,22 +72,14 @@ const Dismasting = () => {
         date: values.date,
         port: values.port && values.port.value,
         shipping_status: values.status && values.status.value,
-        auto_name: values.model && values.model.value,
         auto_year: values.years && values.years.value,
         auto_make: values.makes && values.makes.value,
+        date_from: document.querySelector('#from').value || '',
+        date_to: document.querySelector('#to').value || '',
       },
     });
   };
 
-  const allModel = { id: 0, value: '', label: 'All Model' };
-  const model = dismanting.additional.models;
-  const modelArr = Object.keys(model).map((item, index = '1') => ({
-    id: index + 1,
-    label: model[index].model_name,
-    value: model[index].model_name,
-  }));
-
-  const newModel = [allModel, ...modelArr];
   const allYear = { id: 0, value: '', label: 'All Years' };
   const years = dismanting.additional.years;
   const yearArr = Object.keys(years).map((item, index = '1') => ({
@@ -193,14 +188,22 @@ const Dismasting = () => {
                   })}
                   options={newMakes}
                 />
-                <Field
-                  name="model"
-                  component={renderSelect({
-                    placeholder: router.query.model || 'All Model',
-                    classNameWrapper: styles.widthSelect,
-                  })}
-                  options={newModel}
-                />
+                <div className={cx(styles.flex, styles.pickers)}>
+                  <p>Date from</p>
+                  <Pickers
+                    time={router.query.date_from || ''}
+                    defaultValue=""
+                    id="from"
+                  />
+                </div>
+                <div className={cx(styles.flex, styles.pickers)}>
+                  <p>Date to</p>
+                  <Pickers
+                    time={router.query.date_to || ''}
+                    defaultValue=""
+                    id="to"
+                  />
+                </div>
                 <Button
                   customBtn={styles.btnSubmit}
                   type="submit"

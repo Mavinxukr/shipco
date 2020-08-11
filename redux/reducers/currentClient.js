@@ -9,8 +9,8 @@ const initialState = {
 
 export const currentClient = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.currentClient.request
-    || actionTypes.currentClient.update:
+    case actionTypes.currentClient.request:
+    case actionTypes.currentClient.update:
       return {
         ...state,
         isFetch: true,

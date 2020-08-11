@@ -71,7 +71,7 @@ const AutoOpen = () => {
   const [newArrPicsWarehouses, setNewArrPicsWarehouses] = useState([]);
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
   const [newArrPicsDamage, setNewArrPicsDamage] = useState([]);
-  const [stepIndex, setStepIndex] = useState(0);
+  // const [stepIndex, setStepIndex] = useState(0);
 
   const router = useRouter();
 
@@ -89,47 +89,53 @@ const AutoOpen = () => {
       setArrPicsWarehouses(getArr(arrTypes, auto.data.document)[1].images);
       setArrPicsContainer(getArr(arrTypes, auto.data.document)[2].images);
     }
-    if (auto) {
-      setStepIndex(auto.data.offsite);
-    }
+    // if (auto) {
+    //   setStepIndex(auto.data.offsite);
+    // }
   }, [auto]);
 
   if (!isDataReceived) {
     return <Loader />;
   }
 
-  const saleObj = auto.data.sale_info;
+  const saleObj = auto.data.sale_info || [];
   const saleArr = Object.keys(saleObj).map((item, index) => ({
     id: index + 1,
     title: item.split('_').join(' '),
-    value: saleObj[item],
+    value: saleObj[item] || 'No information',
   }));
 
-  saleArr[1].title = 'Lane/Item/Grid/Row';
+  if (saleArr.length !== 0) {
+    saleArr[1].title = 'Lane/Item/Grid/Row';
+  }
 
-  const lotObj = auto.data.lot_info;
+  const lotObj = auto.data.lot_info || [];
   const lotArr = Object.keys(lotObj).map((item, index) => ({
     id: index + 1,
     title: item.split('_').join(' '),
-    value: lotObj[item],
+    value: lotObj[item] || 'No information',
   }));
 
-  lotArr[0].title = 'Lot # ';
-  lotArr[3].title = 'Highlights';
-  lotArr[4].title = 'Primary Damage';
-  lotArr[5].title = 'Secondary Damage';
-  lotArr[6].title = 'Est. Retail Value';
-  lotArr[7].title = 'VIN';
+  if (lotArr.length !== 0) {
+    lotArr[0].title = 'Lot # ';
+    lotArr[3].title = 'Highlights';
+    lotArr[4].title = 'Primary Damage';
+    lotArr[5].title = 'Secondary Damage';
+    lotArr[6].title = 'Est. Retail Value';
+    lotArr[7].title = 'VIN';
+  }
 
-  const featureObj = auto.data.feature_info;
+  const featureObj = auto.data.feature_info || [];
   const featureArr = Object.keys(featureObj).map((item, index) => ({
     id: index + 1,
     title: item.split('_').join(' '),
-    value: featureObj[item],
+    value: featureObj[item] || 'No information',
   }));
 
-  featureArr[2].title = 'Engine Type';
-  featureArr[4].title = 'Transmission';
+  if (featureArr.length !== 0) {
+    featureArr[2].title = 'Engine Type';
+    featureArr[4].title = 'Transmission';
+  }
 
   const imagesData = getArr(arrTypes, auto.data.document);
   const idAuto = auto.data.id;
@@ -151,7 +157,7 @@ const AutoOpen = () => {
             values.damage_status
             && values.damage_status.toLowerCase().replace(' ', '_'),
           disassembly: values.disassembly,
-          offsite: stepIndex || '0',
+          // offsite: stepIndex || '0',
           document: [
             {
               type: 'car_fax_report',
@@ -231,7 +237,7 @@ const AutoOpen = () => {
                               ? ''
                               : imagesData[3].images[0].name,
                           accept:
-                            '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                            '.xlsx,.xls,.doc, .docx,.ppt, .pptauto.data.ship_info.tracking_idx,.txt,.pdf',
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => {
@@ -321,7 +327,7 @@ const AutoOpen = () => {
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
                         parse={formatStringByPattern('99 9999 9999 9999')}
-                        defaultValue={auto.data.ship_info.tracking_id || ''}
+                        defaultValue={auto.data.ship_info && auto.data.ship_info.tracking_id || ''}
                       >
                         {renderInput({
                           label: 'Tracking id:',
@@ -337,12 +343,12 @@ const AutoOpen = () => {
                             label: 'Point of loading:',
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            placeholder: auto.data.ship_info.point_load[0] || '',
+                            placeholder: auto.data.ship_info && auto.data.ship_info.point_load[0] || '',
                           })}
                           options={stateOptions}
                         />
                         <Pickers
-                          time={auto.data.ship_info.point_load_date}
+                          time={auto.data.ship_info && auto.data.ship_info.point_load_date}
                           id="loadind"
                         />
                       </div>
@@ -351,7 +357,7 @@ const AutoOpen = () => {
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
                         parse={formatStringByPattern('999999999')}
-                        defaultValue={auto.data.ship_info.container_id || ''}
+                        defaultValue={auto.data.ship_info && auto.data.ship_info.container_id || ''}
                       >
                         {renderInput({
                           label: 'Container id:',
@@ -368,12 +374,12 @@ const AutoOpen = () => {
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
                             placeholder:
-                              auto.data.ship_info.point_delivery[0] || '',
+                              auto.data.ship_info && auto.data.ship_info.point_delivery[0] || '',
                           })}
                           options={stateOptionsDelivery}
                         />
                         <Pickers
-                          time={auto.data.ship_info.point_delivery_date}
+                          time={auto.data.ship_info && auto.data.ship_info.point_delivery_date || ''}
                           id="delivery"
                         />
                       </div>
@@ -381,7 +387,7 @@ const AutoOpen = () => {
                         <p className={styles.label}>Disassembly</p>
                         <Field
                           defaultValue={`${Number(
-                            auto.data.ship_info.disassembly,
+                            auto.data.ship_info && auto.data.ship_info.disassembly || '',
                           )}`}
                           name="disassembly"
                         >
@@ -407,40 +413,40 @@ const AutoOpen = () => {
                           )}
                         </Field>
                       </div>
-                      <div className={styles.flexRadio}>
-                        <p className={styles.label}>Offsite</p>
-                        {statusRadio.map((statusFilter) => {
-                          const classNameForButton = cx(styles.btnStatus, {
-                            [styles.activeStatus]: stepIndex === statusFilter.id,
-                          });
+                      {/*<div className={styles.flexRadio}>*/}
+                      {/*  <p className={styles.label}>Offsite</p>*/}
+                      {/*  {statusRadio.map((statusFilter) => {*/}
+                      {/*    const classNameForButton = cx(styles.btnStatus, {*/}
+                      {/*      [styles.activeStatus]: stepIndex === statusFilter.id,*/}
+                      {/*    });*/}
 
-                          return (
-                            <Button
-                              type="button"
-                              onClick={() => setStepIndex(statusFilter.id)}
-                              customBtn={classNameForButton}
-                              key={statusFilter.id}
-                            >
-                              {statusFilter.text}
-                            </Button>
-                          );
-                        })}
-                      </div>
-                      {stepIndex === 1 && (
-                        <Field
-                          name="offsite_price"
-                          validate={composeValidators(required, mustBeNumber)}
-                          type="text"
-                          defaultValue={auto.data.offsite_price || ''}
-                        >
-                          {renderInput({
-                            label: 'Offsite price:',
-                            classNameWrapper: styles.popupFieldRow,
-                            customInput: styles.color,
-                            classNameWrapperLabel: styles.blackLabel,
-                          })}
-                        </Field>
-                      )}
+                      {/*    return (*/}
+                      {/*      <Button*/}
+                      {/*        type="button"*/}
+                      {/*        onClick={() => setStepIndex(statusFilter.id)}*/}
+                      {/*        customBtn={classNameForButton}*/}
+                      {/*        key={statusFilter.id}*/}
+                      {/*      >*/}
+                      {/*        {statusFilter.text}*/}
+                      {/*      </Button>*/}
+                      {/*    );*/}
+                      {/*  })}*/}
+                      {/*</div>*/}
+                      {/*{stepIndex === 1 && (*/}
+                      {/*  <Field*/}
+                      {/*    name="offsite_price"*/}
+                      {/*    validate={composeValidators(required, mustBeNumber)}*/}
+                      {/*    type="text"*/}
+                      {/*    defaultValue={auto.data.offsite_price || ''}*/}
+                      {/*  >*/}
+                      {/*    {renderInput({*/}
+                      {/*      label: 'Offsite price:',*/}
+                      {/*      classNameWrapper: styles.popupFieldRow,*/}
+                      {/*      customInput: styles.color,*/}
+                      {/*      classNameWrapperLabel: styles.blackLabel,*/}
+                      {/*    })}*/}
+                      {/*  </Field>*/}
+                      {/*)}*/}
                       <div className={styles.submit}>
                         <Button
                           onClick={handleSubmit}
@@ -471,7 +477,7 @@ const AutoOpen = () => {
                       <div className={styles.items}>
                         <span>Sale Information</span>
                       </div>
-                      {saleArr.map(item => (
+                      {saleArr && saleArr.map(item => (
                         <div className={styles.items} key={item.id}>
                           <span>{item.title}:</span>
                           <span className={styles.widthItems}>
@@ -522,9 +528,9 @@ const AutoOpen = () => {
                           <span className={styles.status}>
                             {(values.damage_status
                               && values.damage_status.split('_').join(' '))
-                              || auto.data.ship_info.damage_status
+                              || auto.data.ship_info && auto.data.ship_info.damage_status
                                 .split('_')
-                                .join(' ')}
+                                .join(' ') || 'case_closed'.split('_').join(' ')}
                           </span>
                           <HoverPopup>
                             <Field name="damage_status">

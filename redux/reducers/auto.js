@@ -9,9 +9,9 @@ const initialState = {
 
 export const auto = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.auto.request
-      || actionTypes.auto.update
-      || actionTypes.auto.delete:
+    case actionTypes.auto.request:
+    case actionTypes.auto.update:
+    case actionTypes.auto.delete:
       return {
         ...state,
         isFetch: true,

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import qs from 'query-string';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
+import { API_DOMAIN_ADMIN } from '../enums/api';
 
 export const getClientRequest = async (params) => {
   const serverData = await Fetch.get('get-autos', params, {}, true);
@@ -37,7 +38,7 @@ export const addNewClientRequest = async (params, body) => {
     }
     formData.append(key, value);
   });
-  const serverData = await fetch(`http://167.172.214.80/api-admin/store-auto?${qs.stringify(params)}`, {
+  const serverData = await fetch(`${API_DOMAIN_ADMIN}store-auto?${qs.stringify(params)}`, {
     mode: 'cors',
     method: 'POST',
     headers: {

@@ -104,6 +104,31 @@ th:first-child {
 
 .selectBlock {
   width: 240px;
+
+  & + .selectBlock {
+    margin-left: 10px;
+  }
+}
+
+.pickers {
+  flex-wrap: nowrap;
+
+  div div {
+    margin: 0;
+
+    &:after {
+      display: none;
+    }
+
+    p {
+      display: none;
+    }
+  }
+
+  p {
+    white-space: nowrap;
+    margin: 0 10px;
+  }
 }
 
 .new,
@@ -253,11 +278,84 @@ td.paiment {
 }
 
 .customInputFile {
-  border: 1px solid $colorBorder;
+  border: 1px solid $colorBorder!important;
 }
 
 .noFiles {
   p {
     display: none;
+  }
+}
+
+.container td img {
+  width: 150px;
+}
+
+.filter {
+  justify-content: flex-start;
+  align-items: baseline;
+
+  .btnSubmit {
+    width: 46px;
+    height: 46px;
+    margin: 0 0 0 10px;
+  }
+}
+
+.btnStatus {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  margin-right: 20px;
+  background: transparent!important;
+  color: $colorContent!important;
+  font-size: 16px;
+}
+
+.btnStatus:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 25px;
+  height: 25px;
+  border: 1px solid $colorBorder;
+  border-radius: 100%;
+  background: transparent;
+}
+
+.activeStatus:after {
+  content: '';
+  width: 13px;
+  height: 13px;
+  background: $colorBackground;
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  border-radius: 100%;
+  transition: all 0.2s ease;
+}
+
+.flexRadio {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+
+  & > div {
+    display: flex;
+  }
+
+  p {
+    margin: 0 31px 0 0 !important;
+    min-width: 136px;
+    color: $colorBackground;
+  }
+
+  @media screen and (max-width: 768px) {
+    p {
+      min-width: 117px!important;
+    }
   }
 }

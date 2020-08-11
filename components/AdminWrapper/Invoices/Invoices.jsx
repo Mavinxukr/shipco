@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSortBy, useTable } from 'react-table';
 import { Field, Form } from 'react-final-form';
+import cx from 'classnames';
 import { getInvoices, updateInvoices } from '../../../redux/actions/invoices';
 import {
   invoicesDataSelector,
@@ -15,13 +16,14 @@ import CustomTable from '../../CustomTable/CustomTable';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
 import { renderInputFile } from '../../../utils/renderInputs';
 import IconPlus from '../../../assets/svg/Plus.svg';
-import styles from './Invoices.scss';
 import Loader from '../../Loader/Loader';
 import Button from '../../Button/Button';
 import { printData, getIdsArr } from '../../../utils/helpers';
 import Popup from '../../Popup/Popup';
 import MultiSelect from '../../Multi/Multi';
 import { print, columns } from './data';
+import Pickers from '../../Pickers/Pickers';
+import styles from './Invoices.scss';
 
 const Table = ({ columns, data, dispatch }) => {
   const {
@@ -150,6 +152,8 @@ const Invoices = () => {
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
         search: router.query.search || '',
+        date_from: router.query.date_from || '',
+        date_to: router.query.date_to || '',
       }),
     );
   }, [router.query]);
@@ -175,12 +179,23 @@ const Invoices = () => {
     });
   };
 
+  const onSubmitFilter = async (values) => {
+    router.push({
+      pathname: '/invoices-admin',
+      query: {
+        ...router.query,
+        date_from: document.querySelector('#from').value || '',
+        date_to: document.querySelector('#to').value || '',
+      },
+    });
+  };
+
   return (
     <MainLayout admin>
       <SubHeader
         onClick={() => {
           router.push({
-            pathname: '/auto-admin/invoices',
+            pathname: '/invoices-admin',
             query: {
               ...router.query,
               page: 1,
@@ -204,11 +219,43 @@ const Invoices = () => {
             Print
           </Button>
         </div>
+        <Form
+          onSubmit={onSubmitFilter}
+          render={({ handleSubmit, invalid, submitting }) => (
+            <form className={cx(styles.flex, styles.filter)} onSubmit={handleSubmit}>
+              <div className={cx(styles.flex, styles.pickers)}>
+                <p>Date from</p>
+                <Pickers
+                  time={router.query.date_from || ''}
+                  defaultValue=""
+                  id="from"
+                />
+              </div>
+              <div className={cx(styles.flex, styles.pickers)}>
+                <p>Date to</p>
+                <Pickers
+                  time={router.query.date_to || ''}
+                  defaultValue=""
+                  id="to"
+                />
+              </div>
+              <div className={cx(styles.flex, styles.selectBlock)}>
+                <Button
+                  customBtn={styles.btnSubmit}
+                  type="submit"
+                  disabled={submitting || invalid}
+                >
+                  Ok
+                </Button>
+              </div>
+            </form>
+          )}
+        />
         {invoices.data.length !== 0 ? (
           <CustomTable>
             <Pagination
               params={invoices.links}
-              pathname="/auto-admin/invoices"
+              pathname="/invoices-admin"
               router={router}
             />
             <div className={styles.scrollTable}>
@@ -220,7 +267,7 @@ const Invoices = () => {
             </div>
             <Pagination
               params={invoices.links}
-              pathname="/auto-admin/invoices"
+              pathname="/invoices-admin"
               router={router}
             />
           </CustomTable>

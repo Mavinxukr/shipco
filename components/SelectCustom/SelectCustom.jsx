@@ -118,7 +118,6 @@ SelectCustom.propTypes = {
   meta: PropTypes.object,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
-  defaultValue: PropTypes.array,
   onFocusCustom: PropTypes.func,
   isRequired: PropTypes.bool,
   custonOnChange: PropTypes.func,

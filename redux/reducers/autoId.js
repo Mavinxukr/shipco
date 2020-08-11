@@ -9,7 +9,8 @@ const initialState = {
 
 export const autoId = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.autoId.request || actionTypes.autoId.update:
+    case actionTypes.autoId.request:
+    case actionTypes.autoId.update:
       return {
         ...state,
         isFetch: true,

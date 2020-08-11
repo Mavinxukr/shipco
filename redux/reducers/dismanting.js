@@ -9,7 +9,8 @@ const initialState = {
 
 export const dismanting = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.dismanting.request || actionTypes.dismanting.update:
+    case actionTypes.dismanting.request:
+    case actionTypes.dismanting.update:
       return {
         ...state,
         isFetch: true,

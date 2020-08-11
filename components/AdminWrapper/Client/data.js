@@ -5,13 +5,8 @@ export const columns = [
     Header: 'Table',
     columns: [
       {
-        Header: 'Date',
+        Header: 'Date purchased',
         accessor: 'created_at',
-      },
-      {
-        Header: 'Product',
-        accessor: 'product',
-        Cell: ({ cell: { value } }) => <>Auto{value}</>,
       },
       {
         Header: 'ID',
@@ -32,6 +27,17 @@ export const columns = [
         ),
       },
       {
+        Header: 'Images',
+        accessor: 'image.link',
+        Cell: ({ cell: { value } }) => (
+          <img src={value || '/images/no-preview-available.png'} alt={value} />
+        ),
+      },
+      {
+        Header: 'Client id',
+        accessor: 'client.id',
+      },
+      {
         Header: 'Model',
         accessor: 'auto',
         Cell: ({ cell: { value } }) => <span>{value}</span>,
@@ -42,6 +48,11 @@ export const columns = [
         Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
+        Header: 'VIN number',
+        accessor: 'lot_info.vin_code',
+        Cell: ({ cell: { value } }) => <span>{value}</span>,
+      },
+      {
         Header: 'Point of loading',
         accessor: 'ship_info.point_load',
         Cell: ({ cell: { value } }) => (
@@ -49,7 +60,6 @@ export const columns = [
             {value ? (
               <>
                 <p>{value[0]}</p>
-                <p>{value[1]}</p>
               </>
             ) : (
               <>{value}</>
@@ -69,7 +79,6 @@ export const columns = [
             {value ? (
               <>
                 <p>{value[0]}</p>
-                <p>{value[1]}</p>
               </>
             ) : (
               <>{value}</>
@@ -127,16 +136,56 @@ export const columns = [
         Cell: ({ cell: { value } }) => <p>{value && <span>$ {value}</span>}</p>,
       },
       {
-        Header: 'Days to pay',
-        accessor: 'client.due_day',
-      },
-      {
         Header: 'Status',
         accessor: 'status',
-        Cell: ({ cell: { value } }) => <>{value.replace('_', ' ')}</>,
+        Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')}</>,
+      },
+      {
+        Header: 'Key',
+        accessor: 'feature_info.key',
+      },
+      {
+        Header: 'Auction',
+        accessor: 'auction',
+      },
+      {
+        Header: 'Damage status',
+        accessor: 'ship_info.damage_status',
+        Cell: ({ cell: { value } }) => <>{value && value.split('_').join(' ')}</>,
       },
     ],
   },
+];
+
+export const auctions = [
+  { value: 'Antique', label: 'Antique' },
+  { value: 'AutoBidMaster', label: 'AutoBidMaster' },
+  { value: 'Manheim', label: 'Manheim' },
+  { value: 'EZ Auto Auction', label: 'EZ Auto Auction' },
+  { value: 'AMCbid', label: 'AMCbid' },
+];
+
+export const popularCars = [
+  { value: 'Toyota Camry', label: 'Toyota Camry' },
+  { value: 'Toyota Corolla', label: 'Toyota Corolla' },
+  { value: 'Honda Civic', label: 'Honda Civic' },
+  { value: 'Nissan Altima', label: 'Nissan Altima' },
+  { value: 'Honda Accord', label: 'Honda Accord' },
+  { value: 'Hyundai Elantra', label: 'Hyundai Elantra' },
+  { value: 'Nissan Sentra', label: 'Nissan Sentra' },
+  { value: 'Ford Fusion', label: 'Ford Fusion' },
+  { value: 'Chevrolet Cruze', label: 'Chevrolet Cruze' },
+  { value: 'Hyundai Sonata', label: 'Hyundai Sonata' },
+  { value: 'Ford Focus', label: 'Ford Focus' },
+  { value: 'Chevrolet Malibu', label: 'Chevrolet Malibu' },
+  { value: 'Nissan Versa', label: 'Nissan Versa' },
+  { value: 'Subaru Impreza', label: 'Subaru Impreza' },
+  { value: 'Kia Forte', label: 'Kia Forte' },
+  { value: 'Kia Optima', label: 'Kia Optima' },
+  { value: 'Volkswagen Jetta', label: 'Volkswagen Jetta' },
+  { value: 'Ford Mustang', label: 'Ford Mustang' },
+  { value: 'Chevrolet Impala', label: 'Chevrolet Impala' },
+  { value: 'Kia Soul', label: 'Kia Soul' },
 ];
 
 export const city = [
@@ -147,22 +196,39 @@ export const city = [
   { value: '5', label: 'Montreal' },
 ];
 
+export const cityselect = [
+  { value: '', label: 'Point of loading' },
+  { value: 'California', label: 'California' },
+  { value: 'Texas', label: 'Texas' },
+  { value: 'New Jersey', label: 'New Jersey' },
+  { value: 'Savannah', label: 'Savannah' },
+  { value: 'Montreal', label: 'Montreal' },
+];
+
 export const stateStatus = [
   {
     value: '',
     label: 'All Status',
   },
   {
-    value: 'new',
-    label: 'New',
+    value: 'dispatched',
+    label: 'Dispatched',
   },
   {
-    value: 'pending',
-    label: 'Pending',
+    value: 'title_delay',
+    label: 'Title delay',
   },
   {
-    value: 'not_approved',
-    label: 'Not approved',
+    value: 'ready_to_load',
+    label: 'Ready to load',
+  },
+  {
+    value: 'loaded',
+    label: 'Loaded',
+  },
+  {
+    value: 'shipped',
+    label: 'Shipped',
   },
   {
     value: 'delivered',
@@ -172,16 +238,24 @@ export const stateStatus = [
 
 export const status = [
   {
-    value: 'new',
-    label: 'New',
+    value: 'dispatched',
+    label: 'Dispatched',
   },
   {
-    value: 'pending',
-    label: 'Pending',
+    value: 'title_delay',
+    label: 'Title delay',
   },
   {
-    value: 'not_approved',
-    label: 'Not approved',
+    value: 'ready_to_load',
+    label: 'Ready to load',
+  },
+  {
+    value: 'loaded',
+    label: 'Loaded',
+  },
+  {
+    value: 'shipped',
+    label: 'Shipped',
   },
   {
     value: 'delivered',
@@ -193,9 +267,8 @@ export const print = [
   { name: 'Date', id: 'autos.created_at' },
   { name: 'Id', id: 'autos.id' },
   { name: 'Model', id: 'autos.model_name' },
-  { name: 'Year', id: 'autos.year' },
-  { name: 'Make name', id: 'autos.make_name' },
   { name: 'Lot', id: 'lot_infos.lot_number' },
+  { name: 'VIN', id: 'lot_infos.vin_code' },
   { name: 'Point of loading', id: 'ship_infos.point_load_city' },
   { name: 'Container ID', id: 'ship_infos.container_id' },
   { name: 'Point of delivery', id: 'ship_infos.point_delivery_city' },
@@ -203,4 +276,39 @@ export const print = [
   { name: 'Paid', id: 'invoices.paid_price' },
   { name: 'Outstanding', id: 'invoices.outstanding_price' },
   { name: 'Status', id: 'autos.status' },
+  { name: 'Key', id: 'feature_infos.key' },
+  { name: 'Auction', id: 'autos.auction' },
+  { name: 'Damage status', id: 'ship_infos.damage_status' },
+];
+
+export const damageStatus = [
+  {
+    label: 'Damage status',
+    value: '',
+  },
+  {
+    label: 'Case closed',
+    value: 'case_closed',
+  },
+  {
+    id: 2,
+    label: 'Under unvestigation',
+    value: 'under_unvestigation',
+  },
+  {
+    id: 3,
+    label: 'Compensation given',
+    value: 'compensation_given',
+  },
+];
+
+export const statusRadio = [
+  {
+    id: 1,
+    text: 'Yes',
+  },
+  {
+    id: 0,
+    text: 'No',
+  },
 ];

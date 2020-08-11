@@ -9,8 +9,8 @@ const initialState = {
 
 export const client = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.client.request
-    || actionTypes.client.delete:
+    case actionTypes.client.request:
+    case actionTypes.client.delete:
       return {
         ...state,
         isFetch: true,

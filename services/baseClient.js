@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
+import { API_DOMAIN_ADMIN } from '../enums/api';
 
 export const getBaseClientRequest = async (params) => {
   const serverData = await Fetch.get('get-clients', params, {}, true);
@@ -22,7 +23,7 @@ export const addNewBaseClientRequest = async (params, body) => {
     }
     formData.append(key, value);
   });
-  const serverData = await fetch('http://167.172.214.80/api-admin/store-client', {
+  const serverData = await fetch(`${API_DOMAIN_ADMIN}store-client`, {
     method: 'POST',
     headers: {
       Authorization: cookies.get('tokenShipco'),

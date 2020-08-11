@@ -9,10 +9,10 @@ const initialState = {
 
 export const payments = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.payments.request
-    || actionTypes.payments.delete
-    || actionTypes.payments.save
-    || actionTypes.payments.update:
+    case actionTypes.payments.request:
+    case actionTypes.payments.delete:
+    case actionTypes.payments.save:
+    case actionTypes.payments.update:
       return {
         ...state,
         isFetch: true,

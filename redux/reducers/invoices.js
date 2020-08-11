@@ -9,7 +9,8 @@ const initialState = {
 
 export const invoices = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.invoices.request || actionTypes.invoices.update:
+    case actionTypes.invoices.request:
+    case actionTypes.invoices.update:
       return {
         ...state,
         isFetch: true,

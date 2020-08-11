@@ -37,6 +37,7 @@ import {
   required,
   mustBeNumber,
   composeValidators,
+  vinNum,
 } from '../../../utils/validation';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Pagination from '../../Pagination/Pagination';
@@ -207,19 +208,19 @@ const Parts = () => {
     return <Loader />;
   }
 
-  const vinNumbers = parts.additional.vin_numbers;
-  const vinArr = Object.keys(vinNumbers).map((item, index) => ({
-    id: index + 1,
-    label: vinNumbers[index].vin_code,
-    value: vinNumbers[index].vin_code,
-  }));
+  // const vinNumbers = parts.additional.vin_numbers;
+  // const vinArr = Object.keys(vinNumbers).map((item, index) => ({
+  //   id: index + 1,
+  //   label: vinNumbers[index].vin_code,
+  //   value: vinNumbers[index].vin_code,
+  // }));
 
-  const catalogNumbers = parts.additional.catalog_numbers;
-  const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
-    id: index + 1,
-    label: catalogNumbers[index].catalog_number,
-    value: catalogNumbers[index].catalog_number,
-  }));
+  // const catalogNumbers = parts.additional.catalog_numbers;
+  // const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
+  //   id: index + 1,
+  //   label: catalogNumbers[index].catalog_number,
+  //   value: catalogNumbers[index].catalog_number,
+  // }));
 
   const onSubmit = async (values) => {
     dispatch(
@@ -227,8 +228,8 @@ const Parts = () => {
         {},
         {
           ...values,
-          vin: values.vin && values.vin.label,
-          status: values.status && values.status.value,
+          // vin: values.vin && values.vin.label,
+          // status: values.status && values.status.value,
           catalog_number: values.catalog_numberInput || values.catalog_number && values.catalog_number.label,
           image: newArrPicsContainer,
         },
@@ -243,7 +244,6 @@ const Parts = () => {
         {},
         {
           ...values,
-          vin: values.vin && values.vin.label,
           status: values.status && values.status.value,
           catalog_number: values.catalog_number && values.catalog_number.label,
           image: newArrPicsContainer,
@@ -401,17 +401,17 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="catalog_number"
-                  component={renderSelect({
-                    placeholder: updateData.catalog_number,
-                    label: 'Catalog number',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={catalogArr}
-                />
+                {/* <Field */}
+                {/*  name="catalog_number" */}
+                {/*  component={renderSelect({ */}
+                {/*    placeholder: updateData.catalog_number, */}
+                {/*    label: 'Catalog number', */}
+                {/*    classNameWrapper: styles.popupFieldRow, */}
+                {/*    classNameLabel: styles.label, */}
+                {/*    widthInputBlock: styles.widthInput, */}
+                {/*  })} */}
+                {/*  options={catalogArr} */}
+                {/* /> */}
                 <Field
                   name="name"
                   type="text"
@@ -438,15 +438,17 @@ const Parts = () => {
                 </Field>
                 <Field
                   name="vin"
-                  component={renderSelect({
-                    placeholder: updateData.vin,
+                  type="text"
+                  validate={vinNum}
+                  defaultValue={updateData.vin || ''}
+                >
+                  {renderInput({
                     label: 'VIN Number',
                     classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
+                    classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
                   })}
-                  options={vinArr}
-                />
+                </Field>
                 <Field
                   name="status"
                   component={renderSelect({
@@ -522,7 +524,7 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field name="catalog_numberInput" type="number">
+                <Field name="catalog_numberInput" type="text">
                   {renderInput({
                     label: 'Catalog number',
                     classNameWrapper: styles.popupFieldRow,
@@ -530,17 +532,17 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="catalog_number"
-                  component={renderSelect({
-                    placeholder: '',
-                    label: 'or',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={catalogArr}
-                />
+                {/* <Field */}
+                {/*  name="catalog_number" */}
+                {/*  component={renderSelect({ */}
+                {/*    placeholder: '', */}
+                {/*    label: 'or', */}
+                {/*    classNameWrapper: styles.popupFieldRow, */}
+                {/*    classNameLabel: styles.label, */}
+                {/*    widthInputBlock: styles.widthInput, */}
+                {/*  })} */}
+                {/*  options={catalogArr} */}
+                {/* /> */}
                 <Field name="name" validate={required} type="text">
                   {renderInput({
                     label: 'Name',
@@ -557,29 +559,29 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="vin"
-                  component={renderSelect({
-                    placeholder: '',
-                    label: 'VIN Number',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={vinArr}
-                />
-                <Field
-                  name="status"
-                  validate={required}
-                  component={renderSelect({
-                    placeholder: '',
-                    label: 'Status',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={statusSelect}
-                />
+                {/* <Field */}
+                {/*  name="vin" */}
+                {/*  component={renderSelect({ */}
+                {/*    placeholder: '', */}
+                {/*    label: 'VIN Number', */}
+                {/*    classNameWrapper: styles.popupFieldRow, */}
+                {/*    classNameLabel: styles.label, */}
+                {/*    widthInputBlock: styles.widthInput, */}
+                {/*  })} */}
+                {/*  options={vinArr} */}
+                {/* /> */}
+                {/* <Field */}
+                {/*  name="status" */}
+                {/*  validate={required} */}
+                {/*  component={renderSelect({ */}
+                {/*    placeholder: '', */}
+                {/*    label: 'Status', */}
+                {/*    classNameWrapper: styles.popupFieldRow, */}
+                {/*    classNameLabel: styles.label, */}
+                {/*    widthInputBlock: styles.widthInput, */}
+                {/*  })} */}
+                {/*  options={statusSelect} */}
+                {/* /> */}
                 <Field
                   name="quality"
                   validate={composeValidators(required, mustBeNumber)}

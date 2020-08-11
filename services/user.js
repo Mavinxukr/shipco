@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
+import { API_DOMAIN_CLIENT } from '../enums/api';
 
 export const login = async (params, body) => {
   const serverData = await Fetch.post('login', params, {
@@ -29,7 +30,7 @@ export const editCurrentUserRequest = async (params, body) => {
     }
     formData.append(key, value);
   });
-  const serverData = await fetch('http://167.172.214.80/api-client/update-profile', {
+  const serverData = await fetch(`${API_DOMAIN_CLIENT}update-profile`, {
     method: 'POST',
     headers: {
       Authorization: cookies.get('tokenShipco'),

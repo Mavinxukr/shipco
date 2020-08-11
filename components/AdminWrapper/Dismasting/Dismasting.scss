@@ -36,6 +36,7 @@
 
 .btnSubmit {
   padding: 15px;
+  margin-left: 10px;
 }
 
 .fullWidth {
@@ -119,5 +120,26 @@
 
   @media screen and (max-width: 768px) {
     margin-top: 30px;
+  }
+}
+
+.pickers {
+  flex-wrap: nowrap;
+
+  div div {
+    margin: 0;
+
+    &:after {
+      display: none;
+    }
+
+    p {
+      display: none;
+    }
+  }
+
+  p {
+    white-space: nowrap;
+    margin: 0 10px;
   }
 }

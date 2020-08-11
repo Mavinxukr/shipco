@@ -45,7 +45,7 @@ export const statusRadio = [
   },
   {
     id: 0,
-    text: 'No'
+    text: 'No',
   },
 ];
 

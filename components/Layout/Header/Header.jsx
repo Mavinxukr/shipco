@@ -165,6 +165,15 @@ const Header = ({ newLink, admin }) => {
                   </a>
                 </ActiveLink>
               </li>
+              <li className={styles.menuItem}>
+                <ActiveLink activeClassName={styles.active} href="/invoices-admin">
+                  <a className={styles.menuLink}>
+                    <IconInvoices className={styles.menuIcon} />
+                    Invoices
+                    <p className={styles.menuDot} />
+                  </a>
+                </ActiveLink>
+              </li>
               {newLink ? (
                 <div className={classNameForOpenContainer}>
                   <Button
@@ -311,11 +320,13 @@ const Header = ({ newLink, admin }) => {
                 </a>
               </Link>
             )}
+            {!admin && (
             <Link href={admin ? '/' : '/profile-settings'}>
               <a className={styles.bottomIconsLink}>
                 <IconUser />
               </a>
             </Link>
+            )}
             <Button onClick={() => {
               if (!admin) {
                 dispatch(logoutCurrentUser({}, cookies, true));

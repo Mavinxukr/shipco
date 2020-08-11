@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
+import { API_DOMAIN_ADMIN } from '../enums/api';
 
 export const getInvoicesRequest = async (params) => {
   const serverData = await Fetch.get('get-invoices', params, {}, true);
@@ -20,7 +21,7 @@ export const updateInvoicesRequest = async (params, body, id) => {
     formData.append(key, value);
   });
   const serverData = await fetch(
-    `http://167.172.214.80/api-admin/restore-invoice-document/${id}`,
+    `${API_DOMAIN_ADMIN}restore-invoice-document/${id}`,
     {
       method: 'POST',
       headers: {

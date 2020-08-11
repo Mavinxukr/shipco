@@ -15,6 +15,14 @@ export const columns = [
         accessor: 'date',
       },
       {
+        Header: 'Client ID',
+        accessor: 'client_id',
+      },
+      {
+        Header: 'VIN',
+        accessor: 'vin',
+      },
+      {
         Header: 'Auto',
         accessor: 'name_car',
       },
@@ -63,7 +71,7 @@ export const columns = [
         accessor: 'status',
         Cell: ({ cell: { value } }) => (
           <>
-            <p>{value[0]}</p>
+            <p>{value[0] || '-'}</p>
             <p>{value[1] || '-'}</p>
           </>
         ),
@@ -99,6 +107,10 @@ export const columns = [
           </>
         ),
       },
+      {
+        Header: 'Days past due',
+        accessor: 'due_day',
+      },
     ],
   },
 ];
@@ -106,9 +118,12 @@ export const columns = [
 export const print = [
   { name: 'Date', id: 'invoices.created_at' },
   { name: 'Id', id: 'invoices.id' },
+  { name: 'Client Id', id: 'invoices.client_id' },
+  { name: 'VIN', id: 'invoices.vin' },
   { name: 'Auto', id: 'invoices.name_car' },
   { name: 'Total', id: 'invoices.total_price' },
   { name: 'Paid', id: 'invoices.paid_price' },
   { name: 'Outstanding', id: 'invoices.outstanding_price' },
   { name: 'Status', id: 'invoices.status_shipping' },
+  { name: 'Days past due', id: 'invoices.due_day' },
 ];

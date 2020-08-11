@@ -164,7 +164,10 @@ td.name_car {
 
 td.id,
 td.date,
-td.name_car {
+td.name_car,
+td.client_id,
+td.vin,
+td.due_day{
   padding-bottom: 65px;
 }
 
@@ -224,4 +227,37 @@ th:first-child {
 
 th.documents svg {
   display: none
+}
+
+.filter {
+  justify-content: flex-start;
+  align-items: baseline;
+  margin-top: 20px;
+
+  .btnSubmit {
+    width: 46px;
+    height: 46px;
+    margin: 0 0 0 10px;
+  }
+}
+
+.pickers {
+  flex-wrap: nowrap;
+
+  div div {
+    margin: 0;
+
+    &:after {
+      display: none;
+    }
+
+    p {
+      display: none;
+    }
+  }
+
+  p {
+    white-space: nowrap;
+    margin: 0 10px;
+  }
 }

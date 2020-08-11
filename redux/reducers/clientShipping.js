@@ -9,8 +9,8 @@ const initialState = {
 
 export const clientShipping = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.clientShipping.request
-             || actionTypes.clientShipping.update:
+    case actionTypes.clientShipping.request:
+    case actionTypes.clientShipping.update:
       return {
         ...state,
         isFetch: true,

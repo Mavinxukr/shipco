@@ -1,2 +1,2 @@
-export const API_DOMAIN_ADMIN = 'http://167.172.214.80/api-admin/';
-export const API_DOMAIN_CLIENT = 'http://167.172.214.80/api-client/';
+export const API_DOMAIN_ADMIN = 'https://shipko.mavinx.com/api-admin/';
+export const API_DOMAIN_CLIENT = 'https://shipko.mavinx.com/api-client/';

@@ -26,6 +26,13 @@ export const passwordValidation = (value) => {
   return undefined;
 };
 
+export const vinNum = (value) => {
+  if (value.length === 17 && /^[0-9a-zA-Z]+$/.test(value)) {
+    return undefined;
+  }
+  return 'Required';
+};
+
 export const mustBeNumber = value => /[^0-9\(\)\-\+\s]/i.test(value) ? 'Must be a number' : '';
 
 export const lengthPhone = value => value.length < 17 ? 'Not enough numbers' : '';

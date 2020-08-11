@@ -23,7 +23,7 @@ import { state } from './data';
 import { updateCurrentClient } from '../../../redux/actions/currentClient';
 
 const SubHeader = ({
-  hidden, currentClientId, currentClient, onClick, client
+  hidden, currentClientId, currentClient, onClick, client,
 }) => {
   const router = useRouter();
 
@@ -100,17 +100,6 @@ const SubHeader = ({
               >
                 <a className={styles.menuLink}>
                   Auto for dismanting
-                  <span className={styles.dotActive} />
-                </a>
-              </ActiveLink>
-            </li>
-            <li>
-              <ActiveLink
-                activeClassName={styles.active}
-                href="/auto-admin/invoices"
-              >
-                <a className={styles.menuLink}>
-                  Invoice
                   <span className={styles.dotActive} />
                 </a>
               </ActiveLink>

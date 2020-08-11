@@ -3,8 +3,29 @@ export const columns = [
     Header: 'Table',
     columns: [
       {
+        Header: 'ID',
+        accessor: 'id',
+      },
+      {
+        Header: 'Client ID',
+        accessor: 'client_id',
+      },
+      {
         Header: 'Catalog number',
         accessor: 'catalog_number',
+      },
+      {
+        Header: 'VIN number',
+        accessor: 'vin',
+        Cell: ({ cell: { value } }) => <>{value}</>,
+      },
+      {
+        Header: 'Container',
+        accessor: 'container',
+      },
+      {
+        Header: 'Delivery date',
+        accessor: 'delivery_date',
       },
       {
         Header: 'Name',
@@ -14,10 +35,10 @@ export const columns = [
         Header: 'Auto',
         accessor: 'auto',
       },
-      {
-        Header: 'Comment',
-        accessor: 'comment',
-      },
+      // {
+      //   Header: 'Comment',
+      //   accessor: 'comment',
+      // },
       {
         Header: 'Quality',
         accessor: 'quality',
@@ -25,9 +46,8 @@ export const columns = [
       {
         Header: 'Status',
         accessor: 'status',
-        Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')}</>,
+        Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')|| 'New' }</>,
       },
-
       {
         Header: 'Actions',
         accessor: 'actions',

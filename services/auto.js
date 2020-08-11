@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
+import { API_DOMAIN_ADMIN } from '../enums/api';
 
 export const getAutoRequest = async (params, id) => {
   const serverData = await Fetch.get(`get-auto/${id}`, params, {}, true);
@@ -34,7 +35,7 @@ export const updateAutoRequest = async (params, body, id) => {
     formData.append(key, value);
   });
   const serverData = await fetch(
-    `http://167.172.214.80/api-admin/update-auto/${id}`,
+    `${API_DOMAIN_ADMIN}update-auto/${id}`,
     {
       mode: 'cors',
       method: 'POST',

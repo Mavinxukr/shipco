@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
 import { cookies } from '../utils/getCookies';
+import { API_DOMAIN_ADMIN } from '../enums/api';
 
 export const getPartsRequest = async (params) => {
   const serverData = await Fetch.get('get-parts', params, {}, true);
@@ -29,7 +30,7 @@ export const addNewPartsRequest = async (params, body) => {
     formData.append(key, value);
   });
   const serverData = await fetch(
-    'http://167.172.214.80//api-admin/store-part',
+    `${API_DOMAIN_ADMIN}store-part`,
     {
       method: 'POST',
       headers: {
@@ -61,7 +62,7 @@ export const updatePartsRequest = async (params, body, id) => {
     formData.append(key, value);
   });
   const serverData = await fetch(
-    `http://167.172.214.80//api-admin/update-part/${id}`,
+    `${API_DOMAIN_ADMIN}update-part/${id}`,
     {
       method: 'POST',
       headers: {

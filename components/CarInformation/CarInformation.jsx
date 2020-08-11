@@ -72,13 +72,13 @@ const CarInformation = ({
               && item.image.link)
             || '/images/no-preview-available.png'
           }
-          alt={item.model_name || '21321'}
+          alt={item.model_name || 'No Information'}
         />
       </div>
       <div className={styles.column}>
-        <p className={styles.colorText}>{item.auto || '21321'}</p>
-        <p>Lot # {(item.lot_info && item.lot_info.lot_number) || '12312'}</p>
-        <p>VIN: {(item.lot_info && item.lot_info.vin_code) || '21321'}</p>
+        <p className={styles.colorText}>{item.auto || 'No Information'}</p>
+        <p>Lot # {(item.lot_info && item.lot_info.lot_number) || 'No Information'}</p>
+        <p>VIN: {(item.lot_info && item.lot_info.vin_code) || 'No Information'}</p>
         {admin && (
           <Link
             href={{
@@ -98,26 +98,32 @@ const CarInformation = ({
         <CustomStepper
           status={status}
           item={item}
+          disassembled={disassembled}
           customBlock={styles.paddingBlock}
           paddingBottom={styles.paddingBottom}
           updateStatus={updateStatus}
         />
       </div>
       <div className={styles.column}>
-        <p>
-          Tracking id:{' '}
-          <span className={styles.colorText}>
-            {(item.ship_info && item.ship_info.tracking_id) || '21321'}
-          </span>
-        </p>
-        <p>
-          Point of loading:{' '}
-          {(item.ship_info && item.ship_info.point_delivery[0]) || '21321'}
-        </p>
+        {!disassembled && (
+          <>
+            <p>
+              Tracking id:{' '}
+              <span className={styles.colorText}>
+              {(item.ship_info && item.ship_info.tracking_id) || 'No Information'}
+            </span>
+            </p>
+            <p>
+            Point of loading:{' '}
+            {(item.ship_info && item.ship_info.point_delivery[0]) || 'No Information'}
+            </p>
+          </>
+        )}
+
         <p>
           Container id:{' '}
           <span className={styles.colorText}>
-            {(item.ship_info && item.ship_info.container_id) || '21321'}
+            {(item.ship_info && item.ship_info.container_id) || 'No Information'}
           </span>
         </p>
         {disassembled && (
