@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { useRowSelect, useTable, useSortBy } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import { Field, Form } from 'react-final-form';
-import formatStringByPattern from 'format-string-by-pattern';
 import _ from 'lodash';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import {

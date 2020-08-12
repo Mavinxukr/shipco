@@ -11,7 +11,7 @@ export const columns = [
         accessor: 'client_id',
       },
       {
-        Header: 'Catalog number',
+        Header: 'Part number',
         accessor: 'catalog_number',
       },
       {

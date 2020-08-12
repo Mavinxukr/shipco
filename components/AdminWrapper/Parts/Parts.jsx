@@ -524,9 +524,9 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field name="catalog_numberInput" type="text">
+                <Field name="catalog_number" type="text">
                   {renderInput({
-                    label: 'Catalog number',
+                    label: 'Part number',
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
