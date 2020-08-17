@@ -169,6 +169,11 @@ th:first-child {
   }
 }
 
+.error {
+  color: $colorBackground;
+  margin-top: 10px;
+}
+
 .btnSubmit {
   margin-left: 168px;
   width: 379px;

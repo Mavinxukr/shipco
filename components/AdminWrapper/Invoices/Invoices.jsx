@@ -14,16 +14,19 @@ import SubHeader from '../../Layout/SubHeader/SubHeader';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
-import { renderInputFile } from '../../../utils/renderInputs';
+import { renderInputFile, renderSelect } from '../../../utils/renderInputs';
 import IconPlus from '../../../assets/svg/Plus.svg';
 import Loader from '../../Loader/Loader';
 import Button from '../../Button/Button';
 import { printData, getIdsArr } from '../../../utils/helpers';
 import Popup from '../../Popup/Popup';
 import MultiSelect from '../../Multi/Multi';
-import { print, columns } from './data';
+import {
+  print, columns, firstStatus, secondStatus, firstStatusSelect, secondStatusSelect,
+} from './data';
 import Pickers from '../../Pickers/Pickers';
 import styles from './Invoices.scss';
+import HoverPopup from '../../HoverPopup/HoverPopup';
 
 const Table = ({ columns, data, dispatch }) => {
   const {
@@ -123,7 +126,78 @@ const Table = ({ columns, data, dispatch }) => {
                         )}
                       </>
                     ) : (
-                      <>{cell.render('Cell')} </>
+                      <>
+                        {cell.column.id === 'status' ? (
+                          <>
+                            <div className={styles.position}>
+                              <span className={styles.status}>
+                                {cell.row.original.status[0]}
+                              </span>
+                              <HoverPopup>
+                                {secondStatus.map((carStatus, index) => {
+                                  const classNameForButton = cx(styles.btn, {
+                                    [styles.activeStatus]: carStatus.value === cell.row.original.status[0],
+                                  });
+                                  return (
+                                    <Button
+                                      onClick={() => (
+                                        dispatch(
+                                          updateInvoices(
+                                            {},
+                                            {
+                                              status: `${carStatus.value}`,
+                                            },
+                                            cell.row.original.id,
+                                          ),
+                                        )
+                                      )}
+                                      customBtn={classNameForButton}
+                                      key={index}
+                                      id={carStatus.label}
+                                    >
+                                      {carStatus.value}
+                                    </Button>
+                                  );
+                                })}
+                              </HoverPopup>
+                            </div>
+                            <div className={styles.position}>
+                              <span className={styles.status}>
+                                {cell.row.original.status[1]}
+                              </span>
+                              <HoverPopup>
+                                {firstStatus.map((carStatus, index) => {
+                                  const classNameForButton = cx(styles.btn, {
+                                    [styles.activeStatus]: carStatus.value === cell.row.original.status[1],
+                                  });
+                                  return (
+                                    <Button
+                                      onClick={() => (
+                                        dispatch(
+                                          updateInvoices(
+                                            {},
+                                            {
+                                              status_shipping: `${carStatus.value}`,
+                                            },
+                                            cell.row.original.id,
+                                          ),
+                                        )
+                                      )}
+                                      customBtn={classNameForButton}
+                                      key={index}
+                                      id={carStatus.label}
+                                    >
+                                      {carStatus.value}
+                                    </Button>
+                                  );
+                                })}
+                              </HoverPopup>
+                            </div>
+                          </>
+                        ) : (
+                          <>{cell.render('Cell')} </>
+                        )}
+                      </>
                     )}
                   </td>
                 ))}
@@ -152,7 +226,11 @@ const Invoices = () => {
         page: router.query.page || 1,
         countpage: router.query.countpage || '10',
         search: router.query.search || '',
+        client_id: router.query.client_id || '',
+        past_due: router.query.past_due || '',
         date_from: router.query.date_from || '',
+        shipping_status: router.query.shipping_status || '',
+        auction_status: router.query.auction_status || '',
         date_to: router.query.date_to || '',
       }),
     );
@@ -178,13 +256,26 @@ const Invoices = () => {
       setPrintPopup,
     });
   };
+  const clientId = invoices.additional.clients.map(item => ({
+    label: item.name,
+    value: item.name,
+  }));
+
+  clientId.unshift({
+    label: 'All clients',
+    value: '',
+  });
 
   const onSubmitFilter = async (values) => {
     router.push({
       pathname: '/invoices-admin',
       query: {
         ...router.query,
+        client_id: values.client_id && values.client_id.value,
+        shipping_status: values.shipping_status && values.shipping_status.value,
+        auction_status: values.auction_status && values.auction_status.value,
         date_from: document.querySelector('#from').value || '',
+        past_due: document.querySelector('#past_due').value || '',
         date_to: document.querySelector('#to').value || '',
       },
     });
@@ -223,6 +314,34 @@ const Invoices = () => {
           onSubmit={onSubmitFilter}
           render={({ handleSubmit, invalid, submitting }) => (
             <form className={cx(styles.flex, styles.filter)} onSubmit={handleSubmit}>
+              <Field
+                name="client_id"
+                component={renderSelect({
+                  placeholder: 'All clients',
+                  label: '',
+                  classNameWrapper: styles.popupFieldRow,
+                })}
+                options={clientId}
+              />
+              <Field
+                name="auction_status"
+                component={renderSelect({
+                  placeholder: 'Auction status',
+                  label: '',
+                  classNameWrapper: styles.popupFieldRow,
+                })}
+                options={secondStatusSelect}
+              />
+              <Field
+                name="shipping_status"
+                component={renderSelect({
+                  placeholder: 'Shipping status',
+                  label: '',
+                  classNameWrapper: styles.popupFieldRow,
+                })}
+                options={firstStatusSelect}
+              />
+              <input type="number" id="past_due" className={styles.inputNumber} />
               <div className={cx(styles.flex, styles.pickers)}>
                 <p>Date from</p>
                 <Pickers

@@ -8,6 +8,18 @@ export const getInvoicesRequest = async (params) => {
   return serverData;
 };
 
+export const updateStatusInvoices = async (params, body, id) => {
+  const serverData = await Fetch.post(
+    `update-invoice/${id}`,
+    params,
+    {
+      body: JSON.stringify(body),
+    },
+    true,
+  );
+  return serverData;
+}
+
 export const updateInvoicesRequest = async (params, body, id) => {
   const formData = new FormData();
   _.forIn(body, (value, key) => {

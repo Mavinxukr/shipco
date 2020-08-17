@@ -2,13 +2,15 @@ import {
   call, put, select, takeLatest,
 } from 'redux-saga/effects';
 import { getInvoicesSuccess, getInvoicesError } from '../../actions/invoices';
-import { updateInvoicesRequest } from '../../../services/invoices';
+import { updateInvoicesRequest, updateStatusInvoices } from '../../../services/invoices';
 import * as actionTypes from '../../actions/actionTypes';
 
 const getInvoicesData = state => state.invoices.invoicesData;
 
-function* updateInvoices({ params, body, id }) {
-  const response = yield call(updateInvoicesRequest, params, body, id);
+function* updateInvoices({
+  params, body, id, status,
+}) {
+  const response = yield call(updateStatusInvoices, params, body, id, status);
   const invoiceData = yield select(getInvoicesData);
   if (response.status) {
     const idx = invoiceData.data.findIndex(item => item.id === id);

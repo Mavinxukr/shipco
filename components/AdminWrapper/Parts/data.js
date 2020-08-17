@@ -46,7 +46,7 @@ export const columns = [
       {
         Header: 'Status',
         accessor: 'status',
-        Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')|| 'New' }</>,
+        Cell: ({ cell: { value } }) => <>{value.split('_').join(' ') || 'New' }</>,
       },
       {
         Header: 'Actions',

@@ -13,7 +13,19 @@
 
 .scrollTable {
   width: 100%;
-  overflow: auto;
+
+  @media screen and (max-width: 1100px) {
+    overflow: auto;
+  }
+}
+
+.popupFieldRow {
+  flex-direction: row !important;
+  align-items: center;
+  padding: 10px 0;
+  width: 100% !important;
+  max-width: 285px;
+
 }
 
 .notFound {
@@ -126,6 +138,40 @@ td.name_car {
     display: none;
   }
 }
+
+.position {
+  position: relative;
+  cursor: pointer;
+
+  &:hover div {
+    display: flex;
+    background: $white!important;
+    max-width: 300px!important;
+    width: 100% !important;
+    min-width: 300px !important;
+
+    &:before,
+    &:after {
+      display: none;
+    }
+
+    button {
+      background: $white!important;
+      display: flex;
+      padding: 10px!important;
+      align-items: center;
+      justify-content: center;
+      color: $colorContent!important;
+      text-transform: capitalize;
+
+      &:hover,
+      &.activeStatus {
+        color: $colorBackgroundHover!important;
+      }
+    }
+  }
+}
+
 .customInputFile {
   border: none;
   display: none;
@@ -234,11 +280,27 @@ th.documents svg {
   align-items: baseline;
   margin-top: 20px;
 
+  .popupFieldRow + .popupFieldRow {
+    margin-left: 10px;
+  }
+
   .btnSubmit {
     width: 46px;
     height: 46px;
     margin: 0 0 0 10px;
   }
+}
+
+.inputNumber {
+  background: $colorInput;
+  border: 1px solid $colorBorder;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 15px 20px;
+  max-width: 285px;
+  margin-left: 10px;
+  font-family: $fontMain;
 }
 
 .pickers {

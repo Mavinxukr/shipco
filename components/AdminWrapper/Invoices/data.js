@@ -127,3 +127,85 @@ export const print = [
   { name: 'Status', id: 'invoices.status_shipping' },
   { name: 'Days past due', id: 'invoices.due_day' },
 ];
+
+export const firstStatus = [
+  {
+    label: 'not due yet',
+    value: 'not due yet',
+  },
+  {
+    label: 'past due',
+    value: 'past due',
+  },
+  {
+    label: 'not paid',
+    value: 'not paid',
+  },
+  {
+    label: 'paid',
+    value: 'paid',
+  },
+];
+export const secondStatus = [
+  {
+    label: 'not paid',
+    value: 'not paid',
+  },
+  {
+    label: 'paid',
+    value: 'paid',
+  },
+  {
+    label: 'relist',
+    value: 'relist',
+  },
+  {
+    label: 'refund',
+    value: 'refund',
+  },
+];
+
+export const firstStatusSelect = [
+  {
+    label: 'Auction status',
+    value: '',
+  },
+  {
+    label: 'not due yet',
+    value: 'not due yet',
+  },
+  {
+    label: 'past due',
+    value: 'past due',
+  },
+  {
+    label: 'not paid',
+    value: 'not paid',
+  },
+  {
+    label: 'paid',
+    value: 'paid',
+  },
+];
+export const secondStatusSelect = [
+  {
+    label: 'Shipping status',
+    value: '',
+  },
+  {
+    label: 'not paid',
+    value: 'not paid',
+  },
+  {
+    label: 'paid',
+    value: 'paid',
+  },
+  {
+    label: 'relist',
+    value: 'relist',
+  },
+  {
+    label: 'refund',
+    value: 'refund',
+  },
+];

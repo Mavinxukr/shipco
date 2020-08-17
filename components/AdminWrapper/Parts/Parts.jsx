@@ -171,6 +171,7 @@ const Parts = () => {
   const [selected, setSelected] = useState([]);
 
   const parts = useSelector(partsDataSelector);
+  const error = useSelector(state => state.parts.error);
   const isDataReceived = useSelector(partsDataReceivedSelector);
 
   const dispatch = useDispatch();
@@ -203,6 +204,12 @@ const Parts = () => {
       );
     }
   }, [parts]);
+
+  useEffect(() => {
+    if (error) {
+      setIsPopupUpdateOpen(true);
+    }
+  }, [error]);
 
   if (!isDataReceived) {
     return <Loader />;
@@ -505,6 +512,7 @@ const Parts = () => {
                 >
                   Update part
                 </Button>
+                {error && (<p className={styles.error}>Vin number not found</p>)}
               </form>
             )}
           />
@@ -524,7 +532,7 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field name="catalog_number" type="text">
+                <Field name="catalog_number" validate={required} type="text">
                   {renderInput({
                     label: 'Part number',
                     classNameWrapper: styles.popupFieldRow,
