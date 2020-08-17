@@ -30,7 +30,7 @@ import IconFilter from '../../../assets/svg/Group (5).svg';
 import CustomTable from '../../CustomTable/CustomTable';
 import { printData, getIdsArr } from '../../../utils/helpers';
 import {
-  columns, status, statusSelect, print,
+  columns, status, print,
 } from './data';
 import styles from './Parts.scss';
 import {
@@ -456,17 +456,17 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="status"
-                  component={renderSelect({
-                    placeholder: updateData.status.split('_').join(' '),
-                    label: 'Status',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={statusSelect}
-                />
+                {/*<Field*/}
+                {/*  name="status"*/}
+                {/*  component={renderSelect({*/}
+                {/*    placeholder: updateData.status.split('_').join(' '),*/}
+                {/*    label: 'Status',*/}
+                {/*    classNameWrapper: styles.popupFieldRow,*/}
+                {/*    classNameLabel: styles.label,*/}
+                {/*    widthInputBlock: styles.widthInput,*/}
+                {/*  })}*/}
+                {/*  options={statusSelect}*/}
+                {/*/>*/}
                 <Field
                   name="quality"
                   type="text"
@@ -480,19 +480,19 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="container"
-                  validate={composeValidators(mustBeNumber)}
-                  type="text"
-                  defaultValue={updateData.container || ''}
-                >
-                  {renderInput({
-                    label: 'Add container #',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
+                {/*<Field*/}
+                {/*  name="container"*/}
+                {/*  validate={composeValidators(mustBeNumber)}*/}
+                {/*  type="text"*/}
+                {/*  defaultValue={updateData.container || ''}*/}
+                {/*>*/}
+                {/*  {renderInput({*/}
+                {/*    label: 'Add container #',*/}
+                {/*    classNameWrapper: styles.popupFieldRow,*/}
+                {/*    classNameWrapperLabel: styles.label,*/}
+                {/*    widthInputBlock: styles.widthInput,*/}
+                {/*  })}*/}
+                {/*</Field>*/}
                 <Previews
                   idAuto={updateData.id}
                   icon={<IconUpload className={styles.icon} />}
@@ -602,18 +602,18 @@ const Parts = () => {
                     widthInputBlock: styles.widthInput,
                   })}
                 </Field>
-                <Field
-                  name="container"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                >
-                  {renderInput({
-                    label: 'Add container #',
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
+                {/*<Field*/}
+                {/*  name="container"*/}
+                {/*  validate={composeValidators(required, mustBeNumber)}*/}
+                {/*  type="text"*/}
+                {/*>*/}
+                {/*  {renderInput({*/}
+                {/*    label: 'Add container #',*/}
+                {/*    classNameWrapper: styles.popupFieldRow,*/}
+                {/*    classNameWrapperLabel: styles.label,*/}
+                {/*    widthInputBlock: styles.widthInput,*/}
+                {/*  })}*/}
+                {/*</Field>*/}
                 <Previews
                   icon={<IconUpload className={styles.icon} />}
                   setArrPics={setArrPicsContainer}

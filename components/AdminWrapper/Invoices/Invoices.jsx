@@ -258,7 +258,7 @@ const Invoices = () => {
   };
   const clientId = invoices.additional.clients.map(item => ({
     label: item.name,
-    value: item.name,
+    value: item.id,
   }));
 
   clientId.unshift({
