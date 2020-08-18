@@ -180,8 +180,8 @@ const Parts = () => {
   const vinNumbers = clientParts.additional.vin_numbers;
   const vinArr = Object.keys(vinNumbers).map((item, index) => ({
     id: index + 1,
-    label: vinNumbers[index].vin,
-    value: vinNumbers[index].vin,
+    label: vinNumbers[index].vin_code,
+    value: vinNumbers[index].vin_code,
   }));
 
   const catalogNumbers = clientParts.additional.catalog_numbers;
