@@ -237,7 +237,6 @@ const Parts = () => {
           ...values,
           // vin: values.vin && values.vin.label,
           // status: values.status && values.status.value,
-          catalog_number: values.catalog_numberInput || values.catalog_number && values.catalog_number.label,
           image: newArrPicsContainer,
         },
       ),

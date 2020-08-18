@@ -92,6 +92,7 @@ const Client = () => {
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
   const [stepIndex, setStepIndex] = useState(0);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -136,6 +137,7 @@ const Client = () => {
           ],
         },
       ),
+      setIsSuccess(true),
     );
   };
 
@@ -653,7 +655,7 @@ const Client = () => {
                     <Button
                       customBtn={styles.btnSubmit}
                       type="submit"
-                      disabled={submitting || invalid}
+                      disabled={isSuccess}
                     >
                       ADD New offers
                     </Button>
