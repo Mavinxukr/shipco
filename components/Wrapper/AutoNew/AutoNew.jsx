@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
 import { getAutoId, updateAutoId } from '../../../redux/actions/autoId';
-import { getCurrentUser } from '../../../redux/actions/currentUser';
 import MainLayout from '../../Layout/Global/Global';
 import {
   autoIdDataSelector,

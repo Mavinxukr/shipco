@@ -11,7 +11,6 @@ import {
   autoClientDataReceivedSelector,
 } from '../../../utils/selectors';
 import MainLayout from '../../Layout/Global/Global';
-// import InputNumber from '../../InputNumber/InputNumber';
 import { stateOptions, columns } from './data';
 import { renderInput, renderSelect } from '../../../utils/renderInputs';
 import Button from '../../Button/Button';
@@ -88,21 +87,6 @@ const Auto = () => {
               <div className={styles.flex}>
                 <div className={styles.column}>
                   <div className={styles.flex}>
-                    {/* <Field name="from" type="number"> */}
-                    {/*  {({ input }) => ( */}
-                    {/*    <InputNumber */}
-                    {/*      cassNameLabel={styles.firstLabel} */}
-                    {/*      title="Year from:" */}
-                    {/*      name="from" */}
-                    {/*      input={input} */}
-                    {/*    /> */}
-                    {/*  )} */}
-                    {/* </Field> */}
-                    {/* <Field name="to" type="number"> */}
-                    {/*  {({ input }) => ( */}
-                    {/*    <InputNumber title="to:" name="to" input={input} /> */}
-                    {/*  )} */}
-                    {/* </Field> */}
                     <Field
                       name="model_name"
                       component={renderSelect({
@@ -135,16 +119,6 @@ const Auto = () => {
                   </Field>
                 </div>
                 <div className={cx(styles.column, styles.secondBlock)}>
-                  {/* <Field */}
-                  {/*  name="Model" */}
-                  {/*  component={renderSelect({ */}
-                  {/*    placeholder: '', */}
-                  {/*    label: 'Model:', */}
-                  {/*    classNameWrapper: styles.rowSelect, */}
-                  {/*    classNameLabel: styles.labelSelect, */}
-                  {/*  })} */}
-                  {/*  options={stateOptions} */}
-                  {/* /> */}
                   <Field
                     name="point_load_city"
                     component={renderSelect({
@@ -179,16 +153,6 @@ const Auto = () => {
                   </Field>
                 </div>
                 <div className={cx(styles.column, styles.lastColumn)}>
-                  {/* <Field */}
-                  {/*  name="Point" */}
-                  {/*  component={renderSelect({ */}
-                  {/*    placeholder: '', */}
-                  {/*    label: 'Point of loading:', */}
-                  {/*    classNameWrapper: styles.rowSelect, */}
-                  {/*    classNameLabel: styles.labelSelect, */}
-                  {/*  })} */}
-                  {/*  options={stateOptions} */}
-                  {/* /> */}
                   <Field name="container" type="text">
                     {renderInput({
                       label: 'Сontainer:',

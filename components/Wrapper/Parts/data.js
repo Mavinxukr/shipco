@@ -43,27 +43,42 @@ export const status = [
   {
     id: 1,
     value: '',
-    label: 'all',
+    label: 'All Status',
   },
   {
     id: 2,
-    value: 'in_warehouse',
-    label: 'in warehouse',
+    value: 'new',
+    label: 'New',
   },
   {
     id: 3,
-    value: 'in_the_sea',
-    label: 'in the sea',
+    value: 'dispatched',
+    label: 'Dispatched',
   },
   {
     id: 4,
-    value: 'at_the_port',
-    label: 'at the port',
+    value: 'title_delay',
+    label: 'Title delay',
   },
   {
     id: 5,
+    value: 'ready_to_load',
+    label: 'Ready to load',
+  },
+  {
+    id: 6,
+    value: 'loaded',
+    label: 'Loaded',
+  },
+  {
+    id: 7,
+    value: 'shipped',
+    label: 'Shipped',
+  },
+  {
+    id: 8,
     value: 'delivered',
-    label: 'delivered',
+    label: 'Delivered',
   },
 ];
 

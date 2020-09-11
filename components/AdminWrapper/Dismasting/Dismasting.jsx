@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import formatStringByPattern from 'format-string-by-pattern';
 import { useRouter } from 'next/router';
 import { Field, Form } from 'react-final-form';
+import cx from 'classnames';
 import {
   getDismanting,
   updateDismanting,
@@ -25,7 +26,6 @@ import { renderSelect, renderInput } from '../../../utils/renderInputs';
 import { printData, getIdsArr } from '../../../utils/helpers';
 import Popup from '../../Popup/Popup';
 import MultiSelect from '../../Multi/Multi';
-import cx from 'classnames';
 import Pickers from '../../Pickers/Pickers';
 
 const Dismasting = () => {
