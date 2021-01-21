@@ -26,7 +26,6 @@
     }
   }
 
-
   @media screen and (max-width: 500px) {
     min-height: 200px;
     max-height: 200px;
@@ -45,7 +44,7 @@
 .ArrowR {
   width: 30px;
   height: 30px;
-  background: #D73E45;
+  background: #d73e45;
 
   @media screen and (max-width: 780px) {
     display: none;
@@ -78,23 +77,23 @@
 
 .customSlider {
   overflow: hidden;
-  min-width: 736px;
+  width: 100%;
 
   @media screen and (max-width: 781px) {
-    min-width: 100%;
+    width: 100%;
   }
 }
 
 .itemTabs {
-  margin-left: -24px!important;
-  margin-right: -24px!important;
+  margin-left: -24px !important;
+  margin-right: -24px !important;
 
   @media screen and (max-width: 780px) {
-    margin: 0!important;
+    margin: 0 !important;
   }
 }
 
-.noImages{
+.noImages {
   width: 730px;
   text-align: center;
   margin: 100px 0;
