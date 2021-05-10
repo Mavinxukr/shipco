@@ -12,7 +12,7 @@ function OverviewPage() {
   useEffect(() => {
     getSession().then((session) => {
       if (!session || session.user.role !== 'user') {
-        router.replace('/');
+        router.push('/');
       } else {
         setIsLoading(false);
       }
