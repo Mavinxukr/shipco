@@ -23,7 +23,7 @@ export const FormRegistration = ({ setVariant }) => {
     const response = await funcAuth({}, values);
     if (response.status) {
       const result = await signIn('user', {
-        callbackUrl: `${window.location.origin}/`,
+        redirect: false,
         email: values.email,
         password: values.password,
       });
