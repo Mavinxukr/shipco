@@ -106,9 +106,8 @@ const callbacks = {
     return Promise.resolve(updatedSession);
   },
 
-  async redirect(url, 'https://front-shipko.mavinx.com/') {
-    console.log(url, baseUrl);
-    return url.startsWith(baseUrl) ? url : baseUrl;
+  async redirect(url, baseUrl) {
+    return url.startsWith(baseUrl) ? url : 'https://front-shipko.mavinx.com/';
   },
 };
 
