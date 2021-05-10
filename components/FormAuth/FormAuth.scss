@@ -1,0 +1,32 @@
+@import '../../scss/core/vars';
+@import '../../scss/core/mixins';
+
+.title {
+  @include styleForText(24px, $fontRegular);
+}
+.widthForm {
+  width: 435px;
+
+  input {
+    margin-top: 40px;
+  }
+}
+.error {
+  margin-top: 20px;
+  color: $colorBackground;
+}
+.btnSubmit {
+  margin-top: 40px;
+  text-transform: uppercase;
+  height: 40px;
+  width: 100%;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+.btnRegister {
+  background: transparent !important;
+  color: blue !important;
+  font-size: 16px;
+}

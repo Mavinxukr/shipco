@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useState, forwardRef, useRef,
-} from 'react';
+import React, { useEffect, useState, forwardRef, useRef } from 'react';
 import cx from 'classnames';
 import { useRouter } from 'next/router';
 import { useRowSelect, useTable, useSortBy } from 'react-table';
@@ -43,6 +41,7 @@ import styles from './BaseClient.scss';
 import Loader from '../../Loader/Loader';
 import MultiSelect from '../../Multi/Multi';
 import { printData, getIdsArr } from '../../../utils/helpers';
+import { getSession, session } from 'next-auth/client';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -77,7 +76,7 @@ const finalDate = `${currDay}.${currMonth}.${currYear}`;
 const BaseClient = () => {
   const baseClient = useSelector(baseClientDataSelector);
   const isDataReceived = useSelector(baseClientDataReceivedSelector);
-  const error = useSelector(state => state.baseClient.error);
+  const error = useSelector((state) => state.baseClient.error);
   const router = useRouter();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -90,6 +89,7 @@ const BaseClient = () => {
 
   useEffect(() => {
     dispatch(getBaseClient({}));
+    getSession().then((session) => console.log(session));
   }, []);
 
   useEffect(() => {
@@ -134,7 +134,6 @@ const BaseClient = () => {
       setPrintPopup,
     });
   };
-
 
   const stateObj = baseClient.additional.states;
   const stateArr = Object.values(stateObj).map((item, index) => ({
@@ -324,16 +323,18 @@ const BaseClient = () => {
                     label: 'City',
                   })}
                   options={
-                    (baseClient
-                      && baseClient.additional.cities.map(item => ({
+                    (baseClient &&
+                      baseClient.additional.cities.map((item) => ({
                         value: item.name,
                         label: item.name,
-                      })))
-                    || []
+                      }))) ||
+                    []
                   }
                 />
                 <ImageUpload baseClient image={image} setImage={setImage} />
-                {error && <p className={styles.error}>customer data must be unique</p>}
+                {error && (
+                  <p className={styles.error}>customer data must be unique</p>
+                )}
                 <div className={styles.submitPopup}>
                   <Button
                     customBtn={styles.btnSubmit}
@@ -400,7 +401,7 @@ const Table = ({ columns, data, arrClientsId }) => {
     useSortBy,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.allColumns.push((columns) => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -423,9 +424,9 @@ const Table = ({ columns, data, arrClientsId }) => {
     <>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th
                   className={styles.sortHeader}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -442,7 +443,7 @@ const Table = ({ columns, data, arrClientsId }) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
+                {row.cells.map((cell) => (
                   <td
                     className={`BaseClient-${cell.column.id}`}
                     {...cell.getCellProps()}

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import PropsType from 'prop-types';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSession, signOut } from 'next-auth/client';
 import { cookies } from '../../../utils/getCookies';
 import {
   currentUserDataSelector,
@@ -25,7 +26,10 @@ import IconBell from '../../../assets/svg/Group (4).svg';
 import IconUser from '../../../assets/svg/Vector (1).svg';
 import IconLogOut from '../../../assets/svg/signs.svg';
 import styles from './Header.scss';
-import { getCurrentUser, logoutCurrentUser } from '../../../redux/actions/currentUser';
+import {
+  getCurrentUser,
+  logoutCurrentUser,
+} from '../../../redux/actions/currentUser';
 import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
 import { storeShipping } from '../../../redux/actions/shipping';
 import IconMenu from '../../../assets/svg/menuWhite.svg';
@@ -33,38 +37,33 @@ import IconMenu from '../../../assets/svg/menuWhite.svg';
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [session, loading] = useSession();
+  const user = useSelector(currentUserDataSelector);
+  const autoBycontainer = useSelector(autoByContainerDataSelector);
+
+  useEffect(() => {
+    dispatch(getCurrentUser({}));
+    dispatch(getAutoByContainer());
+  }, []);
+
+  function logoutHandler() {
+    signOut();
+  }
 
   const classNameForOpenContainer = cx(styles.menuItem, {
     [styles.activePopup]: isOpenContainerPanel,
   });
-
-  const router = useRouter();
-
-  const user = useSelector(currentUserDataSelector);
-  const autoBycontainer = useSelector(autoByContainerDataSelector);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCurrentUser({}));
-  }, []);
-
-  useEffect(() => {
-    dispatch(getAutoByContainer());
-  }, []);
-
   const classNameForLink = cx(styles.menuLink, {
     [styles.active]: router.pathname.split('/')[1] === 'auto-admin',
   });
-
   const classNameForLinkAuto = cx(styles.menuLink, {
     [styles.active]: router.pathname.split('/')[1] === 'auto',
   });
-
   const classNameForLinkPrices = cx(styles.menuLink, {
     [styles.active]: router.pathname.split('/')[1] === 'prices',
   });
-
   const navClass = cx(styles.menu, {
     [styles.openMenu]: isMenuOpen,
   });
@@ -166,7 +165,10 @@ const Header = ({ newLink, admin }) => {
                 </ActiveLink>
               </li>
               <li className={styles.menuItem}>
-                <ActiveLink activeClassName={styles.active} href="/invoices-admin">
+                <ActiveLink
+                  activeClassName={styles.active}
+                  href="/invoices-admin"
+                >
                   <a className={styles.menuLink}>
                     <IconInvoices className={styles.menuIcon} />
                     Invoices
@@ -177,7 +179,8 @@ const Header = ({ newLink, admin }) => {
               {newLink ? (
                 <div className={classNameForOpenContainer}>
                   <Button
-                    onClick={() => setIsOpenContainerPanel(!isOpenContainerPanel)
+                    onClick={() =>
+                      setIsOpenContainerPanel(!isOpenContainerPanel)
                     }
                     customBtn={cx(styles.menuLink, styles.btnOpenPopup)}
                   >
@@ -193,13 +196,14 @@ const Header = ({ newLink, admin }) => {
                         classNameWrapper={styles.flexInput}
                         classNameWrapperLabel={styles.customLabel}
                         customInput={styles.customInput}
-                        onKeyUp={() => dispatch(
-                          getAutoByContainer({
-                            tracking_id: document.querySelector(
-                              '#tracking_id',
-                            ).value,
-                          }),
-                        )
+                        onKeyUp={() =>
+                          dispatch(
+                            getAutoByContainer({
+                              tracking_id: document.querySelector(
+                                '#tracking_id',
+                              ).value,
+                            }),
+                          )
                         }
                       />
                     </div>
@@ -321,22 +325,13 @@ const Header = ({ newLink, admin }) => {
               </Link>
             )}
             {!admin && (
-            <Link href={admin ? '/' : '/profile-settings'}>
-              <a className={styles.bottomIconsLink}>
-                <IconUser />
-              </a>
-            </Link>
+              <Link href={admin ? '/' : '/profile-settings'}>
+                <a className={styles.bottomIconsLink}>
+                  <IconUser />
+                </a>
+              </Link>
             )}
-            <Button onClick={() => {
-              if (!admin) {
-                dispatch(logoutCurrentUser({}, cookies, true));
-                setTimeout(() => router.push('/'), 800);
-              } else {
-                dispatch(logoutCurrentUser({}, cookies));
-                setTimeout(() => router.push('/'), 800);
-              }
-            }}
-            >
+            <Button onClick={logoutHandler}>
               <IconLogOut className={styles.logOut} />
             </Button>
           </div>

@@ -1,6 +1,4 @@
-import React, {
-  useEffect, forwardRef, useState, useRef,
-} from 'react';
+import React, { useEffect, forwardRef, useState, useRef } from 'react';
 import { usePagination, useTable, useRowSelect } from 'react-table';
 import formatStringByPattern from 'format-string-by-pattern';
 import cx from 'classnames';
@@ -29,7 +27,16 @@ import IconPlus from '../../../assets/svg/Plus.svg';
 import IconMinus from '../../../assets/svg/min.svg';
 import { printData, getIdsArr } from '../../../utils/helpers';
 import {
-  columns, stateStatus, status, city, print, cityselect, popularCars, auctions, damageStatus, statusRadio,
+  columns,
+  stateStatus,
+  status,
+  city,
+  print,
+  cityselect,
+  popularCars,
+  auctions,
+  damageStatus,
+  statusRadio,
 } from './data';
 import Loader from '../../Loader/Loader';
 import Popup from '../../Popup/Popup';
@@ -84,7 +91,7 @@ selectYear.unshift({
 
 const Client = () => {
   const client = useSelector(clientDataSelector);
-  const error = useSelector(state => state.client.error);
+  const error = useSelector((state) => state.client.error);
   const currentClient = useSelector(currentClientDataSelector);
   const isDataReceived = useSelector(clientDataReceivedSelector);
   const isDataReceivedClient = useSelector(currentClientDataReceivedSelector);
@@ -201,12 +208,12 @@ const Client = () => {
     const idsArr = getIdsArr(selected);
     const paramsClient = router.query.isClient
       ? {
-        fields: idsArr,
-      }
+          fields: idsArr,
+        }
       : {
-        client_id: +router.query.idUser || '',
-        fields: idsArr,
-      };
+          client_id: +router.query.idUser || '',
+          fields: idsArr,
+        };
     const tableClient = router.query.isClient ? 'autos' : 'client';
     printData({
       params: paramsClient,
@@ -233,7 +240,7 @@ const Client = () => {
     });
   };
 
-  const arrClientName = client.additional.clients.map(item => ({
+  const arrClientName = client.additional.clients.map((item) => ({
     label: item.name,
     value: item.name,
   }));
@@ -309,7 +316,10 @@ const Client = () => {
         <Form
           onSubmit={onSubmitFilter}
           render={({ handleSubmit, invalid, submitting }) => (
-            <form className={cx(styles.flex, styles.filter)} onSubmit={handleSubmit}>
+            <form
+              className={cx(styles.flex, styles.filter)}
+              onSubmit={handleSubmit}
+            >
               <div className={cx(styles.flex, styles.selectBlock)}>
                 <Field
                   name="auto_status"
@@ -377,7 +387,7 @@ const Client = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-              Ok
+                  Ok
                 </Button>
               </div>
             </form>
@@ -459,12 +469,16 @@ const Client = () => {
                       label: 'Client id',
                       classNameWrapper: styles.popupFieldRow,
                     })}
-                    options={clientId.map(item => ({
+                    options={clientId.map((item) => ({
                       label: `${item.id} ${item.name}`,
                       value: item.id,
                     }))}
                   />
-                  <Field name="vin_code" validate={composeValidators(required, vinNum)} type="text">
+                  <Field
+                    name="vin_code"
+                    validate={composeValidators(required, vinNum)}
+                    type="text"
+                  >
                     {renderInput({
                       label: 'Vin code',
                       classNameWrapper: styles.popupFieldRow,
@@ -504,7 +518,11 @@ const Client = () => {
                   />
                   <Field
                     name="point_delivery_date"
-                    validate={composeValidators(required, mustBeNumber, lengthDueDay)}
+                    validate={composeValidators(
+                      required,
+                      mustBeNumber,
+                      lengthDueDay,
+                    )}
                     type="text"
                     parse={formatStringByPattern('9999-99-99')}
                   >
@@ -545,7 +563,11 @@ const Client = () => {
                   </Field>
                   <Field
                     name="purchased_date"
-                    validate={composeValidators(required, mustBeNumber, lengthDueDay)}
+                    validate={composeValidators(
+                      required,
+                      mustBeNumber,
+                      lengthDueDay,
+                    )}
                     type="text"
                     parse={formatStringByPattern('9999-99-99')}
                   >
@@ -716,7 +738,7 @@ const Table = ({ columns, data, arrAutoId }) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.allColumns.push((columns) => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -739,9 +761,9 @@ const Table = ({ columns, data, arrAutoId }) => {
     <>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
             </tr>
@@ -752,7 +774,7 @@ const Table = ({ columns, data, arrAutoId }) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
+                {row.cells.map((cell) => (
                   <td
                     className={cx(
                       `Client-${cell.column.id}`,

@@ -8,17 +8,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import createStore from '../redux/store';
 import theme from '../utils/theme';
 import { getCurrentUser } from '../redux/actions/currentUser';
+import { Provider as AuthProvider } from 'next-auth/client';
 
 class MyApp extends App {
-  componentDidMount() {
-    const jssStyles = document.querySelector('#jss-server-side');
-    const { getUser } = this.props;
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
+  // componentDidMount() {
+  //   const jssStyles = document.querySelector('#jss-server-side');
+  //   const { getUser } = this.props;
+  //   if (jssStyles) {
+  //     jssStyles.parentElement.removeChild(jssStyles);
+  //   }
 
-    getUser({});
-  }
+  //   getUser({});
+  // }
 
   static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps
@@ -31,17 +32,22 @@ class MyApp extends App {
     const { Component, pageProps, store } = this.props;
 
     return (
-      <Provider store={store}>
-        <Head>
-          <title>Shipco</title>
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </Provider>
+      <AuthProvider session={pageProps.session}>
+        <Provider store={store}>
+          <Head>
+            <title>Shipco</title>
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </Provider>
+      </AuthProvider>
     );
   }
 }

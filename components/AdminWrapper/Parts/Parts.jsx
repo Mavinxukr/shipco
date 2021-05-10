@@ -1,6 +1,4 @@
-import React, {
-  forwardRef, useRef, useEffect, useState,
-} from 'react';
+import React, { forwardRef, useRef, useEffect, useState } from 'react';
 import { usePagination, useRowSelect, useTable } from 'react-table';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,9 +27,7 @@ import IconUpload from '../../../assets/svg/uploadfile.svg';
 import IconFilter from '../../../assets/svg/Group (5).svg';
 import CustomTable from '../../CustomTable/CustomTable';
 import { printData, getIdsArr } from '../../../utils/helpers';
-import {
-  columns, status, statusSelect, print,
-} from './data';
+import { columns, status, statusSelect, print } from './data';
 import styles from './Parts.scss';
 import {
   required,
@@ -59,9 +55,7 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   );
 });
 
-const Table = ({
-  columns, data, setIsPopupUpdateOpen, setUpdateData,
-}) => {
+const Table = ({ columns, data, setIsPopupUpdateOpen, setUpdateData }) => {
   const dispatch = useDispatch();
 
   const {
@@ -79,7 +73,7 @@ const Table = ({
     usePagination,
     useRowSelect,
     (hooks) => {
-      hooks.flatColumns.push(columns => [
+      hooks.allColumns.push((columns) => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -101,9 +95,9 @@ const Table = ({
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th
                 {...column.getHeaderProps()}
                 className={`Parts-${column.id}Header`}
@@ -119,7 +113,7 @@ const Table = ({
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => (
+              {row.cells.map((cell) => (
                 <td
                   className={`Parts-${cell.column.id}`}
                   {...cell.getCellProps()}
@@ -199,7 +193,7 @@ const Parts = () => {
   useEffect(() => {
     if (updateData) {
       setArrPicsContainer(
-        parts.data.find(item => item.id === updateData.id).images,
+        parts.data.find((item) => item.id === updateData.id).images,
       );
     }
   }, [parts]);
@@ -230,7 +224,9 @@ const Parts = () => {
           ...values,
           // vin: values.vin && values.vin.label,
           // status: values.status && values.status.value,
-          catalog_number: values.catalog_numberInput || values.catalog_number && values.catalog_number.label,
+          catalog_number:
+            values.catalog_numberInput ||
+            (values.catalog_number && values.catalog_number.label),
           image: newArrPicsContainer,
         },
       ),
@@ -270,9 +266,9 @@ const Parts = () => {
   };
 
   if (
-    isPopupOpen === true
-    || printPopup === true
-    || isPopupUpdateOpen === true
+    isPopupOpen === true ||
+    printPopup === true ||
+    isPopupUpdateOpen === true
   ) {
     document.querySelector('#__next').classList.add('Global-overflow');
   } else {

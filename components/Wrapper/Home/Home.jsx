@@ -5,22 +5,12 @@ import PropTypes from 'prop-types';
 import '../../../public/slick/slick.css';
 import Slider from 'react-slick';
 import GoogleMapReact from 'google-map-react';
-import { Field, Form } from 'react-final-form';
-import { login, registration } from '../../../services/user';
 import { cookies } from '../../../utils/getCookies';
-import Button from '../../Button/Button';
 import Image from '../../Image/Image';
-import Popup from '../../Popup/Popup';
 // import ProductCard from '../../ProductCard/ProductCard';
 import { sliderData } from './data';
-import {
-  composeValidators,
-  emailValidation,
-  required,
-  passwordValidation,
-  snpValidation,
-} from '../../../utils/validation';
-import { renderInput } from '../../../utils/renderInputs';
+import { useSession } from 'next-auth/client';
+
 import IconQuotes from '../../../assets/svg/quotes.svg';
 import IconFb from '../../../assets/svg/Vector(1).svg';
 import IconIn from '../../../assets/svg/Group.svg';
@@ -28,7 +18,8 @@ import IckonTw from '../../../assets/svg/Vector.svg';
 import IconYoutube from '../../../assets/svg/Vector(2).svg';
 import IconArrow from '../../../assets/svg/Group (6).svg';
 import styles from './Home.scss';
-import IconMenu from '../../../assets/svg/menu.svg';
+import { IndexHeader } from '../../IndexHeader/IndexHeader';
+import Loader from '../../Loader/Loader';
 
 const SampleNextArrow = ({ onClick, index }) => (
   <button
@@ -52,36 +43,11 @@ const SamplePrevArrow = ({ onClick, index }) => (
   </button>
 );
 
-const validateForm = (values) => {
-  const errors = {};
-  if (!values.password_confirmation) {
-    errors.password_confirmation = 'Required';
-  } else if (values.password_confirmation !== values.password) {
-    errors.password_confirmation = 'The password was entered incorrectly';
-  }
-  return errors;
-};
-
 const Home = () => {
   const [index, setIndex] = useState(0);
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [session, loading] = useSession();
 
-  const router = useRouter();
-
-  const onSubmit = async (values, funcAuth) => {
-    const response = await funcAuth({}, values);
-    if (response.status) {
-      cookies.set('tokenShipco', response.data.data.auth.token, {
-        maxAge: 60 * 60 * 24 * 30,
-      });
-      router.push('/overview');
-    } else {
-      setErrorMessage(response.message);
-    }
-  };
+  console.log(session);
 
   const settings = {
     dots: true,
@@ -93,77 +59,13 @@ const Home = () => {
     nextArrow: <SampleNextArrow index={index} />,
     prevArrow: <SamplePrevArrow index={index} />,
   };
-
-  const navClass = cx(styles.menuItems, {
-    [styles.openMenu]: isMenuOpen,
-  });
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
-      <header className={styles.header}>
-        <div className={cx(styles.container, styles.containerHeader)}>
-          <div className={styles.flexBtn}>
-            <Button
-              type="button"
-              customBtn={styles.menu}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <IconMenu className={styles.burger} />
-            </Button>
-            <a href="/">
-              <Image src="/images/Shipco.png" alt="logo" />
-            </a>
-          </div>
-          <nav className={navClass}>
-            <ul className={styles.headerMenuItems}>
-              <li className={styles.headerMenuItem}>
-                <a className={styles.headerMenuLink} href="/">
-                  Cars for Sale
-                </a>
-              </li>
-              <li className={styles.headerMenuItem}>
-                <a className={styles.headerMenuLink} href="/">
-                  Auto Export
-                </a>
-              </li>
-              <li className={styles.headerMenuItem}>
-                <a className={styles.headerMenuLink} href="/">
-                  General info
-                </a>
-              </li>
-              <li className={styles.headerMenuItem}>
-                <a className={styles.headerMenuLink} href="/">
-                  About Us
-                </a>
-              </li>
-              <li className={styles.headerMenuItem}>
-                <a className={styles.headerMenuLink} href="/">
-                  Contacts
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <Button
-            onClick={() => setIsLoginPopupOpen(true)}
-            customBtn={styles.btnLogin}
-            type="button"
-          >
-            Login
-          </Button>
-        </div>
-        <h1 className={styles.headerTitle}>
-          The{' '}
-          <span className={cx(styles.headerTitleBg, styles.headerTitle)}>
-            Shipco
-          </span>{' '}
-          CAR FROM USA
-        </h1>
-        <p className={styles.headerText}>
-          A car sales site from America. Used cars, whole and beaten cars from
-          US auto auctions - Copart, Manheim, IAAI, CARS.COM SAVING when buying
-          a car on order in the USA up to -50%
-        </p>
-      </header>
+      <IndexHeader></IndexHeader>
       <main>
         <div className={styles.container}>
           <h2 className={styles.infoTitle}>OUR FEATURES</h2>
@@ -206,23 +108,23 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div className={styles.cars}> */}
-        {/*  <div className={styles.container}> */}
-        {/*    <h2 className={styles.carsTitle}>Cars</h2> */}
-        {/*    <div className={styles.carsItems}> */}
-        {/*      {data.map(item => ( */}
-        {/*        <ProductCard key={item.id} item={item} /> */}
-        {/*      ))} */}
-        {/*    </div> */}
-        {/*  </div> */}
-        {/* </div> */}
+        {/* <div className={styles.cars}>
+          <div className={styles.container}>
+            <h2 className={styles.carsTitle}>Cars</h2>
+            <div className={styles.carsItems}>
+              {data.map((item) => (
+                <ProductCard key={item.id} item={item} />
+              ))}
+            </div>
+          </div>
+        </div> */}
         <div className={cx(styles.container, styles.mediaWidth)}>
           <h2 className={styles.testimonialsTitle}>
             <IconQuotes className={styles.testimonialsIcon} />
             Testimonials
           </h2>
           <Slider className={styles.sliderContainer} {...settings}>
-            {sliderData.map(item => (
+            {sliderData.map((item) => (
               <div key={item.id} className={styles.slider}>
                 <Image className={styles.sliderImg} src={item.src} />
                 <div className={styles.sliderRight}>
@@ -308,161 +210,8 @@ const Home = () => {
             />
           </div>
         </div>
-        {isLoginPopupOpen && (
-          <Popup
-            isPopupOpen={isLoginPopupOpen}
-            setIsPopupOpen={setIsLoginPopupOpen}
-            title="Shipco"
-            customPopup={styles.customTitle}
-          >
-            <div>
-              <h5>Sign In</h5>
-              <Form
-                onSubmit={values => onSubmit(values, login)}
-                render={({ handleSubmit, submitting, invalid }) => (
-                  <form className={styles.widthForm} onSubmit={handleSubmit}>
-                    <Field
-                      name="email"
-                      validate={composeValidators(required, emailValidation)}
-                      type="email"
-                    >
-                      {renderInput({
-                        label: '',
-                        placeholder: 'Email Address',
-                      })}
-                    </Field>
-                    <Field
-                      name="password"
-                      validate={composeValidators(required)}
-                      type="password"
-                    >
-                      {renderInput({
-                        label: '',
-                        placeholder: 'Password',
-                      })}
-                    </Field>
-                    {errorMessage && (
-                      <p className={styles.error}>
-                        The given data was invalid.
-                      </p>
-                    )}
-                    <Button
-                      customBtn={styles.btnSubmit}
-                      type="submit"
-                      disabled={invalid || submitting}
-                    >
-                      Sign in
-                    </Button>
-                  </form>
-                )}
-              />
-              <p className={styles.text}>
-                Not on Shipco yet?{' '}
-                <Button
-                  customBtn={styles.btnRegister}
-                  onClick={() => {
-                    setIsLoginPopupOpen(!isLoginPopupOpen);
-                    setIsRegisterPopupOpen(!isRegisterPopupOpen);
-                  }}
-                >
-                  Register
-                </Button>
-              </p>
-            </div>
-          </Popup>
-        )}
       </main>
-      {isRegisterPopupOpen && (
-        <Popup
-          isPopupOpen={isRegisterPopupOpen}
-          setIsPopupOpen={setIsRegisterPopupOpen}
-          title="Shipco"
-          customPopup={styles.customTitle}
-        >
-          <div>
-            <h5>Register</h5>
-            <Form
-              onSubmit={values => onSubmit(values, registration)}
-              validate={validateForm}
-              render={({ handleSubmit, submitting, invalid }) => (
-                <form className={styles.widthForm} onSubmit={handleSubmit}>
-                  <Field
-                    name="name"
-                    validate={composeValidators(required, snpValidation)}
-                    type="text"
-                  >
-                    {renderInput({
-                      label: '',
-                      placeholder: 'Name',
-                    })}
-                  </Field>
-                  <Field
-                    name="email"
-                    validate={composeValidators(required, emailValidation)}
-                    type="email"
-                  >
-                    {renderInput({
-                      label: '',
-                      placeholder: 'Email Address',
-                    })}
-                  </Field>
-                  <Field
-                    name="password"
-                    validate={composeValidators(required, passwordValidation)}
-                    type="password"
-                  >
-                    {renderInput({
-                      label: '',
-                      placeholder: 'Password',
-                    })}
-                  </Field>
-                  <Field name="password_confirmation" type="password">
-                    {renderInput({
-                      label: '',
-                      placeholder: 'Confirm password',
-                    })}
-                  </Field>
-                  <div className={styles.checkboxBlock}>
-                    <Field name="checked" type="checkbox" validate={required}>
-                      {renderInput({
-                        label: "I agree to Shipco's",
-                        classNameWrapper: styles.checkedLogin,
-                        widthInputBlock: styles.widthCheckboxBlock,
-                        classNameWrapperLabel: styles.classNameWrapperLabel,
-                      })}
-                    </Field>
-                    <a href="/">Terms of Use</a>
-                  </div>
-                  {errorMessage && (
-                    <div className={styles.error}>
-                      The email has already been taken.
-                    </div>
-                  )}
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={invalid || submitting}
-                  >
-                    send request
-                  </Button>
-                </form>
-              )}
-            />
-            <p className={styles.text}>
-              Already Registered?{' '}
-              <Button
-                customBtn={styles.btnRegister}
-                onClick={() => {
-                  setIsRegisterPopupOpen(!isRegisterPopupOpen);
-                  setIsLoginPopupOpen(!isLoginPopupOpen);
-                }}
-              >
-                Log In
-              </Button>
-            </p>
-          </div>
-        </Popup>
-      )}
+
       <footer className={styles.footer}>
         <div className={styles.container}>
           <div className={styles.footerLogo}>

@@ -1,23 +1,25 @@
 import qs from 'query-string';
 import _ from 'lodash';
-import { cookies } from './getCookies';
 import { API_DOMAIN_ADMIN, API_DOMAIN_CLIENT } from '../enums/api';
+import { getSession } from 'next-auth/client';
 
-export const generalOptions = co => ({
+export const generalOptions = (token) => ({
   mode: 'cors',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: co.get('tokenShipco'),
+    Authorization: token,
   },
 });
 
-const Fetcher = method => async (url, params, options, isUserAdmin) => {
+const Fetcher = (method) => async (url, params, options, isUserAdmin) => {
+  const session = await getSession();
+  const token = session ? session.accessToken : null;
   const domain = isUserAdmin ? API_DOMAIN_ADMIN : API_DOMAIN_CLIENT;
   const paramsString = !_.isEmpty(params) ? `?${qs.stringify(params)}` : '';
   const body = await fetch(`${domain}${url}${paramsString}`, {
     method,
-    ...generalOptions(cookies),
+    ...generalOptions(token),
     ...options,
     redirect: 'follow',
   });

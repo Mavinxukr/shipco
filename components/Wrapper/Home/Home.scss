@@ -2,54 +2,6 @@
 //@import "scss/core/vars";
 @import 'scss/index';
 
-.header {
-  height: 100vh;
-  background: url('/images/background.png') bottom;
-  background-size: cover;
-  flex-direction: column;
-  flex-wrap: nowrap;
-}
-.headerTitle {
-  margin: 160px auto 60px;
-  color: $white;
-  font-size: 72px;
-  line-height: 80px;
-  text-align: center;
-  text-transform: uppercase;
-  max-width: 550px;
-
-  @media screen and (max-width: 800px) {
-    font-size: 56px;
-  }
-}
-.headerTitleBg {
-  background: $colorBackground;
-}
-
-.headerMenuItems {
-  display: flex;
-  justify-content: center;
-}
-
-.headerMenuItem {
-  margin: 0 30px;
-}
-
-.headerMenuLink {
-  color: $white;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.headerText {
-  font-size: 24px;
-  line-height: 36px;
-  text-align: center;
-  color: $white;
-  margin: 0 auto;
-  max-width: 1205px;
-}
-
 .container {
   margin: auto;
   max-width: 1544px;
@@ -63,17 +15,6 @@
   @media screen and (max-width: 1400px) {
     margin: 0 auto;
     max-width: 90%;
-  }
-}
-
-.containerHeader {
-  align-items: center;
-  padding-top: 18px;
-  display: flex;
-  justify-content: space-between;
-
-  @media screen and (max-width: 768px) {
-    align-items: flex-start;
   }
 }
 
@@ -257,7 +198,7 @@
   padding: 30px;
 
   @media screen and (max-width: 768px) {
-    display: none!important;
+    display: none !important;
   }
 }
 
@@ -342,163 +283,8 @@
   height: 678px;
 }
 
-.btnLogin {
-  font-weight: 500;
-  padding: 16px 74px;
-  font-size: 16px;
-  text-transform: uppercase;
-
-  @media screen and (max-width: 991px) {
-    padding: 16px;
-  }
-
-  @media screen and (max-width: 768px) {
-    padding: 10px;
-  }
-}
-
-.customTitle {
-  padding: 75px;
-
-  .widthForm {
-    width: 100%;
-  }
-
-  h4 {
-    font-size: 48px;
-  }
-
-  h5 {
-    margin: 40px 0 0;
-  }
-
-  .text {
-    margin-top: 40px;
-  }
-
-  @media screen and (max-width: 1650px) {
-    padding: 35px;
-
-    h5 {
-      margin: 0;
-    }
-  }
-}
-
-.widthForm {
-  width: 435px;
-
-  input {
-    margin-top: 40px;
-  }
-}
-
-.btnSubmit {
-  margin-top: 40px;
-  text-transform: uppercase;
-  height: 40px;
-  width: 100%;
-
-  &:disabled {
-    opacity: 0.7;
-  }
-}
-
-.error {
-  margin-top: 20px;
-  color: $colorBackground;
-}
-
-.btnRegister {
-  background: transparent!important;
-  color: blue!important;
-  font-size: 16px;
-}
-
-.checkedLogin {
-  flex-direction: row-reverse!important;
-  justify-content: flex-end!important;
-  align-items: baseline!important;
-  width: auto!important;
-}
-
-.widthCheckboxBlock {
-  flex-direction: row-reverse;
-  width: auto;
-  justify-content: flex-end;
-  align-items: baseline;
-
-  input {
-    margin-right: 10px;
-    width: 15px;
-  }
-}
-
-.classNameWrapperLabel {
-  color: $colorContent!important;
-}
-
-.checkboxBlock {
-  align-items: baseline;
-  display: flex;
-
-  a {
-    margin-top: 30px;
-    color: blue;
-  }
-}
-
-.menu {
-  padding: 10px;
-  margin: 0 15px 0 0;
-  height: 40px;
-  display: none;
-
-  @media screen and (max-width: 1180px) {
-    display: block;
-    position: absolute;
-    top: 17px;
-    left: 20px;
-    z-index: 20;
-  }
-}
-
-.burger {
-  width: 20px;
-  height: 20px;
-}
-
 .menuItems {
   @media screen and (max-width: 1180px) {
     display: none;
-  }
-}
-
-.flexBtn {
-  display: flex;
-
-  @media screen and (max-width: 1180px) {
-    a {
-      padding-left: 50px;
-    }
-  }
-}
-
-.openMenu {
-  display: block;
-  position: absolute;
-  width: 320px;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background: $colorBackground;
-
-  .headerMenuItems {
-    display: grid;
-    padding-top: 50px;
-
-    .headerMenuItem {
-      margin: 20px;
-    }
   }
 }

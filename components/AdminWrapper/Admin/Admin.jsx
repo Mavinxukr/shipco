@@ -1,29 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useRouter } from 'next/router';
-import { loginAdmin } from '../../../services/admin';
+import { signIn } from 'next-auth/client';
+
 import {
   composeValidators,
   emailValidation,
   required,
 } from '../../../utils/validation';
+
 import { renderInput } from '../../../utils/renderInputs';
+import { useSession } from 'next-auth/client';
 import Button from '../../Button/Button';
 import styles from './Admin.scss';
-import { cookies } from '../../../utils/getCookies';
+import Loader from '../../Loader/Loader';
 
 const Admin = () => {
   const [errorMessage, setErrorMessage] = useState('');
+  const [session, loading] = useSession();
 
   const router = useRouter();
 
-  const onSubmit = async (values, isUserAdmin) => {
-    const response = await loginAdmin({}, values, isUserAdmin);
-    if (response.status) {
-      cookies.set('tokenShipco', response.data.data.auth.token);
-      router.push('/base-client');
+  useEffect(() => {
+    if (session) {
+      router.replace('/');
+    }
+  }, [router]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  const submitHandle = async (values) => {
+    const result = await signIn('admin', {
+      redirect: false,
+      ...values,
+    });
+    console.log(result);
+    if (!result.error) {
+      router.replace('/base-client');
     } else {
-      setErrorMessage(response.message);
+      setErrorMessage(result.error);
     }
   };
 
@@ -31,7 +48,7 @@ const Admin = () => {
     <div className={styles.form}>
       <h5>Sign In</h5>
       <Form
-        onSubmit={onSubmit}
+        onSubmit={(values) => submitHandle(values)}
         render={({ handleSubmit, submitting, invalid }) => (
           <form onSubmit={handleSubmit}>
             <Field
@@ -55,9 +72,7 @@ const Admin = () => {
               })}
             </Field>
             {errorMessage && (
-              <p className={styles.error}>
-                The given data was invalid.
-              </p>
+              <p className={styles.error}>The given data was invalid.</p>
             )}
             <Button
               customBtn={styles.btnSubmit}
