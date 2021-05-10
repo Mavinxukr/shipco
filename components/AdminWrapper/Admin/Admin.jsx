@@ -33,8 +33,8 @@ const Admin = () => {
 
   const submitHandle = async (values) => {
     const result = await signIn('admin', {
-      redirect: false,
       ...values,
+      callbackUrl: `${window.location.origin}/`,
     });
     console.log(result);
     if (!result.error) {

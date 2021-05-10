@@ -8,10 +8,11 @@ function OverviewPage() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  console.log(router);
   useEffect(() => {
     getSession().then((session) => {
       if (!session || session.user.role !== 'user') {
-        router.replace('/');
+        router.push('/');
       } else {
         setIsLoading(false);
       }

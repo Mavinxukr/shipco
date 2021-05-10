@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
-import { cookies } from '../utils/getCookies';
 import { API_DOMAIN_ADMIN } from '../enums/api';
+import { getSession } from 'next-auth/client';
 
 export const getInvoicesRequest = async (params) => {
   const serverData = await Fetch.get('get-invoices', params, {}, true);
@@ -9,6 +9,8 @@ export const getInvoicesRequest = async (params) => {
 };
 
 export const updateInvoicesRequest = async (params, body, id) => {
+  const session = await getSession();
+  const token = session ? session.accessToken : null;
   const formData = new FormData();
   _.forIn(body, (value, key) => {
     if (key === 'document') {
@@ -25,7 +27,7 @@ export const updateInvoicesRequest = async (params, body, id) => {
     {
       method: 'POST',
       headers: {
-        Authorization: cookies.get('tokenShipco'),
+        Authorization: token,
         Accept: 'application/json',
       },
       body: formData,

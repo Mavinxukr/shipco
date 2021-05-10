@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Fetch } from '../utils/fetcher';
-import { cookies } from '../utils/getCookies';
 import { API_DOMAIN_ADMIN } from '../enums/api';
+import { getSession } from 'next-auth/client';
 
 export const getPartsRequest = async (params) => {
   const serverData = await Fetch.get('get-parts', params, {}, true);
@@ -9,11 +9,18 @@ export const getPartsRequest = async (params) => {
 };
 
 export const deletePartsRequest = async (params, body, id) => {
-  const serverData = await Fetch.delete(`delete-part/${id}`, params, body, true);
+  const serverData = await Fetch.delete(
+    `delete-part/${id}`,
+    params,
+    body,
+    true,
+  );
   return serverData;
 };
 
 export const addNewPartsRequest = async (params, body) => {
+  const session = await getSession();
+  const token = session ? session.accessToken : null;
   const formData = new FormData();
   _.forIn(body, (value, key) => {
     if (!value) {
@@ -29,23 +36,22 @@ export const addNewPartsRequest = async (params, body) => {
     }
     formData.append(key, value);
   });
-  const serverData = await fetch(
-    `${API_DOMAIN_ADMIN}store-part`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: cookies.get('tokenShipco'),
-        Accept: 'application/json',
-      },
-      redirect: 'follow',
-      body: formData,
+  const serverData = await fetch(`${API_DOMAIN_ADMIN}store-part`, {
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      Accept: 'application/json',
     },
-  );
+    redirect: 'follow',
+    body: formData,
+  });
   const response = await serverData.json();
   return response;
 };
 
 export const updatePartsRequest = async (params, body, id) => {
+  const session = await getSession();
+  const token = session ? session.accessToken : null;
   const formData = new FormData();
   _.forIn(body, (value, key) => {
     if (!value) {
@@ -61,18 +67,15 @@ export const updatePartsRequest = async (params, body, id) => {
     }
     formData.append(key, value);
   });
-  const serverData = await fetch(
-    `${API_DOMAIN_ADMIN}update-part/${id}`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: cookies.get('tokenShipco'),
-        Accept: 'application/json',
-      },
-      redirect: 'follow',
-      body: formData,
+  const serverData = await fetch(`${API_DOMAIN_ADMIN}update-part/${id}`, {
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      Accept: 'application/json',
     },
-  );
+    redirect: 'follow',
+    body: formData,
+  });
   const response = await serverData.json();
   return response;
 };
