@@ -20,7 +20,10 @@ export const IndexHeader = () => {
   const [session, loading] = useSession();
 
   function logoutHandler() {
-    signOut({ redirect: false, callbackUrl: '/' });
+    signOut({
+      redirect: false,
+      callbackUrl: 'https://front-shipko.mavinx.com/',
+    });
   }
 
   return (
