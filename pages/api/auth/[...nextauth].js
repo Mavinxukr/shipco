@@ -105,6 +105,11 @@ const callbacks = {
 
     return Promise.resolve(updatedSession);
   },
+
+  async redirect(url, 'https://front-shipko.mavinx.com/') {
+    console.log(url, baseUrl);
+    return url.startsWith(baseUrl) ? url : baseUrl;
+  },
 };
 
 const options = {

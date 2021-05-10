@@ -5,7 +5,6 @@ import PropsType from 'prop-types';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSession, signOut } from 'next-auth/client';
-import { cookies } from '../../../utils/getCookies';
 import {
   currentUserDataSelector,
   autoByContainerDataSelector,
@@ -39,7 +38,6 @@ const Header = ({ newLink, admin }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const [session, loading] = useSession();
   const user = useSelector(currentUserDataSelector);
   const autoBycontainer = useSelector(autoByContainerDataSelector);
 

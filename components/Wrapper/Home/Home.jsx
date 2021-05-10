@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import '../../../public/slick/slick.css';
 import Slider from 'react-slick';
 import GoogleMapReact from 'google-map-react';
-import { cookies } from '../../../utils/getCookies';
 import Image from '../../Image/Image';
 // import ProductCard from '../../ProductCard/ProductCard';
 import { sliderData } from './data';
@@ -46,8 +44,6 @@ const SamplePrevArrow = ({ onClick, index }) => (
 const Home = () => {
   const [index, setIndex] = useState(0);
   const [session, loading] = useSession();
-
-  console.log(session);
 
   const settings = {
     dots: true,
