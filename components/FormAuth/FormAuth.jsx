@@ -17,7 +17,7 @@ export const FormAuth = ({ setVariant }) => {
   const router = useRouter();
   const submitHandle = async (values) => {
     const result = await signIn('user', {
-      redirect: false,
+      callbackUrl: `${window.location.origin}/`,
       ...values,
     });
     if (!result.error) {
