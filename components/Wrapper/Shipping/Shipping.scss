@@ -1,13 +1,18 @@
-@import "../../../scss/core/mixins";
-@import "../../../scss/core/vars";
+@import '../../../scss/core/mixins';
+@import '../../../scss/core/vars';
 
 .container {
   @include container();
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 60px 0 30px;
+  }
 }
 
 .title {
   color: $colorBackground;
-  margin: 60px 0 30px;
 }
 
 .flex {

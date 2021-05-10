@@ -99,7 +99,29 @@ const Shipping = () => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h3 className={styles.title}>Shipping</h3>
+        <div className={styles.container_header}>
+          <h3 className={styles.title}>Shipping</h3>
+          <div className={styles.rightBlock}>
+            <Search
+              onClick={() => {
+                router.push({
+                  pathname: '/shipping',
+                  query: {
+                    ...router.query,
+                    page: 1,
+                    search: document.querySelector('#search').value,
+                  },
+                });
+                dispatch(
+                  getClientShipping({
+                    search: document.querySelector('#search').value,
+                  }),
+                );
+              }}
+            />
+          </div>
+        </div>
+
         <div className={styles.flex}>
           <Form
             onSubmit={onSubmit}
@@ -166,25 +188,6 @@ const Shipping = () => {
               </form>
             )}
           />
-          <div className={styles.rightBlock}>
-            <Search
-              onClick={() => {
-                router.push({
-                  pathname: '/shipping',
-                  query: {
-                    ...router.query,
-                    page: 1,
-                    search: document.querySelector('#search').value,
-                  },
-                });
-                dispatch(
-                  getClientShipping({
-                    search: document.querySelector('#search').value,
-                  }),
-                );
-              }}
-            />
-          </div>
         </div>
         {clientShipping.data.length === 0 ? (
           <h1 className={styles.notFound}>nothing found</h1>
@@ -195,7 +198,7 @@ const Shipping = () => {
               pathname="/shipping"
               router={router}
             />
-            {clientShipping.data.map(item => (
+            {clientShipping.data.map((item) => (
               <CarInformation
                 key={item.id}
                 item={item}
