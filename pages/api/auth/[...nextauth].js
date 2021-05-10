@@ -107,7 +107,7 @@ const callbacks = {
   },
 
   async redirect(url, baseUrl) {
-    return url.startsWith(baseUrl) ? url : 'https://front-shipko.mavinx.com/';
+    return 'https://front-shipko.mavinx.com/';
   },
 };
 
