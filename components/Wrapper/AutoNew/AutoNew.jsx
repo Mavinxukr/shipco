@@ -33,14 +33,15 @@ const arrTypes = [
   'shipping_damage',
 ];
 
-const getArr = (items, arr) => items.map((item, index) => {
-  const images = arr.filter(itemChild => itemChild.type === item);
-  return {
-    id: index + 1,
-    title: item,
-    images,
-  };
-});
+const getArr = (items, arr) =>
+  items.map((item, index) => {
+    const images = arr.filter((itemChild) => itemChild.type === item);
+    return {
+      id: index + 1,
+      title: item,
+      images,
+    };
+  });
 
 const AutoNew = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -62,6 +63,7 @@ const AutoNew = () => {
 
   useEffect(() => {
     const idAuto = router.query.idAuto;
+    console.log(idAuto);
     dispatch(getAutoId({}, +idAuto));
   }, [router.query]);
 
@@ -195,7 +197,7 @@ const AutoNew = () => {
           </div>
           <div className={cx(styles.fullWidth, styles.flex)}>
             <InformationBlock>
-              {lotArr.map(item => (
+              {lotArr.map((item) => (
                 <div className={styles.items} key={`${item.id}${item.value}`}>
                   <span>{item.title}:</span>
                   <span>{item.value}</span>
@@ -206,25 +208,25 @@ const AutoNew = () => {
               <div className={styles.items}>
                 <span>Shipping Information</span>
               </div>
-              {shipArr.map(item => (
+              {shipArr.map((item) => (
                 <div className={styles.items} key={`${item.id}${item.title}`}>
                   <span>{item.title}:</span>
                   <span className={styles.rightText}>
-                    {typeof item.value === 'object' ? (
+                    {Array.isArray(item.value) ? (
                       <>
                         {item.value[0]}
                         <br />
                         {item.value[1]}
                       </>
                     ) : (
-                      <>{item.value}</>
+                      <>{item.value ? item.value : ''}</>
                     )}
                   </span>
                 </div>
               ))}
             </InformationBlock>
             <InformationBlock customInformationBlock={styles.widthBlock}>
-              {damage.map(item => (
+              {damage.map((item) => (
                 <div className={styles.items} key={`${item.id}${item.title}`}>
                   <span>{item.title}</span>
                   <span className={styles.colorText}>
@@ -259,7 +261,7 @@ const AutoNew = () => {
                 initialSlide={openSlide}
                 customArrow={styles.displayNone}
               >
-                {autoDamage.map(item => (
+                {autoDamage.map((item) => (
                   <div key={item.id}>
                     <Image className={styles.image} src={item.link} />
                   </div>
@@ -275,9 +277,7 @@ const AutoNew = () => {
             >
               <Form
                 onSubmit={onSubmit}
-                render={({
-                  handleSubmit, submitting, form, values,
-                }) => (
+                render={({ handleSubmit, submitting, form, values }) => (
                   <form onSubmit={handleSubmit} className={styles.fullWidth}>
                     <div className={styles.flex}>
                       <label className={styles.label}>Comment:</label>
@@ -332,8 +332,12 @@ const AutoNew = () => {
           )}
         </div>
         <h3 className={styles.title}>Popular Vehicles Right Now</h3>
-        <div className={cx(styles.flex, styles.popularItems, { [styles.index]: isPopupOpen })}>
-          {autoId.vehicles.map(item => (
+        <div
+          className={cx(styles.flex, styles.popularItems, {
+            [styles.index]: isPopupOpen,
+          })}
+        >
+          {autoId.vehicles.map((item) => (
             <div className={styles.popular} key={item.id}>
               <div>
                 {item.document ? (
