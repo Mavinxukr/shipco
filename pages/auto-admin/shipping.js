@@ -2,7 +2,7 @@ import Shipping from '../../components/AdminWrapper/Shipping/Shipping';
 import { getSession } from 'next-auth/client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Loader from '../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 function ShippingPage() {
   const [isLoading, setIsLoading] = useState(true);
