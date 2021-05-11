@@ -1,22 +1,22 @@
 export const data = [
   {
-    name: 'CARS FOR SALE',
+    name: 'carsForSale',
     path: '/',
   },
   {
-    name: 'AUTO EXPORT',
+    name: 'autoExport',
     path: '/',
   },
   {
-    name: 'GENERAL INFO',
+    name: 'genetalInfo',
     path: '/',
   },
   {
-    name: 'ABOUT US',
+    name: 'aboutUs',
     path: '/',
   },
   {
-    name: 'CONTACTS',
+    name: 'contacts',
     path: '/',
   },
 ];

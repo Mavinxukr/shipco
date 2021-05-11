@@ -18,6 +18,7 @@ import IconArrow from '../../../assets/svg/Group (6).svg';
 import styles from './Home.scss';
 import { IndexHeader } from '../../IndexHeader/IndexHeader';
 import Loader from '../../Loader/Loader';
+import useTranslation from 'next-translate/useTranslation';
 
 const SampleNextArrow = ({ onClick, index }) => (
   <button
@@ -44,6 +45,7 @@ const SamplePrevArrow = ({ onClick, index }) => (
 const Home = () => {
   const [index, setIndex] = useState(0);
   const [session, loading] = useSession();
+  const { t, lang } = useTranslation('home');
 
   const settings = {
     dots: true,
@@ -64,7 +66,7 @@ const Home = () => {
       <IndexHeader></IndexHeader>
       <main>
         <div className={styles.container}>
-          <h2 className={styles.infoTitle}>OUR FEATURES</h2>
+          <h2 className={styles.infoTitle}>{t('ourFeatures')}</h2>
           <p className={styles.infoText}>
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
             nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
@@ -74,7 +76,7 @@ const Home = () => {
             <div className={styles.infoBlockItem}>
               <Image src="/images/icon_1.png" alt="" />
               <p className={styles.infoBlockItemTitle}>
-                Best Deals &amp; Prices
+                {t('bestDealsAndPrices')}
               </p>
               <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
@@ -85,7 +87,7 @@ const Home = () => {
             <div className={styles.infoBlockItem}>
               <Image src="/images/icon_2.png" alt="" />
               <p className={styles.infoBlockItemTitle}>
-                Efficiency and quality
+                {t('efficiencyAndQuality')}
               </p>
               <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
@@ -95,7 +97,7 @@ const Home = () => {
             </div>
             <div className={styles.infoBlockItem}>
               <Image src="/images/icon_3.png" alt="" />
-              <p className={styles.infoBlockItemTitle}>Security</p>
+              <p className={styles.infoBlockItemTitle}>{t('security')}</p>
               <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
                 diam nonummy nibh euismod tincidunt ut laoreet dolore magna
@@ -117,7 +119,7 @@ const Home = () => {
         <div className={cx(styles.container, styles.mediaWidth)}>
           <h2 className={styles.testimonialsTitle}>
             <IconQuotes className={styles.testimonialsIcon} />
-            Testimonials
+            {t('testimonials')}
           </h2>
           <Slider className={styles.sliderContainer} {...settings}>
             {sliderData.map((item) => (
@@ -138,7 +140,7 @@ const Home = () => {
           </Slider>
         </div>
         <div className={styles.container}>
-          <h2 className={styles.contactTitle}>Contact US</h2>
+          <h2 className={styles.contactTitle}> {t('contactUs')}</h2>
           <div className={styles.contactBlock}>
             <div className={styles.contactBlockText}>
               <p>
@@ -240,34 +242,34 @@ const Home = () => {
           <ul className={styles.footerNav}>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                Cars for Sale
+                {t('carsForSale')}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                Auto Export
+                {t('autoExport')}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                Cargo tracking
+                {t('cargoTracking')}
               </a>
             </li>
           </ul>
           <ul className={styles.footerNav}>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                General info
+                {t('genetalInfo')}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                About Us
+                {t('aboutUs')}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                Contacts
+                {t('contacts')}
               </a>
             </li>
           </ul>
