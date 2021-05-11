@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,OAAO,CAAC;EACN,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,UAAU,ECHM,OAAO;EDIvB,KAAK,ECLC,IAAI;EDMV,MAAM,EAAE,OAAO;EACf,aAAa,EAAE,GAAG;EAClB,UAAU,EAAE,QAAQ;EACpB,WAAW,ECCF,cAAc,EAAE,UAAU;EDAnC,SAAS,EAAE,IAAI;CAShB;;AAlBD,AAWE,OAXK,AAWJ,MAAM,CAAC;EACN,UAAU,ECXS,OAAO;CDY3B;;AAbH,AAcE,OAdK,AAcJ,SAAS,CAAC;EACT,gBAAgB,ECbN,OAAO;EDcjB,MAAM,EAAE,IAAI;CACb",
+    "sources": [
+        "../../components/UI/Button/Button.scss",
+        "../../scss/core/_vars.scss"
+    ],
+    "names": [],
+    "file": "Button.css"
+}

@@ -1,0 +1,132 @@
+.container {
+  width: 100%;
+  padding: 0 25px;
+  margin: 0 auto;
+  max-width: 1595px;
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+.container_header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 60px 0 30px;
+}
+
+.title {
+  color: #d73e3e;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.widthSelect {
+  max-width: 200px;
+  margin: 15px 15px 15px 0;
+}
+
+@media (max-width: 768px) {
+  .widthSelect {
+    max-width: 100%;
+    margin: 5px 0;
+  }
+}
+
+.widthSelect input {
+  border-radius: 0;
+  font-size: 16px;
+  padding: 13px 15px;
+}
+
+.widthSelect input::-webkit-input-placeholder {
+  color: #000;
+}
+
+.widthSelect input:-ms-input-placeholder {
+  color: #000;
+}
+
+.widthSelect input::-ms-input-placeholder {
+  color: #000;
+}
+
+.widthSelect input::placeholder {
+  color: #000;
+}
+
+.widthSelect label {
+  display: none;
+}
+
+.btnSubmit {
+  padding: 15px;
+  height: 46px;
+  margin: 15px 15px 15px 0;
+}
+
+.fullWidth {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.notFound {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 130px 0;
+}
+
+.filterText {
+  color: #d73e3e;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 16px;
+  margin-right: 61px;
+}
+
+.rightBlock {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filterIcon {
+  margin-right: 17px;
+}
+/*# sourceMappingURL=Shipping.css.map */
