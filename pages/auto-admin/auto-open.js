@@ -2,7 +2,7 @@ import AutoOpen from '../../components/AdminWrapper/AutoOpen/AutoOpen';
 import { getSession } from 'next-auth/client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Loader from '../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 function AutoOpenPage() {
   const [isLoading, setIsLoading] = useState(true);
