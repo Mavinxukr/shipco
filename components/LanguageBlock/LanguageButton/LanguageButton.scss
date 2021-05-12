@@ -1,0 +1,14 @@
+@import '../../../scss/core/vars';
+@import '../../../scss/core/mixins';
+
+.button {
+  @include styleForText(18px, $fontRegular);
+  color: $colorDisabled;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+.active {
+  font-weight: bold;
+  color: $colorBackground;
+}

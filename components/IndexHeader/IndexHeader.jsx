@@ -12,11 +12,13 @@ import Profile from '../../public/icons/Profile.svg';
 import Notification from '../../public/icons/Notification.svg';
 import Exit from '../../public/icons/signs.svg';
 import Link from 'next/link';
+import { LanguageBlock } from '../LanguageBlock/LanguageBlock';
+import useTranslation from 'next-translate/useTranslation';
 
 export const IndexHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [variant, setVariant] = useState('signIn');
-
+  const { t } = useTranslation('home');
   const [session, loading] = useSession();
 
   function logoutHandler() {
@@ -29,53 +31,53 @@ export const IndexHeader = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <div className={styles.header_logo}>
-          {/* <Button
-            type="button"
-            customBtn={styles.menu}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <IconMenu className={styles.burger} />
-          </Button> */}
-          <a href="/">
-            <Image src="/images/Shipco.png" alt="logo" />
-          </a>
+        <div className={styles.header_top}>
+          <LanguageBlock></LanguageBlock>
         </div>
-        <MenuIndex></MenuIndex>
-        <div className={styles.header_login__wrapper}>
-          {!session ? (
-            <Button
-              event={() => {
-                setVariant('signIn');
-                setIsOpen(true);
-              }}
-            >
-              LOGIN
-            </Button>
-          ) : (
-            <>
-              {/* <div className={styles.header_icons__notification}>
+        <div className={styles.header_bottom}>
+          <div className={styles.header_logo}>
+            <a href="/">
+              <Image src="/images/Shipco.png" alt="logo" />
+            </a>
+          </div>
+          <MenuIndex></MenuIndex>
+          <div className={styles.header_login__wrapper}>
+            {!session ? (
+              <Button
+                event={() => {
+                  setVariant('signIn');
+                  setIsOpen(true);
+                }}
+              >
+                {t('login')}
+              </Button>
+            ) : (
+              <>
+                {/* <div className={styles.header_icons__notification}>
                 <Notification />
               </div> */}
-              <div className={styles.header_icons__profile}>
-                <Link
-                  href={
-                    session.user.role === 'user' ? '/overview' : '/base-client'
-                  }
+                <div className={styles.header_icons__profile}>
+                  <Link
+                    href={
+                      session.user.role === 'user'
+                        ? '/overview'
+                        : '/base-client'
+                    }
+                  >
+                    <a>
+                      <Profile />
+                    </a>
+                  </Link>
+                </div>
+                <div
+                  onClick={logoutHandler}
+                  className={styles.header_icons__exit}
                 >
-                  <a>
-                    <Profile />
-                  </a>
-                </Link>
-              </div>
-              <div
-                onClick={logoutHandler}
-                className={styles.header_icons__exit}
-              >
-                <Exit />
-              </div>
-            </>
-          )}
+                  <Exit />
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
@@ -86,11 +88,7 @@ export const IndexHeader = () => {
         </span>{' '}
         CAR FROM USA
       </h1>
-      <p className={styles.headerText}>
-        A car sales site from America. Used cars, whole and beaten cars from US
-        auto auctions - Copart, Manheim, IAAI, CARS.COM SAVING when buying a car
-        on order in the USA up to -50%
-      </p>
+      <p className={styles.headerText}>{t('title')}</p>
       {isOpen && (
         <Popup
           isPopupOpen={isOpen}
