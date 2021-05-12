@@ -18,11 +18,13 @@ import Button from '../../Button/Button';
 import Pagination from '../../Pagination/Pagination';
 import CustomTable from '../../CustomTable/CustomTable';
 import Loader from '../../Loader/Loader';
+import useTranslation from 'next-translate/useTranslation';
 
 const Auto = () => {
   const autoClient = useSelector(autoClientDataSelector);
   const isDataReceived = useSelector(autoClientDataReceivedSelector);
   const router = useRouter();
+  const { t } = useTranslation('auto');
 
   const dispatch = useDispatch();
 
@@ -80,7 +82,7 @@ const Auto = () => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h4 className={styles.title}>Auto List</h4>
+        <h4 className={styles.title}>{t('autoList')}</h4>
         <Form
           onSubmit={onSubmit}
           render={({ handleSubmit, invalid, submitting }) => (
@@ -107,7 +109,7 @@ const Auto = () => {
                       name="model_name"
                       component={renderSelect({
                         placeholder: router.query.auto_name || '',
-                        label: 'Model:',
+                        label: t('model'),
                         classNameWrapper: styles.rowSelect,
                         classNameLabel: styles.labelSelect,
                         custonOnChange: (value) => {
@@ -126,7 +128,7 @@ const Auto = () => {
                   </div>
                   <Field name="lot_number" type="text">
                     {renderInput({
-                      label: 'Lot:',
+                      label: t('lot'),
                       defaultInputValue: router.query.lot_number || '',
                       classNameWrapper: styles.firstFlexInput,
                       classNameWrapperLabel: styles.customLabel,
@@ -149,7 +151,7 @@ const Auto = () => {
                     name="point_load_city"
                     component={renderSelect({
                       placeholder: router.query.port || '',
-                      label: 'Point of loading:',
+                      label: t('pointOfLoading'),
                       classNameWrapper: styles.rowSelect,
                       classNameLabel: styles.labelSelect,
                       custonOnChange: (value) => {
@@ -167,7 +169,7 @@ const Auto = () => {
                   />
                   <Field name="vin" type="text">
                     {renderInput({
-                      label: 'VIN:',
+                      label: t('VIN'),
                       defaultInputValue: router.query.vin || '',
                       classNameWrapper: styles.flexInput,
                       classNameWrapperLabel: cx(
@@ -191,7 +193,7 @@ const Auto = () => {
                   {/* /> */}
                   <Field name="container" type="text">
                     {renderInput({
-                      label: 'Сontainer:',
+                      label: t('container'),
                       defaultInputValue: router.query.container || '',
                       classNameWrapper: styles.flexInput,
                       classNameWrapperLabel: cx(
@@ -207,7 +209,7 @@ const Auto = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Search
+                  {t('search')}
                 </Button>
               </div>
             </form>
@@ -222,7 +224,7 @@ const Auto = () => {
                 router={router}
               />
               <div className={styles.scrollTable}>
-                <Table columns={columns} data={autoClient.data} />
+                <Table columns={columns(t)} data={autoClient.data} />
               </div>
               <Pagination
                 params={autoClient.links}
@@ -242,28 +244,23 @@ const Auto = () => {
 export default Auto;
 
 const Table = ({ columns, data }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    usePagination,
-    useRowSelect,
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
+    useTable(
+      {
+        columns,
+        data,
+        initialState: { pageIndex: 0 },
+      },
+      usePagination,
+      useRowSelect,
+    );
 
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
           </tr>
@@ -274,7 +271,7 @@ const Table = ({ columns, data }) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => (
+              {row.cells.map((cell) => (
                 <td
                   className={`Auto-${cell.column.id}`}
                   {...cell.getCellProps()}

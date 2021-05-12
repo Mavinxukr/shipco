@@ -18,10 +18,12 @@ import {
   overviewDataReceivedSelector,
 } from '../../../utils/selectors';
 import styles from './Overview.scss';
+import useTranslation from 'next-translate/useTranslation';
 
 const Overview = () => {
   const overviews = useSelector(overviewDataSelector);
   const isDataReceived = useSelector(overviewDataReceivedSelector);
+  const { t } = useTranslation('overview');
 
   const dispatch = useDispatch();
 
@@ -40,13 +42,13 @@ const Overview = () => {
           {overviews.vehicles && (
             <CustomSlider
               className={styles.containerSlider}
-              titleSlider="Popular Vehicles Right Now"
+              titleSlider={t('popularVehiclesRightNow')}
               count={4}
               countXl={2}
               countMd={1}
               amountArrProduct={overviews.vehicles.length}
             >
-              {overviews.vehicles.map(item => (
+              {overviews.vehicles.map((item) => (
                 <div className={styles.slider} key={item.id}>
                   <div>
                     {item.document ? (
@@ -63,10 +65,14 @@ const Overview = () => {
                   </div>
                   <h6 className={styles.titleSlider}>{item.model_name}</h6>
                   <div className={styles.flex}>
-                    <span>Lot# {item.lot_info.lot_number}</span>
+                    <span>
+                      {t('lot#')} {item.lot_info.lot_number}
+                    </span>
                   </div>
                   <div className={styles.flex}>
-                    <span>Location: {item.sale_info.location}</span>
+                    <span>
+                      {t('location')} {item.sale_info.location}
+                    </span>
                     <span className={styles.circle}>e</span>
                   </div>
                   <div className={styles.bg}>
@@ -78,7 +84,7 @@ const Overview = () => {
                         },
                       }}
                     >
-                      <a>view</a>
+                      <a>{t('view')}</a>
                     </Link>
                   </div>
                 </div>
@@ -90,13 +96,13 @@ const Overview = () => {
           {overviews.latest_shippings && (
             <CustomSlider
               className={styles.containerSlider}
-              titleSlider="Shipping "
+              titleSlider={t('shipping')}
               count={3}
               countXl={2}
               countMd={1}
               // amountArrProduct={overviews.latest_shippings.length}
             >
-              {overviews.latest_shippings.map(item => (
+              {overviews.latest_shippings.map((item) => (
                 <div className={styles.slider} key={item.id}>
                   <div className={cx(styles.flex, styles.firstBlock)}>
                     <span className={styles.title}>
@@ -113,9 +119,9 @@ const Overview = () => {
         </>
         <>
           {overviews.latest_invoices && (
-            <CustomTable title="Invoices">
+            <CustomTable title={t('invoices')}>
               <div className={styles.scrollTable}>
-                <Table columns={columns} data={overviews.latest_invoices} />
+                <Table columns={columns(t)} data={overviews.latest_invoices} />
               </div>
             </CustomTable>
           )}
@@ -128,27 +134,22 @@ const Overview = () => {
 export default Overview;
 
 const Table = ({ columns, data }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable(
-    {
-      columns,
-      data,
-    },
-    useSortBy,
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+      },
+      useSortBy,
+    );
 
   return (
     <>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <IconSortTable className={styles.sort} />
                   {column.render('Header')}
@@ -162,7 +163,7 @@ const Table = ({ columns, data }) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
+                {row.cells.map((cell) => (
                   <td
                     className={`Overview-${cell.column.id}`}
                     {...cell.getCellProps()}

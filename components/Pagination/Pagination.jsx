@@ -5,15 +5,19 @@ import Button from '../Button/Button';
 import SelectCustom from '../SelectCustom/SelectCustom';
 import styles from './Pagination.scss';
 import { pagination } from './data';
+import useTranslation from 'next-translate/useTranslation';
 
 const Pagination = ({
   params,
   router,
   pathname,
-}) => (
+}) => {
+  const { t } = useTranslation('pagination');
+
+  return (
   <div className={styles.pagination}>
     <div className={styles.paginationFlex}>
-      <span>Show</span>
+      <span>{t('show')}</span>
       <SelectCustom
         classNameWrapper={styles.widthSelect}
         options={pagination}
@@ -29,11 +33,11 @@ const Pagination = ({
           });
         }}
       />
-      <span>entries</span>
+      <span>{t('entries')}</span>
     </div>
     <div className={styles.paginationFlex}>
       <span className={styles.margitRight}>
-          Showing {params.from} to {params.to} of {params.total} entries
+      {t('showing')} {params.from}  {t('to')}  {params.to} {t('of')}  {params.total} {t('entries')} 
       </span>
       <div className={styles.paginationFlex}>
         <Button
@@ -49,11 +53,12 @@ const Pagination = ({
             });
           }}
         >
-            First
+            {t('first')}
         </Button>
         <ReactPaginate
-          previousLabel="Previous"
-          nextLabel="Next"
+          previousLabel={t('previous')}
+
+          nextLabel={t('next')}
           breakLabel="..."
           breakClassName={styles.paginationBtn}
           pageCount={params.last_page}
@@ -87,12 +92,12 @@ const Pagination = ({
             });
           }}
         >
-            Last
+           {t('last')}
         </Button>
       </div>
     </div>
   </div>
-);
+)};
 
 
 Pagination.propTypes = {

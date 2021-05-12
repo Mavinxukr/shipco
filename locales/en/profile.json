@@ -1,0 +1,17 @@
+{
+  "profileSettings": "Profile settings",
+  "name": "Name",
+  "username": "Username",
+  "emailAdress": "E-mail adress",
+  "oldPassword": "Old password",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "phoneNumber": "Phone number",
+  "country": "Country",
+  "city": "City",
+  "zip": "Zip",
+  "adress": "Adress",
+  "cardNumber": "Card number",
+  "saveChanges": "SAVE CHANGES",
+  "addNewPhoto": "Add new photo"
+}

@@ -32,6 +32,8 @@ import {
 import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
 import { storeShipping } from '../../../redux/actions/shipping';
 import IconMenu from '../../../assets/svg/menuWhite.svg';
+import { LanguageBlock } from '../../LanguageBlock/LanguageBlock';
+import useTranslation from 'next-translate/useTranslation';
 
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
@@ -40,6 +42,7 @@ const Header = ({ newLink, admin }) => {
   const dispatch = useDispatch();
   const user = useSelector(currentUserDataSelector);
   const autoBycontainer = useSelector(autoByContainerDataSelector);
+  const { t, lang } = useTranslation('client-header');
 
   useEffect(() => {
     dispatch(getCurrentUser({}));
@@ -70,18 +73,7 @@ const Header = ({ newLink, admin }) => {
     <header className={styles.header}>
       <div className={styles.top}>
         <div className={styles.topLanguages}>
-          <button
-            type="button"
-            className={cx(styles.topLanguagesItem, styles.topLanguagesActive)}
-          >
-            En
-          </button>
-          <button type="button" className={styles.topLanguagesItem}>
-            Ru
-          </button>
-          <button type="button" className={styles.topLanguagesItem}>
-            Uk
-          </button>
+          <LanguageBlock></LanguageBlock>
         </div>
       </div>
       <div className={styles.bottom}>
@@ -93,9 +85,15 @@ const Header = ({ newLink, admin }) => {
           >
             <IconMenu className={styles.burger} />
           </Button>
-          <a href={admin ? '/base-client' : '/overview'}>
-            <h1 className={styles.logo}>Shipco</h1>
-          </a>
+          <Link
+            href={admin ? '/base-client' : '/overview'}
+            locale={lang}
+            key={lang}
+          >
+            <a>
+              <h1 className={styles.logo}>Shipco</h1>
+            </a>
+          </Link>
         </div>
         <nav className={navClass}>
           {admin ? (
@@ -197,9 +195,8 @@ const Header = ({ newLink, admin }) => {
                         onKeyUp={() =>
                           dispatch(
                             getAutoByContainer({
-                              tracking_id: document.querySelector(
-                                '#tracking_id',
-                              ).value,
+                              tracking_id:
+                                document.querySelector('#tracking_id').value,
                             }),
                           )
                         }
@@ -252,7 +249,7 @@ const Header = ({ newLink, admin }) => {
                 <Link href={{ pathname: '/auto' }}>
                   <a className={classNameForLinkAuto}>
                     <IconAuto className={styles.menuIcon} />
-                    Auto
+                    {t('auto')}
                     <p className={styles.menuDot} />
                   </a>
                 </Link>
@@ -261,7 +258,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/dismanting">
                   <a className={styles.menuLink}>
                     <IconRepair className={styles.menuIcon} />
-                    Auto for dismanting
+                    {t('autoForDismantig')}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -270,7 +267,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/parts">
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
-                    parts
+                    {t('parts')}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -279,7 +276,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/shipping">
                   <a className={styles.menuLink}>
                     <IconShipping className={styles.menuIcon} />
-                    Shipping
+                    {t('shiping')}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -288,7 +285,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/invoices">
                   <a className={styles.menuLink}>
                     <IconInvoices className={styles.menuIcon} />
-                    Invoices
+                    {t('invoces')}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -297,7 +294,7 @@ const Header = ({ newLink, admin }) => {
           )}
         </nav>
         <div className={styles.rigthItemsHeader}>
-          {admin ? null : (
+          {/* {admin ? null : (
             <div className={styles.bottomLanguages}>
               <button type="button" className={styles.bottomLanguagesItem}>
                 Ru
@@ -308,7 +305,7 @@ const Header = ({ newLink, admin }) => {
               </button>
               <IconArrow className={styles.bottomLanguagesIcon} />
             </div>
-          )}
+          )} */}
           <div className={styles.bottomIconsItems}>
             {!admin && (
               <Link href="/notification">

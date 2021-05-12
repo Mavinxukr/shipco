@@ -1,0 +1,17 @@
+{
+  "profileSettings": "إعدادات الملف الشخصي",
+  "name": "اسم",
+  "username": "اسم المستخدم",
+  "emailAdress": "عنوان البريد الإلكتروني",
+  "oldPassword": "كلمة السر القديمة",
+  "newPassword": "كلمة السر جديدة",
+  "confirmPassword": "تأكيد كلمة السر",
+  "phoneNumber": "رقم الهاتف",
+  "country": "البلد",
+  "city": "المدينة",
+  "zip": "الرمز البريدي",
+  "adress": "العنوان",
+  "cardNumber": "رقم البطاقة",
+  "saveChanges": "حفظ التغييرات",
+  "addNewPhoto": "أضف صورة جديدة"
+}

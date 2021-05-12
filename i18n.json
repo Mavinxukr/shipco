@@ -2,7 +2,7 @@
   "locales": ["en", "ar"],
   "defaultLocale": "en",
   "pages": {
-    "*": ["admin"],
+    "*": ["client-header", "overview", "footer", "auto", "pagination"],
     "/": ["home"]
   }
 }
