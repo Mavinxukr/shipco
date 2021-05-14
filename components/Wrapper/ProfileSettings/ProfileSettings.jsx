@@ -24,6 +24,7 @@ import {
   isAuthSelector,
 } from '../../../utils/selectors';
 import { editCurrentUser } from '../../../redux/actions/currentUser';
+import useTranslation from 'next-translate/useTranslation';
 
 const ProfileSettings = () => {
   const [isChangeType, setIsChangeType] = useState(false);
@@ -31,6 +32,7 @@ const ProfileSettings = () => {
   const dispatch = useDispatch();
   const userData = useSelector(currentUserDataSelector);
   const isAuth = useSelector(isAuthSelector);
+  const { t } = useTranslation('profile');
 
   useEffect(() => {
     if (userData && userData.image) {
@@ -59,7 +61,7 @@ const ProfileSettings = () => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h4 className={styles.title}>Profile settings</h4>
+        <h4 className={styles.title}>{t('profileSettings')}</h4>
         <Form
           onSubmit={onSubmit}
           validate={(values) => {
@@ -86,7 +88,7 @@ const ProfileSettings = () => {
                     defaultValue={userData.name || ''}
                   >
                     {renderInput({
-                      label: 'Name',
+                      label: t('name'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
@@ -96,7 +98,7 @@ const ProfileSettings = () => {
                     defaultValue={userData.username || ''}
                   >
                     {renderInput({
-                      label: 'Username',
+                      label: t('username'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
@@ -107,7 +109,7 @@ const ProfileSettings = () => {
                     defaultValue={userData.email || ''}
                   >
                     {renderInput({
-                      label: 'E-mail adress',
+                      label: t('emailAdress'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
@@ -117,7 +119,7 @@ const ProfileSettings = () => {
                       type={isChangeType ? 'text' : 'password'}
                     >
                       {renderInput({
-                        label: 'Old password',
+                        label: t('oldPassword'),
                         icon: <IconEye />,
                         classNameWrapperForIcon: styles.showPassword,
                         classNameWrapper: styles.mediaFullWidth,
@@ -126,13 +128,13 @@ const ProfileSettings = () => {
                     </Field>
                     <Field name="password" type="password">
                       {renderInput({
-                        label: 'New password',
+                        label: t('newPassword'),
                         classNameWrapper: styles.mediaFullWidth,
                       })}
                     </Field>
                     <Field name="password_confirmation" type="password">
                       {renderInput({
-                        label: 'Confirm password',
+                        label: t('confirmPassword'),
                         classNameWrapper: styles.mediaFullWidth,
                       })}
                     </Field>
@@ -147,14 +149,14 @@ const ProfileSettings = () => {
                     defaultValue={userData.phone || ''}
                   >
                     {renderInput({
-                      label: 'Phone number',
+                      label: t('phoneNumber'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
                   <Field
                     name="country"
                     component={renderSelect({
-                      label: 'Country',
+                      label: t('country'),
                       placeholder: userData.country || '',
                     })}
                     options={state}
@@ -162,7 +164,7 @@ const ProfileSettings = () => {
                   <Field
                     name="city"
                     component={renderSelect({
-                      label: 'City',
+                      label: t('city'),
                       placeholder: userData.city || '',
                     })}
                     options={stateOptions}
@@ -173,7 +175,7 @@ const ProfileSettings = () => {
                     defaultValue={userData.zip || ''}
                   >
                     {renderInput({
-                      label: 'Zip',
+                      label: t('zip'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
@@ -183,7 +185,7 @@ const ProfileSettings = () => {
                     defaultValue={userData.address || ''}
                   >
                     {renderInput({
-                      label: 'Adress',
+                      label: t('adress'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
@@ -195,7 +197,7 @@ const ProfileSettings = () => {
                     defaultValue={userData.card_number || ''}
                   >
                     {renderInput({
-                      label: 'Card number',
+                      label: t('cardNumber'),
                       classNameWrapper: styles.mediaFullWidth,
                     })}
                   </Field>
@@ -206,7 +208,7 @@ const ProfileSettings = () => {
                     customBtn={styles.btnSubmit}
                     type="submit"
                   >
-                    Save changes
+                    {t('saveChanges')}
                   </Button>
                 </div>
               </div>

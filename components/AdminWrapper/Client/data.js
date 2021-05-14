@@ -1,15 +1,15 @@
 import Link from 'next/link';
 
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'Date purchased',
+        Header: t('Date purchased'),
         accessor: 'created_at',
       },
       {
-        Header: 'ID',
+        Header: t('ID'),
         accessor: 'id',
         Cell: ({ cell: { value } }) => (
           <Link
@@ -27,33 +27,33 @@ export const columns = [
         ),
       },
       {
-        Header: 'Images',
+        Header: t('Images'),
         accessor: 'image.link',
         Cell: ({ cell: { value } }) => (
           <img src={value || '/images/no-preview-available.png'} alt={value} />
         ),
       },
       {
-        Header: 'Client id',
+        Header: t('Client id'),
         accessor: 'client.id',
       },
       {
-        Header: 'Model',
+        Header: t('Model'),
         accessor: 'auto',
         Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
-        Header: 'Lot',
+        Header: t('Lot'),
         accessor: 'lot_info.lot_number',
         Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
-        Header: 'VIN number',
+        Header: t('VIN number'),
         accessor: 'lot_info.vin_code',
         Cell: ({ cell: { value } }) => <span>{value}</span>,
       },
       {
-        Header: 'Point of loading',
+        Header: t('Point of loading'),
         accessor: 'ship_info.point_load',
         Cell: ({ cell: { value } }) => (
           <>
@@ -68,11 +68,11 @@ export const columns = [
         ),
       },
       {
-        Header: 'Container ID',
+        Header: t('Container ID'),
         accessor: 'ship_info.container_id',
       },
       {
-        Header: 'Point of delivery',
+        Header: t('Point of delivery'),
         accessor: 'ship_info.point_delivery',
         Cell: ({ cell: { value } }) => (
           <>
@@ -87,11 +87,11 @@ export const columns = [
         ),
       },
       {
-        Header: 'Paiment for',
+        Header: t('Paiment for'),
         accessor: 'paiment',
       },
       {
-        Header: 'Total',
+        Header: t('Total'),
         accessor: 'invoice.total',
         Cell: ({ cell: { value } }) => (
           <>
@@ -111,7 +111,7 @@ export const columns = [
         ),
       },
       {
-        Header: 'Paid',
+        Header: t('Paid'),
         accessor: 'invoice.paid',
         Cell: ({ cell: { value } }) => (
           <>
@@ -131,25 +131,25 @@ export const columns = [
         ),
       },
       {
-        Header: 'Outstanding',
+        Header: t('Outstanding'),
         accessor: 'invoice.outstanding_price',
         Cell: ({ cell: { value } }) => <p>{value && <span>$ {value}</span>}</p>,
       },
       {
-        Header: 'Status',
+        Header: t('Status'),
         accessor: 'status',
         Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')}</>,
       },
       {
-        Header: 'Key',
+        Header: t('Key'),
         accessor: 'feature_info.key',
       },
       {
-        Header: 'Auction',
+        Header: t('Auction'),
         accessor: 'auction',
       },
       {
-        Header: 'Damage status',
+        Header: t('Damage status'),
         accessor: 'ship_info.damage_status',
         Cell: ({ cell: { value } }) => <>{value && value.split('_').join(' ')}</>,
       },

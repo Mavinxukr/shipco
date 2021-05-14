@@ -37,6 +37,7 @@ import Pagination from '../../Pagination/Pagination';
 import { getCurrentUser } from '../../../redux/actions/currentUser';
 import HoverPopup from '../../HoverPopup/HoverPopup';
 import { getParts } from '../../../redux/actions/parts';
+import useTranslation from 'next-translate/useTranslation';
 
 const Table = ({
   columns,
@@ -47,6 +48,7 @@ const Table = ({
   setUpdateData,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('parts');
 
   const {
     getTableProps,
@@ -124,7 +126,7 @@ const Table = ({
                             }
                           }}
                         >
-                          View pics
+                          {t('viewPics')}
                         </Button>
                       ) : (
                         <>{cell.render('Cell')}</>
@@ -152,6 +154,7 @@ const Parts = () => {
   const clientParts = useSelector(clientPartsDataSelector);
   const isDataReceived = useSelector(clientPartsDataReceivedSelector);
   const user = useSelector(currentUserDataSelector);
+  const { t } = useTranslation('parts');
 
   const dispatch = useDispatch();
 
@@ -230,22 +233,22 @@ const Parts = () => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h3 className={styles.title}>Parts</h3>
+        <h3 className={styles.title}>{t('parts')}</h3>
         <div className={styles.flex}>
           <Button
             customBtn={styles.btnIcon}
             onClick={() => setIsPopupOpen(true)}
           >
             <IconPlus className={styles.plus} />
-            Add New Part
+            {t('addNewPart')}
           </Button>
           <div className={styles.rightBlock}>
             <Button customBtn={styles.filterText}>
               <IconFilter className={styles.filterIcon} />
-              Status
+              {t('status')}
             </Button>
             <HoverPopup>
-              {status.map((statusFilter, index) => {
+              {status(t).map((statusFilter, index) => {
                 const classNameForButton = cx(styles.btnStatus, {
                   [styles.activeStatus]: stepIndex === index,
                 });
@@ -287,7 +290,7 @@ const Parts = () => {
             />
             <div className={styles.scrollTable}>
               <Table
-                columns={columns}
+                columns={columns(t)}
                 data={clientParts.data}
                 setIsPopupPhotoOpen={setIsPopupPhotoOpen}
                 setSliderImages={setSliderImages}
@@ -307,7 +310,7 @@ const Parts = () => {
         )}
       </div>
       {isPopupUpdateOpen && (
-        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title="Update Part">
+        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title={t('updatePart')}>
           <Form
             onSubmit={onSubmitUpdate}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -316,7 +319,7 @@ const Parts = () => {
                   name="catalog_number"
                   component={renderSelect({
                     placeholder: updateData.catalog_number,
-                    label: 'Catalog number',
+                    label: t('catalogNumber'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -329,7 +332,7 @@ const Parts = () => {
                   defaultValue={updateData.name || ''}
                 >
                   {renderInput({
-                    label: 'Name',
+                    label: t('name'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -341,7 +344,7 @@ const Parts = () => {
                   defaultValue={updateData.auto || ''}
                 >
                   {renderInput({
-                    label: 'Auto',
+                    label: t('auto'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -352,7 +355,7 @@ const Parts = () => {
                   isRequired
                   component={renderSelect({
                     placeholder: updateData.vin,
-                    label: 'VIN Number',
+                    label: t('vinNumber'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -366,7 +369,7 @@ const Parts = () => {
                   defaultValue={updateData.container || ''}
                 >
                   {renderInput({
-                    label: 'Container',
+                    label: t('container'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -378,7 +381,7 @@ const Parts = () => {
                   defaultValue={updateData.quality || ''}
                 >
                   {renderInput({
-                    label: 'Quality',
+                    label: t('quality'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -386,7 +389,7 @@ const Parts = () => {
                 </Field>
                 <div className={styles.popupFieldRow}>
                   <label className={cx(styles.label, styles.colorDec)}>
-                    Comment
+                    {t('comment')}
                   </label>
                   <Field
                     className={cx(styles.widthInput, styles.customTextarea)}
@@ -401,7 +404,7 @@ const Parts = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Update part
+                    {t('updatePart')}
                 </Button>
               </form>
             )}
@@ -409,7 +412,7 @@ const Parts = () => {
         </Popup>
       )}
       {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Part">
+        <Popup setIsPopupOpen={setIsPopupOpen} title={t('addNewPart')}>
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -419,7 +422,7 @@ const Parts = () => {
                   validate={required}
                   component={renderSelect({
                     placeholder: '',
-                    label: 'Catalog number',
+                    label: t('catalogNumber'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -428,7 +431,7 @@ const Parts = () => {
                 />
                 <Field name="name" validate={required} type="text">
                   {renderInput({
-                    label: 'Name',
+                    label: t('name'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -436,7 +439,7 @@ const Parts = () => {
                 </Field>
                 <Field name="auto" validate={required} type="text">
                   {renderInput({
-                    label: 'Auto',
+                    label: t('auto'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -448,7 +451,7 @@ const Parts = () => {
                   validate={required}
                   component={renderSelect({
                     placeholder: '',
-                    label: 'VIN Number',
+                    label:  t('vinNumber'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -461,7 +464,7 @@ const Parts = () => {
                   type="text"
                 >
                   {renderInput({
-                    label: 'Container',
+                    label: t('container'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -469,7 +472,7 @@ const Parts = () => {
                 </Field>
                 <Field name="quality" validate={required} type="text">
                   {renderInput({
-                    label: 'Quality',
+                    label: t('quality'),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -477,7 +480,7 @@ const Parts = () => {
                 </Field>
                 <div className={styles.popupFieldRow}>
                   <label className={cx(styles.label, styles.colorDec)}>
-                    Comment
+                  {t('comment')}
                   </label>
                   <Field
                     className={cx(styles.widthInput, styles.customTextarea)}
@@ -491,7 +494,7 @@ const Parts = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  ADD New part
+                  {t('addNewPart')}
                 </Button>
               </form>
             )}
@@ -502,7 +505,7 @@ const Parts = () => {
         <Popup
           isPopupOpen={isPopupPhotoOpen}
           setIsPopupOpen={setIsPopupPhotoOpen}
-          title="Parts photo"
+          title={t('partsPhoto')}
           customPopup={styles.paddingBottom}
         >
           <AsNavForSlider sliderImages={sliderImages} />

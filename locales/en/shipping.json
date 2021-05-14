@@ -1,4 +1,5 @@
 {
+  "shipping": "Shipping",
   "allPorts": "All Ports",
   "allStatus": "All Status",
   "allDate": "All Date",
@@ -16,8 +17,6 @@
   "last": "Last",
   "lot": "Lot #",
   "vin": "VIN:",
-  "trackingId": "Tracking id:",
-  "pointOfLoading": "Point of loading:",
   "containerId": "Container id:",
   "carFaxReport": "CarFax report",
   "invoice": "Invoice",

@@ -1,36 +1,38 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Link from 'next/link';
-import cx from 'classnames';
-import { Field, Form } from 'react-final-form';
-import { useDispatch } from 'react-redux';
-import Button from '../Button/Button';
-import { updateDismanting } from '../../redux/actions/dismanting';
-import CustomStepper from '../CustomStepper/CustomStepper';
-import ButtonGroup from '../ButtonGroup/ButtonGroup';
-import IconEdit from '../../assets/svg/edit.svg';
-import Popup from '../Popup/Popup';
-import styles from './CarInformation.scss';
-import { required } from '../../utils/validation';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Link from "next/link";
+import cx from "classnames";
+import { Field, Form } from "react-final-form";
+import { useDispatch } from "react-redux";
+import Button from "../Button/Button";
+import { updateDismanting } from "../../redux/actions/dismanting";
+import CustomStepper from "../CustomStepper/CustomStepper";
+import ButtonGroup from "../ButtonGroup/ButtonGroup";
+import IconEdit from "../../assets/svg/edit.svg";
+import Popup from "../Popup/Popup";
+import styles from "./CarInformation.scss";
+import { required } from "../../utils/validation";
+import useTranslation from "next-translate/useTranslation";
 
 const arrTypes = [
-  'auction_picture',
-  'warehouse_picture',
-  'container_picture',
-  'car_fax_report',
-  'invoice',
-  'checklist_report',
-  'shipping_damage',
+  "auction_picture",
+  "warehouse_picture",
+  "container_picture",
+  "car_fax_report",
+  "invoice",
+  "checklist_report",
+  "shipping_damage",
 ];
 
-const getArr = (items, arr) => items.map((item, index) => {
-  const images = arr.filter(itemChild => itemChild.type === item);
-  return {
-    id: index + 1,
-    title: item,
-    images,
-  };
-});
+const getArr = (items, arr) =>
+  items.map((item, index) => {
+    const images = arr.filter((itemChild) => itemChild.type === item);
+    return {
+      id: index + 1,
+      title: item,
+      images,
+    };
+  });
 
 const CarInformation = ({
   item,
@@ -47,6 +49,7 @@ const CarInformation = ({
   const fileCarfac = getArr(arrTypes, item.document)[3].images;
   const fileInvoice = getArr(arrTypes, item.document)[4].images;
   const dispatch = useDispatch();
+  const { t } = useTranslation("dismanting");
 
   const onSubmit = async (values) => {
     dispatch(
@@ -56,9 +59,9 @@ const CarInformation = ({
           auto_id: item.id,
           ...values,
         },
-        '',
-        true,
-      ),
+        "",
+        true
+      )
     );
     setIsCommentPopupOpen(false);
   };
@@ -68,28 +71,33 @@ const CarInformation = ({
       <div className={styles.image}>
         <img
           src={
-            (item.image
-              && item.image.link)
-            || '/images/no-preview-available.png'
+            (item.image && item.image.link) ||
+            "/images/no-preview-available.png"
           }
-          alt={item.model_name || 'No Information'}
+          alt={item.model_name || "No Information"}
         />
       </div>
       <div className={styles.column}>
-        <p className={styles.colorText}>{item.auto || 'No Information'}</p>
-        <p>Lot # {(item.lot_info && item.lot_info.lot_number) || 'No Information'}</p>
-        <p>VIN: {(item.lot_info && item.lot_info.vin_code) || 'No Information'}</p>
+        <p className={styles.colorText}>{item.auto || t("NoInformation")}</p>
+        <p>
+          {t("Lot")}{" "}
+          {(item.lot_info && item.lot_info.lot_number) || t("NoInformation")}
+        </p>
+        <p>
+          {t("VIN")}{" "}
+          {(item.lot_info && item.lot_info.vin_code) || t("NoInformation")}
+        </p>
         {admin && (
           <Link
             href={{
-              pathname: '/auto-admin/auto-open',
+              pathname: "/auto-admin/auto-open",
               query: {
                 idAuto: item.id,
               },
             }}
           >
             <a className={styles.link}>
-              <IconEdit className={styles.svg} /> Edit
+              <IconEdit className={styles.svg} /> {t("Edit")}
             </a>
           </Link>
         )}
@@ -108,27 +116,30 @@ const CarInformation = ({
         {!disassembled && (
           <>
             <p>
-              Tracking id:{' '}
+              {t("trackingId")}{" "}
               <span className={styles.colorText}>
-              {(item.ship_info && item.ship_info.tracking_id) || 'No Information'}
-            </span>
+                {(item.ship_info && item.ship_info.tracking_id) ||
+                  t("NoInformation")}
+              </span>
             </p>
             <p>
-            Point of loading:{' '}
-            {(item.ship_info && item.ship_info.point_delivery[0]) || 'No Information'}
+              {t("pointOfLoading")}{" "}
+              {(item.ship_info && item.ship_info.point_delivery[0]) ||
+                t("NoInformation")}
             </p>
           </>
         )}
 
         <p>
-          Container id:{' '}
+          {t("ContainerId")}{" "}
           <span className={styles.colorText}>
-            {(item.ship_info && item.ship_info.container_id) || 'No Information'}
+            {(item.ship_info && item.ship_info.container_id) ||
+              t("NoInformation")}
           </span>
         </p>
         {disassembled && (
           <div className={styles.flex}>
-            <span>Disassembled:</span>
+            <span>{t("Disassembled")}</span>
             {admin ? (
               <ButtonGroup>
                 <Button
@@ -140,20 +151,20 @@ const CarInformation = ({
                         {},
                         {
                           disassembly: 1,
-                          port: router.query.port || '',
-                          search: router.query.search || '',
-                          shipping_status: router.query.shipping_status || '',
-                          auto_name: router.query.auto_name || '',
-                          auto_year: router.query.auto_year || '',
-                          auto_make: router.query.auto_make || '',
+                          port: router.query.port || "",
+                          search: router.query.search || "",
+                          shipping_status: router.query.shipping_status || "",
+                          auto_name: router.query.auto_name || "",
+                          auto_year: router.query.auto_year || "",
+                          auto_make: router.query.auto_make || "",
                         },
-                        item.id,
-                      ),
+                        item.id
+                      )
                     );
                     setSwitchOn(true);
                   }}
                 >
-                  Yes
+                  {t("Yes")}
                 </Button>
                 <Button
                   customBtn={styles.btnNo}
@@ -164,31 +175,31 @@ const CarInformation = ({
                         {},
                         {
                           disassembly: 0,
-                          port: router.query.port || '',
-                          search: router.query.search || '',
-                          shipping_status: router.query.shipping_status || '',
-                          auto_name: router.query.auto_name || '',
-                          auto_year: router.query.auto_year || '',
-                          auto_make: router.query.auto_make || '',
+                          port: router.query.port || "",
+                          search: router.query.search || "",
+                          shipping_status: router.query.shipping_status || "",
+                          auto_name: router.query.auto_name || "",
+                          auto_year: router.query.auto_year || "",
+                          auto_make: router.query.auto_make || "",
                         },
-                        item.id,
-                      ),
+                        item.id
+                      )
                     );
                     setSwitchOn(false);
                   }}
                 >
-                  No
+                  {t("No")}
                 </Button>
               </ButtonGroup>
             ) : (
               <ButtonGroup>
                 {switchOn ? (
                   <Button customBtn={styles.btnYes} active={switchOn}>
-                    Yes
+                    {t("Yes")}
                   </Button>
                 ) : (
                   <Button customBtn={styles.btnNo} active={!switchOn}>
-                    No
+                    {t("No")}
                   </Button>
                 )}
               </ButtonGroup>
@@ -198,42 +209,48 @@ const CarInformation = ({
       </div>
       <div className={styles.column}>
         <a
-          href={(fileCarfac.length !== 0 && fileCarfac[0].link_for_download) || ''}
+          href={
+            (fileCarfac.length !== 0 && fileCarfac[0].link_for_download) || ""
+          }
           download
           className={cx(
             styles.colorText,
-            fileCarfac.length === 0 && styles.disabled,
+            fileCarfac.length === 0 && styles.disabled
           )}
         >
-          CarFax report
+          {t("CarFaxReport")}
         </a>
         <a
-          href={(fileInvoice.length !== 0 && fileInvoice[0].link_for_download) || ''}
+          href={
+            (fileInvoice.length !== 0 && fileInvoice[0].link_for_download) || ""
+          }
           download
           className={cx(
             styles.colorText,
-            fileInvoice.length === 0 && styles.disabled,
+            fileInvoice.length === 0 && styles.disabled
           )}
         >
-          Invoice
+          {t("Invoices")}
         </a>
         <Button
           customBtn={styles.colorText}
           onClick={() => setIsCommentPopupOpen(true)}
         >
-          Adding notes
+          {t("AddingNotes")}
         </Button>
       </div>
       {isCommentPopupOpen && (
-        <Popup customPopup={styles.popupDamage} title="Adding notes" setIsPopupOpen={setIsCommentPopupOpen}>
+        <Popup
+          customPopup={styles.popupDamage}
+          title={t("AddingNotes")}
+          setIsPopupOpen={setIsCommentPopupOpen}
+        >
           <Form
             onSubmit={onSubmit}
-            render={({
-              handleSubmit, submitting, form, values, invalid,
-            }) => (
+            render={({ handleSubmit, submitting, form, values, invalid }) => (
               <form onSubmit={handleSubmit} className={styles.fullWidth}>
                 <div className={styles.flex}>
-                  <label className={styles.label}>Comment:</label>
+                  <label className={styles.label}>{t("Comment")}</label>
                   <Field
                     className={styles.customTextarea}
                     name="comment"
@@ -247,7 +264,7 @@ const CarInformation = ({
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Adding notes
+                  {t("AddingNotes")}
                 </Button>
               </form>
             )}
@@ -265,7 +282,11 @@ const CarInformation = ({
         </Popup>
       )}
       {isHistoryPopupOpen && (
-        <Popup customPopup={styles.popupDamage} title="History notes" setIsPopupOpen={setIsHistoryPopupOpen}>
+        <Popup
+          customPopup={styles.popupDamage}
+          title="History notes"
+          setIsPopupOpen={setIsHistoryPopupOpen}
+        >
           {item.notes.length === 0 ? (
             <p className={styles.noComment}>Not Comments</p>
           ) : (

@@ -17,6 +17,8 @@ import { columns } from './data';
 import IconSortTable from '../../../assets/svg/SortTable.svg';
 import styles from './Invoices.scss';
 import Loader from '../../Loader/Loader';
+import useTranslation from 'next-translate/useTranslation';
+
 
 const Table = ({ columns, data }) => {
   const {
@@ -76,6 +78,7 @@ const Table = ({ columns, data }) => {
 const Invoices = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation('invoices');
 
   const clientInvoices = useSelector(clientInvoicesDataSelector);
   const isDataReceived = useSelector(clientInvoicesDataReceivedSelector);
@@ -102,7 +105,7 @@ const Invoices = () => {
     <MainLayout>
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h3 className={styles.title}>Invoices</h3>
+          <h3 className={styles.title}>{t('invoices')}</h3>
           <div className={styles.rightBlock}>
             {/*<Button customBtn={styles.filterText}>*/}
             {/*  <IconFilter className={styles.filterIcon} />*/}
@@ -135,7 +138,7 @@ const Invoices = () => {
               router={router}
             />
             <div className={styles.scrollTable}>
-              <Table columns={columns} data={clientInvoices.data} />
+              <Table columns={columns(t)} data={clientInvoices.data} />
             </div>
             <Pagination
               params={clientInvoices.links}

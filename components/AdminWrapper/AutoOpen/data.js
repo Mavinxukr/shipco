@@ -20,20 +20,20 @@ export const damage = [
   },
 ];
 
-export const status = [
+export const status = (t) => [
   {
     id: 1,
-    text: 'Case closed',
+    text: t('case closed'),
     textValue: 'case_closed',
   },
   {
     id: 2,
-    text: 'Under unvestigation',
+    text: t('under unvestigation'),
     textValue: 'under_unvestigation',
   },
   {
     id: 3,
-    text: 'Compensation given',
+    text: t('compensation given'),
     textValue: 'compensation_given',
   },
 ];

@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import { getNotifications } from '../../../redux/actions/notifications';
+import React, { useEffect, useState } from "react";
+import cx from "classnames";
+import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import { getNotifications } from "../../../redux/actions/notifications";
 import {
   notificationsDataSelector,
   notificationDataReceivedSelector,
-} from '../../../utils/selectors';
-import { updateStatusNotificationsRequest } from '../../../services/notifications';
-import styles from './Notification.scss';
-import MainLayout from '../../Layout/Global/Global';
-import Button from '../../Button/Button';
-import IconArrow from '../../../assets/svg/Group (6).svg';
-import IconAuto from '../../../assets/svg/Vector (2).svg';
-import IconRepair from '../../../assets/svg/Group (1).svg';
-import IconSetting from '../../../assets/svg/Group (2).svg';
-import IconShipping from '../../../assets/svg/Group (3).svg';
-import IconInvoices from '../../../assets/svg/Vector (3).svg';
-import Loader from '../../Loader/Loader';
+} from "../../../utils/selectors";
+import { updateStatusNotificationsRequest } from "../../../services/notifications";
+import styles from "./Notification.scss";
+import MainLayout from "../../Layout/Global/Global";
+import Button from "../../Button/Button";
+import IconArrow from "../../../assets/svg/Group (6).svg";
+import IconAuto from "../../../assets/svg/Vector (2).svg";
+import IconRepair from "../../../assets/svg/Group (1).svg";
+import IconSetting from "../../../assets/svg/Group (2).svg";
+import IconShipping from "../../../assets/svg/Group (3).svg";
+import IconInvoices from "../../../assets/svg/Vector (3).svg";
+import Loader from "../../Loader/Loader";
+import useTranslation from "next-translate/useTranslation";
 
 const arrOfIcons = [
   <IconAuto className={styles.iconTitle} />,
@@ -35,9 +36,9 @@ const AccordionItem = ({ item, arrData, icon }) => {
 
   const classNameForAccordionTitle = cx(styles.titleBlock, {
     [styles.titleBlockNoBorder]:
-      expanded
-      || arrData.findIndex(itemArrData => itemArrData.id === item.id)
-        === arrData.length - 1,
+      expanded ||
+      arrData.findIndex((itemArrData) => itemArrData.id === item.id) ===
+        arrData.length - 1,
     [styles.titleBlockPadding]: expanded,
   });
 
@@ -59,24 +60,25 @@ const AccordionItem = ({ item, arrData, icon }) => {
           root: styles.accordion,
           content: styles.accordionSummaryContent,
         }}
-        onClick={() => updateStatusNotificationsRequest({
-          type: item.title,
-        })}
+        onClick={() =>
+          updateStatusNotificationsRequest({
+            type: item.title,
+          })
+        }
       >
         <div className={classNameForAccordionTitle}>
           <div className={styles.mainInfo}>
             <p className={styles.accordionTitle}>
               {icon}
-              {item.title.split('_').join(' ')}
+              {item.title.split("_").join(" ")}
             </p>
-            {item.notifications.some(notification => notification.is_new) ? (
-              <p
-                className={styles.countOfNotification}
-              >
+            {item.notifications.some((notification) => notification.is_new) ? (
+              <p className={styles.countOfNotification}>
                 {
-                  item.notifications.filter(notification => notification.is_new)
-                    .length
-                }{' '}
+                  item.notifications.filter(
+                    (notification) => notification.is_new
+                  ).length
+                }{" "}
                 new notification
               </p>
             ) : null}
@@ -121,6 +123,7 @@ const AccordionItem = ({ item, arrData, icon }) => {
 const Notification = () => {
   const allNotifications = useSelector(notificationsDataSelector);
   const isDataReceived = useSelector(notificationDataReceivedSelector);
+  const { t } = useTranslation("notification");
 
   const dispatch = useDispatch();
 
@@ -133,21 +136,22 @@ const Notification = () => {
   }
 
   const arrTypes = [
-    'auto',
-    'auto_for_dismanting',
-    'parts',
-    'shipping',
-    'invoices',
+    t("AUTO"),
+    t("AUTO FOR DISMANTING"),
+    t("PARTS"),
+    t("SHIPPING"),
+    t("INVOICES"),
   ];
 
-  const getArr = (items, arr) => items.map((item, index) => {
-    const notifications = arr.filter(itemChild => itemChild.type === item);
-    return {
-      id: index + 1,
-      title: item,
-      notifications,
-    };
-  });
+  const getArr = (items, arr) =>
+    items.map((item, index) => {
+      const notifications = arr.filter((itemChild) => itemChild.type === item);
+      return {
+        id: index + 1,
+        title: item,
+        notifications,
+      };
+    });
 
   const notificationData = getArr(arrTypes, allNotifications);
 
@@ -155,7 +159,7 @@ const Notification = () => {
     <MainLayout>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h4 className={styles.title}>Notifications</h4>
+          <h4 className={styles.title}>{t("Notifications")}</h4>
         </div>
         <div className={styles.accordionsContainer}>
           {notificationData.map((item, index) => (

@@ -1,64 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Field, Form } from 'react-final-form';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import cx from 'classnames';
-import formatStringByPattern from 'format-string-by-pattern';
-import { getAuto, updateAuto, deleteAuto } from '../../../redux/actions/auto';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Field, Form } from "react-final-form";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import cx from "classnames";
+import formatStringByPattern from "format-string-by-pattern";
+import { getAuto, updateAuto, deleteAuto } from "../../../redux/actions/auto";
 import {
   autoDataSelector,
   autoDataReceivedSelector,
-} from '../../../utils/selectors';
-import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
-import CustomTabs from '../../CustomTabs/CustomTabs';
-import InformationBlock from '../../InformationBlock/InformationBlock';
-import HoverPopup from '../../HoverPopup/HoverPopup';
-import Previews from '../../Previews/Previews';
-import Radio from '../../Radio/Radio';
-import IconTrash from '../../../assets/svg/Trash.svg';
-import styles from './AutoOpen.scss';
+} from "../../../utils/selectors";
+import MainLayout from "../../Layout/Global/Global";
+import SubHeader from "../../Layout/SubHeader/SubHeader";
+import CustomTabs from "../../CustomTabs/CustomTabs";
+import InformationBlock from "../../InformationBlock/InformationBlock";
+import HoverPopup from "../../HoverPopup/HoverPopup";
+import Previews from "../../Previews/Previews";
+import Radio from "../../Radio/Radio";
+import IconTrash from "../../../assets/svg/Trash.svg";
+import styles from "./AutoOpen.scss";
 import {
   stateOptions,
   damage,
   status,
   stateOptionsDelivery,
   statusRadio,
-} from './data';
+} from "./data";
 import {
   renderInput,
   renderSelect,
   renderInputFile,
-} from '../../../utils/renderInputs';
-import Pickers from '../../Pickers/Pickers';
+} from "../../../utils/renderInputs";
+import Pickers from "../../Pickers/Pickers";
 import {
   composeValidators,
   mustBeNumber,
   required,
-} from '../../../utils/validation';
-import Button from '../../Button/Button';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import Loader from '../../Loader/Loader';
+} from "../../../utils/validation";
+import Button from "../../Button/Button";
+import IconPlus from "../../../assets/svg/Plus.svg";
+import Loader from "../../Loader/Loader";
+import useTranslation from "next-translate/useTranslation";
 
 const arrTypes = [
-  'auction_picture',
-  'warehouse_picture',
-  'container_picture',
-  'car_fax_report',
-  'invoice',
-  'checklist_report',
-  'shipping_damage',
+  "auction_picture",
+  "warehouse_picture",
+  "container_picture",
+  "car_fax_report",
+  "invoice",
+  "checklist_report",
+  "shipping_damage",
 ];
 
-const getArr = (items, arr) => items.map((item, index) => {
-  const images = arr.filter(itemChild => itemChild.type === item);
-  return {
-    id: index + 1,
-    title: item,
-    images,
-  };
-});
+const getArr = (items, arr) =>
+  items.map((item, index) => {
+    const images = arr.filter((itemChild) => itemChild.type === item);
+    return {
+      id: index + 1,
+      title: item,
+      images,
+    };
+  });
 
 const AutoOpen = () => {
   const auto = useSelector(autoDataSelector);
@@ -71,7 +73,7 @@ const AutoOpen = () => {
   const [newArrPicsWarehouses, setNewArrPicsWarehouses] = useState([]);
   const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
   const [newArrPicsDamage, setNewArrPicsDamage] = useState([]);
-  // const [stepIndex, setStepIndex] = useState(0);
+  const { t } = useTranslation("admin-auto-edit");
 
   const router = useRouter();
 
@@ -89,52 +91,62 @@ const AutoOpen = () => {
       setArrPicsWarehouses(getArr(arrTypes, auto.data.document)[1].images);
       setArrPicsContainer(getArr(arrTypes, auto.data.document)[2].images);
     }
-    // if (auto) {
-    //   setStepIndex(auto.data.offsite);
-    // }
   }, [auto]);
 
   if (!isDataReceived) {
     return <Loader />;
   }
+  console.log(auto.data.lot_info);
 
   const saleObj = auto.data.sale_info || [];
   const saleArr = Object.keys(saleObj).map((item, index) => ({
     id: index + 1,
-    title: item.split('_').join(' '),
-    value: saleObj[item] || 'No information',
+    title: item.split("_").join(" "),
+    value: saleObj[item] || t("No Information"),
   }));
 
   if (saleArr.length !== 0) {
-    saleArr[1].title = 'Lane/Item/Grid/Row';
+    saleArr[0].title = t("Location");
+    saleArr[1].title = t("LaneItemGridRow");
+    saleArr[2].title = t("Sale Name");
+    saleArr[3].title = t("Ret Date");
   }
 
   const lotObj = auto.data.lot_info || [];
   const lotArr = Object.keys(lotObj).map((item, index) => ({
     id: index + 1,
-    title: item.split('_').join(' '),
-    value: lotObj[item] || 'No information',
+    title: item.split("_").join(" "),
+    value: lotObj[item] || t("No Information"),
   }));
 
   if (lotArr.length !== 0) {
-    lotArr[0].title = 'Lot # ';
-    lotArr[3].title = 'Highlights';
-    lotArr[4].title = 'Primary Damage';
-    lotArr[5].title = 'Secondary Damage';
-    lotArr[6].title = 'Est. Retail Value';
-    lotArr[7].title = 'VIN';
+    lotArr[0].title = t("Lot #");
+    lotArr[1].title = t("Doc Type");
+    lotArr[2].title = t("Odometer");
+    lotArr[3].title = t("Highlights");
+    lotArr[4].title = t("Primary Damage");
+    lotArr[5].title = t("Secondary Damage");
+    lotArr[6].title = t("EstRetailValue");
+    lotArr[7].title = t("VIN");
   }
 
   const featureObj = auto.data.feature_info || [];
   const featureArr = Object.keys(featureObj).map((item, index) => ({
     id: index + 1,
-    title: item.split('_').join(' '),
-    value: featureObj[item] || 'No information',
+    title: item.split("_").join(" "),
+    value: featureObj[item] || t("No Information"),
   }));
 
   if (featureArr.length !== 0) {
-    featureArr[2].title = 'Engine Type';
-    featureArr[4].title = 'Transmission';
+    featureArr[0].title = t("Body Style");
+    featureArr[1].title = t("Color");
+    featureArr[2].title = t("Engine Type");
+    featureArr[3].title = t("Cylinder");
+    featureArr[4].title = t("Transmission");
+    featureArr[5].title = t("Drive");
+    featureArr[6].title = t("Fuel");
+    featureArr[7].title = t("Key");
+    featureArr[8].title = t("Note");
   }
 
   const imagesData = getArr(arrTypes, auto.data.document);
@@ -151,46 +163,46 @@ const AutoOpen = () => {
             values.point_load_city && values.point_load_city.label,
           point_delivery_city:
             values.point_delivery_city && values.point_delivery_city.label,
-          point_load_date: document.querySelector('#loadind').value,
-          point_delivery_date: document.querySelector('#delivery').value,
+          point_load_date: document.querySelector("#loadind").value,
+          point_delivery_date: document.querySelector("#delivery").value,
           damage_status:
-            values.damage_status
-            && values.damage_status.toLowerCase().replace(' ', '_'),
+            values.damage_status &&
+            values.damage_status.toLowerCase().replace(" ", "_"),
           disassembly: values.disassembly,
           // offsite: stepIndex || '0',
           document: [
             {
-              type: 'car_fax_report',
-              file: document.querySelector('#car_fax_report').files,
+              type: "car_fax_report",
+              file: document.querySelector("#car_fax_report").files,
             },
             {
-              type: 'invoice',
-              file: document.querySelector('#invoice').files,
+              type: "invoice",
+              file: document.querySelector("#invoice").files,
             },
             {
-              type: 'checklist_report',
-              file: document.querySelector('#checklist_report').files,
+              type: "checklist_report",
+              file: document.querySelector("#checklist_report").files,
             },
             {
-              type: 'shipping_damage',
+              type: "shipping_damage",
               file: newArrPicsDamage,
             },
             {
-              type: 'auction_picture',
+              type: "auction_picture",
               file: newArrPicsActions,
             },
             {
-              type: 'warehouse_picture',
+              type: "warehouse_picture",
               file: newArrPicsWarehouses,
             },
             {
-              type: 'container_picture',
+              type: "container_picture",
               file: newArrPicsContainer,
             },
           ],
         },
-        auto.data.id,
-      ),
+        auto.data.id
+      )
     );
     setNewArrPicsWarehouses([]);
     setNewArrPicsContainer([]);
@@ -227,17 +239,17 @@ const AutoOpen = () => {
                     <div className={styles.fullWidth}>
                       <Field name="car_fax_report" type="file">
                         {renderInputFile({
-                          label: 'CarFax report',
+                          label: t("CarFax report"),
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
                           file: true,
-                          id: 'car_fax_report',
+                          id: "car_fax_report",
                           fileValue:
                             imagesData[3].images.length === 0
-                              ? ''
+                              ? ""
                               : imagesData[3].images[0].name,
                           accept:
-                            '.xlsx,.xls,.doc, .docx,.ppt, .pptauto.data.ship_info.tracking_idx,.txt,.pdf',
+                            ".xlsx,.xls,.doc, .docx,.ppt, .pptauto.data.ship_info.tracking_idx,.txt,.pdf",
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => {
@@ -248,28 +260,28 @@ const AutoOpen = () => {
                                   {
                                     ids: imagesData[3].images[0].id,
                                   },
-                                  idAuto,
-                                ),
+                                  idAuto
+                                )
                               );
-                              imagesData[3].images[0].name = '';
+                              imagesData[3].images[0].name = "";
                             }
-                            form.change('car_fax_report', '');
+                            form.change("car_fax_report", "");
                           },
                         })}
                       </Field>
                       <Field name="invoice" type="file">
                         {renderInputFile({
-                          label: 'Invoice',
+                          label: t("Invoice"),
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
-                          id: 'invoice',
+                          id: "invoice",
                           fileValue:
                             imagesData[4].images.length === 0
-                              ? ''
+                              ? ""
                               : imagesData[4].images[0].name,
                           file: true,
                           accept:
-                            '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                            ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => {
@@ -280,28 +292,28 @@ const AutoOpen = () => {
                                   {
                                     ids: imagesData[4].images[0].id,
                                   },
-                                  idAuto,
-                                ),
+                                  idAuto
+                                )
                               );
-                              imagesData[4].images[0].name = '';
+                              imagesData[4].images[0].name = "";
                             }
-                            form.change('invoice', '');
+                            form.change("invoice", "");
                           },
                         })}
                       </Field>
                       <Field name="checklist_report" type="file">
                         {renderInputFile({
-                          label: 'Checklist report',
+                          label: t("Checklist report"),
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.customInputFile,
-                          id: 'checklist_report',
+                          id: "checklist_report",
                           fileValue:
                             imagesData[5].images.length === 0
-                              ? ''
+                              ? ""
                               : imagesData[5].images[0].name,
                           file: true,
                           accept:
-                            '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                            ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
                           icon: <IconTrash />,
                           classNameWrapperForIcon: styles.trashIcon,
                           onClickForIcon: () => {
@@ -312,25 +324,31 @@ const AutoOpen = () => {
                                   {
                                     ids: imagesData[5].images[0].id,
                                   },
-                                  idAuto,
-                                ),
+                                  idAuto
+                                )
                               );
-                              imagesData[5].images[0].name = '';
+                              imagesData[5].images[0].name = "";
                             }
-                            form.change('checklist_report', '');
+                            form.change("checklist_report", "");
                           },
                         })}
                       </Field>
-                      <h4 className={styles.title}>Shipping Information</h4>
+                      <h4 className={styles.title}>
+                        {t("Shipping Information")}
+                      </h4>
                       <Field
                         name="tracking_id"
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
-                        parse={formatStringByPattern('99 9999 9999 9999')}
-                        defaultValue={auto.data.ship_info && auto.data.ship_info.tracking_id || ''}
+                        parse={formatStringByPattern("99 9999 9999 9999")}
+                        defaultValue={
+                          (auto.data.ship_info &&
+                            auto.data.ship_info.tracking_id) ||
+                          ""
+                        }
                       >
                         {renderInput({
-                          label: 'Tracking id:',
+                          label: t("Tracking id"),
                           customInput: styles.color,
                           classNameWrapper: styles.popupFieldRow,
                           classNameWrapperLabel: styles.blackLabel,
@@ -340,15 +358,21 @@ const AutoOpen = () => {
                         <Field
                           name="point_load_city"
                           component={renderSelect({
-                            label: 'Point of loading:',
+                            label: t("Point of loading"),
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
-                            placeholder: auto.data.ship_info && auto.data.ship_info.point_load[0] || '',
+                            placeholder:
+                              (auto.data.ship_info &&
+                                auto.data.ship_info.point_load[0]) ||
+                              "",
                           })}
                           options={stateOptions}
                         />
                         <Pickers
-                          time={auto.data.ship_info && auto.data.ship_info.point_load_date}
+                          time={
+                            auto.data.ship_info &&
+                            auto.data.ship_info.point_load_date
+                          }
                           id="loadind"
                         />
                       </div>
@@ -356,11 +380,15 @@ const AutoOpen = () => {
                         name="container_id"
                         validate={composeValidators(required, mustBeNumber)}
                         type="text"
-                        parse={formatStringByPattern('999999999')}
-                        defaultValue={auto.data.ship_info && auto.data.ship_info.container_id || ''}
+                        parse={formatStringByPattern("999999999")}
+                        defaultValue={
+                          (auto.data.ship_info &&
+                            auto.data.ship_info.container_id) ||
+                          ""
+                        }
                       >
                         {renderInput({
-                          label: 'Container id:',
+                          label: t("Container id"),
                           classNameWrapper: styles.popupFieldRow,
                           customInput: styles.color,
                           classNameWrapperLabel: styles.blackLabel,
@@ -370,24 +398,32 @@ const AutoOpen = () => {
                         <Field
                           name="point_delivery_city"
                           component={renderSelect({
-                            label: 'Point of delivery:',
+                            label: t("Point of delivery"),
                             classNameWrapper: styles.selectFieldRow,
                             classNameLabel: styles.blackLabel,
                             placeholder:
-                              auto.data.ship_info && auto.data.ship_info.point_delivery[0] || '',
+                              (auto.data.ship_info &&
+                                auto.data.ship_info.point_delivery[0]) ||
+                              "",
                           })}
                           options={stateOptionsDelivery}
                         />
                         <Pickers
-                          time={auto.data.ship_info && auto.data.ship_info.point_delivery_date || ''}
+                          time={
+                            (auto.data.ship_info &&
+                              auto.data.ship_info.point_delivery_date) ||
+                            ""
+                          }
                           id="delivery"
                         />
                       </div>
                       <div className={styles.flexRadio}>
-                        <p className={styles.label}>Disassembly</p>
+                        <p className={styles.label}>{t("Disassembly")}</p>
                         <Field
                           defaultValue={`${Number(
-                            auto.data.ship_info && auto.data.ship_info.disassembly || '',
+                            (auto.data.ship_info &&
+                              auto.data.ship_info.disassembly) ||
+                              ""
                           )}`}
                           name="disassembly"
                         >
@@ -395,17 +431,17 @@ const AutoOpen = () => {
                             <>
                               <Radio
                                 name={input.name}
-                                title="Yes"
+                                title={t("Yes")}
                                 value="1"
-                                checked={input.value === '1'}
+                                checked={input.value === "1"}
                                 onChange={input.onChange}
                                 id="yes"
                               />
                               <Radio
                                 name={input.name}
-                                title="No"
+                                title={t("No")}
                                 value="0"
-                                checked={input.value === '0'}
+                                checked={input.value === "0"}
                                 onChange={input.onChange}
                                 id="no"
                               />
@@ -453,7 +489,7 @@ const AutoOpen = () => {
                           customBtn={styles.btnSubmit}
                           type="submit"
                         >
-                          save
+                          {t("SAVE")}
                         </Button>
                       </div>
                     </div>
@@ -462,7 +498,7 @@ const AutoOpen = () => {
                 <div className={styles.widthBlock}>
                   <InformationBlock>
                     <>
-                      {lotArr.map(item => (
+                      {lotArr.map((item) => (
                         <div className={styles.items} key={item.id}>
                           <span>{item.title}:</span>
                           <span className={styles.widthItems}>
@@ -475,24 +511,25 @@ const AutoOpen = () => {
                   <InformationBlock>
                     <>
                       <div className={styles.items}>
-                        <span>Sale Information</span>
+                        <span>{t("Sale Information")}</span>
                       </div>
-                      {saleArr && saleArr.map(item => (
-                        <div className={styles.items} key={item.id}>
-                          <span>{item.title}:</span>
-                          <span className={styles.widthItems}>
-                            {item.value}
-                          </span>
-                        </div>
-                      ))}
+                      {saleArr &&
+                        saleArr.map((item) => (
+                          <div className={styles.items} key={item.id}>
+                            <span>{item.title}:</span>
+                            <span className={styles.widthItems}>
+                              {item.value}
+                            </span>
+                          </div>
+                        ))}
                     </>
                   </InformationBlock>
                   <InformationBlock>
                     <div className={styles.items}>
-                      <span>Features</span>
+                      <span>{t("Features")}</span>
                     </div>
                     <>
-                      {featureArr.map(item => (
+                      {featureArr.map((item) => (
                         <div className={styles.items} key={item.id}>
                           <span>{item.title}:</span>
                           <span className={styles.widthItems}>
@@ -508,35 +545,47 @@ const AutoOpen = () => {
                       customBtn={styles.btnSubmit}
                       type="submit"
                     >
-                      save
+                      {t("SAVE")}
                     </Button>
                   </div>
                   <InformationBlock>
                     <>
-                      {damage.map(item => (
+                      {damage.map((item) => (
                         <div
                           className={styles.items}
                           key={`${item.id}${item.title}`}
                         >
-                          <span>{item.title}</span>
+                          <span>{t(item.title)}</span>
                           <span className={styles.widthItems}>{item.text}</span>
                         </div>
                       ))}
                       <div className={styles.items}>
-                        <span>Shipping Damage:</span>
+                        <span>{t("Shipping Damage")}</span>
                         <div className={styles.position}>
                           <span className={styles.status}>
-                            {(values.damage_status
-                              && values.damage_status.split('_').join(' '))
-                              || auto.data.ship_info && auto.data.ship_info.damage_status
-                                .split('_')
-                                .join(' ') || 'case_closed'.split('_').join(' ')}
+                            {(values.damage_status &&
+                              t(
+                                values.damage_status.split("_").join(" ")
+                              ).toLocaleLowerCase()) ||
+                              (auto.data.ship_info &&
+                                t(
+                                  auto.data.ship_info.damage_status
+                                    .split("_")
+                                    .join(" ")
+                                    .toLocaleLowerCase()
+                                )) ||
+                              t(
+                                "case_closed"
+                                  .split("_")
+                                  .join(" ")
+                                  .toLocaleLowerCase()
+                              )}
                           </span>
                           <HoverPopup>
                             <Field name="damage_status">
                               {({ input }) => (
                                 <>
-                                  {status.map(item => (
+                                  {status(t).map((item) => (
                                     <Radio
                                       key={item.id}
                                       value={item.textValue}
@@ -546,9 +595,9 @@ const AutoOpen = () => {
                                       title={item.text}
                                       onChange={input.onChange}
                                       checked={
-                                        (item.textValue === 'case_closed'
-                                          && input.value === '')
-                                        || input.value === item.textValue
+                                        (item.textValue === "case_closed" &&
+                                          input.value === "") ||
+                                        input.value === item.textValue
                                       }
                                     />
                                   ))}
@@ -565,7 +614,7 @@ const AutoOpen = () => {
                         customTumd="Previews-reverse"
                         type="shipping_damage"
                         icon={<IconPlus className={styles.icon} />}
-                        title="Add photo"
+                        title={t("Add photo")}
                         setNewArrPics={setNewArrPicsDamage}
                         newArrPics={newArrPicsDamage}
                       />

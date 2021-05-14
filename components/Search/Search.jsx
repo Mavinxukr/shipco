@@ -3,8 +3,12 @@ import Input from '../Input/Input';
 import IconSearch from '../../assets/svg/search.svg';
 import Button from '../Button/Button';
 import styles from './Search.scss';
+import useTranslation from 'next-translate/useTranslation';
 
-const Search = ({ onClick }) => (
+const Search = ({ onClick }) => {
+  const { t } = useTranslation('dismanting');
+
+  return (
   <div className={styles.search}>
     <Input
       customInput={styles.inputHeight}
@@ -13,9 +17,9 @@ const Search = ({ onClick }) => (
       id="search"
     />
     <Button type="button" onClick={onClick} customBtn={styles.customBtnSearch}>
-      Search
+      {t('Search')}
     </Button>
   </div>
-);
+)};
 
 export default Search;

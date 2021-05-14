@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Previews from '../Previews/Previews';
-import IconPlus from '../../assets/svg/Plus.svg';
-import styles from './CustomTabs.scss';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Previews from "../Previews/Previews";
+import IconPlus from "../../assets/svg/Plus.svg";
+import styles from "./CustomTabs.scss";
+import useTranslation from "next-translate/useTranslation";
 
-const TabPanel = ({
-  children, value, index, ...other
-}) => (
+const TabPanel = ({ children, value, index, ...other }) => (
   <Typography
     component="div"
     role="tabpanel"
@@ -31,58 +30,58 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-const a11yProps = index => ({
+const a11yProps = (index) => ({
   id: `simple-tab-${index}`,
-  'aria-controls': `simple-tabpanel-${index}`,
+  "aria-controls": `simple-tabpanel-${index}`,
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    marginTop: '15px',
-    width: '100%',
-    maxWidth: '736px',
+    marginTop: "15px",
+    width: "100%",
+    maxWidth: "736px",
   },
   tabs: {
-    backgroundColor: '#f8bebe',
-    color: '#d73e3e',
-    textTransform: 'uppercase',
+    backgroundColor: "#f8bebe",
+    color: "#d73e3e",
+    textTransform: "uppercase",
   },
 }));
 
 const AntTabs = withStyles({
   indicator: {
-    display: 'none',
+    display: "none",
   },
 })(Tabs);
 
-const AntTab = withStyles(theme => ({
+const AntTab = withStyles((theme) => ({
   root: {
-    fontWeight: 'bold',
-    maxWidth: '33,4%',
+    fontWeight: "bold",
+    maxWidth: "33,4%",
     opacity: 1,
-    borderLeft: '1px solid #fff',
-    textTransform: 'uppercase',
-    '&:first-child': {
+    borderLeft: "1px solid #fff",
+    textTransform: "uppercase",
+    "&:first-child": {
       borderLeft: 0,
     },
-    '&:hover': {
-      color: '#fff',
+    "&:hover": {
+      color: "#fff",
       opacity: 1,
-      backgroundColor: '#d73e3e',
+      backgroundColor: "#d73e3e",
     },
-    '&$selected': {
-      color: '#fff',
-      backgroundColor: '#d73e3e',
+    "&$selected": {
+      color: "#fff",
+      backgroundColor: "#d73e3e",
     },
-    '&:focus': {
-      color: '#fff',
-      backgroundColor: '#d73e3e',
+    "&:focus": {
+      color: "#fff",
+      backgroundColor: "#d73e3e",
     },
   },
   selected: {},
-}))(props => <Tab disableRipple {...props} />);
+}))((props) => <Tab disableRipple {...props} />);
 
 const CustomTabs = ({
   arrPicsActions,
@@ -101,6 +100,7 @@ const CustomTabs = ({
 }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const { t } = useTranslation("admin-auto-edit");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -116,9 +116,9 @@ const CustomTabs = ({
           aria-label="simple tabs example"
           className={classes.tabs}
         >
-          <AntTab label="auction pictures" {...a11yProps(0)} />
-          <AntTab label="warehouse pictures" {...a11yProps(1)} />
-          <AntTab label="Container pictures" {...a11yProps(2)} />
+          <AntTab label={t("AUCTION PICTURES")} {...a11yProps(0)} />
+          <AntTab label={t("WAREHOUSE PICTURES")} {...a11yProps(1)} />
+          <AntTab label={t("CONTAINER PICTURES")} {...a11yProps(2)} />
         </AntTabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -129,7 +129,7 @@ const CustomTabs = ({
           newArrPics={newArrPicsActions}
           arrPics={arrPicsActions}
           icon={<IconPlus className={styles.icon} />}
-          title="Add Picture"
+          title={t("Add Picture")}
           type="auction_picture"
         />
       </TabPanel>
@@ -141,7 +141,7 @@ const CustomTabs = ({
           newArrPics={newArrPicsWarehouses}
           arrPics={arrPicsWarehouses}
           icon={<IconPlus className={styles.icon} />}
-          title="Add Picture"
+          title={t("Add Picture")}
           type="warehouse_picture"
         />
       </TabPanel>
@@ -153,7 +153,7 @@ const CustomTabs = ({
           newArrPics={newArrPicsContainer}
           setNewArrPics={setNewArrPicsContainer}
           icon={<IconPlus className={styles.icon} />}
-          title="Add Picture"
+          title={t("Add Picture")}
           type="container_picture"
         />
       </TabPanel>

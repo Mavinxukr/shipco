@@ -2,7 +2,24 @@
   "locales": ["en", "ar"],
   "defaultLocale": "en",
   "pages": {
-    "*": ["client-header", "overview", "footer", "auto", "pagination"],
+    "*": [
+      "client-header",
+      "overview",
+      "footer",
+      "auto",
+      "pagination",
+      "dismanting",
+      "parts",
+      "shipping",
+      "invoices",
+      "profile",
+      "notification",
+      "admin-base-client",
+      "admin-auto",
+      "admin-subheader",
+      "admin-dismantings",
+      "admin-auto-edit"
+    ],
     "/": ["home"]
   }
 }

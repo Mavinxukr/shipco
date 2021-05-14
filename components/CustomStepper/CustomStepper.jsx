@@ -1,60 +1,61 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import cx from 'classnames';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepConnector from '@material-ui/core/StepConnector';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import IconCar from '../../assets/svg/iconcar.svg';
-import HoverPopup from '../HoverPopup/HoverPopup';
-import IconUpdate from '../../assets/svg/updateStatus.svg';
-import Button from '../Button/Button';
-import { statusCar } from './data';
-import { getStatusInNumber } from '../../utils/helpers';
-import styles from './CustomStepper.scss';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import cx from "classnames";
+import StepLabel from "@material-ui/core/StepLabel";
+import StepConnector from "@material-ui/core/StepConnector";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import IconCar from "../../assets/svg/iconcar.svg";
+import HoverPopup from "../HoverPopup/HoverPopup";
+import IconUpdate from "../../assets/svg/updateStatus.svg";
+import Button from "../Button/Button";
+import { statusCar } from "./data";
+import { getStatusInNumber } from "../../utils/helpers";
+import styles from "./CustomStepper.scss";
+import useTranslation from "next-translate/useTranslation";
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
-    left: 'calc(-50% + 28px)',
-    right: 'calc(50% + 28px)',
+    left: "calc(-50% + 28px)",
+    right: "calc(50% + 28px)",
   },
   active: {
-    '& $line': {
-      backgroundColor: '#d73e3e',
+    "& $line": {
+      backgroundColor: "#d73e3e",
     },
   },
   completed: {
-    '& $line': {
-      backgroundColor: '#d73e3e',
+    "& $line": {
+      backgroundColor: "#d73e3e",
     },
   },
   line: {
     height: 3,
     border: 0,
-    backgroundColor: '#f8bebe',
+    backgroundColor: "#f8bebe",
   },
 })(StepConnector);
 
 const useColorlibStepIconStyles = makeStyles({
   root: {
-    backgroundColor: '#f8bebe',
+    backgroundColor: "#f8bebe",
     // zIndex: -1,
-    color: '#f8bebe',
+    color: "#f8bebe",
     width: 15,
     height: 15,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    borderRadius: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   active: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     width: 45,
     height: 15,
   },
   completed: {
-    backgroundColor: '#d73e3e',
+    backgroundColor: "#d73e3e",
   },
 });
 
@@ -73,7 +74,7 @@ function ColorlibStepIcon({ active, completed }) {
   );
 }
 
-const getSteps = () => ['', '', '', ''];
+const getSteps = () => ["", "", "", ""];
 
 const CustomStepper = ({
   item,
@@ -86,8 +87,10 @@ const CustomStepper = ({
   const steps = getSteps();
   const [isOpenStatusPanel, setIsOpenStatusPanel] = useState(false);
   const [stepIndex, setStepIndex] = useState(
-    (item.shipping && getStatusInNumber(item.shipping.status)) || 0,
+    (item.shipping && getStatusInNumber(item.shipping.status)) || 0
   );
+  const { t } = useTranslation("dismanting");
+
   const classNameForOpenStatus = cx(styles.status, {
     [styles.active]: isOpenStatusPanel,
   });
@@ -123,7 +126,7 @@ const CustomStepper = ({
       )}
       <div className={styles.root}>
         <Stepper activeStep={stepIndex} connector={<ColorlibConnector />}>
-          {steps.map(label => (
+          {steps.map((label) => (
             <Step key={label}>
               <StepLabel StepIconComponent={ColorlibStepIcon}>
                 {label}
@@ -138,7 +141,7 @@ const CustomStepper = ({
             onClick={() => setIsOpenStatusPanel(!isOpenStatusPanel)}
             customBtn={styles.update}
           >
-            <IconUpdate className={styles.icon} /> Update status
+            <IconUpdate className={styles.icon} /> {t("updatesSatus")}
           </Button>
           <>
             {item.ship_info ? (

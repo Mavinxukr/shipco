@@ -1,30 +1,30 @@
-import React, { useEffect, useState, forwardRef, useRef } from 'react';
-import cx from 'classnames';
-import { useRouter } from 'next/router';
-import { useRowSelect, useTable, useSortBy } from 'react-table';
-import { useSelector, useDispatch } from 'react-redux';
-import { Field, Form } from 'react-final-form';
-import formatStringByPattern from 'format-string-by-pattern';
-import _ from 'lodash';
-import ImageUpload from '../../ImageUpload/ImageUpload';
+import React, { useEffect, useState, forwardRef, useRef } from "react";
+import cx from "classnames";
+import { useRouter } from "next/router";
+import { useRowSelect, useTable, useSortBy } from "react-table";
+import { useSelector, useDispatch } from "react-redux";
+import { Field, Form } from "react-final-form";
+import formatStringByPattern from "format-string-by-pattern";
+import _ from "lodash";
+import ImageUpload from "../../ImageUpload/ImageUpload";
 import {
   getBaseClient,
   deleteBaseClient,
   addNewBaseClient,
-} from '../../../redux/actions/baseClient';
+} from "../../../redux/actions/baseClient";
 import {
   baseClientDataSelector,
   baseClientDataReceivedSelector,
-} from '../../../utils/selectors';
-import Button from '../../Button/Button';
-import Search from '../../Search/Search';
-import Popup from '../../Popup/Popup';
-import MainLayout from '../../Layout/Global/Global';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import IconMinus from '../../../assets/svg/min.svg';
-import { columns, print } from './data';
-import CustomTable from '../../CustomTable/CustomTable';
-import IconSortTable from '../../../assets/svg/SortTable.svg';
+} from "../../../utils/selectors";
+import Button from "../../Button/Button";
+import Search from "../../Search/Search";
+import Popup from "../../Popup/Popup";
+import MainLayout from "../../Layout/Global/Global";
+import IconPlus from "../../../assets/svg/Plus.svg";
+import IconMinus from "../../../assets/svg/min.svg";
+import { columns, print } from "./data";
+import CustomTable from "../../CustomTable/CustomTable";
+import IconSortTable from "../../../assets/svg/SortTable.svg";
 import {
   composeValidators,
   emailValidation,
@@ -34,14 +34,15 @@ import {
   mustBeNumber,
   lengthCart,
   snpValidation,
-} from '../../../utils/validation';
-import Pagination from '../../Pagination/Pagination';
-import { renderInput, renderSelect } from '../../../utils/renderInputs';
-import styles from './BaseClient.scss';
-import Loader from '../../Loader/Loader';
-import MultiSelect from '../../Multi/Multi';
-import { printData, getIdsArr } from '../../../utils/helpers';
-import { getSession, session } from 'next-auth/client';
+} from "../../../utils/validation";
+import Pagination from "../../Pagination/Pagination";
+import { renderInput, renderSelect } from "../../../utils/renderInputs";
+import styles from "./BaseClient.scss";
+import Loader from "../../Loader/Loader";
+import MultiSelect from "../../Multi/Multi";
+import { printData, getIdsArr } from "../../../utils/helpers";
+import { getSession, session } from "next-auth/client";
+import useTranslation from "next-translate/useTranslation";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -78,12 +79,12 @@ const BaseClient = () => {
   const isDataReceived = useSelector(baseClientDataReceivedSelector);
   const error = useSelector((state) => state.baseClient.error);
   const router = useRouter();
-
+  const { t } = useTranslation("admin-base-client");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
 
-  const [image, setImage] = useState('/images/no-preview-available.png');
+  const [image, setImage] = useState("/images/no-preview-available.png");
 
   const dispatch = useDispatch();
 
@@ -96,9 +97,9 @@ const BaseClient = () => {
     dispatch(
       getBaseClient({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        search: router.query.search || '',
-      }),
+        countpage: router.query.countpage || "10",
+        search: router.query.search || "",
+      })
     );
   }, [router.query]);
 
@@ -117,8 +118,8 @@ const BaseClient = () => {
           country: values.country && values.country.label,
           city: values.city && values.city.label,
           image: _.isObject(image) ? image : null,
-        },
-      ),
+        }
+      )
     );
   };
 
@@ -128,7 +129,7 @@ const BaseClient = () => {
       params: {
         fields: idsArr,
       },
-      table: 'base_clients',
+      table: "base_clients",
       selected: idsArr,
       setSelected,
       setPrintPopup,
@@ -143,30 +144,30 @@ const BaseClient = () => {
   }));
 
   if (isPopupOpen === true || printPopup === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   return (
     <MainLayout admin>
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h4 className={styles.title}>Base client</h4>
+          <h4 className={styles.title}>{t("BASECLIENT")}</h4>
           <Search
             onClick={() => {
               router.push({
-                pathname: '/base-client',
+                pathname: "/base-client",
                 query: {
                   ...router.query,
                   page: 1,
-                  search: document.querySelector('#search').value,
+                  search: document.querySelector("#search").value,
                 },
               });
               dispatch(
                 getBaseClient({
-                  search: document.querySelector('#search').value,
-                }),
+                  search: document.querySelector("#search").value,
+                })
               );
             }}
           />
@@ -179,7 +180,7 @@ const BaseClient = () => {
               customBtn={styles.btnIcon}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
-              Add New client
+              {t("AddNewclient")}
             </Button>
             <Button
               type="button"
@@ -190,13 +191,13 @@ const BaseClient = () => {
                     {},
                     {
                       client_id: arrClientsId,
-                    },
-                  ),
+                    }
+                  )
                 );
               }}
             >
               <IconMinus className={styles.icon} />
-              Delete client
+              {t("Deleteclient")}
             </Button>
           </div>
           <div className={styles.groupBtn}>
@@ -204,9 +205,9 @@ const BaseClient = () => {
               customBtn={styles.rightBtn}
               onClick={() => setPrintPopup(true)}
             >
-              Print
+              {t("Print")}
             </Button>
-            <Button customBtn={styles.rightBtn}>Import</Button>
+            <Button customBtn={styles.rightBtn}> {t("Import")}</Button>
           </div>
         </div>
         {baseClient.data.length !== 0 ? (
@@ -218,7 +219,7 @@ const BaseClient = () => {
             />
             <div className={styles.scrollTable}>
               <Table
-                columns={columns}
+                columns={columns(t)}
                 data={baseClient.data}
                 arrClientsId={arrClientsId}
               />
@@ -236,7 +237,7 @@ const BaseClient = () => {
       {isPopupOpen && (
         <Popup
           setIsPopupOpen={setIsPopupOpen}
-          title="Add New Client "
+          title={t("AddNewclient")}
           subTitle={finalDate}
         >
           <Form
@@ -249,7 +250,7 @@ const BaseClient = () => {
                   type="text"
                 >
                   {renderInput({
-                    label: 'Name',
+                    label: t("Name"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -257,7 +258,7 @@ const BaseClient = () => {
                 </Field>
                 <Field name="username" validate={required} type="text">
                   {renderInput({
-                    label: 'Username',
+                    label: t("Username"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -269,7 +270,7 @@ const BaseClient = () => {
                   type="email"
                 >
                   {renderInput({
-                    label: 'Email Address',
+                    label: t("EmailAddress"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -281,12 +282,12 @@ const BaseClient = () => {
                   validate={composeValidators(
                     required,
                     // lengthPhone,
-                    mustBeNumber,
+                    mustBeNumber
                   )}
                   // parse={formatStringByPattern('+9-9999-999-99-99')}
                 >
                   {renderInput({
-                    label: 'Phone number',
+                    label: t("Phonenumber"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -298,7 +299,7 @@ const BaseClient = () => {
                   type="password"
                 >
                   {renderInput({
-                    label: 'Password',
+                    label: t("Password"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -308,8 +309,8 @@ const BaseClient = () => {
                   name="country"
                   validate={required}
                   component={renderSelect({
-                    placeholder: '',
-                    label: 'Country',
+                    placeholder: "",
+                    label: t("Country"),
                     classNameWrapper: styles.popupFieldRow,
                   })}
                   options={stateArr}
@@ -318,9 +319,9 @@ const BaseClient = () => {
                   name="city"
                   validate={required}
                   component={renderSelect({
-                    placeholder: '',
+                    placeholder: "",
                     classNameWrapper: styles.popupFieldRow,
-                    label: 'City',
+                    label: t("City"),
                   })}
                   options={
                     (baseClient &&
@@ -341,7 +342,7 @@ const BaseClient = () => {
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    ADD New Client
+                    {t("AddNewclient")}
                   </Button>
                 </div>
               </form>
@@ -353,7 +354,7 @@ const BaseClient = () => {
         <Popup
           customPopup={styles.heightPopup}
           setIsPopupOpen={setPrintPopup}
-          title="Print"
+          title={t("Print")}
         >
           <Form
             onSubmit={onSubmitPrint}
@@ -361,17 +362,17 @@ const BaseClient = () => {
               <form onSubmit={handleSubmit}>
                 <div className={styles.columnSelect}>
                   <MultiSelect
-                    options={print}
+                    options={print(t)}
                     setSelected={setSelected}
                     value={selected}
-                    label="Select the fields Print"
+                    label={t("SelectthefieldsPrint")}
                   />
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    Submit
+                    {t("SUBMIT")}
                   </Button>
                 </div>
               </form>
@@ -386,39 +387,34 @@ const BaseClient = () => {
 export default BaseClient;
 
 const Table = ({ columns, data, arrClientsId }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    useSortBy,
-    useRowSelect,
-    (hooks) => {
-      hooks.allColumns.push((columns) => [
-        {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </>
-          ),
-          Cell: ({ row }) => (
-            <>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </>
-          ),
-        },
-        ...columns,
-      ]);
-    },
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        initialState: { pageIndex: 0 },
+      },
+      useSortBy,
+      useRowSelect,
+      (hooks) => {
+        hooks.allColumns.push((columns) => [
+          {
+            id: "selection",
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <>
+                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+              </>
+            ),
+            Cell: ({ row }) => (
+              <>
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              </>
+            ),
+          },
+          ...columns,
+        ]);
+      }
+    );
 
   return (
     <>
@@ -432,7 +428,7 @@ const Table = ({ columns, data, arrClientsId }) => {
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   <IconSortTable className={styles.sort} />
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -452,7 +448,7 @@ const Table = ({ columns, data, arrClientsId }) => {
                         arrClientsId.push(cell.row.original.id);
                       } else {
                         const index = arrClientsId.indexOf(
-                          cell.row.original.id,
+                          cell.row.original.id
                         );
                         if (index > -1) {
                           arrClientsId.splice(index, 1);
@@ -460,7 +456,7 @@ const Table = ({ columns, data, arrClientsId }) => {
                       }
                     }}
                   >
-                    {cell.render('Cell')}
+                    {cell.render("Cell")}
                   </td>
                 ))}
               </tr>

@@ -1,31 +1,31 @@
-import React, { useEffect, forwardRef, useState, useRef } from 'react';
-import { usePagination, useTable, useRowSelect } from 'react-table';
-import formatStringByPattern from 'format-string-by-pattern';
-import cx from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
-import { Field, Form } from 'react-final-form';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Pickers from '../../Pickers/Pickers';
+import React, { useEffect, forwardRef, useState, useRef } from "react";
+import { usePagination, useTable, useRowSelect } from "react-table";
+import formatStringByPattern from "format-string-by-pattern";
+import cx from "classnames";
+import { useSelector, useDispatch } from "react-redux";
+import { Field, Form } from "react-final-form";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Pickers from "../../Pickers/Pickers";
 import {
   getClient,
   deleteClient,
   addNewClient,
-} from '../../../redux/actions/client';
+} from "../../../redux/actions/client";
 import {
   clientDataSelector,
   clientDataReceivedSelector,
   currentClientDataSelector,
   currentClientDataReceivedSelector,
-} from '../../../utils/selectors';
-import { getCurrentClient } from '../../../redux/actions/currentClient';
-import Button from '../../Button/Button';
-import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
-import CustomTable from '../../CustomTable/CustomTable';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import IconMinus from '../../../assets/svg/min.svg';
-import { printData, getIdsArr } from '../../../utils/helpers';
+} from "../../../utils/selectors";
+import { getCurrentClient } from "../../../redux/actions/currentClient";
+import Button from "../../Button/Button";
+import MainLayout from "../../Layout/Global/Global";
+import SubHeader from "../../Layout/SubHeader/SubHeader";
+import CustomTable from "../../CustomTable/CustomTable";
+import IconPlus from "../../../assets/svg/Plus.svg";
+import IconMinus from "../../../assets/svg/min.svg";
+import { printData, getIdsArr } from "../../../utils/helpers";
 import {
   columns,
   stateStatus,
@@ -37,24 +37,25 @@ import {
   auctions,
   damageStatus,
   statusRadio,
-} from './data';
-import Loader from '../../Loader/Loader';
-import Popup from '../../Popup/Popup';
+} from "./data";
+import Loader from "../../Loader/Loader";
+import Popup from "../../Popup/Popup";
 import {
   required,
   mustBeNumber,
   composeValidators,
   lengthDueDay,
   vinNum,
-} from '../../../utils/validation';
+} from "../../../utils/validation";
 import {
   renderInput,
   renderSelect,
   renderInputFile,
-} from '../../../utils/renderInputs';
-import Pagination from '../../Pagination/Pagination';
-import MultiSelect from '../../Multi/Multi';
-import styles from './Client.scss';
+} from "../../../utils/renderInputs";
+import Pagination from "../../Pagination/Pagination";
+import MultiSelect from "../../Multi/Multi";
+import styles from "./Client.scss";
+import useTranslation from "next-translate/useTranslation";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -78,17 +79,6 @@ for (let i = 2000; i <= yearNow; i++) {
   arrYear.push({ label: i, value: i });
 }
 
-const selectYear = [];
-
-for (let i = 2000; i <= yearNow; i++) {
-  selectYear.push({ label: i, value: i });
-}
-
-selectYear.unshift({
-  label: 'All years',
-  value: '',
-});
-
 const Client = () => {
   const client = useSelector(clientDataSelector);
   const error = useSelector((state) => state.client.error);
@@ -99,6 +89,18 @@ const Client = () => {
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
   const [stepIndex, setStepIndex] = useState(0);
+  const { t } = useTranslation("admin-auto");
+
+  const selectYear = [];
+
+  for (let i = 2000; i <= yearNow; i++) {
+    selectYear.push({ label: i, value: i });
+  }
+
+  selectYear.unshift({
+    label: t("All years"),
+    value: "",
+  });
 
   const dispatch = useDispatch();
 
@@ -110,7 +112,7 @@ const Client = () => {
     dispatch(
       addNewClient(
         {
-          client: +router.query.idUser || '',
+          client: +router.query.idUser || "",
         },
         {
           ...values,
@@ -129,20 +131,20 @@ const Client = () => {
           feature: 1,
           disassembly: 0,
           invoice: 1,
-          damage_status: 'case_closed',
-          offsite: stepIndex || '0',
+          damage_status: "case_closed",
+          offsite: stepIndex || "0",
           invoice_document: [
             {
-              type: 'invoice',
-              file: document.querySelector('#car_fax_report').files,
+              type: "invoice",
+              file: document.querySelector("#car_fax_report").files,
             },
             {
-              type: 'invoices',
-              file: document.querySelector('#invoice').files,
+              type: "invoices",
+              file: document.querySelector("#invoice").files,
             },
           ],
-        },
-      ),
+        }
+      )
     );
   };
 
@@ -172,17 +174,17 @@ const Client = () => {
     dispatch(
       getClient({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        client: router.query.idUser || '',
-        auto_status: router.query.auto_status || '',
-        search: router.query.search || '',
-        port: router.query.port || '',
-        client_name: router.query.client_name || '',
-        year: router.query.year || '',
-        damage_status: router.query.damage_status || '',
-        date_from: router.query.date_from || '',
-        date_to: router.query.date_to || '',
-      }),
+        countpage: router.query.countpage || "10",
+        client: router.query.idUser || "",
+        auto_status: router.query.auto_status || "",
+        search: router.query.search || "",
+        port: router.query.port || "",
+        client_name: router.query.client_name || "",
+        year: router.query.year || "",
+        damage_status: router.query.damage_status || "",
+        date_from: router.query.date_from || "",
+        date_to: router.query.date_to || "",
+      })
     );
   }, [router.query]);
 
@@ -197,9 +199,9 @@ const Client = () => {
   }
 
   if (isPopupOpen === true || printPopup === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   const clientId = client.additional.clients;
@@ -211,10 +213,10 @@ const Client = () => {
           fields: idsArr,
         }
       : {
-          client_id: +router.query.idUser || '',
+          client_id: +router.query.idUser || "",
           fields: idsArr,
         };
-    const tableClient = router.query.isClient ? 'autos' : 'client';
+    const tableClient = router.query.isClient ? "autos" : "client";
     printData({
       params: paramsClient,
       table: tableClient,
@@ -226,7 +228,7 @@ const Client = () => {
 
   const onSubmitFilter = async (values) => {
     router.push({
-      pathname: '/auto-admin',
+      pathname: "/auto-admin",
       query: {
         ...router.query,
         auto_status: values.auto_status && values.auto_status.value,
@@ -234,8 +236,8 @@ const Client = () => {
         client_name: values.client_name && values.client_name.value,
         year: values.year && values.year.value,
         damage_status: values.damage_status && values.damage_status.value,
-        date_from: document.querySelector('#from').value || '',
-        date_to: document.querySelector('#to').value || '',
+        date_from: document.querySelector("#from").value || "",
+        date_to: document.querySelector("#to").value || "",
       },
     });
   };
@@ -246,8 +248,8 @@ const Client = () => {
   }));
 
   arrClientName.unshift({
-    label: 'All clients',
-    value: '',
+    label: t("All clients"),
+    value: "",
   });
 
   return (
@@ -259,17 +261,17 @@ const Client = () => {
         currentClientId={router.query.idUser}
         onClick={() => {
           router.push({
-            pathname: '/auto-admin',
+            pathname: "/auto-admin",
             query: {
               ...router.query,
               page: 1,
-              search: document.querySelector('#search').value,
+              search: document.querySelector("#search").value,
             },
           });
           dispatch(
             getClient({
-              search: document.querySelector('#search').value,
-            }),
+              search: document.querySelector("#search").value,
+            })
           );
         }}
       />
@@ -282,7 +284,7 @@ const Client = () => {
               onClick={() => setIsPopupOpen(true)}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
-              Add New offers
+              {t("Add New offers")}
             </Button>
             <Button
               customBtn={styles.btnIcon}
@@ -290,17 +292,17 @@ const Client = () => {
                 dispatch(
                   deleteClient(
                     {
-                      client: +router.query.idUser || '',
+                      client: +router.query.idUser || "",
                     },
                     {
                       auto_id: arrAutoId,
-                    },
-                  ),
+                    }
+                  )
                 );
               }}
             >
               <IconMinus className={styles.icon} />
-              Delete
+              {t("Add New offers")}
             </Button>
           </div>
           <div className={styles.groupBtn}>
@@ -324,7 +326,7 @@ const Client = () => {
                 <Field
                   name="auto_status"
                   component={renderSelect({
-                    placeholder: router.query.auto_status || 'All Status',
+                    placeholder: router.query.auto_status || t("All status"),
                   })}
                   options={stateStatus}
                 />
@@ -333,7 +335,7 @@ const Client = () => {
                 <Field
                   name="port"
                   component={renderSelect({
-                    placeholder: router.query.port || 'Point of loading',
+                    placeholder: router.query.port || t("Point of loading"),
                   })}
                   options={cityselect}
                 />
@@ -342,7 +344,7 @@ const Client = () => {
                 <Field
                   name="client_name"
                   component={renderSelect({
-                    placeholder: router.query.client_name || 'All clients',
+                    placeholder: router.query.client_name || t("All clients"),
                   })}
                   options={arrClientName}
                 />
@@ -351,7 +353,7 @@ const Client = () => {
                 <Field
                   name="year"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All years',
+                    placeholder: router.query.year || t("All years"),
                   })}
                   options={selectYear}
                 />
@@ -360,23 +362,23 @@ const Client = () => {
                 <Field
                   name="damage_status"
                   component={renderSelect({
-                    placeholder: router.query.damage_status || 'Damage status',
+                    placeholder: router.query.damage_status || t("All years"),
                   })}
                   options={damageStatus}
                 />
               </div>
               <div className={cx(styles.flex, styles.pickers)}>
-                <p>Date from</p>
+                <p>{t("Date from")}</p>
                 <Pickers
-                  time={router.query.date_from || ''}
+                  time={router.query.date_from || ""}
                   defaultValue=""
                   id="from"
                 />
               </div>
               <div className={cx(styles.flex, styles.pickers)}>
-                <p>Date to</p>
+                <p>{t("Date to")}</p>
                 <Pickers
-                  time={router.query.date_to || ''}
+                  time={router.query.date_to || ""}
                   defaultValue=""
                   id="to"
                 />
@@ -387,7 +389,7 @@ const Client = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Ok
+                  {t("Ok")}
                 </Button>
               </div>
             </form>
@@ -403,7 +405,7 @@ const Client = () => {
               />
               <div className={styles.scrollTable}>
                 <Table
-                  columns={columns}
+                  columns={columns(t)}
                   data={client.data}
                   arrAutoId={arrAutoId}
                 />
@@ -419,7 +421,7 @@ const Client = () => {
           )}
         </>
         {isPopupOpen && (
-          <Popup setIsPopupOpen={setIsPopupOpen} title="Add New offers">
+          <Popup setIsPopupOpen={setIsPopupOpen} title={t("Add New offers")}>
             <Form
               onSubmit={onSubmit}
               render={({ handleSubmit, invalid, submitting }) => (
@@ -428,8 +430,8 @@ const Client = () => {
                     name="make_name"
                     validate={required}
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Make',
+                      placeholder: "",
+                      label: "Make",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={popularCars}
@@ -438,8 +440,8 @@ const Client = () => {
                     name="auction"
                     validate={required}
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Auction',
+                      placeholder: "",
+                      label: "Auction",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={auctions}
@@ -448,15 +450,15 @@ const Client = () => {
                     name="year"
                     validate={required}
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Year',
+                      placeholder: "",
+                      label: "Year",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={arrYear}
                   />
                   <Field name="model_name" validate={required} type="text">
                     {renderInput({
-                      label: 'Model',
+                      label: "Model",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -465,8 +467,8 @@ const Client = () => {
                   <Field
                     name="client_id"
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Client id',
+                      placeholder: "",
+                      label: "Client id",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={clientId.map((item) => ({
@@ -480,7 +482,7 @@ const Client = () => {
                     type="text"
                   >
                     {renderInput({
-                      label: 'Vin code',
+                      label: "Vin code",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -490,8 +492,8 @@ const Client = () => {
                     name="status"
                     validate={required}
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Status',
+                      placeholder: "",
+                      label: "Status",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={status}
@@ -500,8 +502,8 @@ const Client = () => {
                     name="point_load_city"
                     validate={required}
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Point of loading',
+                      placeholder: "",
+                      label: "Point of loading",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={city}
@@ -510,8 +512,8 @@ const Client = () => {
                     name="point_delivery_city"
                     validate={required}
                     component={renderSelect({
-                      placeholder: '',
-                      label: 'Delivery City',
+                      placeholder: "",
+                      label: "Delivery City",
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={city}
@@ -521,13 +523,13 @@ const Client = () => {
                     validate={composeValidators(
                       required,
                       mustBeNumber,
-                      lengthDueDay,
+                      lengthDueDay
                     )}
                     type="text"
-                    parse={formatStringByPattern('9999-99-99')}
+                    parse={formatStringByPattern("9999-99-99")}
                   >
                     {renderInput({
-                      label: 'Delivery date',
+                      label: "Delivery date",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -539,7 +541,7 @@ const Client = () => {
                     type="text"
                   >
                     {renderInput({
-                      label: 'Lot number',
+                      label: "Lot number",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -547,7 +549,7 @@ const Client = () => {
                   </Field>
                   <Field name="odometer" validate={required} type="text">
                     {renderInput({
-                      label: 'Odometer',
+                      label: "Odometer",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -555,7 +557,7 @@ const Client = () => {
                   </Field>
                   <Field name="location" validate={required} type="text">
                     {renderInput({
-                      label: 'Location',
+                      label: "Location",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -566,13 +568,13 @@ const Client = () => {
                     validate={composeValidators(
                       required,
                       mustBeNumber,
-                      lengthDueDay,
+                      lengthDueDay
                     )}
                     type="text"
-                    parse={formatStringByPattern('9999-99-99')}
+                    parse={formatStringByPattern("9999-99-99")}
                   >
                     {renderInput({
-                      label: 'Purchased date',
+                      label: "Purchased date",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -580,7 +582,7 @@ const Client = () => {
                   </Field>
                   <Field name="color" validate={required} type="text">
                     {renderInput({
-                      label: 'Color',
+                      label: "Color",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -588,7 +590,7 @@ const Client = () => {
                   </Field>
                   <Field name="key" validate={required} type="text">
                     {renderInput({
-                      label: 'Key',
+                      label: "Key",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -596,7 +598,7 @@ const Client = () => {
                   </Field>
                   <Field name="note" type="text">
                     {renderInput({
-                      label: 'Note',
+                      label: "Note",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -608,7 +610,7 @@ const Client = () => {
                     type="text"
                   >
                     {renderInput({
-                      label: 'Total Price',
+                      label: "Total Price",
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -616,24 +618,24 @@ const Client = () => {
                   </Field>
                   <Field name="car_fax_report" type="file" validate={required}>
                     {renderInputFile({
-                      label: 'CarFax report',
+                      label: "CarFax report",
                       classNameWrapper: styles.popupFieldRow,
                       customInput: styles.customInputFile,
                       widthInputBlock: styles.noFiles,
                       file: true,
-                      id: 'car_fax_report',
-                      accept: '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                      id: "car_fax_report",
+                      accept: ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
                     })}
                   </Field>
                   <Field name="invoice" type="file" validate={required}>
                     {renderInputFile({
-                      label: 'Invoice',
+                      label: "Invoice",
                       classNameWrapper: styles.popupFieldRow,
                       customInput: styles.customInputFile,
                       widthInputBlock: styles.noFiles,
-                      id: 'invoice',
+                      id: "invoice",
                       file: true,
-                      accept: '.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+                      accept: ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
                     })}
                   </Field>
                   <div className={styles.flexRadio}>
@@ -660,10 +662,10 @@ const Client = () => {
                       name="offsite_price"
                       validate={composeValidators(required, mustBeNumber)}
                       type="text"
-                      defaultValue={client.data.offsite_price || ''}
+                      defaultValue={client.data.offsite_price || ""}
                     >
                       {renderInput({
-                        label: 'Offsite price:',
+                        label: "Offsite price:",
                         classNameWrapper: styles.popupFieldRow,
                         customInput: styles.color,
                         classNameWrapperLabel: styles.blackLabel,
@@ -723,39 +725,34 @@ const Client = () => {
 export default Client;
 
 const Table = ({ columns, data, arrAutoId }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    usePagination,
-    useRowSelect,
-    (hooks) => {
-      hooks.allColumns.push((columns) => [
-        {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ]);
-    },
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        initialState: { pageIndex: 0 },
+      },
+      usePagination,
+      useRowSelect,
+      (hooks) => {
+        hooks.allColumns.push((columns) => [
+          {
+            id: "selection",
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+              </div>
+            ),
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              </div>
+            ),
+          },
+          ...columns,
+        ]);
+      }
+    );
 
   return (
     <>
@@ -764,7 +761,7 @@ const Table = ({ columns, data, arrAutoId }) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
           ))}
@@ -778,7 +775,7 @@ const Table = ({ columns, data, arrAutoId }) => {
                   <td
                     className={cx(
                       `Client-${cell.column.id}`,
-                      `Client-${cell.value}`,
+                      `Client-${cell.value}`
                     )}
                     {...cell.getCellProps()}
                     onClick={() => {
@@ -792,14 +789,14 @@ const Table = ({ columns, data, arrAutoId }) => {
                       }
                     }}
                   >
-                    {cell.column.id === 'paiment' ? (
+                    {cell.column.id === "paiment" ? (
                       <>
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
                           href={
                             cell.row.original.document.length === 0
-                              ? '/'
+                              ? "/"
                               : cell.row.original.document[0].link
                           }
                           onClick={(e) => {
@@ -816,7 +813,7 @@ const Table = ({ columns, data, arrAutoId }) => {
                           href={
                             cell.row.original.document.length === 2
                               ? cell.row.original.document[1].link
-                              : '/'
+                              : "/"
                           }
                           onClick={(e) => {
                             if (cell.row.original.document.length !== 2) {
@@ -829,10 +826,10 @@ const Table = ({ columns, data, arrAutoId }) => {
                       </>
                     ) : (
                       <>
-                        {cell.column.id === 'client.due_day' ? (
+                        {cell.column.id === "client.due_day" ? (
                           <Link
                             href={{
-                              pathname: '/payments',
+                              pathname: "/payments",
                               query: {
                                 idClient: cell.row.original.client.price_id,
                               },
@@ -845,11 +842,11 @@ const Table = ({ columns, data, arrAutoId }) => {
                                   : undefined
                               }
                             >
-                              {cell.render('Cell')}
+                              {cell.render("Cell")}
                             </a>
                           </Link>
                         ) : (
-                          <>{cell.render('Cell')}</>
+                          <>{cell.render("Cell")}</>
                         )}
                       </>
                     )}

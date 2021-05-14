@@ -17,8 +17,17 @@
   "Last": "الاخير",
   "Lot": "رقم اللوت",
   "VIN": "الشاصي:",
+  "ContainerId": "رقم الحاوية:",
+  "trackingId": "رقم التتبع:",
+  "pointOfLoading": "نقطة التحميل:",
+  "NoInformation": "لا يوجد معلومات",
+  "Disassembled": "مفكك:",
   "CarFaxReport": "تقرير CarFax",
   "Invoices": "الفواتير",
   "AddingNotes": "إضافة ملاحظات",
-  "Yes": "نعم"
+  "updatesSatus": "تحديث الحالة",
+  "Yes": "نعم",
+  "No": "لا",
+  "Edit": "تعديل",
+  "Comment": "تعليق:"
 }

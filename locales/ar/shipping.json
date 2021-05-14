@@ -1,4 +1,5 @@
 {
+  "shipping": "الشحن",
   "allPorts": "جميع الموانئ",
   "allStatus": "جميع الحالات",
   "allDate": "جميع التواريخ",
@@ -16,8 +17,6 @@
   "last": "الاخير",
   "lot": "رقم اللوت",
   "vin": "الشاصي:",
-  "trackingId": "رقم التتبع:",
-  "pointOfLoading": "نقطة التحميل:",
   "containerId": "رقم الحاوية:",
   "carFaxReport": "تقرير CarFax",
   "invoice": "فاتورة",

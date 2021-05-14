@@ -1,11 +1,11 @@
 import Link from 'next/link';
 
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'ID',
+        Header: t("ID"),
         accessor: 'id',
         Cell: ({ cell: { value } }) => (
           <Link
@@ -23,35 +23,35 @@ export const columns = [
         ),
       },
       {
-        Header: 'Name',
+        Header: t("Name"),
         accessor: 'name',
       },
       {
-        Header: 'Email Address',
+        Header: t("EmailAddress"),
         accessor: 'email',
         Cell: ({ cell: { value } }) => <a href={`mailto:${value}`}>{value}</a>,
       },
       {
-        Header: 'Phone number',
+        Header: t("Phonenumber"),
         accessor: 'phone',
       },
       {
-        Header: 'Address',
+        Header: t("Address"),
         accessor: 'full_address',
       },
       {
-        Header: 'Date of registration',
+        Header: t("DateOfegistration"),
         accessor: 'date_register',
       },
     ],
   },
 ];
 
-export const print = [
-  { name: 'Id', id: 'clients.id' },
-  { name: 'Name', id: 'clients.name' },
-  { name: 'Email', id: 'clients.email' },
-  { name: 'Phone', id: 'clients.phone' },
-  { name: 'Date of registration', id: 'clients.created_at' },
-  { name: 'Address', id: 'addresses.name' },
+export const print = (t) => [
+  { name: t("ID"), id: 'clients.id' },
+  { name: t("Name"), id: 'clients.name' },
+  { name: t("EmailAddress"), id: 'clients.email' },
+  { name: t("Phonenumber"), id: 'clients.phone' },
+  { name: t("DateOfegistration"), id: 'clients.created_at' },
+  { name: t("Address"), id: 'addresses.name' },
 ];

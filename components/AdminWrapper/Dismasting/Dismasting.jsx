@@ -1,39 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import formatStringByPattern from 'format-string-by-pattern';
-import { useRouter } from 'next/router';
-import { Field, Form } from 'react-final-form';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import formatStringByPattern from "format-string-by-pattern";
+import { useRouter } from "next/router";
+import { Field, Form } from "react-final-form";
 import {
   getDismanting,
   updateDismanting,
-} from '../../../redux/actions/dismanting';
+} from "../../../redux/actions/dismanting";
 import {
   dismantingDataSelector,
   dismantingDataReceivedSelector,
-} from '../../../utils/selectors';
-import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
-import CustomTable from '../../CustomTable/CustomTable';
-import Button from '../../Button/Button';
-import Pagination from '../../Pagination/Pagination';
-import CarInformation from '../../CarInformation/CarInformation';
-import { stateStatus, status, print } from './data';
-import styles from './Dismasting.scss';
-import Loader from '../../Loader/Loader';
-import { updateShipping } from '../../../redux/actions/shipping';
-import { renderSelect, renderInput } from '../../../utils/renderInputs';
-import { printData, getIdsArr } from '../../../utils/helpers';
-import Popup from '../../Popup/Popup';
-import MultiSelect from '../../Multi/Multi';
-import cx from 'classnames';
-import Pickers from '../../Pickers/Pickers';
+} from "../../../utils/selectors";
+import MainLayout from "../../Layout/Global/Global";
+import SubHeader from "../../Layout/SubHeader/SubHeader";
+import CustomTable from "../../CustomTable/CustomTable";
+import Button from "../../Button/Button";
+import Pagination from "../../Pagination/Pagination";
+import CarInformation from "../../CarInformation/CarInformation";
+import { stateStatus, status, print } from "./data";
+import styles from "./Dismasting.scss";
+import Loader from "../../Loader/Loader";
+import { updateShipping } from "../../../redux/actions/shipping";
+import { renderSelect, renderInput } from "../../../utils/renderInputs";
+import { printData, getIdsArr } from "../../../utils/helpers";
+import Popup from "../../Popup/Popup";
+import MultiSelect from "../../Multi/Multi";
+import cx from "classnames";
+import Pickers from "../../Pickers/Pickers";
+import useTranslation from "next-translate/useTranslation";
 
 const Dismasting = () => {
   const router = useRouter();
 
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
-
+  const { t } = useTranslation("admin-dismantings");
   const dismanting = useSelector(dismantingDataSelector);
   const isDataReceived = useSelector(dismantingDataReceivedSelector);
 
@@ -47,16 +48,16 @@ const Dismasting = () => {
     dispatch(
       getDismanting({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        port: router.query.port || '',
-        search: router.query.search || '',
-        shipping_status: router.query.shipping_status || '',
-        auto_year: router.query.auto_year || '',
-        auto_make: router.query.auto_make || '',
-        date: router.query.date || '',
-        date_from: router.query.date_from || '',
-        date_to: router.query.date_to || '',
-      }),
+        countpage: router.query.countpage || "10",
+        port: router.query.port || "",
+        search: router.query.search || "",
+        shipping_status: router.query.shipping_status || "",
+        auto_year: router.query.auto_year || "",
+        auto_make: router.query.auto_make || "",
+        date: router.query.date || "",
+        date_from: router.query.date_from || "",
+        date_to: router.query.date_to || "",
+      })
     );
   }, [router.query]);
 
@@ -66,7 +67,7 @@ const Dismasting = () => {
 
   const onSubmit = async (values) => {
     router.push({
-      pathname: '/auto-admin/dismanting',
+      pathname: "/auto-admin/dismanting",
       query: {
         ...router.query,
         date: values.date,
@@ -74,24 +75,24 @@ const Dismasting = () => {
         shipping_status: values.status && values.status.value,
         auto_year: values.years && values.years.value,
         auto_make: values.makes && values.makes.value,
-        date_from: document.querySelector('#from').value || '',
-        date_to: document.querySelector('#to').value || '',
+        date_from: document.querySelector("#from").value || "",
+        date_to: document.querySelector("#to").value || "",
       },
     });
   };
 
-  const allYear = { id: 0, value: '', label: 'All Years' };
+  const allYear = { id: 0, value: "", label: t("All Years") };
   const years = dismanting.additional.years;
-  const yearArr = Object.keys(years).map((item, index = '1') => ({
+  const yearArr = Object.keys(years).map((item, index = "1") => ({
     id: index + 1,
     label: years[index].year,
     value: years[index].year,
   }));
   const newYear = [allYear, ...yearArr];
 
-  const allMakes = { id: 0, value: '', label: 'All Makes' };
+  const allMakes = { id: 0, value: "", label: t("All Makes") };
   const makes = dismanting.additional.makes;
-  const makeArr = Object.keys(makes).map((item, index = '1') => ({
+  const makeArr = Object.keys(makes).map((item, index = "1") => ({
     id: index + 1,
     label: makes[index].make_name,
     value: makes[index].make_name,
@@ -104,7 +105,7 @@ const Dismasting = () => {
       params: {
         fields: idsArr,
       },
-      table: 'dismantings',
+      table: "dismantings",
       selected: idsArr,
       setSelected,
       setPrintPopup,
@@ -116,28 +117,28 @@ const Dismasting = () => {
       <SubHeader
         onClick={() => {
           router.push({
-            pathname: '/auto-admin/dismanting',
+            pathname: "/auto-admin/dismanting",
             query: {
               ...router.query,
               page: 1,
-              search: document.querySelector('#search').value,
+              search: document.querySelector("#search").value,
             },
           });
           dispatch(
             getDismanting({
-              search: document.querySelector('#search').value,
-            }),
+              search: document.querySelector("#search").value,
+            })
           );
         }}
       />
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h4 className={styles.title}>Dismantings</h4>
+          <h4 className={styles.title}>{t("Dismantings")}</h4>
           <Button
             customBtn={styles.rightBtn}
             onClick={() => setPrintPopup(true)}
           >
-            Print
+            {t("Print")}
           </Button>
         </div>
         <div className={styles.flex}>
@@ -148,7 +149,7 @@ const Dismasting = () => {
                 <Field
                   name="port"
                   component={renderSelect({
-                    placeholder: router.query.port || 'All Ports',
+                    placeholder: router.query.port || t("All Ports"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={stateStatus}
@@ -156,7 +157,7 @@ const Dismasting = () => {
                 <Field
                   name="status"
                   component={renderSelect({
-                    placeholder: router.query.status || 'All Status',
+                    placeholder: router.query.status || t("All status"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={status}
@@ -164,18 +165,18 @@ const Dismasting = () => {
                 <Field
                   name="date"
                   type="text"
-                  defaultValue={router.query.date || ''}
-                  parse={formatStringByPattern('99-99-9999')}
+                  defaultValue={router.query.date || ""}
+                  parse={formatStringByPattern("99-99-9999")}
                 >
                   {renderInput({
-                    placeholder: router.query.date || 'All Date',
+                    placeholder: router.query.date || t("All Date"),
                     classNameWrapper: styles.widthSelect,
                   })}
                 </Field>
                 <Field
                   name="years"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All Years',
+                    placeholder: router.query.year || t("All Years"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newYear}
@@ -183,23 +184,23 @@ const Dismasting = () => {
                 <Field
                   name="makes"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All Makes',
+                    placeholder: router.query.year || t("All Makes"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newMakes}
                 />
                 <div className={cx(styles.flex, styles.pickers)}>
-                  <p>Date from</p>
+                  <p>{t("Date from")}</p>
                   <Pickers
-                    time={router.query.date_from || ''}
+                    time={router.query.date_from || ""}
                     defaultValue=""
                     id="from"
                   />
                 </div>
                 <div className={cx(styles.flex, styles.pickers)}>
-                  <p>Date to</p>
+                  <p>{t("Date to")}</p>
                   <Pickers
-                    time={router.query.date_to || ''}
+                    time={router.query.date_to || ""}
                     defaultValue=""
                     id="to"
                   />
@@ -209,7 +210,7 @@ const Dismasting = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Ok
+                  {t("Ok")}
                 </Button>
               </form>
             )}
@@ -224,7 +225,7 @@ const Dismasting = () => {
               pathname="/auto-admin/dismanting"
               router={router}
             />
-            {dismanting.data.map(item => (
+            {dismanting.data.map((item) => (
               <CarInformation
                 key={item.id}
                 item={item}
@@ -233,15 +234,16 @@ const Dismasting = () => {
                 admin
                 router={router}
                 updateShipping={updateDismanting}
-                updateStatus={el => dispatch(
-                  updateShipping(
-                    {},
-                    {
-                      status: el.target.id,
-                    },
-                    item.id,
-                  ),
-                )
+                updateStatus={(el) =>
+                  dispatch(
+                    updateShipping(
+                      {},
+                      {
+                        status: el.target.id,
+                      },
+                      item.id
+                    )
+                  )
                 }
               />
             ))}
@@ -257,7 +259,7 @@ const Dismasting = () => {
         <Popup
           customPopup={styles.heightPopup}
           setIsPopupOpen={setPrintPopup}
-          title="Print"
+          title={t("Print")}
         >
           <Form
             onSubmit={onSubmitPrint}
@@ -268,14 +270,14 @@ const Dismasting = () => {
                     options={print}
                     setSelected={setSelected}
                     value={selected}
-                    label="Select the fields Print"
+                    label={t("Select the fields Print")}
                   />
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    Submit
+                    {t("SUBMIT")}
                   </Button>
                 </div>
               </form>

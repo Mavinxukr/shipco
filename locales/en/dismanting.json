@@ -17,8 +17,17 @@
   "Last": "Last",
   "Lot": "Lot #",
   "VIN:": "VIN:",
+  "ContainerId": "Container id",
+  "trackingId": "Tracking id:",
+  "pointOfLoading": "Point of loading:",
+  "NoInformation": "No Information",
+  "Disassembled": "Disassembled:",
   "CarFaxReport": "CarFax report",
   "Invoices": "Invoices",
   "AddingNotes": "Adding notes",
-  "Yes": "Yes"
+  "updatesSatus": "Update status",
+  "Yes": "Yes",
+  "No": "No",
+  "Edit": "Edit",
+  "Comment": "Comment:"
 }

@@ -1,13 +1,14 @@
-import React from 'react';
-import _ from 'lodash';
-import cx from 'classnames';
-import styles from './ImageUpload.scss';
-import IconPlus from '../../assets/svg/Plus.svg';
-import IconSuccess from '../../assets/svg/Dec.svg';
+import React from "react";
+import _ from "lodash";
+import cx from "classnames";
+import styles from "./ImageUpload.scss";
+import IconPlus from "../../assets/svg/Plus.svg";
+import IconSuccess from "../../assets/svg/Dec.svg";
+import useTranslation from "next-translate/useTranslation";
 
-const ImageUpload = ({
-  image, setImage, baseClient, customImageUpload,
-}) => {
+const ImageUpload = ({ image, setImage, baseClient, customImageUpload }) => {
+  const { t } = useTranslation("profile");
+
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       return;
@@ -20,12 +21,13 @@ const ImageUpload = ({
     <>
       {baseClient ? (
         <div className={styles.flex}>
-          <p className={styles.label}>Add ID photo</p>
+          <p className={styles.label}>{t("AddIDphoto")}</p>
           <label
             className={styles.labelFileInputNoPreview}
             htmlFor="upload-photo"
           >
-            {document.querySelector('#upload-photo') && document.querySelector('#upload-photo').value === '' ? (
+            {document.querySelector("#upload-photo") &&
+            document.querySelector("#upload-photo").value === "" ? (
               <IconPlus className={styles.iconPlus} />
             ) : (
               <IconSuccess className={styles.iconPlus} />
@@ -48,7 +50,7 @@ const ImageUpload = ({
           />
           <div className={styles.file}>
             <label className={styles.labelFileInput} htmlFor="upload-photo">
-              <IconPlus className={styles.iconPlus} /> Add new photo
+              <IconPlus className={styles.iconPlus} /> {t("addNewPhoto")}
             </label>
             <input
               className={styles.fileInput}

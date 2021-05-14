@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
-import { Field, Form } from 'react-final-form';
-import { useDispatch } from 'react-redux';
-import formatStringByPattern from 'format-string-by-pattern';
-import ActiveLink from '../ActiveLink/ActiveLink';
-import Button from '../../Button/Button';
-import IconSettings from '../../../assets/svg/Settings.svg';
-import Search from '../../Search/Search';
-import Popup from '../../Popup/Popup';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { useRouter } from "next/router";
+import { Field, Form } from "react-final-form";
+import { useDispatch } from "react-redux";
+import formatStringByPattern from "format-string-by-pattern";
+import ActiveLink from "../ActiveLink/ActiveLink";
+import Button from "../../Button/Button";
+import IconSettings from "../../../assets/svg/Settings.svg";
+import Search from "../../Search/Search";
+import Popup from "../../Popup/Popup";
 import {
   composeValidators,
   emailValidation,
@@ -16,17 +16,22 @@ import {
   required,
   lengthCart,
   lengthPhone,
-} from '../../../utils/validation';
-import { renderInput, renderSelect } from '../../../utils/renderInputs';
-import styles from './SubHeader.scss';
-import { state } from './data';
-import { updateCurrentClient } from '../../../redux/actions/currentClient';
+} from "../../../utils/validation";
+import { renderInput, renderSelect } from "../../../utils/renderInputs";
+import styles from "./SubHeader.scss";
+import { state } from "./data";
+import { updateCurrentClient } from "../../../redux/actions/currentClient";
+import useTranslation from "next-translate/useTranslation";
 
 const SubHeader = ({
-  hidden, currentClientId, currentClient, onClick, client,
+  hidden,
+  currentClientId,
+  currentClient,
+  onClick,
+  client,
 }) => {
   const router = useRouter();
-
+  const { t } = useTranslation("admin-subheader");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -40,8 +45,8 @@ const SubHeader = ({
           country: values.country && values.country.label,
           city: values.city && values.city.label,
         },
-        currentClient.data.id,
-      ),
+        currentClient.data.id
+      )
     );
   };
 
@@ -51,9 +56,9 @@ const SubHeader = ({
         {currentClientId ? (
           <div className={styles.flex}>
             <h4 className={styles.title}>
-              {currentClient.data.name}{' '}
+              {currentClient.data.name}{" "}
               <span className={styles.titleColor}>
-                (ID {currentClient.data.id})
+                ({t("ID")} {currentClient.data.id})
               </span>
             </h4>
             {hidden && (
@@ -68,12 +73,13 @@ const SubHeader = ({
           </div>
         ) : (
           <>
-            {currentClient && router.pathname !== '/auto-admin' && (
+            {currentClient && router.pathname !== "/auto-admin" && (
               <div className={styles.flex}>
                 <h4 className={styles.title}>
-                  {currentClient.name}{' '}
+                  {currentClient.name}{" "}
                   <span className={styles.titleColor}>
-                    (ID {currentClient.id})
+                    ({t("ID")}
+                    {currentClient.id})
                   </span>
                 </h4>
               </div>
@@ -85,10 +91,10 @@ const SubHeader = ({
             <li>
               <ActiveLink
                 activeClassName={styles.active}
-                href={{ pathname: '/auto-admin', query: { isClient: false } }}
+                href={{ pathname: "/auto-admin", query: { isClient: false } }}
               >
                 <a className={styles.menuLink}>
-                  Auto
+                  {t("auto")}
                   <span className={styles.dotActive} />
                 </a>
               </ActiveLink>
@@ -99,7 +105,7 @@ const SubHeader = ({
                 href="/auto-admin/dismanting"
               >
                 <a className={styles.menuLink}>
-                  Auto for dismanting
+                  {t("dismanting")}
                   <span className={styles.dotActive} />
                 </a>
               </ActiveLink>
@@ -110,7 +116,7 @@ const SubHeader = ({
                 href="/auto-admin/parts"
               >
                 <a className={styles.menuLink}>
-                  Parts
+                  {t("parts")}
                   <span className={styles.dotActive} />
                 </a>
               </ActiveLink>
@@ -121,7 +127,8 @@ const SubHeader = ({
                 href="/auto-admin/shipping"
               >
                 <a className={styles.menuLink}>
-                  Shipping
+                  {t("shipping")}
+
                   <span className={styles.dotActive} />
                 </a>
               </ActiveLink>
@@ -145,24 +152,24 @@ const SubHeader = ({
                   name="name"
                   validate={required}
                   type="text"
-                  defaultValue={currentClient.data.name || ''}
+                  defaultValue={currentClient.data.name || ""}
                 >
                   {renderInput({
-                    label: 'Name',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                    classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                    label: t("Name"),
+                    classNameWrapper: "InputFormWrapper-popupFieldRow",
+                    classNameWrapperLabel: "InputFormWrapper-blackLabel",
                   })}
                 </Field>
                 <Field
                   name="email"
                   validate={composeValidators(required, emailValidation)}
                   type="email"
-                  defaultValue={currentClient.data.email || ''}
+                  defaultValue={currentClient.data.email || ""}
                 >
                   {renderInput({
-                    label: 'Email Address',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                    classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                    label: t("Email Address"),
+                    classNameWrapper: "InputFormWrapper-popupFieldRow",
+                    classNameWrapperLabel: "InputFormWrapper-blackLabel",
                   })}
                 </Field>
                 <Field
@@ -170,67 +177,68 @@ const SubHeader = ({
                   validate={composeValidators(
                     required,
                     mustBeNumber,
-                    lengthPhone,
+                    lengthPhone
                   )}
                   type="text"
-                  parse={formatStringByPattern('+9-9999-999-99-99')}
-                  defaultValue={currentClient.data.phone || ''}
+                  parse={formatStringByPattern("+9-9999-999-99-99")}
+                  defaultValue={currentClient.data.phone || ""}
                 >
                   {renderInput({
-                    label: 'Phone number',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                    classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                    label: t("Phone number"),
+                    classNameWrapper: "InputFormWrapper-popupFieldRow",
+                    classNameWrapperLabel: "InputFormWrapper-blackLabel",
                   })}
                 </Field>
                 <Field
                   name="country"
                   component={renderSelect({
-                    label: 'Country',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
-                    classNameLabel: 'SelectCustom-blackLabel',
-                    placeholder: currentClient.data.country || '',
+                    label: t("Country"),
+                    classNameWrapper: "SelectCustom-popupFieldRow",
+                    classNameLabel: "SelectCustom-blackLabel",
+                    placeholder: currentClient.data.country || "",
                   })}
                   options={state}
                 />
                 <Field
                   name="city"
                   component={renderSelect({
-                    label: 'City',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
-                    classNameLabel: 'SelectCustom-blackLabel',
-                    placeholder: currentClient.data.city || '',
+                    label: t("City"),
+                    classNameWrapper: "SelectCustom-popupFieldRow",
+                    classNameLabel: "SelectCustom-blackLabel",
+                    placeholder: currentClient.data.city || "",
                   })}
                   options={
-                    (client
-                      && client.additional.cities.map(item => ({
+                    (client &&
+                      client.additional.cities.map((item) => ({
                         value: item.name,
                         label: item.name,
-                      })))
-                    || []}
+                      }))) ||
+                    []
+                  }
                 />
                 <Field
                   name="zip"
                   validate={composeValidators(required, mustBeNumber)}
                   type="text"
-                  defaultValue={currentClient.data.zip || ''}
+                  defaultValue={currentClient.data.zip || ""}
                 >
                   {renderInput({
-                    label: 'ZIP',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                    classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                    label: t("Zip"),
+                    classNameWrapper: "InputFormWrapper-popupFieldRow",
+                    classNameWrapperLabel: "InputFormWrapper-blackLabel",
                   })}
                 </Field>
                 <Field
                   name="address"
                   validate={required}
                   type="text"
-                  defaultValue={currentClient.data.address || ''}
+                  defaultValue={currentClient.data.address || ""}
                 >
                   {renderInput({
-                    label: 'Address',
-                    widthInputBlock: 'InputFormWrapper-widthInputBlock',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                    classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                    label: t("Adress"),
+                    widthInputBlock: "InputFormWrapper-widthInputBlock",
+                    classNameWrapper: "InputFormWrapper-popupFieldRow",
+                    classNameWrapperLabel: "InputFormWrapper-blackLabel",
                   })}
                 </Field>
                 <Field
@@ -238,16 +246,16 @@ const SubHeader = ({
                   validate={composeValidators(
                     required,
                     mustBeNumber,
-                    lengthCart,
+                    lengthCart
                   )}
                   type="text"
-                  parse={formatStringByPattern('9999-9999-9999-9999')}
-                  defaultValue={currentClient.data.card_number || ''}
+                  parse={formatStringByPattern("9999-9999-9999-9999")}
+                  defaultValue={currentClient.data.card_number || ""}
                 >
                   {renderInput({
-                    label: 'Payment Information',
-                    classNameWrapper: 'InputFormWrapper-popupFieldRow',
-                    classNameWrapperLabel: 'InputFormWrapper-blackLabel',
+                    label: t("PAYMENT"),
+                    classNameWrapper: "InputFormWrapper-popupFieldRow",
+                    classNameWrapperLabel: "InputFormWrapper-blackLabel",
                   })}
                 </Field>
                 <div className={styles.submitPopup}>
@@ -256,7 +264,7 @@ const SubHeader = ({
                     type="submit"
                     disabled={invalid || submitting}
                   >
-                    Save
+                    {t("save")}
                   </Button>
                 </div>
               </form>

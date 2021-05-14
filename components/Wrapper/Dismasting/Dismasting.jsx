@@ -1,30 +1,32 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import formatStringByPattern from 'format-string-by-pattern';
-import { useRouter } from 'next/router';
-import { Field, Form } from 'react-final-form';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import formatStringByPattern from "format-string-by-pattern";
+import { useRouter } from "next/router";
+import { Field, Form } from "react-final-form";
 import {
   getClientDismanting,
   updateClientDismanting,
-} from '../../../redux/actions/clientDismanting';
+} from "../../../redux/actions/clientDismanting";
 import {
   clientDismantingDataReceivedSelector,
   clientDismantingDataSelector,
-} from '../../../utils/selectors';
-import MainLayout from '../../Layout/Global/Global';
-import CustomTable from '../../CustomTable/CustomTable';
-import Button from '../../Button/Button';
-import Pagination from '../../Pagination/Pagination';
-import CarInformation from '../../CarInformation/CarInformation';
-import Search from '../../Search/Search';
-import { stateStatus, status } from './data';
-import styles from './Dismasting.scss';
-import Loader from '../../Loader/Loader';
-import { renderInput, renderSelect } from '../../../utils/renderInputs';
+} from "../../../utils/selectors";
+import MainLayout from "../../Layout/Global/Global";
+import CustomTable from "../../CustomTable/CustomTable";
+import Button from "../../Button/Button";
+import Pagination from "../../Pagination/Pagination";
+import CarInformation from "../../CarInformation/CarInformation";
+import Search from "../../Search/Search";
+import { stateStatus, status } from "./data";
+import styles from "./Dismasting.scss";
+import Loader from "../../Loader/Loader";
+import { renderInput, renderSelect } from "../../../utils/renderInputs";
+import useTranslation from "next-translate/useTranslation";
 
 const Dismasting = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation("dismanting");
 
   const clientDismanting = useSelector(clientDismantingDataSelector);
   const isDataReceived = useSelector(clientDismantingDataReceivedSelector);
@@ -37,15 +39,15 @@ const Dismasting = () => {
     dispatch(
       getClientDismanting({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        port: router.query.port || '',
-        search: router.query.search || '',
-        shipping_status: router.query.shipping_status || '',
-        auto_name: router.query.auto_name || '',
-        auto_year: router.query.auto_year || '',
-        auto_make: router.query.auto_make || '',
-        date: router.query.date || '',
-      }),
+        countpage: router.query.countpage || "10",
+        port: router.query.port || "",
+        search: router.query.search || "",
+        shipping_status: router.query.shipping_status || "",
+        auto_name: router.query.auto_name || "",
+        auto_year: router.query.auto_year || "",
+        auto_make: router.query.auto_make || "",
+        date: router.query.date || "",
+      })
     );
   }, [router.query]);
 
@@ -55,7 +57,7 @@ const Dismasting = () => {
 
   const onSubmit = async (values) => {
     router.push({
-      pathname: '/shipping',
+      pathname: "/shipping",
       query: {
         ...router.query,
         date: values.date,
@@ -68,27 +70,27 @@ const Dismasting = () => {
     });
   };
 
-  const allModel = { id: 0, value: '', label: 'All Model' };
+  const allModel = { id: 0, value: "", label: t("AllModels") };
   const model = clientDismanting.additional.models;
-  const modelArr = Object.keys(model).map((item, index = '1') => ({
+  const modelArr = Object.keys(model).map((item, index = "1") => ({
     id: index + 1,
     label: model[index].model_name,
     value: model[index].model_name,
   }));
   const newModel = [allModel, ...modelArr];
 
-  const allYear = { id: 0, value: '', label: 'All Years' };
+  const allYear = { id: 0, value: "", label: t("AllYears") };
   const years = clientDismanting.additional.years;
-  const yearArr = Object.keys(years).map((item, index = '1') => ({
+  const yearArr = Object.keys(years).map((item, index = "1") => ({
     id: index + 1,
     label: years[index].year,
     value: years[index].year,
   }));
   const newYear = [allYear, ...yearArr];
 
-  const allMakes = { id: 0, value: '', label: 'All Makes' };
+  const allMakes = { id: 0, value: "", label: t("AllMakes") };
   const makes = clientDismanting.additional.makes;
-  const makeArr = Object.keys(makes).map((item, index = '1') => ({
+  const makeArr = Object.keys(makes).map((item, index = "1") => ({
     id: index + 1,
     label: makes[index].make_name,
     value: makes[index].make_name,
@@ -98,7 +100,7 @@ const Dismasting = () => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h3 className={styles.title}>Auto for dismanting</h3>
+        <h3 className={styles.title}>{t("Autofordismanting")}</h3>
         <div className={styles.flex}>
           <Form
             onSubmit={onSubmit}
@@ -107,7 +109,7 @@ const Dismasting = () => {
                 <Field
                   name="port"
                   component={renderSelect({
-                    placeholder: router.query.port || 'All Ports',
+                    placeholder: router.query.port || t("AllPorts"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={stateStatus}
@@ -115,7 +117,7 @@ const Dismasting = () => {
                 <Field
                   name="status"
                   component={renderSelect({
-                    placeholder: router.query.status || 'All Status',
+                    placeholder: router.query.status || t("AllStatus"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={status}
@@ -123,18 +125,18 @@ const Dismasting = () => {
                 <Field
                   name="date"
                   type="text"
-                  defaultValue={router.query.date || ''}
-                  parse={formatStringByPattern('99-99-9999')}
+                  defaultValue={router.query.date || ""}
+                  parse={formatStringByPattern("99-99-9999")}
                 >
                   {renderInput({
-                    placeholder: router.query.date || 'All Date',
+                    placeholder: router.query.date || t("AllDate"),
                     classNameWrapper: styles.widthSelect,
                   })}
                 </Field>
                 <Field
                   name="years"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All Years',
+                    placeholder: router.query.year || t("AllYears"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newYear}
@@ -142,7 +144,7 @@ const Dismasting = () => {
                 <Field
                   name="makes"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All Makes',
+                    placeholder: router.query.year || t("AllMakes"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newMakes}
@@ -150,7 +152,7 @@ const Dismasting = () => {
                 <Field
                   name="model"
                   component={renderSelect({
-                    placeholder: router.query.model || 'All Model',
+                    placeholder: router.query.model || t("AllModels"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newModel}
@@ -160,7 +162,7 @@ const Dismasting = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Ok
+                  {t("Ok")}
                 </Button>
               </form>
             )}
@@ -169,17 +171,17 @@ const Dismasting = () => {
             <Search
               onClick={() => {
                 router.push({
-                  pathname: '/dismanting',
+                  pathname: "/dismanting",
                   query: {
                     ...router.query,
                     page: 1,
-                    search: document.querySelector('#search').value,
+                    search: document.querySelector("#search").value,
                   },
                 });
                 dispatch(
                   getClientDismanting({
-                    search: document.querySelector('#search').value,
-                  }),
+                    search: document.querySelector("#search").value,
+                  })
                 );
               }}
             />
@@ -194,7 +196,7 @@ const Dismasting = () => {
               pathname="/dismanting"
               router={router}
             />
-            {clientDismanting.data.map(item => (
+            {clientDismanting.data.map((item) => (
               <CarInformation
                 key={item.id}
                 item={item}
