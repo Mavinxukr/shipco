@@ -18,7 +18,12 @@
       "admin-auto",
       "admin-subheader",
       "admin-dismantings",
-      "admin-auto-edit"
+      "admin-auto-edit",
+      "admin-parts",
+      "admin-groups",
+      "admin-price",
+      "admin-payments",
+      "admin-invoices"
     ],
     "/": ["home"]
   }

@@ -3,5 +3,9 @@
   "autoForDismantig": "AUTO FOR DISMANTING",
   "parts": "PARTS",
   "shiping": "SHIPPING",
-  "invoces": "INVOICES"
+  "invoces": "INVOICES",
+  "clients": "clients",
+  "groups": "groups",
+  "prices": "prices",
+  "payments": "payments"
 }

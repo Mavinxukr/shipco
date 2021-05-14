@@ -1,59 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'classnames';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Field, Form } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTable } from 'react-table';
-import Example from '../../Multi/Multi';
+import React, { useEffect, useState } from "react";
+import cx from "classnames";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Field, Form } from "react-final-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useTable } from "react-table";
+import Example from "../../Multi/Multi";
 import {
   getGroups,
   deleteGroups,
   addNewGroups,
   updateGroups,
-} from '../../../redux/actions/groups';
+} from "../../../redux/actions/groups";
 import {
   groupsDataSelector,
   groupsDataReceivedSelector,
-} from '../../../utils/selectors';
-import { printData, getIdsArr } from '../../../utils/helpers';
-import Button from '../../Button/Button';
-import Popup from '../../Popup/Popup';
-import MainLayout from '../../Layout/Global/Global';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import CustomTable from '../../CustomTable/CustomTable';
+} from "../../../utils/selectors";
+import { printData, getIdsArr } from "../../../utils/helpers";
+import Button from "../../Button/Button";
+import Popup from "../../Popup/Popup";
+import MainLayout from "../../Layout/Global/Global";
+import IconPlus from "../../../assets/svg/Plus.svg";
+import CustomTable from "../../CustomTable/CustomTable";
 import {
   composeValidators,
   required,
   mustBeNumber,
-} from '../../../utils/validation';
-import Pagination from '../../Pagination/Pagination';
-import { renderInput } from '../../../utils/renderInputs';
-import { columns, print } from './data';
-import Loader from '../../Loader/Loader';
-import IconTrash from '../../../assets/svg/Trash.svg';
-import styles from './Groups.scss';
-import IconP from '../../../assets/svg/p.svg';
+} from "../../../utils/validation";
+import Pagination from "../../Pagination/Pagination";
+import { renderInput } from "../../../utils/renderInputs";
+import { columns, print } from "./data";
+import Loader from "../../Loader/Loader";
+import IconTrash from "../../../assets/svg/Trash.svg";
+import styles from "./Groups.scss";
+import IconP from "../../../assets/svg/p.svg";
+import useTranslation from "next-translate/useTranslation";
 
-const Table = ({
-  columns, data, dispatch, groupsArr,
-}) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows,
-  } = useTable({
-    columns,
-    data,
-    initialState: { pageIndex: 0 },
-  });
+const Table = ({ columns, data, dispatch, groupsArr }) => {
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
+    useTable({
+      columns,
+      data,
+      initialState: { pageIndex: 0 },
+    });
   const [deleteId, setDeleteId] = useState(null);
   const [isPopupDelete, setIsPopupDelete] = useState(false);
   const [isPopupUpdate, setIsPopupUpdate] = useState(false);
   const [itemGroup, setItemGroup] = useState(null);
   const [selected, setSelected] = useState([]);
+  const { t } = useTranslation("admin-groups");
 
   const onSubmit = (values) => {
     const id = selected;
@@ -71,30 +66,30 @@ const Table = ({
           ...values,
           clients: submitId.join(),
         },
-        itemGroup.id,
-      ),
+        itemGroup.id
+      )
     );
     setIsPopupUpdate(false);
   };
 
   if (isPopupUpdate === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   return (
     <>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
                   className={`Groups-${column.id}Header`}
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -105,12 +100,12 @@ const Table = ({
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
+                {row.cells.map((cell) => (
                   <td
                     className={`Groups-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.column.id === 'actions' ? (
+                    {cell.column.id === "actions" ? (
                       <>
                         <Button
                           type="button"
@@ -120,11 +115,11 @@ const Table = ({
                             setIsPopupUpdate(true);
                             setSelected(
                               cell.row.original.clients
-                                ? cell.row.original.clients.map(item => ({
-                                  value: item.clients.id,
-                                  label: item.clients.name,
-                                }))
-                                : selected,
+                                ? cell.row.original.clients.map((item) => ({
+                                    value: item.clients.id,
+                                    label: item.clients.name,
+                                  }))
+                                : selected
                             );
                           }}
                         >
@@ -143,18 +138,18 @@ const Table = ({
                       </>
                     ) : (
                       <>
-                        {cell.column.id === 'client' ? (
+                        {cell.column.id === "client" ? (
                           <>
-                            {(cell.row.original.clients
-                              && cell.row.original.clients.length)
-                              || '0'}
+                            {(cell.row.original.clients &&
+                              cell.row.original.clients.length) ||
+                              "0"}
                           </>
                         ) : (
                           <>
-                            {cell.column.id === 'due_day' ? (
+                            {cell.column.id === "due_day" ? (
                               <Link
                                 href={{
-                                  pathname: '/payments',
+                                  pathname: "/payments",
                                   query: {
                                     idClient: cell.row.original.price_id,
                                   },
@@ -167,11 +162,11 @@ const Table = ({
                                       : undefined
                                   }
                                 >
-                                  {cell.render('Cell')}
+                                  {cell.render("Cell")}
                                 </a>
                               </Link>
                             ) : (
-                              <>{cell.render('Cell')}</>
+                              <>{cell.render("Cell")}</>
                             )}
                           </>
                         )}
@@ -185,7 +180,7 @@ const Table = ({
         </tbody>
       </table>
       {isPopupUpdate && (
-        <Popup setIsPopupOpen={setIsPopupUpdate} title="Update Group ">
+        <Popup setIsPopupOpen={setIsPopupUpdate} title={t("UPDATEGROUP")}>
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -197,7 +192,7 @@ const Table = ({
                   defaultValue={itemGroup.name}
                 >
                   {renderInput({
-                    label: 'Name',
+                    label: t("Name"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -207,6 +202,7 @@ const Table = ({
                   options={groupsArr}
                   setSelected={setSelected}
                   value={selected}
+                  label={t("Clientsid")}
                 />
                 <div className={styles.submitPopup}>
                   <Button
@@ -214,7 +210,7 @@ const Table = ({
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    Update Group
+                    {t("UPDATEGROUP")}{" "}
                   </Button>
                 </div>
               </form>
@@ -258,7 +254,7 @@ const Groups = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
-
+  const { t } = useTranslation("admin-groups");
   const groups = useSelector(groupsDataSelector);
   const isDataReceived = useSelector(groupsDataReceivedSelector);
 
@@ -273,8 +269,8 @@ const Groups = () => {
     dispatch(
       getGroups({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-      }),
+        countpage: router.query.countpage || "10",
+      })
     );
   }, [router.query]);
 
@@ -283,15 +279,15 @@ const Groups = () => {
   }
 
   const onSubmit = (values) => {
-    const arrId = selected.map(item => item.value);
+    const arrId = selected.map((item) => item.value);
     dispatch(
       addNewGroups(
         {},
         {
           ...values,
           clients: arrId.join(),
-        },
-      ),
+        }
+      )
     );
     setIsPopupOpen(false);
   };
@@ -302,7 +298,7 @@ const Groups = () => {
       params: {
         fields: idsArr,
       },
-      table: 'groups',
+      table: "groups",
       selected: idsArr,
       setSelected,
       setPrintPopup,
@@ -310,16 +306,16 @@ const Groups = () => {
   };
 
   if (isPopupOpen === true || printPopup === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   return (
     <MainLayout admin>
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h4 className={styles.title}>Groups</h4>
+          <h4 className={styles.title}>{t("GROUPS")}</h4>
         </div>
         <div className={styles.flex}>
           <div className={styles.groupBtn}>
@@ -332,7 +328,7 @@ const Groups = () => {
               }}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
-              Add New Groups
+              {t("Add New Groups")}
             </Button>
           </div>
           <div className={styles.groupBtn}>
@@ -340,9 +336,9 @@ const Groups = () => {
               customBtn={styles.rightBtn}
               onClick={() => setPrintPopup(true)}
             >
-              Print
+              {t("print")}
             </Button>
-            <Button customBtn={styles.rightBtn}>Import</Button>
+            <Button customBtn={styles.rightBtn}> {t("import")}</Button>
           </div>
         </div>
         {groups.data.length !== 0 ? (
@@ -354,7 +350,7 @@ const Groups = () => {
             />
             <div className={styles.scrollTable}>
               <Table
-                columns={columns}
+                columns={columns(t)}
                 data={groups.data}
                 dispatch={dispatch}
                 groupsArr={groups.additional.clients}
@@ -371,14 +367,14 @@ const Groups = () => {
         )}
       </div>
       {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Group ">
+        <Popup setIsPopupOpen={setIsPopupOpen} title={t("Add New Groups")}>
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
                 <Field name="name" validate={required} type="text">
                   {renderInput({
-                    label: 'Name',
+                    label: t("Name"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -388,6 +384,7 @@ const Groups = () => {
                   options={groups.additional.clients}
                   setSelected={setSelected}
                   value={selected}
+                  label={t("Clientsid")}
                 />
                 <div className={styles.submitPopup}>
                   <Button
@@ -395,7 +392,7 @@ const Groups = () => {
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    ADD New Group
+                    {t("Add New Groups")}
                   </Button>
                 </div>
               </form>
@@ -407,7 +404,7 @@ const Groups = () => {
         <Popup
           customPopup={styles.heightPopup}
           setIsPopupOpen={setPrintPopup}
-          title="Print"
+          title={t("PRINT")}
         >
           <Form
             onSubmit={onSubmitPrint}
@@ -415,17 +412,17 @@ const Groups = () => {
               <form onSubmit={handleSubmit}>
                 <div className={styles.columnSelect}>
                   <Example
-                    options={print}
+                    options={print(t)}
                     setSelected={setSelected}
                     value={selected}
-                    label="Select the fields Print"
+                    label={t("SelectPrint")}
                   />
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    Submit
+                    {t("SUBMIT")}
                   </Button>
                 </div>
               </form>

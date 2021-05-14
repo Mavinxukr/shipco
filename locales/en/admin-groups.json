@@ -1,0 +1,19 @@
+{
+  "GROUPS": "GROUPS",
+  "print": "print",
+  "import": "import",
+  "price": "Price",
+  "Add New Groups": "Add New Groups",
+  "Name": "Name",
+  "Clientsid": "Clients id",
+  "ADDNEWGROUP": "ADD NEW GROUP",
+  "Show": "Show",
+  "ID": "ID",
+  "Clientsingroup": "Clients in the group",
+  "Daystopay": "Days to pay",
+  "Actions": "Actions",
+  "UPDATEGROUP": "UPDATE GROUP",
+  "PRINT": "PRINT",
+  "SelectPrint": "Select the fields Print",
+  "SUBMIT": "SUBMIT"
+}

@@ -1,0 +1,14 @@
+{
+  "payments": "Payments",
+  "addNewPayments": "Add New Payments",
+  "name": "Name",
+  "ID": "ID",
+  "applicableType": "Applicable Type",
+  "groups": "Groups",
+  "clients": "Clients",
+  "applicableId": "Applicable id",
+  "daysToPay": "Days to pay",
+  "nothingFound": "NOTHING FOUND",
+  "UPDATE PRICE": "UPDATE PRICE",
+  "Actions": "Actions"
+}

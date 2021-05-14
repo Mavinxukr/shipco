@@ -1,0 +1,14 @@
+{
+  "payments": "الدفعات",
+  "addNewPayments": "أضف دفعات جديدة",
+  "name": "الاسم",
+  "ID": "هوية شخصية",
+  "applicableType": "النوع المطبق",
+  "groups": "مجموعات",
+  "clietns": "عملاء",
+  "applicableId": "المعرف القابل للتطبيق",
+  "daysToPay": "عدد الأيام للدفع",
+  "nothingFound": "لم يتم العثور على أي شيء",
+  "UPDATE PRICE": "تحديث سعر",
+  "Actions": "أجراءات"
+}

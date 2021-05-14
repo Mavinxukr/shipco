@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'classnames';
-import Link from 'next/link';
-import PropsType from 'prop-types';
-import { useRouter } from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
-import { useSession, signOut } from 'next-auth/client';
+import React, { useEffect, useState } from "react";
+import cx from "classnames";
+import Link from "next/link";
+import PropsType from "prop-types";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import { useSession, signOut } from "next-auth/client";
 import {
   currentUserDataSelector,
   autoByContainerDataSelector,
-} from '../../../utils/selectors';
-import ActiveLink from '../ActiveLink/ActiveLink';
-import Button from '../../Button/Button';
-import HoverPopup from '../../HoverPopup/HoverPopup';
-import InputFormWrapper from '../../InputWrapperForm/InputFormWrapper';
-import IconAuto from '../../../assets/svg/Vector (2).svg';
-import IconRepair from '../../../assets/svg/Group (1).svg';
-import IconSetting from '../../../assets/svg/Group (2).svg';
-import IconShipping from '../../../assets/svg/Group (3).svg';
-import IconInvoices from '../../../assets/svg/Vector (3).svg';
-import IconArrow from '../../../assets/svg/Vector 2.svg';
-import IconContainer from '../../../assets/svg/AddContainerIcon.svg';
-import IconClients from '../../../assets/svg/Clients.svg';
-import IconBell from '../../../assets/svg/Group (4).svg';
-import IconUser from '../../../assets/svg/Vector (1).svg';
-import IconLogOut from '../../../assets/svg/signs.svg';
-import styles from './Header.scss';
+} from "../../../utils/selectors";
+import ActiveLink from "../ActiveLink/ActiveLink";
+import Button from "../../Button/Button";
+import HoverPopup from "../../HoverPopup/HoverPopup";
+import InputFormWrapper from "../../InputWrapperForm/InputFormWrapper";
+import IconAuto from "../../../assets/svg/Vector (2).svg";
+import IconRepair from "../../../assets/svg/Group (1).svg";
+import IconSetting from "../../../assets/svg/Group (2).svg";
+import IconShipping from "../../../assets/svg/Group (3).svg";
+import IconInvoices from "../../../assets/svg/Vector (3).svg";
+import IconArrow from "../../../assets/svg/Vector 2.svg";
+import IconContainer from "../../../assets/svg/AddContainerIcon.svg";
+import IconClients from "../../../assets/svg/Clients.svg";
+import IconBell from "../../../assets/svg/Group (4).svg";
+import IconUser from "../../../assets/svg/Vector (1).svg";
+import IconLogOut from "../../../assets/svg/signs.svg";
+import styles from "./Header.scss";
 import {
   getCurrentUser,
   logoutCurrentUser,
-} from '../../../redux/actions/currentUser';
-import { getAutoByContainer } from '../../../redux/actions/autosByContainer';
-import { storeShipping } from '../../../redux/actions/shipping';
-import IconMenu from '../../../assets/svg/menuWhite.svg';
-import { LanguageBlock } from '../../LanguageBlock/LanguageBlock';
-import useTranslation from 'next-translate/useTranslation';
+} from "../../../redux/actions/currentUser";
+import { getAutoByContainer } from "../../../redux/actions/autosByContainer";
+import { storeShipping } from "../../../redux/actions/shipping";
+import IconMenu from "../../../assets/svg/menuWhite.svg";
+import { LanguageBlock } from "../../LanguageBlock/LanguageBlock";
+import useTranslation from "next-translate/useTranslation";
 
 const Header = ({ newLink, admin }) => {
   const [isOpenContainerPanel, setIsOpenContainerPanel] = useState(false);
@@ -42,7 +42,7 @@ const Header = ({ newLink, admin }) => {
   const dispatch = useDispatch();
   const user = useSelector(currentUserDataSelector);
   const autoBycontainer = useSelector(autoByContainerDataSelector);
-  const { t, lang } = useTranslation('client-header');
+  const { t, lang } = useTranslation("client-header");
 
   useEffect(() => {
     dispatch(getCurrentUser({}));
@@ -57,13 +57,13 @@ const Header = ({ newLink, admin }) => {
     [styles.activePopup]: isOpenContainerPanel,
   });
   const classNameForLink = cx(styles.menuLink, {
-    [styles.active]: router.pathname.split('/')[1] === 'auto-admin',
+    [styles.active]: router.pathname.split("/")[1] === "auto-admin",
   });
   const classNameForLinkAuto = cx(styles.menuLink, {
-    [styles.active]: router.pathname.split('/')[1] === 'auto',
+    [styles.active]: router.pathname.split("/")[1] === "auto",
   });
   const classNameForLinkPrices = cx(styles.menuLink, {
-    [styles.active]: router.pathname.split('/')[1] === 'prices',
+    [styles.active]: router.pathname.split("/")[1] === "prices",
   });
   const navClass = cx(styles.menu, {
     [styles.openMenu]: isMenuOpen,
@@ -86,7 +86,7 @@ const Header = ({ newLink, admin }) => {
             <IconMenu className={styles.burger} />
           </Button>
           <Link
-            href={admin ? '/base-client' : '/overview'}
+            href={admin ? "/base-client" : "/overview"}
             locale={lang}
             key={lang}
           >
@@ -100,20 +100,20 @@ const Header = ({ newLink, admin }) => {
             <ul className={cx(styles.menuItems, styles.adminMenu)}>
               <li className={styles.menuItem}>
                 <Link
-                  href={{ pathname: '/auto-admin', query: { isClient: false } }}
+                  href={{ pathname: "/auto-admin", query: { isClient: false } }}
                 >
                   <a className={classNameForLink}>
                     <IconAuto className={styles.menuIcon} />
-                    Auto
+                    {t("auto")}
                     <p className={styles.menuDot} />
                   </a>
                 </Link>
               </li>
               <li className={styles.menuItem}>
-                <Link href={{ pathname: '/auto-admin/parts' }}>
+                <Link href={{ pathname: "/auto-admin/parts" }}>
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
-                    parts
+                    {t("parts")}
                     <p className={styles.menuDot} />
                   </a>
                 </Link>
@@ -122,7 +122,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/base-client">
                   <a className={styles.menuLink}>
                     <IconClients className={styles.menuIcon} />
-                    Clients
+                    {t("clients")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -131,7 +131,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/groups">
                   <a className={styles.menuLink}>
                     <IconClients className={styles.menuIcon} />
-                    Groups
+                    {t("groups")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -139,11 +139,11 @@ const Header = ({ newLink, admin }) => {
               <li className={styles.menuItem}>
                 <ActiveLink
                   activeClassName={styles.active}
-                  href={{ pathname: '/prices', query: { isClient: false } }}
+                  href={{ pathname: "/prices", query: { isClient: false } }}
                 >
                   <a className={classNameForLinkPrices}>
                     <IconSetting className={styles.menuIcon} />
-                    Prices
+                    {t("prices")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -151,11 +151,11 @@ const Header = ({ newLink, admin }) => {
               <li className={styles.menuItem}>
                 <ActiveLink
                   activeClassName={styles.active}
-                  href={{ pathname: '/payments', query: { isClient: false } }}
+                  href={{ pathname: "/payments", query: { isClient: false } }}
                 >
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
-                    Payments
+                    {t("payments")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -167,7 +167,7 @@ const Header = ({ newLink, admin }) => {
                 >
                   <a className={styles.menuLink}>
                     <IconInvoices className={styles.menuIcon} />
-                    Invoices
+                    {t("invoces")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -196,8 +196,8 @@ const Header = ({ newLink, admin }) => {
                           dispatch(
                             getAutoByContainer({
                               tracking_id:
-                                document.querySelector('#tracking_id').value,
-                            }),
+                                document.querySelector("#tracking_id").value,
+                            })
                           )
                         }
                       />
@@ -227,10 +227,10 @@ const Header = ({ newLink, admin }) => {
                                 {},
                                 {
                                   auto_id: JSON.stringify(
-                                    autoBycontainer.data.auto_id,
+                                    autoBycontainer.data.auto_id
                                   ),
-                                },
-                              ),
+                                }
+                              )
                             );
                           }}
                           customBtn={styles.addContainer}
@@ -246,10 +246,10 @@ const Header = ({ newLink, admin }) => {
           ) : (
             <ul className={styles.menuItems}>
               <li className={styles.menuItem}>
-                <Link href={{ pathname: '/auto' }}>
+                <Link href={{ pathname: "/auto" }}>
                   <a className={classNameForLinkAuto}>
                     <IconAuto className={styles.menuIcon} />
-                    {t('auto')}
+                    {t("auto")}
                     <p className={styles.menuDot} />
                   </a>
                 </Link>
@@ -258,7 +258,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/dismanting">
                   <a className={styles.menuLink}>
                     <IconRepair className={styles.menuIcon} />
-                    {t('autoForDismantig')}
+                    {t("autoForDismantig")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -267,7 +267,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/parts">
                   <a className={styles.menuLink}>
                     <IconSetting className={styles.menuIcon} />
-                    {t('parts')}
+                    {t("parts")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -276,7 +276,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/shipping">
                   <a className={styles.menuLink}>
                     <IconShipping className={styles.menuIcon} />
-                    {t('shiping')}
+                    {t("shiping")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -285,7 +285,7 @@ const Header = ({ newLink, admin }) => {
                 <ActiveLink activeClassName={styles.active} href="/invoices">
                   <a className={styles.menuLink}>
                     <IconInvoices className={styles.menuIcon} />
-                    {t('invoces')}
+                    {t("invoces")}
                     <p className={styles.menuDot} />
                   </a>
                 </ActiveLink>
@@ -320,7 +320,7 @@ const Header = ({ newLink, admin }) => {
               </Link>
             )}
             {!admin && (
-              <Link href={admin ? '/' : '/profile-settings'}>
+              <Link href={admin ? "/" : "/profile-settings"}>
                 <a className={styles.bottomIconsLink}>
                   <IconUser />
                 </a>

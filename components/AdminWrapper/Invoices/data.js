@@ -2,32 +2,32 @@ import IconStar from '../../../assets/svg/viewStar.svg';
 import IconStarDisabled from '../../../assets/svg/viewStarDisabled.svg';
 import Button from '../../Button/Button';
 
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'ID',
+        Header: t('id'),
         accessor: 'id',
       },
       {
-        Header: 'Date',
+        Header: t('date'),
         accessor: 'date',
       },
       {
-        Header: 'Client ID',
+        Header:  t('clientId'),
         accessor: 'client_id',
       },
       {
-        Header: 'VIN',
+        Header: t('vin'),
         accessor: 'vin',
       },
       {
-        Header: 'Auto',
+        Header: t('auto'),
         accessor: 'name_car',
       },
       {
-        Header: 'Paiment for',
+        Header: t('paymentFor'),
         accessor: 'paiment_for',
         Cell: ({ cell: { value } }) => (
           <>
@@ -37,7 +37,7 @@ export const columns = [
         ),
       },
       {
-        Header: 'Total',
+        Header: t('total'),
         accessor: 'total',
         Cell: ({ cell: { value } }) => (
           <>
@@ -47,7 +47,7 @@ export const columns = [
         ),
       },
       {
-        Header: 'Paid',
+        Header:  t('paid'),
         accessor: 'paid',
         Cell: ({ cell: { value } }) => (
           <>
@@ -57,7 +57,7 @@ export const columns = [
         ),
       },
       {
-        Header: 'Outstanding',
+        Header: t('outstanding'),
         accessor: 'outstanding',
         Cell: ({ cell: { value } }) => (
           <>
@@ -67,7 +67,7 @@ export const columns = [
         ),
       },
       {
-        Header: 'Status',
+        Header:  t('status'),
         accessor: 'status',
         Cell: ({ cell: { value } }) => (
           <>
@@ -87,12 +87,12 @@ export const columns = [
               customBtn="Invoices-viewBtn"
             >
               <IconStar className="Invoices-star" />
-              View Invoice
+              {t('viewInvoice')}
             </Button>
             {value.length <= 1 ? (
               <Button disabled target="_blank" customBtn="Invoices-viewBtn">
                 <IconStarDisabled className="Invoices-star" />
-                View Invoice
+                {t('viewInvoice')}
               </Button>
             ) : (
               <Button
@@ -101,29 +101,29 @@ export const columns = [
                 customBtn="Invoices-viewBtn"
               >
                 <IconStar className="Invoices-star" />
-                View Invoice
+                {t('viewInvoice')}
               </Button>
             )}
           </>
         ),
       },
       {
-        Header: 'Days past due',
+        Header: t('daysPastDue'),
         accessor: 'due_day',
       },
     ],
   },
 ];
 
-export const print = [
-  { name: 'Date', id: 'invoices.created_at' },
-  { name: 'Id', id: 'invoices.id' },
-  { name: 'Client Id', id: 'invoices.client_id' },
-  { name: 'VIN', id: 'invoices.vin' },
-  { name: 'Auto', id: 'invoices.name_car' },
-  { name: 'Total', id: 'invoices.total_price' },
-  { name: 'Paid', id: 'invoices.paid_price' },
-  { name: 'Outstanding', id: 'invoices.outstanding_price' },
-  { name: 'Status', id: 'invoices.status_shipping' },
-  { name: 'Days past due', id: 'invoices.due_day' },
+export const print = (t) => [
+  { name: t('date'), id: 'invoices.created_at' },
+  { name: t('id'), id: 'invoices.id' },
+  { name: t('clientId'), id: 'invoices.client_id' },
+  { name: t('vin'), id: 'invoices.vin' },
+  { name: t('auto'), id: 'invoices.name_car' },
+  { name: t('total'), id: 'invoices.total_price' },
+  { name: t('paid'), id: 'invoices.paid_price' },
+  { name: t('outstanding'), id: 'invoices.outstanding_price' },
+  { name: t('status'), id: 'invoices.status_shipping' },
+  { name: t('daysPastDue'), id: 'invoices.due_day' },
 ];

@@ -310,9 +310,9 @@ const Client = () => {
               customBtn={styles.rightBtn}
               onClick={() => setPrintPopup(true)}
             >
-              Print
+              {t("print")}
             </Button>
-            <Button customBtn={styles.rightBtn}>Import</Button>
+            <Button customBtn={styles.rightBtn}> {t("import")}</Button>
           </div>
         </div>
         <Form
@@ -431,7 +431,7 @@ const Client = () => {
                     validate={required}
                     component={renderSelect({
                       placeholder: "",
-                      label: "Make",
+                      label: t("Make"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={popularCars}
@@ -441,7 +441,7 @@ const Client = () => {
                     validate={required}
                     component={renderSelect({
                       placeholder: "",
-                      label: "Auction",
+                      label: t("Auction"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={auctions}
@@ -451,14 +451,14 @@ const Client = () => {
                     validate={required}
                     component={renderSelect({
                       placeholder: "",
-                      label: "Year",
+                      label: t("Year"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={arrYear}
                   />
                   <Field name="model_name" validate={required} type="text">
                     {renderInput({
-                      label: "Model",
+                      label: t("Model"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -468,7 +468,7 @@ const Client = () => {
                     name="client_id"
                     component={renderSelect({
                       placeholder: "",
-                      label: "Client id",
+                      label: t("Client id"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={clientId.map((item) => ({
@@ -482,7 +482,7 @@ const Client = () => {
                     type="text"
                   >
                     {renderInput({
-                      label: "Vin code",
+                      label: t("Vin code"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -493,7 +493,7 @@ const Client = () => {
                     validate={required}
                     component={renderSelect({
                       placeholder: "",
-                      label: "Status",
+                      label: t("Status"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={status}
@@ -503,7 +503,7 @@ const Client = () => {
                     validate={required}
                     component={renderSelect({
                       placeholder: "",
-                      label: "Point of loading",
+                      label: t("Point of loading"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={city}
@@ -513,7 +513,7 @@ const Client = () => {
                     validate={required}
                     component={renderSelect({
                       placeholder: "",
-                      label: "Delivery City",
+                      label: t("Delivery City"),
                       classNameWrapper: styles.popupFieldRow,
                     })}
                     options={city}
@@ -529,7 +529,7 @@ const Client = () => {
                     parse={formatStringByPattern("9999-99-99")}
                   >
                     {renderInput({
-                      label: "Delivery date",
+                      label: t("Delivery date"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -541,7 +541,7 @@ const Client = () => {
                     type="text"
                   >
                     {renderInput({
-                      label: "Lot number",
+                      label: t("Lot number"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -549,7 +549,7 @@ const Client = () => {
                   </Field>
                   <Field name="odometer" validate={required} type="text">
                     {renderInput({
-                      label: "Odometer",
+                      label: t("Odometer"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -557,7 +557,7 @@ const Client = () => {
                   </Field>
                   <Field name="location" validate={required} type="text">
                     {renderInput({
-                      label: "Location",
+                      label: t("Location"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -574,7 +574,7 @@ const Client = () => {
                     parse={formatStringByPattern("9999-99-99")}
                   >
                     {renderInput({
-                      label: "Purchased date",
+                      label: t("Purchased date"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -582,7 +582,7 @@ const Client = () => {
                   </Field>
                   <Field name="color" validate={required} type="text">
                     {renderInput({
-                      label: "Color",
+                      label: t("Color"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -590,7 +590,7 @@ const Client = () => {
                   </Field>
                   <Field name="key" validate={required} type="text">
                     {renderInput({
-                      label: "Key",
+                      label: t("Key"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -598,7 +598,7 @@ const Client = () => {
                   </Field>
                   <Field name="note" type="text">
                     {renderInput({
-                      label: "Note",
+                      label: t("Note"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -610,7 +610,7 @@ const Client = () => {
                     type="text"
                   >
                     {renderInput({
-                      label: "Total Price",
+                      label: t("Total Price"),
                       classNameWrapper: styles.popupFieldRow,
                       widthInputBlock: styles.widthInputBlock,
                       classNameWrapperLabel: styles.label,
@@ -618,7 +618,7 @@ const Client = () => {
                   </Field>
                   <Field name="car_fax_report" type="file" validate={required}>
                     {renderInputFile({
-                      label: "CarFax report",
+                      label: t("CarFax report"),
                       classNameWrapper: styles.popupFieldRow,
                       customInput: styles.customInputFile,
                       widthInputBlock: styles.noFiles,
@@ -629,7 +629,7 @@ const Client = () => {
                   </Field>
                   <Field name="invoice" type="file" validate={required}>
                     {renderInputFile({
-                      label: "Invoice",
+                      label: t("Invoice"),
                       classNameWrapper: styles.popupFieldRow,
                       customInput: styles.customInputFile,
                       widthInputBlock: styles.noFiles,
@@ -639,7 +639,7 @@ const Client = () => {
                     })}
                   </Field>
                   <div className={styles.flexRadio}>
-                    <p>Offsite</p>
+                    <p>{t("Offsite")}</p>
                     {statusRadio.map((statusFilter) => {
                       const classNameForButton = cx(styles.btnStatus, {
                         [styles.activeStatus]: stepIndex === statusFilter.id,
@@ -679,7 +679,7 @@ const Client = () => {
                       type="submit"
                       disabled={submitting || invalid}
                     >
-                      ADD New offers
+                      {t("ADD NEW OFFERS")}
                     </Button>
                   </div>
                 </form>

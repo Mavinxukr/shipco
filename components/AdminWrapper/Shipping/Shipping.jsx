@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import formatStringByPattern from 'format-string-by-pattern';
-import { Field, Form } from 'react-final-form';
-import { getShipping, updateShipping } from '../../../redux/actions/shipping';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import formatStringByPattern from "format-string-by-pattern";
+import { Field, Form } from "react-final-form";
+import { getShipping, updateShipping } from "../../../redux/actions/shipping";
 import {
   shippingDataSelector,
   shippingDataReceivedSelector,
-} from '../../../utils/selectors';
-import MainLayout from '../../Layout/Global/Global';
-import SubHeader from '../../Layout/SubHeader/SubHeader';
-import CustomTable from '../../CustomTable/CustomTable';
-import Pagination from '../../Pagination/Pagination';
-import CarInformation from '../../CarInformation/CarInformation';
-import { stateStatus, status, print } from './data';
-import { printData, getIdsArr } from '../../../utils/helpers';
-import Button from '../../Button/Button';
-import styles from './Shipping.scss';
-import Loader from '../../Loader/Loader';
-import { renderSelect, renderInput } from '../../../utils/renderInputs';
-import Popup from '../../Popup/Popup';
-import MultiSelect from '../../Multi/Multi';
+} from "../../../utils/selectors";
+import MainLayout from "../../Layout/Global/Global";
+import SubHeader from "../../Layout/SubHeader/SubHeader";
+import CustomTable from "../../CustomTable/CustomTable";
+import Pagination from "../../Pagination/Pagination";
+import CarInformation from "../../CarInformation/CarInformation";
+import { stateStatus, status, print } from "./data";
+import { printData, getIdsArr } from "../../../utils/helpers";
+import Button from "../../Button/Button";
+import styles from "./Shipping.scss";
+import Loader from "../../Loader/Loader";
+import { renderSelect, renderInput } from "../../../utils/renderInputs";
+import Popup from "../../Popup/Popup";
+import MultiSelect from "../../Multi/Multi";
+import useTranslation from "next-translate/useTranslation";
 
 const Shipping = () => {
   const router = useRouter();
-
+  const { t } = useTranslation("shipping");
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
 
@@ -41,15 +42,15 @@ const Shipping = () => {
     dispatch(
       getShipping({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        port: router.query.port || '',
-        search: router.query.search || '',
-        shipping_status: router.query.shipping_status || '',
-        auto_name: router.query.auto_name || '',
-        auto_year: router.query.auto_year || '',
-        auto_make: router.query.auto_make || '',
-        date: router.query.date || '',
-      }),
+        countpage: router.query.countpage || "10",
+        port: router.query.port || "",
+        search: router.query.search || "",
+        shipping_status: router.query.shipping_status || "",
+        auto_name: router.query.auto_name || "",
+        auto_year: router.query.auto_year || "",
+        auto_make: router.query.auto_make || "",
+        date: router.query.date || "",
+      })
     );
   }, [router.query]);
 
@@ -59,7 +60,7 @@ const Shipping = () => {
 
   const onSubmit = async (values) => {
     router.push({
-      pathname: '/auto-admin/shipping',
+      pathname: "/auto-admin/shipping",
       query: {
         ...router.query,
         date: values.date,
@@ -72,27 +73,27 @@ const Shipping = () => {
     });
   };
 
-  const allModel = { id: 0, value: '', label: 'All Model' };
+  const allModel = { id: 0, value: "", label: "All Model" };
   const model = shipping.additional.models;
-  const modelArr = Object.keys(model).map((item, index = '1') => ({
+  const modelArr = Object.keys(model).map((item, index = "1") => ({
     id: index + 1,
     label: model[index].model_name,
     value: model[index].model_name,
   }));
   const newModel = [allModel, ...modelArr];
 
-  const allYear = { id: 0, value: '', label: 'All Years' };
+  const allYear = { id: 0, value: "", label: "All Years" };
   const years = shipping.additional.years;
-  const yearArr = Object.keys(years).map((item, index = '1') => ({
+  const yearArr = Object.keys(years).map((item, index = "1") => ({
     id: index + 1,
     label: years[index].year,
     value: years[index].year,
   }));
   const newYear = [allYear, ...yearArr];
 
-  const allMakes = { id: 0, value: '', label: 'All Makes' };
+  const allMakes = { id: 0, value: "", label: "All Makes" };
   const makes = shipping.additional.makes;
-  const makeArr = Object.keys(makes).map((item, index = '1') => ({
+  const makeArr = Object.keys(makes).map((item, index = "1") => ({
     id: index + 1,
     label: makes[index].make_name,
     value: makes[index].make_name,
@@ -105,7 +106,7 @@ const Shipping = () => {
       params: {
         fields: idsArr,
       },
-      table: 'shippings',
+      table: "shippings",
       selected: idsArr,
       setSelected,
       setPrintPopup,
@@ -117,28 +118,28 @@ const Shipping = () => {
       <SubHeader
         onClick={() => {
           router.push({
-            pathname: '/auto-admin/shipping',
+            pathname: "/auto-admin/shipping",
             query: {
               ...router.query,
               page: 1,
-              search: document.querySelector('#search').value,
+              search: document.querySelector("#search").value,
             },
           });
           dispatch(
             getShipping({
-              search: document.querySelector('#search').value,
-            }),
+              search: document.querySelector("#search").value,
+            })
           );
         }}
       />
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h4 className={styles.title}>Shipping</h4>
+          <h4 className={styles.title}> {t("shipping")}</h4>
           <Button
             customBtn={styles.rightBtn}
             onClick={() => setPrintPopup(true)}
           >
-            Print
+            {t("print")}
           </Button>
         </div>
         <div className={styles.flex}>
@@ -149,7 +150,7 @@ const Shipping = () => {
                 <Field
                   name="port"
                   component={renderSelect({
-                    placeholder: router.query.port || 'All Ports',
+                    placeholder: router.query.port || t("allPorts"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={stateStatus}
@@ -157,7 +158,7 @@ const Shipping = () => {
                 <Field
                   name="status"
                   component={renderSelect({
-                    placeholder: router.query.status || 'All Status',
+                    placeholder: router.query.status || t("allStatus"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={status}
@@ -165,18 +166,18 @@ const Shipping = () => {
                 <Field
                   name="date"
                   type="text"
-                  defaultValue={router.query.date || ''}
-                  parse={formatStringByPattern('99-99-9999')}
+                  defaultValue={router.query.date || ""}
+                  parse={formatStringByPattern("99-99-9999")}
                 >
                   {renderInput({
-                    placeholder: router.query.date || 'All Date',
+                    placeholder: router.query.date || t("allDate"),
                     classNameWrapper: styles.widthSelect,
                   })}
                 </Field>
                 <Field
                   name="years"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All Years',
+                    placeholder: router.query.year || t("allYears"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newYear}
@@ -184,7 +185,7 @@ const Shipping = () => {
                 <Field
                   name="makes"
                   component={renderSelect({
-                    placeholder: router.query.year || 'All Makes',
+                    placeholder: router.query.year || t("allMakes"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newMakes}
@@ -192,7 +193,7 @@ const Shipping = () => {
                 <Field
                   name="model"
                   component={renderSelect({
-                    placeholder: router.query.model || 'All Model',
+                    placeholder: router.query.model || t("allModel"),
                     classNameWrapper: styles.widthSelect,
                   })}
                   options={newModel}
@@ -202,7 +203,7 @@ const Shipping = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  Ok
+                  {t("ok")}
                 </Button>
               </form>
             )}
@@ -217,28 +218,29 @@ const Shipping = () => {
               pathname="/auto-admin/shipping"
               router={router}
             />
-            {shipping.data.map(item => (
+            {shipping.data.map((item) => (
               <CarInformation
                 key={item.id}
                 item={item}
                 status
                 admin
                 updateShipping={updateShipping}
-                updateStatus={el => dispatch(
-                  updateShipping(
-                    {},
-                    {
-                      status: el.target.id,
-                      port: router.query.port || '',
-                      search: router.query.search || '',
-                      shipping_status: router.query.shipping_status || '',
-                      auto_name: router.query.auto_name || '',
-                      auto_year: router.query.auto_year || '',
-                      auto_make: router.query.auto_make || '',
-                    },
-                    item.id,
-                  ),
-                )
+                updateStatus={(el) =>
+                  dispatch(
+                    updateShipping(
+                      {},
+                      {
+                        status: el.target.id,
+                        port: router.query.port || "",
+                        search: router.query.search || "",
+                        shipping_status: router.query.shipping_status || "",
+                        auto_name: router.query.auto_name || "",
+                        auto_year: router.query.auto_year || "",
+                        auto_make: router.query.auto_make || "",
+                      },
+                      item.id
+                    )
+                  )
                 }
               />
             ))}
@@ -254,7 +256,7 @@ const Shipping = () => {
         <Popup
           customPopup={styles.heightPopup}
           setIsPopupOpen={setPrintPopup}
-          title="Print"
+          title={t("print")}
         >
           <Form
             onSubmit={onSubmitPrint}
@@ -265,14 +267,14 @@ const Shipping = () => {
                     options={print}
                     setSelected={setSelected}
                     value={selected}
-                    label="Select the fields Print"
+                    label={t("SelectPrint")}
                   />
                   <Button
                     customBtn={styles.btnSubmit}
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    Submit
+                    {t("submit")}
                   </Button>
                 </div>
               </form>

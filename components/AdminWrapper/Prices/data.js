@@ -1,46 +1,46 @@
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'ID',
+        Header: t('id'),
         accessor: 'id',
       },
       {
-        Header: 'Name',
+        Header: t('name'),
         accessor: 'name',
       },
       {
-        Header: 'Applicable type',
+        Header: t('applicableType'),
         accessor: 'priceable_type',
       },
       {
-        Header: 'Actions',
+        Header:  t('actions'),
         accessor: 'actions',
       },
     ],
   },
 ];
 
-export const type = [
+export const type = (t) => [
   { value: 'group', label: 'groups' },
   { value: 'client', label: 'clients' },
 ];
 
-export const columnsPrice = [
+export const columnsPrice = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'Cities',
+        Header: t('cities'),
         accessor: 'name',
       },
       {
-        Header: 'State',
+        Header: t('state'),
         accessor: 'state',
       },
       {
-        Header: 'Price',
+        Header: t('price'),
         accessor: 'price',
       },
     ],

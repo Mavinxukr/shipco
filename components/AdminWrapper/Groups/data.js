@@ -1,17 +1,17 @@
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'ID',
+        Header: t('ID'),
         accessor: 'id',
       },
       {
-        Header: 'Name',
+        Header: t('Name'),
         accessor: 'name',
       },
       {
-        Header: 'Clients in the group',
+        Header: t('Clientsingroup'),
         accessor: 'clients',
         Cell: ({ cell: { value } }) => (
           <>
@@ -20,19 +20,19 @@ export const columns = [
         ),
       },
       {
-        Header: 'Days to pay',
+        Header:  t('Daystopay'),
         accessor: 'due_day',
       },
       {
-        Header: 'Actions',
+        Header: t('Actions'),
         accessor: 'actions',
       },
     ],
   },
 ];
 
-export const print = [
-  { name: 'Id', id: 'id' },
-  { name: 'Name', id: 'name' },
-  { name: 'Price', id: 'price' },
+export const print = (t) => [
+  { name: t('ID'), id: 'id' },
+  { name: t('Name'), id: 'name' },
+  { name: t('price'), id: 'price' },
 ];

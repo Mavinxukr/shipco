@@ -1,5 +1,7 @@
 {
   "Auto": "Auto",
+  "print": "print",
+  "import": "import",
   "Add New offers": "Add New offers",
   "Make": "Make",
   "Auction": "Auction",

@@ -267,7 +267,7 @@ const Dismasting = () => {
               <form onSubmit={handleSubmit}>
                 <div className={styles.columnSelect}>
                   <MultiSelect
-                    options={print}
+                    options={print(t)}
                     setSelected={setSelected}
                     value={selected}
                     label={t("Select the fields Print")}

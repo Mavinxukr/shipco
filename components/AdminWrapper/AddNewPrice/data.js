@@ -3,20 +3,20 @@ export const type = [
   { value: 'client', label: 'clients' },
 ];
 
-export const columnsPrice = [
+export const columnsPrice = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'Cities',
+        Header: t('cities'),
         accessor: 'name',
       },
       {
-        Header: 'State',
+        Header: t('state'),
         accessor: 'state',
       },
       {
-        Header: 'Price',
+        Header: t('price'),
         accessor: 'price',
       },
     ],

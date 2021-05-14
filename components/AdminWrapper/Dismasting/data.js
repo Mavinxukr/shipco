@@ -30,7 +30,7 @@ export const status = [
   },
 ];
 
-export const print = [
+export const print = (t) => [
   { name: 'Date', id: 'autos.created_at' },
   { name: 'Id', id: 'autos.id' },
   { name: 'Model', id: 'autos.model_name' },

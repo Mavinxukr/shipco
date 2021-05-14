@@ -1,17 +1,17 @@
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'ID',
+        Header: t('ID'),
         accessor: 'id',
       },
       {
-        Header: 'Name',
+        Header:  t('name'),
         accessor: 'name',
       },
       {
-        Header: 'Applicable type',
+        Header: t('applicableType'),
         accessor: 'applicable_type',
       },
       {
@@ -19,11 +19,11 @@ export const columns = [
         accessor: 'applicable.name',
       },
       {
-        Header: 'Days to pay',
+        Header: t('daysToPay'),
         accessor: 'due_day',
       },
       {
-        Header: 'Actions',
+        Header: t('Actions'),
         accessor: 'actions',
       },
     ],

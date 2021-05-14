@@ -1,38 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'classnames';
-import { useRouter } from 'next/router';
-import { Field, Form } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTable } from 'react-table';
-import formatStringByPattern from 'format-string-by-pattern';
+import React, { useEffect, useState } from "react";
+import cx from "classnames";
+import { useRouter } from "next/router";
+import { Field, Form } from "react-final-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useTable } from "react-table";
+import formatStringByPattern from "format-string-by-pattern";
 import {
   getPayments,
   addNewPayments,
   deletePayments,
   updatePayments,
-} from '../../../redux/actions/payments';
+} from "../../../redux/actions/payments";
 import {
   paymentsDataSelector,
   paymentsDataReceivedSelector,
-} from '../../../utils/selectors';
-import { renderInput, renderSelect } from '../../../utils/renderInputs';
-import Button from '../../Button/Button';
-import Popup from '../../Popup/Popup';
-import MainLayout from '../../Layout/Global/Global';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import CustomTable from '../../CustomTable/CustomTable';
+} from "../../../utils/selectors";
+import { renderInput, renderSelect } from "../../../utils/renderInputs";
+import Button from "../../Button/Button";
+import Popup from "../../Popup/Popup";
+import MainLayout from "../../Layout/Global/Global";
+import IconPlus from "../../../assets/svg/Plus.svg";
+import CustomTable from "../../CustomTable/CustomTable";
 import {
   composeValidators,
   required,
   mustBeNumber,
   lengthDueDay,
-} from '../../../utils/validation';
-import Pagination from '../../Pagination/Pagination';
-import Loader from '../../Loader/Loader';
-import styles from './Payments.scss';
-import IconP from '../../../assets/svg/p.svg';
-import IconTrash from '../../../assets/svg/Trash.svg';
-import { columns, city, type } from './data';
+} from "../../../utils/validation";
+import Pagination from "../../Pagination/Pagination";
+import Loader from "../../Loader/Loader";
+import styles from "./Payments.scss";
+import IconP from "../../../assets/svg/p.svg";
+import IconTrash from "../../../assets/svg/Trash.svg";
+import { columns, city, type } from "./data";
+import useTranslation from "next-translate/useTranslation";
 
 const Table = ({
   columns,
@@ -44,19 +45,15 @@ const Table = ({
 }) => {
   const [isPopupUpdate, setIsPopupUpdate] = useState(false);
   const [itemGroup, setItemGroup] = useState(null);
-  const [priceable, setPriceable] = useState('');
+  const [priceable, setPriceable] = useState("");
+  const { t } = useTranslation("admin-payments");
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows,
-  } = useTable({
-    columns,
-    data,
-    initialState: { pageIndex: 0 },
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
+    useTable({
+      columns,
+      data,
+      initialState: { pageIndex: 0 },
+    });
 
   const onSubmit = (values) => {
     dispatch(
@@ -64,33 +61,34 @@ const Table = ({
         {},
         {
           ...values,
-          applicable_type: values.applicable_type && values.applicable_type.value,
+          applicable_type:
+            values.applicable_type && values.applicable_type.value,
           applicable_id: values.applicable_id && values.applicable_id.value,
         },
-        itemGroup.id,
-      ),
+        itemGroup.id
+      )
     );
     setIsPopupUpdate(false);
   };
 
   if (isPopupUpdate === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   return (
     <>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
                   className={`Groups-${column.id}Header`}
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -101,12 +99,12 @@ const Table = ({
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
+                {row.cells.map((cell) => (
                   <td
                     className={`Groups-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.column.id === 'actions' ? (
+                    {cell.column.id === "actions" ? (
                       <>
                         <Button
                           type="button"
@@ -132,7 +130,7 @@ const Table = ({
                       </>
                     ) : (
                       <>
-                        <>{cell.render('Cell')}</>
+                        <>{cell.render("Cell")}</>
                       </>
                     )}
                   </td>
@@ -152,10 +150,10 @@ const Table = ({
                   name="name"
                   validate={required}
                   type="text"
-                  defaultValue={itemGroup.name || ''}
+                  defaultValue={itemGroup.name || ""}
                 >
                   {renderInput({
-                    label: 'Name',
+                    label: t("name"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -164,13 +162,13 @@ const Table = ({
                 <Field
                   name="applicable_type"
                   component={renderSelect({
-                    placeholder: itemGroup.applicable_type || '',
-                    label: 'Priceable type',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    placeholder: itemGroup.applicable_type || "",
+                    label: t("applicableType"),
+                    classNameWrapper: "SelectCustom-popupFieldRow",
                     custonOnChange: (value) => {
-                      setPriceable('');
+                      setPriceable("");
                       const key =
-                        value.label === 'clients' ? 'clients' : 'groups';
+                        value.label === "clients" ? "clients" : "groups";
                       setPaymentsData(payments.additional[key]);
                     },
                   })}
@@ -180,30 +178,27 @@ const Table = ({
                   name="applicable_id"
                   component={renderSelect({
                     placeholder: priceable,
-                    label: 'Priceable id',
-                    id: 'priceable_id',
-                    classNameWrapper: 'SelectCustom-popupFieldRow',
+                    label: t("applicableId"),
+                    id: "priceable_id",
+                    classNameWrapper: "SelectCustom-popupFieldRow",
                   })}
                   options={
-                    (paymentsData
-                      && paymentsData.map(item => ({
+                    (paymentsData &&
+                      paymentsData.map((item) => ({
                         value: item.id,
                         label: item.name,
-                      })))
-                    || []
+                      }))) ||
+                    []
                   }
                 />
                 <Field
                   name="due_day"
-                  validate={composeValidators(
-                    required,
-                    mustBeNumber,
-                  )}
+                  validate={composeValidators(required, mustBeNumber)}
                   type="text"
-                  defaultValue={itemGroup.due_day || ''}
+                  defaultValue={itemGroup.due_day || ""}
                 >
                   {renderInput({
-                    label: 'Days to pay',
+                    label: t("daysToPay"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -215,7 +210,7 @@ const Table = ({
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    Update Price
+                    {t("UPDATE PRICE")}
                   </Button>
                 </div>
               </form>
@@ -230,7 +225,7 @@ const Table = ({
 const Payments = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [paymentsData, setPaymentsData] = useState(null);
-
+  const { t } = useTranslation("admin-payments");
   const payments = useSelector(paymentsDataSelector);
   const isDataReceived = useSelector(paymentsDataReceivedSelector);
 
@@ -241,9 +236,9 @@ const Payments = () => {
     dispatch(
       getPayments({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        client: +router.query.idClient || '',
-      }),
+        countpage: router.query.countpage || "10",
+        client: +router.query.idClient || "",
+      })
     );
   }, [router.query]);
 
@@ -269,25 +264,26 @@ const Payments = () => {
         {
           ...values,
           cities: values.cities && values.cities.value,
-          applicable_type: values.applicable_type && values.applicable_type.value,
+          applicable_type:
+            values.applicable_type && values.applicable_type.value,
           applicable_id: values.applicable_id && values.applicable_id.value,
-        },
-      ),
+        }
+      )
     );
     setIsPopupOpen(!isPopupOpen);
   };
 
   if (isPopupOpen === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   return (
     <MainLayout admin>
       <div className={styles.container}>
         <div className={styles.flex}>
-          <h4 className={styles.title}>Payments</h4>
+          <h4 className={styles.title}>{t("payments")}</h4>
         </div>
         <div className={styles.flex}>
           <div className={styles.groupBtn}>
@@ -297,13 +293,13 @@ const Payments = () => {
               onClick={() => setIsPopupOpen(true)}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
-              Add New Payments
+              {t("addNewPayments")}
             </Button>
           </div>
         </div>
         {payments && payments.data.length !== 0 ? (
           <CustomTable>
-            {typeof payments.data === 'object' && payments.links && (
+            {typeof payments.data === "object" && payments.links && (
               <Pagination
                 params={payments.links}
                 pathname="/payments"
@@ -312,9 +308,11 @@ const Payments = () => {
             )}
             <div className={styles.scrollTable}>
               <Table
-                columns={columns}
+                columns={columns(t)}
                 data={
-                  (Array.isArray(payments.data) && payments.data) || [payments.data]
+                  (Array.isArray(payments.data) && payments.data) || [
+                    payments.data,
+                  ]
                 }
                 dispatch={dispatch}
                 groupsArr={payments.additional.clients}
@@ -323,7 +321,7 @@ const Payments = () => {
                 payments={payments}
               />
             </div>
-            {typeof payments.data === 'object' && payments.links && (
+            {typeof payments.data === "object" && payments.links && (
               <Pagination
                 params={payments.links}
                 pathname="/payments"
@@ -336,14 +334,14 @@ const Payments = () => {
         )}
       </div>
       {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title="Add New Payments ">
+        <Popup setIsPopupOpen={setIsPopupOpen} title={t("addNewPayments")}>
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
               <form onSubmit={handleSubmit}>
                 <Field name="name" validate={required} type="text">
                   {renderInput({
-                    label: 'Name',
+                    label: t("name"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -352,12 +350,12 @@ const Payments = () => {
                 <Field
                   name="applicable_type"
                   component={renderSelect({
-                    placeholder: '',
-                    label: 'Applicable type',
+                    placeholder: "",
+                    label: t("applicableType"),
                     classNameWrapper: styles.popupFieldRow,
                     custonOnChange: (value) => {
                       const key =
-                        value.label === 'clients' ? 'clients' : 'groups';
+                        value.label === "clients" ? "clients" : "groups";
                       setPaymentsData(payments.additional[key]);
                     },
                   })}
@@ -366,29 +364,26 @@ const Payments = () => {
                 <Field
                   name="applicable_id"
                   component={renderSelect({
-                    placeholder: '',
-                    label: 'Applicable id',
+                    placeholder: "",
+                    label: t("applicableId"),
                     classNameWrapper: styles.popupFieldRow,
                   })}
                   options={
-                    (paymentsData
-                      && paymentsData.map(item => ({
+                    (paymentsData &&
+                      paymentsData.map((item) => ({
                         value: item.id,
                         label: item.name,
-                      })))
-                    || []
+                      }))) ||
+                    []
                   }
                 />
                 <Field
                   name="due_day"
-                  validate={composeValidators(
-                    required,
-                    mustBeNumber,
-                  )}
+                  validate={composeValidators(required, mustBeNumber)}
                   type="text"
                 >
                   {renderInput({
-                    label: 'Days to pay',
+                    label: t("daysToPay"),
                     classNameWrapper: styles.popupFieldRow,
                     widthInputBlock: styles.widthInputBlock,
                     classNameWrapperLabel: styles.label,
@@ -400,7 +395,7 @@ const Payments = () => {
                     type="submit"
                     disabled={submitting || invalid}
                   >
-                    ADD New Payments
+                    {t("addNewPayments")}
                   </Button>
                 </div>
               </form>

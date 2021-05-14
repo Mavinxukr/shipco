@@ -1,38 +1,38 @@
-export const columns = [
+export const columns = (t) => [
   {
     Header: 'Table',
     columns: [
       {
-        Header: 'ID',
+        Header: t('ID'),
         accessor: 'id',
       },
       {
-        Header: 'Client ID',
+        Header: t('ClientID'),
         accessor: 'client_id',
       },
       {
-        Header: 'Catalog number',
+        Header: t("Catalog number"),
         accessor: 'catalog_number',
       },
       {
-        Header: 'VIN number',
+        Header: t('VINnumber'),
         accessor: 'vin',
         Cell: ({ cell: { value } }) => <>{value}</>,
       },
       {
-        Header: 'Container',
+        Header: t('Container'),
         accessor: 'container',
       },
       {
-        Header: 'Delivery date',
+        Header: t('Deliverydate'),
         accessor: 'delivery_date',
       },
       {
-        Header: 'Name',
+        Header: t('Name'),
         accessor: 'name',
       },
       {
-        Header: 'Auto',
+        Header: t('Auto'),
         accessor: 'auto',
       },
       // {
@@ -40,23 +40,23 @@ export const columns = [
       //   accessor: 'comment',
       // },
       {
-        Header: 'Quality',
+        Header: t('Quality'),
         accessor: 'quality',
       },
       {
-        Header: 'Status',
+        Header: t('Status'),
         accessor: 'status',
         Cell: ({ cell: { value } }) => <>{value.split('_').join(' ')|| 'New' }</>,
       },
       {
-        Header: 'Actions',
+        Header: t('Actions'),
         accessor: 'actions',
       },
     ],
   },
 ];
 
-export const status = [
+export const status = (t) => [
   {
     id: 1,
     value: '',
@@ -65,53 +65,53 @@ export const status = [
   {
     id: 2,
     value: 'in_warehouse',
-    label: 'in warehouse',
+    label: t('inWarehouse')
   },
   {
     id: 3,
     value: 'in_the_sea',
-    label: 'in the sea',
+    label: t('inTheSea')
   },
   {
     id: 4,
     value: 'at_the_port',
-    label: 'at the port',
+    label: t('atThePort')
   },
   {
     id: 5,
     value: 'delivered',
-    label: 'delivered',
+    label: t('delivered')
   },
 ];
 
-export const statusSelect = [
+export const statusSelect = (t) => [
   {
     id: 1,
     value: 'in_warehouse',
-    label: 'in warehouse',
+    label: t('inWarehouse')
   },
   {
     id: 2,
     value: 'in_the_sea',
-    label: 'in the sea',
+    label: t('inTheSea')
   },
   {
     id: 3,
     value: 'at_the_port',
-    label: 'at the port',
+    label: t('atThePort')
   },
   {
     id: 4,
     value: 'delivered',
-    label: 'delivered',
+    label: t('delivered')
   },
 ];
 
-export const print = [
-  { name: 'Catalog number', id: 'parts.catalog_number' },
-  { name: 'Name', id: 'parts.name' },
-  { name: 'Auto', id: 'parts.auto' },
+export const print = (t) => [
+  { name: t('Catalog number'), id: 'parts.catalog_number' },
+  { name: t('Name'), id: 'parts.name' },
+  { name: t('Auto'), id: 'parts.auto' },
   { name: 'Comment', id: 'parts.comment' },
-  { name: 'Quality', id: 'parts.quality' },
-  { name: 'Status', id: 'parts.status' },
+  { name: t('Quality'), id: 'parts.quality' },
+  { name: t('Status'), id: 'parts.status' },
 ];

@@ -3,5 +3,9 @@
   "autoForDismantig": "سيارة للتقطيع",
   "parts": "القطع",
   "shiping": "الشحن",
-  "invoces": "الفواتير"
+  "invoces": "الفواتير",
+  "groups": "مجموعات",
+  "clients": "عملاء",
+  "prices": "الأسعار",
+  "payments": "الدفعات"
 }
