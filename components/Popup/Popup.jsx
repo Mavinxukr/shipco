@@ -1,12 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
-import styles from './Popup.scss';
-import IconClose from '../../assets/svg/close.svg';
+import React, { useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
+import styles from "./Popup.scss";
+import IconClose from "../../assets/svg/close.svg";
 
-const Popup = ({
-  title, children, subTitle, setIsPopupOpen, customPopup,
-}) => {
+const Popup = ({ title, children, subTitle, setIsPopupOpen, customPopup }) => {
   const escFunction = useCallback((event) => {
     if (event.keyCode === 27) {
       setIsPopupOpen(false);
@@ -14,20 +12,23 @@ const Popup = ({
   }, []);
 
   useEffect(() => {
-    document.addEventListener('keydown', escFunction, false);
+    document.addEventListener("keydown", escFunction, false);
 
     return () => {
-      document.removeEventListener('keydown', escFunction, false);
+      document.removeEventListener("keydown", escFunction, false);
     };
   }, []);
 
   return (
     <>
-      <div className={styles.popupBackground} />
+      <div
+        className={styles.popupBackground}
+        onClick={() => setIsPopupOpen(false)}
+      />
       <div className={cx(styles.popup, customPopup)}>
         <div className={styles.popupHeader}>
           <h4 className={styles.popupTitle}>
-            {title}{' '}
+            {title}{" "}
             {subTitle && (
               <span className={styles.popupSubTitle}>{subTitle}</span>
             )}
