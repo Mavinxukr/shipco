@@ -1,29 +1,29 @@
-import React, { useEffect } from 'react';
-import cx from 'classnames';
-import Link from 'next/link';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTable, useSortBy } from 'react-table';
-import CustomSlider from '../../CustomSlider/CustomSlider';
-import CustomStepper from '../../CustomStepper/CustomStepper';
-import MainLayout from '../../Layout/Global/Global';
-import CustomTable from '../../CustomTable/CustomTable';
-import Image from '../../Image/Image';
-import IconShipping from '../../../assets/svg/icon.svg';
-import { columns } from './data';
-import IconSortTable from '../../../assets/svg/SortTable.svg';
-import { getOverview } from '../../../redux/actions/overview';
-import Loader from '../../Loader/Loader';
+import React, { useEffect } from "react";
+import cx from "classnames";
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { useTable, useSortBy } from "react-table";
+import CustomSlider from "../../CustomSlider/CustomSlider";
+import CustomStepper from "../../CustomStepper/CustomStepper";
+import MainLayout from "../../Layout/Global/Global";
+import CustomTable from "../../CustomTable/CustomTable";
+import Image from "../../Image/Image";
+import IconShipping from "../../../assets/svg/icon.svg";
+import { columns } from "./data";
+import IconSortTable from "../../../assets/svg/SortTable.svg";
+import { getOverview } from "../../../redux/actions/overview";
+import Loader from "../../Loader/Loader";
 import {
   overviewDataSelector,
   overviewDataReceivedSelector,
-} from '../../../utils/selectors';
-import styles from './Overview.scss';
-import useTranslation from 'next-translate/useTranslation';
+} from "../../../utils/selectors";
+import styles from "./Overview.scss";
+import useTranslation from "next-translate/useTranslation";
 
 const Overview = () => {
   const overviews = useSelector(overviewDataSelector);
   const isDataReceived = useSelector(overviewDataReceivedSelector);
-  const { t } = useTranslation('overview');
+  const { t, lang } = useTranslation("overview");
 
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const Overview = () => {
           {overviews.vehicles && (
             <CustomSlider
               className={styles.containerSlider}
-              titleSlider={t('popularVehiclesRightNow')}
+              titleSlider={t("popularVehiclesRightNow")}
               count={4}
               countXl={2}
               countMd={1}
@@ -66,25 +66,25 @@ const Overview = () => {
                   <h6 className={styles.titleSlider}>{item.model_name}</h6>
                   <div className={styles.flex}>
                     <span>
-                      {t('lot#')} {item.lot_info.lot_number}
+                      {t("lot#")} {item.lot_info.lot_number}
                     </span>
                   </div>
                   <div className={styles.flex}>
                     <span>
-                      {t('location')} {item.sale_info.location}
+                      {t("location")} {item.sale_info.location}
                     </span>
                     <span className={styles.circle}>e</span>
                   </div>
                   <div className={styles.bg}>
                     <Link
                       href={{
-                        pathname: '/auto/auto-new',
+                        pathname: "/auto/auto-new",
                         query: {
                           idAuto: item.id,
                         },
                       }}
                     >
-                      <a>{t('view')}</a>
+                      <a>{t("view")}</a>
                     </Link>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ const Overview = () => {
           {overviews.latest_shippings && (
             <CustomSlider
               className={styles.containerSlider}
-              titleSlider={t('shipping')}
+              titleSlider={t("shipping")}
               count={3}
               countXl={2}
               countMd={1}
@@ -106,7 +106,11 @@ const Overview = () => {
                 <div className={styles.slider} key={item.id}>
                   <div className={cx(styles.flex, styles.firstBlock)}>
                     <span className={styles.title}>
-                      <IconShipping className={styles.sliderIcon} />
+                      <Link href={"/shipping"} locale={lang} key={lang}>
+                        <a>
+                          <IconShipping className={styles.sliderIcon} />
+                        </a>
+                      </Link>
                       {item.id}
                     </span>
                     <span className={styles.title}>{item.model_name}</span>
@@ -119,7 +123,7 @@ const Overview = () => {
         </>
         <>
           {overviews.latest_invoices && (
-            <CustomTable title={t('invoices')}>
+            <CustomTable title={t("invoices")}>
               <div className={styles.scrollTable}>
                 <Table columns={columns(t)} data={overviews.latest_invoices} />
               </div>
@@ -140,7 +144,7 @@ const Table = ({ columns, data }) => {
         columns,
         data,
       },
-      useSortBy,
+      useSortBy
     );
 
   return (
@@ -152,7 +156,7 @@ const Table = ({ columns, data }) => {
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   <IconSortTable className={styles.sort} />
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -168,7 +172,7 @@ const Table = ({ columns, data }) => {
                     className={`Overview-${cell.column.id}`}
                     {...cell.getCellProps()}
                   >
-                    {cell.render('Cell')}
+                    {cell.render("Cell")}
                   </td>
                 ))}
               </tr>
