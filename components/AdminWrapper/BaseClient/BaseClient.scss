@@ -47,8 +47,8 @@
 }
 
 .btnIcon {
-  background: $white!important;
-  color: $colorBackground!important;
+  background: $white !important;
+  color: $colorBackground !important;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -59,7 +59,7 @@
   font-weight: 500;
   font-size: 18px;
   color: $white;
-  background: $colorBorder!important;
+  background: $colorBorder !important;
   padding: 10px;
   min-width: 131px;
   margin-left: 20px;
@@ -101,7 +101,7 @@
   margin-right: 10px;
 }
 
-.sortHeader:first-child svg{
+.sortHeader:first-child svg {
   display: none;
 }
 
@@ -115,11 +115,11 @@ form .flex {
 }
 
 .submitPopup {
-  padding-left: 167px!important;
-  width: 100%!important;
+  padding-left: 167px !important;
+  width: 100% !important;
 
   @media screen and (max-width: 768px) {
-    padding-left: 0!important;
+    padding-left: 0 !important;
   }
 }
 
@@ -134,25 +134,25 @@ form .flex {
   font-size: 18px;
   text-transform: uppercase;
   padding: 10px;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     background: $colorBackgroundHover;
   }
 }
 
-.id span{
+.id span {
   color: $colorBackground;
 }
 
 .popupFieldRow {
-  flex-direction: row!important;
+  flex-direction: row !important;
   align-items: center;
   padding: 10px 0;
-  width: 100%!important;
+  width: 100% !important;
 
   label {
-    margin: 0 31px 0 0!important;
+    margin: 0 31px 0 0 !important;
     min-width: 136px;
   }
 
@@ -168,7 +168,7 @@ form .flex {
 }
 
 .widthInputBlock {
-  width: 360px!important;
+  width: 360px !important;
 
   @media screen and (max-width: 768px) {
     width: 100% !important;
@@ -181,13 +181,12 @@ form .flex {
 }
 
 .columnSelect {
-
   & > div {
     flex-direction: column;
 
     label {
       width: 100%;
-      margin: 10px;
+      margin: 10px 0;
     }
 
     div + div {
@@ -200,7 +199,7 @@ form .flex {
 }
 
 .heightPopup {
-  padding-top: 50px!important;
-  padding-bottom: 50px!important;
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
   overflow: hidden;
 }

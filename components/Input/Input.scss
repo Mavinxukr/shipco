@@ -5,6 +5,7 @@
   background: $colorInput;
   border: 1px solid $colorBorder;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   border-radius: 2px;
   padding: 15px 20px;
@@ -36,7 +37,7 @@
 }
 
 .chosenFile,
-.chosenFileValue{
+.chosenFileValue {
   padding: 10px 0 10px 150px;
   white-space: nowrap;
   overflow: hidden;

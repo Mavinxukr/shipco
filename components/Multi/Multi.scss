@@ -3,8 +3,6 @@
 
 .label {
   color: $colorBackground;
-  min-width: 136px;
-  margin: 0 31px 0 0;
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -24,7 +22,7 @@
 }
 
 .select {
-  width: 360px;
+  width: 100%;
   display: flex;
   white-space: nowrap;
   overflow: hidden;
@@ -65,14 +63,14 @@
 .activeOption {
   display: block;
   position: absolute;
-  top: 100%!important;
+  top: 100% !important;
   left: 167px;
   z-index: 99999999;
   background: $colorInput;
   border: 1px solid $colorBorder;
   border-radius: 2px;
   border-top: 0;
-  width: 360px;
+  width: 100%;
 
   @media screen and (max-width: 768px) {
     width: 100%;

@@ -100,7 +100,28 @@ const Dismasting = () => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h3 className={styles.title}>{t("Autofordismanting")}</h3>
+        <div className={styles.container_header}>
+          <h3 className={styles.container_title}>{t("Autofordismanting")}</h3>
+          <div className={styles.container_search}>
+            <Search
+              onClick={() => {
+                router.push({
+                  pathname: "/dismanting",
+                  query: {
+                    ...router.query,
+                    page: 1,
+                    search: document.querySelector("#search").value,
+                  },
+                });
+                dispatch(
+                  getClientDismanting({
+                    search: document.querySelector("#search").value,
+                  })
+                );
+              }}
+            />
+          </div>
+        </div>
         <div className={styles.flex}>
           <Form
             onSubmit={onSubmit}
@@ -167,25 +188,6 @@ const Dismasting = () => {
               </form>
             )}
           />
-          <div className={styles.rightBlock}>
-            <Search
-              onClick={() => {
-                router.push({
-                  pathname: "/dismanting",
-                  query: {
-                    ...router.query,
-                    page: 1,
-                    search: document.querySelector("#search").value,
-                  },
-                });
-                dispatch(
-                  getClientDismanting({
-                    search: document.querySelector("#search").value,
-                  })
-                );
-              }}
-            />
-          </div>
         </div>
         {clientDismanting.data.length === 0 ? (
           <h1 className={styles.notFound}>nothing found</h1>

@@ -68,6 +68,9 @@
   display: flex;
   align-items: center;
   margin-right: 33px;
+  svg {
+    border-radius: 50%;
+  }
 }
 
 .plus {
@@ -140,13 +143,13 @@ th:first-child {
 }
 
 .popupFieldRow {
-  flex-direction: row!important;
+  flex-direction: row !important;
   align-items: center;
   padding: 10px 0;
-  width: 100%!important;
+  width: 100% !important;
 
   label {
-    margin: 0 31px 0 0!important;
+    margin: 0 31px 0 0 !important;
     min-width: 136px;
   }
 
@@ -162,7 +165,7 @@ th:first-child {
 }
 
 .widthInputBlock {
-  width: 360px!important;
+  width: 360px !important;
 
   @media screen and (max-width: 768px) {
     width: 100% !important;
@@ -175,7 +178,7 @@ th:first-child {
   margin-top: 10px;
   height: 40px;
   text-transform: uppercase;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     background: $colorBackgroundHover;
@@ -236,21 +239,20 @@ th:first-child {
 }
 
 .status {
-  text-transform:capitalize;
+  text-transform: capitalize;
 }
 
 .rightBtn {
   font-weight: 500;
   font-size: 18px;
   color: $white;
-  background: $colorBorder!important;
+  background: $colorBorder !important;
   padding: 10px;
   min-width: 131px;
   margin-left: 20px;
 }
 
 .columnSelect {
-
   & > div {
     flex-direction: column;
 
@@ -270,13 +272,13 @@ th:first-child {
   .btnSubmit {
     margin-left: 0;
     margin-top: 40px;
-    width: 100%!important;
+    width: 100% !important;
   }
 }
 
 .heightPopup {
-  padding-top: 50px!important;
-  padding-bottom: 50px!important;
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
   overflow: hidden;
 }
 

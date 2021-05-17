@@ -1,53 +1,35 @@
-@import "scss/core/vars";
-
-.customBtnSearch {
-  border-radius: 2px;
-  padding: 9px 37px;
-  font-weight: 500;
-  font-size: 18px;
-  transition: all .3s;
-
-  &:hover {
-    background: $colorBackgroundHover;
-  }
-
-  @media screen and (max-width: 1470px){
-    padding: 9px 9px;
-  }
-}
+@import "../../scss/core/vars";
+@import "../../scss/core/mixins";
 
 .search {
   display: flex;
+  height: 40px;
+
+  &_block {
+    width: 360px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  &_input {
+    padding-left: 40px;
+  }
+  &_button {
+    width: 130px;
+    height: 100%;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+    @include styleForText(18px, $fontMain, #fff);
+    font-weight: 500;
+
+    &:hover {
+      background-color: $colorBackgroundHover;
+    }
+  }
 }
 
 .searchIcon {
   position: absolute;
   left: 17px;
   top: 9px;
-
-  @media screen and (max-width:768px) {
-    display: none;
-  }
-}
-
-.inputHeight {
-  padding: 11px 0 11px 40px!important;
-  width: 360px;
-
-  @media screen and (max-width: 1544px){
-    max-width: 300px;
-  }
-
-  @media screen and (max-width: 1470px){
-    max-width: 240px;
-  }
-
-  @media screen and (max-width: 1280px){
-    max-width: 170px;
-  }
-
-  @media screen and (max-width: 768px){
-    max-width: 215px;
-    padding: 11px 0 11px 15px!important;
-  }
 }
