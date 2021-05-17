@@ -135,6 +135,7 @@ const CustomStepper = ({
           ))}
         </Stepper>
       </div>
+      {console.log(status)}
       {status ? (
         <div className={classNameForOpenStatus}>
           <Button
@@ -150,7 +151,7 @@ const CustomStepper = ({
                   <p className={cx(styles.center, customBlock)}>Disassembled</p>
                 ) : (
                   <p className={cx(styles.center, customBlock)}>
-                    Car on the way to port
+                    {item.shipping.status.split("_").join(" ")}
                   </p>
                 )}
               </>
@@ -188,7 +189,7 @@ const CustomStepper = ({
                 <p className={cx(styles.center, customBlock)}>Disassembled</p>
               ) : (
                 <p className={cx(styles.center, customBlock)}>
-                  Car on the way to port
+                  {item.shipping.status.split("_").join(" ")}
                 </p>
               )}
             </>

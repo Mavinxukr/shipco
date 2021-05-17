@@ -21,9 +21,6 @@
 }
 
 .widthSlider {
-  max-width: 536px;
-  min-width: 536px;
-
   img {
     width: 100%;
     height: 100%;
@@ -43,7 +40,7 @@
 }
 
 .imageWidth > div > div {
-  width: 100%!important;
+  width: 100% !important;
   margin: 0;
 }
 
@@ -52,7 +49,7 @@
   width: 30px;
   height: 30px;
   background: $colorBackground;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     background: $colorBackgroundHover;
