@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { useTable } from 'react-table';
-import { useRouter } from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
-import cx from 'classnames';
-import { Field, Form } from 'react-final-form';
+import React, { useEffect, useState } from "react";
+import { useTable } from "react-table";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import cx from "classnames";
+import { Field, Form } from "react-final-form";
 import {
   getClientParts,
   addNewClientParts,
   deleteClientParts,
   updateClientParts,
-} from '../../../redux/actions/clientParts';
+} from "../../../redux/actions/clientParts";
 import {
   clientPartsDataSelector,
   clientPartsDataReceivedSelector,
   currentUserDataSelector,
-} from '../../../utils/selectors';
-import MainLayout from '../../Layout/Global/Global';
-import Popup from '../../Popup/Popup';
-import Button from '../../Button/Button';
-import AsNavForSlider from '../../AsNavForSlider/AsNavForSlider';
-import IconP from '../../../assets/svg/p.svg';
-import IconTrash from '../../../assets/svg/Trash.svg';
-import IconPlus from '../../../assets/svg/Plus.svg';
-import IconFilter from '../../../assets/svg/Group (5).svg';
-import CustomTable from '../../CustomTable/CustomTable';
-import { columns, status } from './data';
+} from "../../../utils/selectors";
+import MainLayout from "../../Layout/Global/Global";
+import Popup from "../../Popup/Popup";
+import Button from "../../Button/Button";
+import AsNavForSlider from "../../AsNavForSlider/AsNavForSlider";
+import IconP from "../../../assets/svg/p.svg";
+import IconTrash from "../../../assets/svg/Trash.svg";
+import IconPlus from "../../../assets/svg/Plus.svg";
+import IconFilter from "../../../assets/svg/Group (5).svg";
+import CustomTable from "../../CustomTable/CustomTable";
+import { columns, status } from "./data";
 import {
   composeValidators,
   mustBeNumber,
   required,
-} from '../../../utils/validation';
-import { renderInput, renderSelect } from '../../../utils/renderInputs';
-import styles from './Parts.scss';
-import Loader from '../../Loader/Loader';
-import Pagination from '../../Pagination/Pagination';
-import { getCurrentUser } from '../../../redux/actions/currentUser';
-import HoverPopup from '../../HoverPopup/HoverPopup';
-import { getParts } from '../../../redux/actions/parts';
-import useTranslation from 'next-translate/useTranslation';
+} from "../../../utils/validation";
+import { renderInput, renderSelect } from "../../../utils/renderInputs";
+import styles from "./Parts.scss";
+import Loader from "../../Loader/Loader";
+import Pagination from "../../Pagination/Pagination";
+import { getCurrentUser } from "../../../redux/actions/currentUser";
+import HoverPopup from "../../HoverPopup/HoverPopup";
+import { getParts } from "../../../redux/actions/parts";
+import useTranslation from "next-translate/useTranslation";
 
 const Table = ({
   columns,
@@ -48,30 +48,25 @@ const Table = ({
   setUpdateData,
 }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('parts');
+  const { t } = useTranslation("parts");
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows,
-  } = useTable({
-    columns,
-    data,
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
+    useTable({
+      columns,
+      data,
+    });
 
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th
                 {...column.getHeaderProps()}
                 className={`Parts-${column.id}Header`}
               >
-                {column.render('Header')}
+                {column.render("Header")}
               </th>
             ))}
           </tr>
@@ -82,12 +77,12 @@ const Table = ({
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => (
+              {row.cells.map((cell) => (
                 <td
                   className={`Parts-${cell.column.id}`}
                   {...cell.getCellProps()}
                 >
-                  {cell.column.id === 'actions' ? (
+                  {cell.column.id === "actions" ? (
                     <div className={styles.tdFlex}>
                       <Button
                         type="button"
@@ -102,7 +97,8 @@ const Table = ({
                       <Button
                         type="button"
                         customBtn={styles.actionsButton}
-                        onClick={() => dispatch(deleteClientParts({}, cell.row.original.id))
+                        onClick={() =>
+                          dispatch(deleteClientParts({}, cell.row.original.id))
                         }
                       >
                         <IconTrash />
@@ -110,14 +106,14 @@ const Table = ({
                     </div>
                   ) : (
                     <>
-                      {cell.column.id === 'photo' ? (
+                      {cell.column.id === "photo" ? (
                         <Button
                           type="button"
                           customBtn={cx(
                             styles.background,
                             styles.colorDec,
-                            cell.row.original.images.length === 0
-                              && styles.disabled,
+                            cell.row.original.images.length === 0 &&
+                              styles.disabled
                           )}
                           onClick={() => {
                             if (cell.row.original.images.length > 0) {
@@ -126,10 +122,10 @@ const Table = ({
                             }
                           }}
                         >
-                          {t('viewPics')}
+                          {t("viewPics")}
                         </Button>
                       ) : (
-                        <>{cell.render('Cell')}</>
+                        <>{cell.render("Cell")}</>
                       )}
                     </>
                   )}
@@ -154,7 +150,7 @@ const Parts = () => {
   const clientParts = useSelector(clientPartsDataSelector);
   const isDataReceived = useSelector(clientPartsDataReceivedSelector);
   const user = useSelector(currentUserDataSelector);
-  const { t } = useTranslation('parts');
+  const { t } = useTranslation("parts");
 
   const dispatch = useDispatch();
 
@@ -170,9 +166,9 @@ const Parts = () => {
     dispatch(
       getClientParts({
         page: router.query.page || 1,
-        countpage: router.query.countpage || '10',
-        part_status: router.query.part_status || '',
-      }),
+        countpage: router.query.countpage || "10",
+        part_status: router.query.part_status || "",
+      })
     );
   }, [router.query]);
 
@@ -180,72 +176,72 @@ const Parts = () => {
     return <Loader />;
   }
 
-  const vinNumbers = clientParts.additional.vin_numbers;
-  const vinArr = Object.keys(vinNumbers).map((item, index) => ({
-    id: index + 1,
-    label: vinNumbers[index].vin,
-    value: vinNumbers[index].vin,
-  }));
+  // const vinNumbers = clientParts.additional.vin_numbers;
+  // const vinArr = Object.keys(vinNumbers).map((item, index) => ({
+  //   id: index + 1,
+  //   label: vinNumbers[index].vin,
+  //   value: vinNumbers[index].vin,
+  // }));
 
-  const catalogNumbers = clientParts.additional.catalog_numbers;
-  const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
-    id: index + 1,
-    label: catalogNumbers[index].catalog_number,
-    value: catalogNumbers[index].catalog_number,
-  }));
+  // const catalogNumbers = clientParts.additional.catalog_numbers;
+  // const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
+  //   id: index + 1,
+  //   label: catalogNumbers[index].catalog_number,
+  //   value: catalogNumbers[index].catalog_number,
+  // }));
 
-  const onSubmit = async (values) => {
-    dispatch(
-      addNewClientParts(
-        {},
-        {
-          ...values,
-          client_id: user.id,
-          vin: values.vin && values.vin.label,
-          catalog_number: values.catalog_number && values.catalog_number.label,
-        },
-      ),
-    );
-    setIsPopupOpen(false);
-  };
+  // const onSubmit = async (values) => {
+  //   dispatch(
+  //     addNewClientParts(
+  //       {},
+  //       {
+  //         ...values,
+  //         client_id: user.id,
+  //         vin: values.vin && values.vin.label,
+  //         catalog_number: values.catalog_number && values.catalog_number.label,
+  //       }
+  //     )
+  //   );
+  //   setIsPopupOpen(false);
+  // };
 
-  const onSubmitUpdate = async (values) => {
-    dispatch(
-      updateClientParts(
-        {},
-        {
-          ...values,
-          vin: values.vin && values.vin.label,
-          catalog_number: values.catalog_number && values.catalog_number.label,
-        },
-        updateData.id,
-      ),
-    );
-    setIsPopupUpdateOpen(false);
-  };
+  // const onSubmitUpdate = async (values) => {
+  //   dispatch(
+  //     updateClientParts(
+  //       {},
+  //       {
+  //         ...values,
+  //         vin: values.vin && values.vin.label,
+  //         catalog_number: values.catalog_number && values.catalog_number.label,
+  //       },
+  //       updateData.id
+  //     )
+  //   );
+  //   setIsPopupUpdateOpen(false);
+  // };
 
   if (isPopupOpen === true || isPopupUpdateOpen === true) {
-    document.querySelector('#__next').classList.add('Global-overflow');
+    document.querySelector("#__next").classList.add("Global-overflow");
   } else {
-    document.querySelector('#__next').classList.remove('Global-overflow');
+    document.querySelector("#__next").classList.remove("Global-overflow");
   }
 
   return (
     <MainLayout>
       <div className={styles.container}>
-        <h3 className={styles.title}>{t('parts')}</h3>
+        <h3 className={styles.title}>{t("parts")}</h3>
         <div className={styles.flex}>
-          <Button
+          {/* <Button
             customBtn={styles.btnIcon}
             onClick={() => setIsPopupOpen(true)}
           >
             <IconPlus className={styles.plus} />
             {t('addNewPart')}
-          </Button>
+          </Button> */}
           <div className={styles.rightBlock}>
             <Button customBtn={styles.filterText}>
               <IconFilter className={styles.filterIcon} />
-              {t('status')}
+              {t("status")}
             </Button>
             <HoverPopup>
               {status(t).map((statusFilter, index) => {
@@ -258,7 +254,7 @@ const Parts = () => {
                     onClick={() => {
                       setStepIndex(index);
                       router.push({
-                        pathname: '/parts',
+                        pathname: "/parts",
                         query: {
                           ...router.query,
                           page: 1,
@@ -268,7 +264,7 @@ const Parts = () => {
                       dispatch(
                         getParts({
                           part_status: statusFilter.value,
-                        }),
+                        })
                       );
                     }}
                     customBtn={classNameForButton}
@@ -309,8 +305,8 @@ const Parts = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
-      {isPopupUpdateOpen && (
-        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title={t('updatePart')}>
+      {/* {isPopupUpdateOpen && (
+        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title={t("updatePart")}>
           <Form
             onSubmit={onSubmitUpdate}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -319,7 +315,7 @@ const Parts = () => {
                   name="catalog_number"
                   component={renderSelect({
                     placeholder: updateData.catalog_number,
-                    label: t('catalogNumber'),
+                    label: t("catalogNumber"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -329,10 +325,10 @@ const Parts = () => {
                 <Field
                   name="name"
                   type="text"
-                  defaultValue={updateData.name || ''}
+                  defaultValue={updateData.name || ""}
                 >
                   {renderInput({
-                    label: t('name'),
+                    label: t("name"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -341,10 +337,10 @@ const Parts = () => {
                 <Field
                   name="auto"
                   type="text"
-                  defaultValue={updateData.auto || ''}
+                  defaultValue={updateData.auto || ""}
                 >
                   {renderInput({
-                    label: t('auto'),
+                    label: t("auto"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -355,7 +351,7 @@ const Parts = () => {
                   isRequired
                   component={renderSelect({
                     placeholder: updateData.vin,
-                    label: t('vinNumber'),
+                    label: t("vinNumber"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -366,10 +362,10 @@ const Parts = () => {
                   name="container"
                   validate={mustBeNumber}
                   type="text"
-                  defaultValue={updateData.container || ''}
+                  defaultValue={updateData.container || ""}
                 >
                   {renderInput({
-                    label: t('container'),
+                    label: t("container"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -378,10 +374,10 @@ const Parts = () => {
                 <Field
                   name="quality"
                   type="text"
-                  defaultValue={updateData.quality || ''}
+                  defaultValue={updateData.quality || ""}
                 >
                   {renderInput({
-                    label: t('quality'),
+                    label: t("quality"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -389,14 +385,14 @@ const Parts = () => {
                 </Field>
                 <div className={styles.popupFieldRow}>
                   <label className={cx(styles.label, styles.colorDec)}>
-                    {t('comment')}
+                    {t("comment")}
                   </label>
                   <Field
                     className={cx(styles.widthInput, styles.customTextarea)}
                     name="comment"
                     component="textarea"
                     placeholder=""
-                    defaultValue={updateData.comment || ''}
+                    defaultValue={updateData.comment || ""}
                   />
                 </div>
                 <Button
@@ -404,15 +400,15 @@ const Parts = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                    {t('updatePart')}
+                  {t("updatePart")}
                 </Button>
               </form>
             )}
           />
         </Popup>
-      )}
-      {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title={t('addNewPart')}>
+      )} */}
+      {/* {isPopupOpen && (
+        <Popup setIsPopupOpen={setIsPopupOpen} title={t("addNewPart")}>
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, invalid, submitting }) => (
@@ -421,8 +417,8 @@ const Parts = () => {
                   name="catalog_number"
                   validate={required}
                   component={renderSelect({
-                    placeholder: '',
-                    label: t('catalogNumber'),
+                    placeholder: "",
+                    label: t("catalogNumber"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -431,7 +427,7 @@ const Parts = () => {
                 />
                 <Field name="name" validate={required} type="text">
                   {renderInput({
-                    label: t('name'),
+                    label: t("name"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -439,7 +435,7 @@ const Parts = () => {
                 </Field>
                 <Field name="auto" validate={required} type="text">
                   {renderInput({
-                    label: t('auto'),
+                    label: t("auto"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -450,8 +446,8 @@ const Parts = () => {
                   isRequired
                   validate={required}
                   component={renderSelect({
-                    placeholder: '',
-                    label:  t('vinNumber'),
+                    placeholder: "",
+                    label: t("vinNumber"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -464,7 +460,7 @@ const Parts = () => {
                   type="text"
                 >
                   {renderInput({
-                    label: t('container'),
+                    label: t("container"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -472,7 +468,7 @@ const Parts = () => {
                 </Field>
                 <Field name="quality" validate={required} type="text">
                   {renderInput({
-                    label: t('quality'),
+                    label: t("quality"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -480,7 +476,7 @@ const Parts = () => {
                 </Field>
                 <div className={styles.popupFieldRow}>
                   <label className={cx(styles.label, styles.colorDec)}>
-                  {t('comment')}
+                    {t("comment")}
                   </label>
                   <Field
                     className={cx(styles.widthInput, styles.customTextarea)}
@@ -494,18 +490,18 @@ const Parts = () => {
                   type="submit"
                   disabled={submitting || invalid}
                 >
-                  {t('addNewPart')}
+                  {t("addNewPart")}
                 </Button>
               </form>
             )}
           />
         </Popup>
-      )}
+      )} */}
       {isPopupPhotoOpen && (
         <Popup
           isPopupOpen={isPopupPhotoOpen}
           setIsPopupOpen={setIsPopupPhotoOpen}
-          title={t('partsPhoto')}
+          title={t("partsPhoto")}
           customPopup={styles.paddingBottom}
         >
           <AsNavForSlider sliderImages={sliderImages} />

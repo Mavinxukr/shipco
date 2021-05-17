@@ -28,7 +28,7 @@ import IconFilter from "../../../assets/svg/Group (5).svg";
 import CustomTable from "../../CustomTable/CustomTable";
 import { printData, getIdsArr } from "../../../utils/helpers";
 import { columns, status, statusSelect, print } from "./data";
-import styles from "./Parts.scss";
+import styles from "./Admin-parts.scss";
 import {
   required,
   mustBeNumber,

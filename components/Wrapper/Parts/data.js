@@ -31,10 +31,10 @@ export const columns = (t) => [
         Header: t('partsPhoto'),
         accessor: 'photo',
       },
-      {
-        Header:  t('actions'),
-        accessor: 'actions',
-      },
+      // {
+      //   Header:  t('actions'),
+      //   accessor: 'actions',
+      // },
     ],
   },
 ];
