@@ -504,7 +504,7 @@ const Parts = () => {
                   validate={mustBeNumber}
                 >
                   {renderInput({
-                    label: t("Quality"),
+                    label: t("Quantity"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,
@@ -626,7 +626,7 @@ const Parts = () => {
                   type="text"
                 >
                   {renderInput({
-                    label: t("Quality"),
+                    label: t("Quantity"),
                     classNameWrapper: styles.popupFieldRow,
                     classNameWrapperLabel: styles.label,
                     widthInputBlock: styles.widthInput,

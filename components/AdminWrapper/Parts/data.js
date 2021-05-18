@@ -40,7 +40,7 @@ export const columns = (t) => [
       //   accessor: 'comment',
       // },
       {
-        Header: t('Quality'),
+        Header: t('Quantity'),
         accessor: 'quality',
       },
       {
