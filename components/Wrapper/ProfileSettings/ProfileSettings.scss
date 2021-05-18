@@ -1,5 +1,5 @@
-@import "scss/core/mixins";
-@import "scss/core/vars";
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
 
 .container {
   @include container();
@@ -28,7 +28,7 @@
   }
 }
 
-.heightBlock{
+.heightBlock {
   min-height: 600px;
 
   @media (max-width: 850px) {
@@ -57,6 +57,46 @@
     width: 100%;
   }
 }
+.address {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+
+  &_input {
+    background: #fafafa;
+    border: 1px solid #c4c4c4;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 2px;
+    padding: 15px 20px;
+    font-family: "RobotoMedium", sans-serif;
+  }
+  &_label {
+    margin: 30px 0 11px;
+    color: #d73e3e;
+  }
+  &_list {
+    width: 100%;
+    padding: 5px 15px 20px 15px;
+    position: absolute;
+    top: 109px;
+    z-index: 9999;
+    background-color: #fafafa;
+    border-right: 1px solid #c4c4c4;
+    border-bottom: 1px solid #c4c4c4;
+    border-left: 1px solid #c4c4c4;
+  }
+  &_item {
+    line-height: 16px;
+    cursor: pointer;
+    @include styleForText(14px, $fontRegular);
+  }
+  &_item + .address_item {
+    margin-top: 20px;
+  }
+}
 
 .label {
   margin: 30px 0 11px;
@@ -68,8 +108,8 @@
 }
 
 .field {
-  background: #FAFAFA;
-  border: 1px solid #C4C4C4;
+  background: #fafafa;
+  border: 1px solid #c4c4c4;
   width: 100%;
   box-sizing: border-box;
   border-radius: 2px;
@@ -100,14 +140,14 @@
   font-size: 18px;
   text-transform: uppercase;
   margin-top: 30px;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     background: $colorBackgroundHover;
   }
 
   &:disabled {
-    opacity: .6;
+    opacity: 0.6;
   }
 }
 

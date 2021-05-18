@@ -18,6 +18,8 @@ function ProfileSettingsPage() {
     });
   }, [router]);
 
+  console.log(isLoading);
+
   if (isLoading) {
     return <Loader></Loader>;
   }

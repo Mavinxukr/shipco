@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
-import '../../../public/slick/slick.css';
-import Slider from 'react-slick';
-import GoogleMapReact from 'google-map-react';
-import Image from '../../Image/Image';
+import React, { useState, useEffect } from "react";
+import cx from "classnames";
+import PropTypes from "prop-types";
+import "../../../public/slick/slick.css";
+import Slider from "react-slick";
+import GoogleMapReact from "google-map-react";
+import Image from "../../Image/Image";
 // import ProductCard from '../../ProductCard/ProductCard';
-import { sliderData } from './data';
-import { useSession } from 'next-auth/client';
+import { sliderData } from "./data";
+import { useSession } from "next-auth/client";
 
-import IconQuotes from '../../../assets/svg/quotes.svg';
-import IconFb from '../../../assets/svg/Vector(1).svg';
-import IconIn from '../../../assets/svg/Group.svg';
-import IckonTw from '../../../assets/svg/Vector.svg';
-import IconYoutube from '../../../assets/svg/Vector(2).svg';
-import IconArrow from '../../../assets/svg/Group (6).svg';
-import styles from './Home.scss';
-import { IndexHeader } from '../../IndexHeader/IndexHeader';
-import Loader from '../../Loader/Loader';
-import useTranslation from 'next-translate/useTranslation';
+import IconQuotes from "../../../assets/svg/quotes.svg";
+import IconFb from "../../../assets/svg/Vector(1).svg";
+import IconIn from "../../../assets/svg/Group.svg";
+import IckonTw from "../../../assets/svg/Vector.svg";
+import IconYoutube from "../../../assets/svg/Vector(2).svg";
+import IconArrow from "../../../assets/svg/Group (6).svg";
+import styles from "./Home.scss";
+import { IndexHeader } from "../../IndexHeader/IndexHeader";
+import Loader from "../../Loader/Loader";
+import useTranslation from "next-translate/useTranslation";
+import ProductCard from "../../ProductCard/ProductCard";
 
 const SampleNextArrow = ({ onClick, index }) => (
   <button
@@ -45,7 +46,8 @@ const SamplePrevArrow = ({ onClick, index }) => (
 const Home = () => {
   const [index, setIndex] = useState(0);
   const [session, loading] = useSession();
-  const { t, lang } = useTranslation('home');
+  const [email, setEmail] = useState("");
+  const { t, lang } = useTranslation("home");
 
   const settings = {
     dots: true,
@@ -57,6 +59,11 @@ const Home = () => {
     nextArrow: <SampleNextArrow index={index} />,
     prevArrow: <SamplePrevArrow index={index} />,
   };
+
+  const subscribeHandle = (e) => {
+    console.log(e);
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -66,7 +73,7 @@ const Home = () => {
       <IndexHeader></IndexHeader>
       <main>
         <div className={styles.container}>
-          <h2 className={styles.infoTitle}>{t('ourFeatures')}</h2>
+          <h2 className={styles.infoTitle}>{t("ourFeatures")}</h2>
           <p className={styles.infoText}>
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
             nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
@@ -76,7 +83,7 @@ const Home = () => {
             <div className={styles.infoBlockItem}>
               <Image src="/images/icon_1.png" alt="" />
               <p className={styles.infoBlockItemTitle}>
-                {t('bestDealsAndPrices')}
+                {t("bestDealsAndPrices")}
               </p>
               <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
@@ -87,7 +94,7 @@ const Home = () => {
             <div className={styles.infoBlockItem}>
               <Image src="/images/icon_2.png" alt="" />
               <p className={styles.infoBlockItemTitle}>
-                {t('efficiencyAndQuality')}
+                {t("efficiencyAndQuality")}
               </p>
               <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
@@ -97,7 +104,7 @@ const Home = () => {
             </div>
             <div className={styles.infoBlockItem}>
               <Image src="/images/icon_3.png" alt="" />
-              <p className={styles.infoBlockItemTitle}>{t('security')}</p>
+              <p className={styles.infoBlockItemTitle}>{t("security")}</p>
               <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
                 diam nonummy nibh euismod tincidunt ut laoreet dolore magna
@@ -106,20 +113,55 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div className={styles.cars}>
+        <div className={styles.cars}>
           <div className={styles.container}>
             <h2 className={styles.carsTitle}>Cars</h2>
             <div className={styles.carsItems}>
-              {data.map((item) => (
-                <ProductCard key={item.id} item={item} />
-              ))}
+              {/* {data.map((item) => ( */}
+              <ProductCard
+                item={{
+                  src: "https://front-shipko.mavinx.com/images/bmw.png",
+                  title: "ads",
+                  road: "qqq",
+                  petrol: "sda",
+                  year: "1111",
+                }}
+              />
+              <ProductCard
+                item={{
+                  src: "https://front-shipko.mavinx.com/images/bmw.png",
+                  title: "ads",
+                  road: "qqq",
+                  petrol: "sda",
+                  year: "1111",
+                }}
+              />
+              <ProductCard
+                item={{
+                  src: "https://front-shipko.mavinx.com/images/bmw.png",
+                  title: "ads",
+                  road: "qqq",
+                  petrol: "sda",
+                  year: "1111",
+                }}
+              />
+              <ProductCard
+                item={{
+                  src: "https://front-shipko.mavinx.com/images/bmw.png",
+                  title: "ads",
+                  road: "qqq",
+                  petrol: "sda",
+                  year: "1111",
+                }}
+              />
+              {/* ))} */}
             </div>
           </div>
-        </div> */}
+        </div>
         <div className={cx(styles.container, styles.mediaWidth)}>
           <h2 className={styles.testimonialsTitle}>
             <IconQuotes className={styles.testimonialsIcon} />
-            {t('testimonials')}
+            {t("testimonials")}
           </h2>
           <Slider className={styles.sliderContainer} {...settings}>
             {sliderData.map((item) => (
@@ -140,7 +182,7 @@ const Home = () => {
           </Slider>
         </div>
         <div className={styles.container}>
-          <h2 className={styles.contactTitle}> {t('contactUs')}</h2>
+          <h2 className={styles.contactTitle}> {t("contactUs")}</h2>
           <div className={styles.contactBlock}>
             <div className={styles.contactBlockText}>
               <p>
@@ -198,7 +240,7 @@ const Home = () => {
           <div className={styles.map}>
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: 'AIzaSyDb8D7DDVkbXbN03KeDk0TFmBpK24NcQjg',
+                key: "AIzaSyDb8D7DDVkbXbN03KeDk0TFmBpK24NcQjg",
               }}
               defaultCenter={{
                 lat: 59.955413,
@@ -242,34 +284,34 @@ const Home = () => {
           <ul className={styles.footerNav}>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                {t('carsForSale')}
+                {t("carsForSale")}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                {t('autoExport')}
+                {t("autoExport")}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                {t('cargoTracking')}
+                {t("cargoTracking")}
               </a>
             </li>
           </ul>
           <ul className={styles.footerNav}>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                {t('genetalInfo')}
+                {t("genetalInfo")}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                {t('aboutUs')}
+                {t("aboutUs")}
               </a>
             </li>
             <li className={styles.footerItem}>
               <a className={styles.footerLink} href="/">
-                {t('contacts')}
+                {t("contacts")}
               </a>
             </li>
           </ul>
@@ -281,6 +323,40 @@ const Home = () => {
               qz16@designare.biz
             </a>
             <p>Lorem ipsum dolor sit amet,</p>
+          </div>
+          <div className={styles.footer_subscribe}>
+            <h4 className={styles.footer_subscribe__title}>
+              Subscribe to our newsletter
+            </h4>
+            <form
+              onSubmit={(ev) => {
+                ev.preventDefault();
+                subscribeHandle(email);
+              }}
+              className={styles.footer_subscribe__form}
+            >
+              <input
+                className={styles.footer_subscribe__input}
+                type="email"
+                placeholder="Your Email"
+                value={email}
+                onChange={(ev) => setEmail(ev.target.value)}
+              />
+              <button type="submit" className={styles.footer_subscribe__button}>
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 47 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 40L47 20L0 0V15.5556L33.5714 20L0 24.4444V40Z"
+                    fill="#fff"
+                  />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
       </footer>

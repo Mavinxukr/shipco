@@ -45,6 +45,7 @@
     "react-final-form": "^6.3.5",
     "react-i18next": "^11.8.15",
     "react-paginate": "^6.3.2",
+    "react-places-autocomplete": "^7.3.0",
     "react-redux": "^7.2.0",
     "react-select": "2.1.1",
     "react-slick": "^0.25.2",

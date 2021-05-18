@@ -1,6 +1,6 @@
-//@import "scss/core/mixins";
-//@import "scss/core/vars";
-@import 'scss/index';
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+@import "scss/index";
 
 .container {
   margin: auto;
@@ -136,6 +136,34 @@
   background: $colorContent;
   padding: 40px 0 22px;
   color: $white;
+  &_subscribe {
+    height: 100%;
+    &__title {
+      font-weight: 700;
+      @include styleForText(16px, $fontRegular, #fff);
+    }
+    &__form {
+      margin-top: 20px;
+      display: flex;
+      height: 50px;
+    }
+    &__input {
+      height: 100%;
+      padding: 15px;
+      width: 300px;
+    }
+    &__button {
+      height: 100%;
+      position: relative;
+      cursor: pointer;
+      width: 70px;
+      background-color: $colorBackground;
+      padding: 12px 20px;
+      &:hover {
+        background-color: $colorBackgroundHover;
+      }
+    }
+  }
 }
 
 .footerLogo {
@@ -173,7 +201,7 @@
 .footerContainer {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 }
 
 .column {

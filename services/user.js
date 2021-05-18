@@ -17,9 +17,19 @@ export const registration = async (params, body) => {
   return serverData;
 };
 
-export const getCurrentUserRequest = async (params) => {
-  const serverData = await Fetch.get('get-profile', params, {});
-  return serverData;
+export const getCurrentUserRequest = async () => {
+  const session = await getSession();
+  const token = session ? session.accessToken : null;
+  const serverData = await fetch(`${API_DOMAIN_CLIENT}get-profile`, {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+      Accept: 'application/json',
+    },
+    redirect: 'follow',
+  });
+  const response = serverData.json();
+  return response;
 };
 
 export const editCurrentUserRequest = async (params, body) => {

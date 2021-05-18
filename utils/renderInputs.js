@@ -5,9 +5,10 @@ import Checkbox from '../components/Checkbox/Checkbox';
 import Radio from '../components/Radio/Radio';
 import InputWrapperFile from '../components/InputWrapperFile/InputWrapperFile';
 
-export const renderInput = props => ({ input, meta, accept }) => (
+export const renderInput = props => ({ input, meta, accept }) =>{ 
+  return (
   <InputFormWrapper inputProps={input} meta={meta} accept={accept} {...props} />
-);
+)};
 
 export const renderInputFile = props => ({
   input, meta, accept, id,
