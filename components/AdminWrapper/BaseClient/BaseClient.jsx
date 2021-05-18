@@ -83,6 +83,7 @@ const BaseClient = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [clients, setClients] = useState([]);
 
   const [image, setImage] = useState("/images/no-preview-available.png");
 
@@ -108,6 +109,7 @@ const BaseClient = () => {
   }
 
   const arrClientsId = [];
+  console.log(clients);
 
   const onSubmit = (values) => {
     dispatch(
@@ -191,7 +193,7 @@ const BaseClient = () => {
                   deleteBaseClient(
                     {},
                     {
-                      client_id: arrClientsId,
+                      client_id: clients,
                     }
                   )
                 );
@@ -222,7 +224,7 @@ const BaseClient = () => {
               <Table
                 columns={columns(t)}
                 data={baseClient.data}
-                arrClientsId={arrClientsId}
+                setClients={setClients}
               />
             </div>
             <Pagination
@@ -387,7 +389,7 @@ const BaseClient = () => {
 
 export default BaseClient;
 
-const Table = ({ columns, data, arrClientsId }) => {
+const Table = ({ columns, data, setClients }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -446,14 +448,19 @@ const Table = ({ columns, data, arrClientsId }) => {
                     {...cell.getCellProps()}
                     onClick={() => {
                       if (!cell.row.isSelected) {
-                        arrClientsId.push(cell.row.original.id);
+                        // arrClientsId.push(cell.row.original.id);
+                        setClients((prev) => [...prev, cell.row.original.id]);
                       } else {
-                        const index = arrClientsId.indexOf(
-                          cell.row.original.id
+                        setClients((prev) =>
+                          prev.filter((item) => item !== cell.row.original.id)
                         );
-                        if (index > -1) {
-                          arrClientsId.splice(index, 1);
-                        }
+
+                        // const index = arrClientsId.indexOf(
+                        //   cell.row.original.id
+                        // );
+                        // if (index > -1) {
+                        //   arrClientsId.splice(index, 1);
+                        // }
                       }
                     }}
                   >
