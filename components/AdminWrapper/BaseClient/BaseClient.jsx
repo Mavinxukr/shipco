@@ -121,6 +121,7 @@ const BaseClient = () => {
         }
       )
     );
+    setIsPopupOpen(false);
   };
 
   const onSubmitPrint = () => {

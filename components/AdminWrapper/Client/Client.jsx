@@ -146,6 +146,7 @@ const Client = () => {
         }
       )
     );
+    setIsPopupOpen(false);
   };
 
   useEffect(() => {
