@@ -1,5 +1,5 @@
-@import '../../../scss/core/mixins';
-@import '../../../scss/core/vars';
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
 
 .container {
   @include container();
@@ -182,7 +182,6 @@ td span,
   &:hover {
     background: $colorBackgroundHover;
   }
-
 }
 
 .error {
@@ -196,7 +195,8 @@ td span,
   padding: 10px 0;
   width: 100% !important;
 
-  label, span {
+  label,
+  span {
     margin: 0 31px 0 0 !important;
     min-width: 136px;
 
@@ -206,13 +206,14 @@ td span,
   }
 
   span + label {
-    margin: 0!important;
+    margin: 0 !important;
   }
 
   @media screen and (max-width: 768px) {
     flex-direction: column !important;
 
-    label, span {
+    label,
+    span {
       margin: 10px 0 !important;
       width: 100% !important;
       min-width: 100%;
@@ -272,13 +273,13 @@ td.paiment {
 }
 
 .heightPopup {
-  padding-top: 50px!important;
-  padding-bottom: 50px!important;
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
   overflow: hidden;
 }
 
 .customInputFile {
-  border: 1px solid $colorBorder!important;
+  border: 1px solid $colorBorder !important;
 }
 
 .noFiles {
@@ -296,7 +297,7 @@ td.paiment {
   align-items: baseline;
 
   .btnSubmit {
-    width: 46px;
+    width: auto;
     height: 46px;
     margin: 0 0 0 10px;
   }
@@ -309,13 +310,13 @@ td.paiment {
   display: inline-block;
   width: auto;
   margin-right: 20px;
-  background: transparent!important;
-  color: $colorContent!important;
+  background: transparent !important;
+  color: $colorContent !important;
   font-size: 16px;
 }
 
 .btnStatus:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: -2px;
@@ -327,7 +328,7 @@ td.paiment {
 }
 
 .activeStatus:after {
-  content: '';
+  content: "";
   width: 13px;
   height: 13px;
   background: $colorBackground;
@@ -355,7 +356,7 @@ td.paiment {
 
   @media screen and (max-width: 768px) {
     p {
-      min-width: 117px!important;
+      min-width: 117px !important;
     }
   }
 }

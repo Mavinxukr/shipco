@@ -303,7 +303,7 @@ const Client = () => {
               }}
             >
               <IconMinus className={styles.icon} />
-              {t("Add New offers")}
+              {t("delete")}
             </Button>
           </div>
           <div className={styles.groupBtn}>

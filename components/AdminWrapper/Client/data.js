@@ -87,7 +87,7 @@ export const columns = (t) => [
         ),
       },
       {
-        Header: t('Paiment for'),
+        Header: t('Payment for'),
         accessor: 'paiment',
       },
       {
