@@ -1,14 +1,17 @@
-import React from 'react';
-import { useDropzone } from 'react-dropzone';
-import cx from 'classnames';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import IconRemoveImage from '../../assets/svg/removeImg.svg';
-import styles from './Previews.scss';
-import { deleteAuto } from '../../redux/actions/auto';
-import { deleteParts } from '../../redux/actions/parts';
+import React from "react";
+import { useDropzone } from "react-dropzone";
+import cx from "classnames";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import IconRemoveImage from "../../assets/svg/removeImg.svg";
+import styles from "./Previews.scss";
+import { deleteAuto } from "../../redux/actions/auto";
+import { deleteParts } from "../../redux/actions/parts";
 
-const filterExistPics = (arrMain, arrPics) => arrMain.filter(item => arrPics.every(itemChild => itemChild.path !== item.path));
+const filterExistPics = (arrMain, arrPics) =>
+  arrMain.filter((item) =>
+    arrPics.every((itemChild) => itemChild.path !== item.path)
+  );
 
 const Previews = ({
   setArrPics,
@@ -25,27 +28,37 @@ const Previews = ({
   idAuto,
 }) => {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: "image/*",
     onDrop: (acceptedFiles) => {
-      setNewArrPics([...newArrPics, ...filterExistPics(acceptedFiles, newArrPics)]);
+      setNewArrPics([
+        ...newArrPics,
+        ...filterExistPics(acceptedFiles, newArrPics),
+      ]);
       setArrPics([
         ...arrPics,
-        ...filterExistPics(acceptedFiles.map(pic => ({
-          ...pic,
-          link: URL.createObjectURL(pic),
-        })), arrPics),
+        ...filterExistPics(
+          acceptedFiles.map((pic) => ({
+            ...pic,
+            link: URL.createObjectURL(pic),
+          })),
+          arrPics
+        ),
       ]);
     },
   });
 
   const handleRemoveItem = (pic) => {
-    setArrPics(arrPics.filter(item => item.link !== pic.link || item.image !== pic.image));
-    setNewArrPics(newArrPics.filter(item => item.path !== pic.path));
+    setArrPics(
+      arrPics.filter(
+        (item) => item.link !== pic.link || item.image !== pic.image
+      )
+    );
+    setNewArrPics(newArrPics.filter((item) => item.path !== pic.path));
   };
 
   const dispatch = useDispatch();
 
-  const thumbs = [...arrPics].map(pic => (
+  const thumbs = [...arrPics].map((pic) => (
     <div className={styles.thumb} key={pic.link || pic.image}>
       <div className={styles.thumbInner}>
         <img
@@ -66,8 +79,8 @@ const Previews = ({
                   {
                     ids: pic.id,
                   },
-                  idAuto,
-                ),
+                  idAuto
+                )
               );
             }
             if (pic.id && pic.image) {
@@ -82,16 +95,16 @@ const Previews = ({
   ));
 
   return (
-    <section className={cx('container', customTumd)}>
+    <section className={cx("container", customTumd)}>
       <div
-        style={{ outline: 'none' }}
+        style={{ outline: "none" }}
         className={custom}
-        {...getRootProps({ className: 'dropzone' })}
+        {...getRootProps({ className: "dropzone" })}
       >
         <input {...getInputProps()} type="file" />
         <div className={cx(styles.color, customText)}>
+          <p className={styles.title}>{title}</p>
           {icon && <div className={customIconBlock}>{icon}</div>}
-          <>{title}</>
         </div>
       </div>
       <aside className={cx(styles.thumbsContainer, customThumbs)}>

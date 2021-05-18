@@ -19,6 +19,8 @@ const Input = ({
   fileValue,
   onKeyUp,
   onChange,
+  meta,
+  notForm,
 }) => {
   const { t } = useTranslation("admin-auto-edit");
 
@@ -43,6 +45,13 @@ const Input = ({
           accept={accept}
           onKeyUp={onKeyUp}
         />
+      )}
+      {notForm ? null : (
+        <>
+          {meta?.touched && meta.error && (
+            <p className={styles.error}>{meta.error}</p>
+          )}
+        </>
       )}
       {icon && (
         <Button

@@ -11,6 +11,7 @@ import * as actionTypes from '../../actions/actionTypes';
 const getPartsData = state => state.parts.partsData;
 
 function* updateParts({ params, body, id }) {
+
   const response = yield call(updatePartsRequest, params, body, id);
   const partsData = yield select(getPartsData);
   if (response.status) {
@@ -24,7 +25,7 @@ function* updateParts({ params, body, id }) {
       }),
     );
   } else {
-    yield put(getPartsError('error'));
+    yield put(getPartsError({error: response.message}));
   }
 }
 

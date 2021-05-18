@@ -11,8 +11,11 @@ import * as actionTypes from '../../actions/actionTypes';
 const getClientPartsData = state => state.clientParts.clientPartsData;
 
 function* updateClientParts({ params, body, id }) {
+  yield console.log(1);
   const response = yield call(updateClientPartsRequest, params, body, id);
   const clientPartsData = yield select(getClientPartsData);
+  yield console.log(response);
+
   if (response.status) {
     const idx = clientPartsData.data.findIndex(item => item.id === id);
     const newArr = [...clientPartsData.data.slice(0, idx), response.data.data, ...clientPartsData.data.slice(idx + 1)];

@@ -173,8 +173,7 @@ th:first-child {
 }
 
 .btnSubmit {
-  margin-left: 168px;
-  width: 379px;
+  width: 100%;
   margin-top: 10px;
   height: 40px;
   text-transform: uppercase;
@@ -201,13 +200,11 @@ th:first-child {
 }
 
 .customIconBlock {
-  position: absolute;
   right: 0;
-  max-width: 379px;
   border: 1px solid $colorBorder;
   background: $colorInput;
-  width: 100%;
   text-align: right;
+  width: 100%;
   border-radius: 2px;
   padding: 11px 16px;
 
@@ -218,7 +215,7 @@ th:first-child {
 }
 
 .thumbs {
-  max-width: 360px;
+  width: 100%;
   margin: 0 0 0 auto;
 
   & > div {

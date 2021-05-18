@@ -13,6 +13,7 @@ import {
 import {
   partsDataSelector,
   partsDataReceivedSelector,
+  clientPartsDataSelector,
 } from "../../../utils/selectors";
 import Loader from "../../Loader/Loader";
 import MainLayout from "../../Layout/Global/Global";
@@ -40,6 +41,7 @@ import Pagination from "../../Pagination/Pagination";
 import HoverPopup from "../../HoverPopup/HoverPopup";
 import MultiSelect from "../../Multi/Multi";
 import useTranslation from "next-translate/useTranslation";
+import { updatePartsRequest } from "../../../services/parts";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -159,9 +161,11 @@ const Parts = () => {
   const [updateData, setUpdateData] = useState(null);
   const [printPopup, setPrintPopup] = useState(false);
   const [selected, setSelected] = useState([]);
-
-  const parts = useSelector(partsDataSelector);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const isDataReceived = useSelector(partsDataReceivedSelector);
+  const parts = useSelector(partsDataSelector);
+
   const { t } = useTranslation("admin-parts");
 
   const dispatch = useDispatch();
@@ -194,10 +198,6 @@ const Parts = () => {
       );
     }
   }, [parts]);
-
-  if (!isDataReceived) {
-    return <Loader />;
-  }
 
   // const vinNumbers = parts.additional.vin_numbers;
   // const vinArr = Object.keys(vinNumbers).map((item, index) => ({
@@ -232,21 +232,58 @@ const Parts = () => {
   };
 
   const onSubmitUpdate = async (values) => {
-    dispatch(
-      updateParts(
-        {},
-        {
-          ...values,
-          status: values.status && values.status.value,
-          catalog_number: values.catalog_number && values.catalog_number.label,
-          image: newArrPicsContainer,
-        },
-        updateData.id
-      )
+    setLoading(true);
+    setError("");
+
+    const response = await updatePartsRequest(
+      {},
+      {
+        ...values,
+        status: values.status && values.status.value,
+        catalog_number: values.catalog_number && values.catalog_number.label,
+        image: newArrPicsContainer,
+      },
+      updateData.id
     );
-    setArrPicsContainer([]);
-    setNewArrPicsContainer([]);
-    setIsPopupUpdateOpen(false);
+
+    if (response.status) {
+      setLoading(false);
+      setIsPopupUpdateOpen(false);
+      const clientPartsData = await useSelector(clientPartsDataSelector);
+      const idx = clientPartsData.data.findIndex((item) => item.id === id);
+      const newArr = [
+        ...clientPartsData.data.slice(0, idx),
+        response.data.data,
+        ...clientPartsData.data.slice(idx + 1),
+      ];
+      dispatch(
+        getClientPartsSuccess({
+          data: newArr,
+          links: clientPartsData.links,
+          additional: response.data.additional,
+        })
+      );
+      setArrPicsContainer([]);
+      setNewArrPicsContainer([]);
+    } else {
+      setLoading(false);
+      setError(response.message);
+    }
+
+    // dispatch(
+    //   updateParts(
+    //     {},
+    //     {
+    //       ...values,
+    //       status: values.status && values.status.value,
+    //       catalog_number: values.catalog_number && values.catalog_number.label,
+    //       image: newArrPicsContainer,
+    //     },
+    //     updateData.id
+    //   )
+    // );
+
+    // setIsPopupUpdateOpen(false);
   };
 
   const onSubmitPrint = () => {
@@ -270,6 +307,10 @@ const Parts = () => {
     document.querySelector("#__next").classList.add("Global-overflow");
   } else {
     document.querySelector("#__next").classList.remove("Global-overflow");
+  }
+
+  if (!isDataReceived) {
+    return <Loader />;
   }
 
   return (
@@ -351,6 +392,7 @@ const Parts = () => {
             </HoverPopup>
           </div>
         </div>
+
         {parts && parts.data.length !== 0 ? (
           <CustomTable>
             <Pagination
@@ -493,10 +535,11 @@ const Parts = () => {
                   setNewArrPics={setNewArrPicsContainer}
                   newArrPics={newArrPicsContainer}
                 />
+                {error ? <p>{error}</p> : null}
                 <Button
                   customBtn={styles.btnSubmit}
                   type="submit"
-                  disabled={submitting || invalid}
+                  disabled={loading || submitting || invalid}
                 >
                   {t("UPDATEPART")}
                 </Button>

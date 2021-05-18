@@ -27,10 +27,10 @@ export const passwordValidation = (value) => {
 };
 
 export const vinNum = (value) => {
-  if (value.length === 17 && /^[0-9a-zA-Z]+$/.test(value)) {
-    return undefined;
+  if (value && value.length === 17 && /^[0-9a-zA-Z]+$/.test(value)) {
+    return null;
   }
-  return 'Required';
+  return 'VIN must be 17 characters';
 };
 
 export const mustBeNumber = (value) =>

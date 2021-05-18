@@ -99,6 +99,15 @@ export const partsDataReceivedSelector = createSelector(
   state => state.parts.isDataReceived,
   isDataReceived => isDataReceived,
 );
+
+export const partsFetchSelector = createSelector(
+  state => state.parts.isFetch,
+  isFetch => isFetch,
+);
+export const partsErrorSelector = createSelector(
+  state => state.parts.error,
+  error => error,
+);
 export const clientPartsDataSelector = createSelector(
   state => state.clientParts.clientPartsData,
   partsData => partsData,

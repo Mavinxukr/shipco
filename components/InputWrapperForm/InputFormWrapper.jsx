@@ -41,14 +41,9 @@ const InputFormWrapper = ({
         classNameWrapperForIcon={classNameWrapperForIcon}
         onClickForIcon={onClickForIcon}
         onKeyUp={onKeyUp}
+        meta={meta}
+        notForm={notForm}
       />
-      {notForm ? null : (
-        <>
-          {meta.touched && meta.error && (
-            <p className={styles.error}>{meta.error}</p>
-          )}
-        </>
-      )}
     </div>
   );
 };

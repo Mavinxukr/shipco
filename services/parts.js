@@ -77,6 +77,7 @@ export const updatePartsRequest = async (params, body, id) => {
     body: formData,
   });
   const response = await serverData.json();
+
   return response;
 };
 
