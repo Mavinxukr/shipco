@@ -1,5 +1,5 @@
-@import '../../../scss/core/mixins';
-@import '../../../scss/core/vars';
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
 
 .container {
   @include container();
@@ -7,7 +7,7 @@
 
 .flex {
   display: flex;
-  align-items: baseline!important;
+  align-items: baseline !important;
   justify-content: space-between;
 }
 
@@ -37,6 +37,7 @@
 .btnSubmit {
   padding: 15px;
   margin-left: 10px;
+  align-self: flex-end;
 }
 
 .fullWidth {
@@ -69,14 +70,13 @@
   font-weight: 500;
   font-size: 18px;
   color: $white;
-  background: $colorBorder!important;
+  background: $colorBorder !important;
   padding: 10px;
   min-width: 131px;
   margin-left: 20px;
 }
 
 .columnSelect {
-
   & > div {
     flex-direction: column;
 
@@ -100,7 +100,7 @@
     font-size: 18px;
     text-transform: uppercase;
     padding: 10px;
-    transition: all .3s;
+    transition: all 0.3s;
 
     &:hover {
       background: $colorBackgroundHover;

@@ -18,7 +18,7 @@ import Button from "../../Button/Button";
 import Pagination from "../../Pagination/Pagination";
 import CarInformation from "../../CarInformation/CarInformation";
 import { stateStatus, status, print } from "./data";
-import styles from "./Dismasting.scss";
+import styles from "./Admin-Dismasting.scss";
 import Loader from "../../Loader/Loader";
 import { updateShipping } from "../../../redux/actions/shipping";
 import { renderSelect, renderInput } from "../../../utils/renderInputs";
