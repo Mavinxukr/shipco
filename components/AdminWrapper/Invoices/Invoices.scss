@@ -7,7 +7,6 @@
 
 .flex {
   display: flex;
-  align-items: baseline!important;
   justify-content: space-between;
 }
 
@@ -70,9 +69,9 @@
   max-width: 113px;
 
   &[disabled] {
-    opacity: .3;
-    border-color: $colorContent!important;
-    color: $colorContent!important;
+    opacity: 0.3;
+    border-color: $colorContent !important;
+    color: $colorContent !important;
   }
 }
 
@@ -98,7 +97,7 @@ td.name_car {
 .total p:before,
 .paid p:before,
 .outstanding p:before {
-  content: '$';
+  content: "$";
 }
 
 .viewBtn + .viewBtn {
@@ -144,20 +143,20 @@ td.name_car {
   height: auto !important;
 }
 
-.customLabel{
+.customLabel {
   z-index: 1;
 
   &:before {
-    background: transparent!important;
-    border: none!important;
-    content: 'Shipping charge invoice'!important;
-    font-weight: 500!important;
-    font-size: 14px!important;
-    width: 180px!important;
-    left: -14px!important;
-    height: auto!important;
-    top: -1px!important;
-    cursor: pointer!important;
+    background: transparent !important;
+    border: none !important;
+    content: "Shipping charge invoice" !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    width: 180px !important;
+    left: -14px !important;
+    height: auto !important;
+    top: -1px !important;
+    cursor: pointer !important;
     z-index: -2;
   }
 }
@@ -167,7 +166,7 @@ td.date,
 td.name_car,
 td.client_id,
 td.vin,
-td.due_day{
+td.due_day {
   padding-bottom: 65px;
 }
 
@@ -180,14 +179,13 @@ th:first-child {
   font-weight: 500;
   font-size: 18px;
   color: $white;
-  background: $colorBorder!important;
+  background: $colorBorder !important;
   padding: 10px;
   min-width: 131px;
   margin-left: 20px;
 }
 
 .columnSelect {
-
   & > div {
     flex-direction: column;
 
@@ -206,8 +204,8 @@ th:first-child {
 }
 
 .heightPopup {
-  padding-top: 50px!important;
-  padding-bottom: 50px!important;
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
   overflow: hidden;
 }
 
@@ -218,7 +216,7 @@ th:first-child {
   font-size: 18px;
   text-transform: uppercase;
   padding: 10px;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     background: $colorBackgroundHover;
@@ -226,12 +224,12 @@ th:first-child {
 }
 
 th.documents svg {
-  display: none
+  display: none;
 }
 
 .filter {
   justify-content: flex-start;
-  align-items: baseline;
+  align-items: center;
   margin-top: 20px;
 
   .btnSubmit {

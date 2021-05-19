@@ -35,9 +35,14 @@
 }
 
 .btnSubmit {
-  padding: 15px;
-  margin-left: 10px;
-  align-self: flex-end;
+  width: auto;
+  height: 46px;
+  margin: 0 0 0 10px;
+  font-weight: 500;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
 }
 
 .fullWidth {
