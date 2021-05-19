@@ -145,15 +145,15 @@ const CustomStepper = ({
             <IconUpdate className={styles.icon} /> {t("updatesSatus")}
           </Button>
           <>
-            {item.ship_info ? (
+            {item.shipping ? (
               <>
-                {item.ship_info.disassembly ? (
+                {/* {item.ship_info.disassembly ? (
                   <p className={cx(styles.center, customBlock)}>Disassembled</p>
-                ) : (
-                  <p className={cx(styles.center, customBlock)}>
-                    {item.shipping.status.split("_").join(" ")}
-                  </p>
-                )}
+                ) : ( */}
+                <p className={cx(styles.center, customBlock)}>
+                  {item.shipping.status.split("_").join(" ")}
+                </p>
+                {/* )} */}
               </>
             ) : null}
           </>
