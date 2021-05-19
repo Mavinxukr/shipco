@@ -1,0 +1,15 @@
+.button {
+  font-size: 18px;
+  font-family: "RobotoRegular", sans-serif;
+  color: #000;
+  color: #f8bebe;
+  margin-left: 10px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.active {
+  font-weight: bold;
+  color: #d73e3e;
+}
+/*# sourceMappingURL=LanguageButton.css.map */

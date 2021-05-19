@@ -1,0 +1,11 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AAAA,OAAO,CAAC;EEEN,SAAS,EFDa,IAAI;EEE1B,WAAW,EDIC,eAAe,EAAE,UAAU;ECHvC,KAAK,EDPQ,IAAI;EDKjB,KAAK,ECGS,OAAO;EDFrB,WAAW,EAAE,IAAI;EACjB,UAAU,EAAE,IAAI;CACjB;;AAED,AAAA,OAAO,CAAC;EACN,WAAW,EAAE,IAAI;EACjB,KAAK,ECVW,OAAO;CDWxB",
+    "sources": [
+        "LanguageButton.scss",
+        "../../../scss/core/_vars.scss",
+        "../../../scss/core/_mixins.scss"
+    ],
+    "names": [],
+    "file": "LanguageButton.css"
+}

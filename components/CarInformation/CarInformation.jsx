@@ -113,22 +113,20 @@ const CarInformation = ({
         />
       </div>
       <div className={styles.column}>
-        {!disassembled && (
-          <>
-            <p>
-              {t("trackingId")}{" "}
-              <span className={styles.colorText}>
-                {(item.ship_info && item.ship_info.tracking_id) ||
-                  t("NoInformation")}
-              </span>
-            </p>
-            <p>
-              {t("pointOfLoading")}{" "}
-              {(item.ship_info && item.ship_info.point_delivery[0]) ||
+        <>
+          <p>
+            {t("trackingId")}{" "}
+            <span className={styles.colorText}>
+              {(item.ship_info && item.ship_info.tracking_id) ||
                 t("NoInformation")}
-            </p>
-          </>
-        )}
+            </span>
+          </p>
+          <p>
+            {t("pointOfLoading")}{" "}
+            {(item.ship_info && item.ship_info.point_delivery[0]) ||
+              t("NoInformation")}
+          </p>
+        </>
 
         <p>
           {t("ContainerId")}{" "}
