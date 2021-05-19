@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'classnames';
-import Link from 'next/link';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import { Field, Form } from 'react-final-form';
-import { getAutoId, updateAutoId } from '../../../redux/actions/autoId';
-import { getCurrentUser } from '../../../redux/actions/currentUser';
-import MainLayout from '../../Layout/Global/Global';
+import React, { useEffect, useState } from "react";
+import cx from "classnames";
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { Field, Form } from "react-final-form";
+import { getAutoId, updateAutoId } from "../../../redux/actions/autoId";
+import { getCurrentUser } from "../../../redux/actions/currentUser";
+import MainLayout from "../../Layout/Global/Global";
 import {
   autoIdDataSelector,
   autoIdDataReceivedSelector,
   currentUserDataSelector,
-} from '../../../utils/selectors';
-import SliderTabs from '../../SliderTabs/SliderTabs';
-import Button from '../../Button/Button';
-import Loader from '../../Loader/Loader';
-import Popup from '../../Popup/Popup';
-import ThumbSlider from '../../ThumbSlider/ThumbSlider';
-import '../../../public/slick/slick.css';
-import styles from './AutoNew.scss';
-import Image from '../../Image/Image';
-import InformationBlock from '../../InformationBlock/InformationBlock';
-import { damage } from './data';
+} from "../../../utils/selectors";
+import SliderTabs from "../../SliderTabs/SliderTabs";
+import Button from "../../Button/Button";
+import Loader from "../../Loader/Loader";
+import Popup from "../../Popup/Popup";
+import ThumbSlider from "../../ThumbSlider/ThumbSlider";
+import "../../../public/slick/slick.css";
+import styles from "./AutoNew.scss";
+import Image from "../../Image/Image";
+import InformationBlock from "../../InformationBlock/InformationBlock";
+import { damage } from "./data";
 
 const arrTypes = [
-  'auction_picture',
-  'warehouse_picture',
-  'container_picture',
-  'car_fax_report',
-  'invoice',
-  'checklist_report',
-  'shipping_damage',
+  "auction_picture",
+  "warehouse_picture",
+  "container_picture",
+  "car_fax_report",
+  "invoice",
+  "checklist_report",
+  "shipping_damage",
 ];
 
 const getArr = (items, arr) =>
@@ -74,34 +74,34 @@ const AutoNew = () => {
   const lotObj = autoId.lot_info;
   const lotArr = Object.keys(lotObj).map((item, index) => ({
     id: index + 1,
-    title: item.split('_').join(' '),
+    title: item.split("_").join(" "),
     value: lotObj[item],
   }));
 
-  lotArr[0].title = 'Lot #  ';
-  lotArr[3].title = 'Highlights';
-  lotArr[4].title = 'Primary Damage';
-  lotArr[5].title = 'Secondary Damage';
-  lotArr[6].title = 'Est. Retail Value';
-  lotArr[7].title = 'VIN';
+  lotArr[0].title = "Lot #  ";
+  lotArr[3].title = "Highlights";
+  lotArr[4].title = "Primary Damage";
+  lotArr[5].title = "Secondary Damage";
+  lotArr[6].title = "Est. Retail Value";
+  lotArr[7].title = "VIN";
 
   const shipOgj = autoId.ship_info;
   const shipArr = Object.keys(shipOgj).map((item, index) => ({
     id: index + 1,
-    title: item.split('_').join(' '),
+    title: item.split("_").join(" "),
     value: shipOgj[item],
   }));
 
-  shipArr[1].title = 'Point of loading';
-  shipArr[3].title = 'Point of delivery';
+  shipArr[1].title = "Point of loading";
+  shipArr[3].title = "Point of delivery";
 
   shipArr.splice(4, 4);
   shipArr.splice(5, 1);
 
   if (shipArr[4].value) {
-    shipArr[4].value = 'Yes';
+    shipArr[4].value = "Yes";
   } else {
-    shipArr[4].value = 'No';
+    shipArr[4].value = "No";
   }
 
   const autoData = getArr(arrTypes, autoId.document);
@@ -118,8 +118,8 @@ const AutoNew = () => {
         {
           auto_id: autoId.id,
           ...values,
-        },
-      ),
+        }
+      )
     );
     setIsCommentPopupOpen(false);
   };
@@ -131,7 +131,7 @@ const AutoNew = () => {
           {autoId.model_name}
         </h3>
         <div className={styles.flex}>
-          <div>
+          <div className={styles.sliderWrapper}>
             <SliderTabs
               autoAuction={autoAuction}
               autoWerhouse={autoWerhouse}
@@ -141,13 +141,13 @@ const AutoNew = () => {
               <a
                 className={cx(
                   styles.link,
-                  autoData[3].images.length === 0 && styles.disabled,
+                  autoData[3].images.length === 0 && styles.disabled
                 )}
                 rel="noopener noreferrer"
                 href={
                   autoData[3].images.length !== 0
                     ? autoData[3].images[0].link_for_download
-                    : '/'
+                    : "/"
                 }
                 download
               >
@@ -156,13 +156,13 @@ const AutoNew = () => {
               <a
                 className={cx(
                   styles.link,
-                  autoData[4].images.length === 0 && styles.disabled,
+                  autoData[4].images.length === 0 && styles.disabled
                 )}
                 rel="noopener noreferrer"
                 href={
                   autoData[4].images.length !== 0
                     ? autoData[4].images[0].link_for_download
-                    : '/'
+                    : "/"
                 }
                 download
               >
@@ -181,13 +181,13 @@ const AutoNew = () => {
               <a
                 className={cx(
                   styles.link,
-                  autoData[5].images.length === 0 && styles.disabled,
+                  autoData[5].images.length === 0 && styles.disabled
                 )}
                 rel="noopener noreferrer"
                 href={
                   autoData[5].images.length !== 0
                     ? autoData[5].images[0].link_for_download
-                    : '/'
+                    : "/"
                 }
                 download
               >
@@ -219,7 +219,7 @@ const AutoNew = () => {
                         {item.value[1]}
                       </>
                     ) : (
-                      <>{item.value ? item.value : ''}</>
+                      <>{item.value ? item.value : ""}</>
                     )}
                   </span>
                 </div>
@@ -230,7 +230,7 @@ const AutoNew = () => {
                 <div className={styles.items} key={`${item.id}${item.title}`}>
                   <span>{item.title}</span>
                   <span className={styles.colorText}>
-                    {autoId.ship_info.damage_status.replace('_', ' ')}
+                    {autoId.ship_info.damage_status.replace("_", " ")}
                   </span>
                 </div>
               ))}
@@ -360,7 +360,7 @@ const AutoNew = () => {
               <div className={styles.bg}>
                 <Link
                   href={{
-                    pathname: '/auto/auto-new',
+                    pathname: "/auto/auto-new",
                     query: {
                       idAuto: item.id,
                     },

@@ -1,8 +1,12 @@
-@import 'scss/core/mixins';
-@import 'scss/core/vars';
+@import "scss/core/mixins";
+@import "scss/core/vars";
 
 .container {
   @include container();
+}
+.sliderWrapper {
+  width: 730px;
+  flex-shrink: 0;
 }
 
 .popularItems {

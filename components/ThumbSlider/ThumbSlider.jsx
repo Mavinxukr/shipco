@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Slider from 'react-slick';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
-import IconArrow from '../../assets/svg/Group (6).svg';
-import styles from '../SliderTabs/SliderTabs.scss';
+import React, { useState } from "react";
+import Slider from "react-slick";
+import cx from "classnames";
+import PropTypes from "prop-types";
+import IconArrow from "../../assets/svg/Group (6).svg";
+import styles from "../SliderTabs/SliderTabs.scss";
 
 const SampleNextArrow = ({ onClick, index, lastIndex }) => (
   <button
@@ -39,7 +39,7 @@ const ThumbSlider = ({ children, customArrow, initialSlide }) => {
       );
     },
     dots: true,
-    dotsClass: 'slick-dots slick-thumb',
+    dotsClass: "slick-dots slick-thumb",
     infinite: false,
     initialSlide: `${initialSlide}`,
     speed: 500,

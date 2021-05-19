@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import PropTypes from 'prop-types';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import ThumbSlider from '../ThumbSlider/ThumbSlider';
-import '../../public/slick/slick.css';
-import styles from './SliderTabs.scss';
-import { sliderItems } from './data';
+import React, { useState } from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import PropTypes from "prop-types";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import ThumbSlider from "../ThumbSlider/ThumbSlider";
+import "../../public/slick/slick.css";
+import styles from "./SliderTabs.scss";
+import { sliderItems } from "./data";
 
-const TabPanel = ({
-  children, value, index, ...other
-}) => (
+const TabPanel = ({ children, value, index, ...other }) => (
   <Typography
     component="div"
     className={styles.tabsItems}
@@ -33,61 +31,61 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-const a11yProps = index => ({
+const a11yProps = (index) => ({
   id: `simple-tab-${index}`,
-  'aria-controls': `simple-tabpanel-${index}`,
+  "aria-controls": `simple-tabpanel-${index}`,
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    marginTop: '15px',
-    width: '100%',
-    maxWidth: '736px',
+    marginTop: "15px",
+    width: "100%",
+    maxWidth: "736px",
   },
   tabs: {
-    backgroundColor: '#f8bebe',
-    color: '#d73e3e',
-    textTransform: 'uppercase',
+    backgroundColor: "#f8bebe",
+    color: "#d73e3e",
+    textTransform: "uppercase",
   },
   items: {
-    padding: '0',
+    padding: "0",
   },
 }));
 
 const AntTabs = withStyles({
   indicator: {
-    display: 'none',
+    display: "none",
   },
 })(Tabs);
 
-const AntTab = withStyles(theme => ({
+const AntTab = withStyles((theme) => ({
   root: {
-    fontWeight: 'bold',
-    maxWidth: '33,4%',
+    fontWeight: "bold",
+    maxWidth: "33,4%",
     opacity: 1,
-    borderLeft: '1px solid #fff',
-    textTransform: 'uppercase',
-    '&:first-child': {
+    borderLeft: "1px solid #fff",
+    textTransform: "uppercase",
+    "&:first-child": {
       borderLeft: 0,
     },
-    '&:hover': {
-      color: '#fff',
+    "&:hover": {
+      color: "#fff",
       opacity: 1,
-      backgroundColor: '#d73e3e',
+      backgroundColor: "#d73e3e",
     },
-    '&$selected': {
-      color: '#fff',
-      backgroundColor: '#d73e3e',
+    "&$selected": {
+      color: "#fff",
+      backgroundColor: "#d73e3e",
     },
-    '&:focus': {
-      color: '#fff',
-      backgroundColor: '#d73e3e',
+    "&:focus": {
+      color: "#fff",
+      backgroundColor: "#d73e3e",
     },
   },
   selected: {},
-}))(props => <Tab disableRipple {...props} />);
+}))((props) => <Tab disableRipple {...props} />);
 
 const SliderTabs = ({ autoAuction, autoWerhouse, autoContainer }) => {
   const classes = useStyles();
@@ -114,28 +112,27 @@ const SliderTabs = ({ autoAuction, autoWerhouse, autoContainer }) => {
       </AppBar>
       <TabPanel className={styles.itemTabs} value={value} index={0}>
         {autoAuction.length === 0 ? (
-          <div className={styles.noImages}>
-            there are no pictures
+          <div className={styles.noImages}>there are no pictures</div>
+        ) : autoAuction.length === 1 ? (
+          <div className={styles.slid}>
+            <img src={autoAuction[0].link} alt={autoAuction[0].name} />
           </div>
         ) : (
           <ThumbSlider initialSlide={0}>
-            {autoAuction.map(item => (
+            {autoAuction.map((item) => (
               <div key={item.id} className={styles.slid}>
                 <img src={item.link} alt={item.name} />
               </div>
             ))}
           </ThumbSlider>
         )}
-
       </TabPanel>
       <TabPanel className={styles.itemTabs} value={value} index={1}>
         {autoWerhouse.length === 0 ? (
-          <div className={styles.noImages}>
-            there are no pictures
-          </div>
+          <div className={styles.noImages}>there are no pictures</div>
         ) : (
           <ThumbSlider initialSlide={0}>
-            {autoWerhouse.map(item => (
+            {autoWerhouse.map((item) => (
               <div key={item.id} className={styles.slid}>
                 <img src={item.link} alt={item.name} />
               </div>
@@ -145,12 +142,10 @@ const SliderTabs = ({ autoAuction, autoWerhouse, autoContainer }) => {
       </TabPanel>
       <TabPanel className={styles.itemTabs} value={value} index={2}>
         {autoContainer.length === 0 ? (
-          <div className={styles.noImages}>
-            there are no pictures
-          </div>
+          <div className={styles.noImages}>there are no pictures</div>
         ) : (
           <ThumbSlider initialSlide={0}>
-            {autoContainer.map(item => (
+            {autoContainer.map((item) => (
               <div key={item.id} className={styles.slid}>
                 <img src={item.link} alt={item.name} />
               </div>
