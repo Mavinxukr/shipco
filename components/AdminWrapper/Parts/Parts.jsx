@@ -232,6 +232,7 @@ const Parts = () => {
   };
 
   const onSubmitUpdate = async (values) => {
+    console.log(values);
     setLoading(true);
     setError("");
 
@@ -422,129 +423,121 @@ const Parts = () => {
         <Popup setIsPopupOpen={setIsPopupUpdateOpen} title={t("UPDATEPART")}>
           <Form
             onSubmit={onSubmitUpdate}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <Field
-                  name="client_id"
-                  type="text"
-                  defaultValue={updateData.client_id || ""}
-                >
-                  {renderInput({
-                    label: t("ClientID"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                {/* <Field */}
-                {/*  name="catalog_number" */}
-                {/*  component={renderSelect({ */}
-                {/*    placeholder: updateData.catalog_number, */}
-                {/*    label: 'Catalog number', */}
-                {/*    classNameWrapper: styles.popupFieldRow, */}
-                {/*    classNameLabel: styles.label, */}
-                {/*    widthInputBlock: styles.widthInput, */}
-                {/*  })} */}
-                {/*  options={catalogArr} */}
-                {/* /> */}
-                <Field
-                  name="name"
-                  type="text"
-                  defaultValue={updateData.name || ""}
-                >
-                  {renderInput({
-                    label: t("Name"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field
-                  name="auto"
-                  type="text"
-                  defaultValue={updateData.auto || ""}
-                >
-                  {renderInput({
-                    label: t("Auto"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field
-                  name="vin"
-                  type="text"
-                  validate={vinNum}
-                  defaultValue={updateData.vin || ""}
-                >
-                  {renderInput({
-                    label: t("VINNumber"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field
-                  name="status"
-                  component={renderSelect({
-                    placeholder: t(
-                      updateData.status.split("_").join(" ").toUpperCase()
-                    ),
-                    label: t("Status"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                  options={statusSelect(t)}
-                />
-                <Field
-                  name="quality"
-                  type="text"
-                  defaultValue={updateData.quality || ""}
-                  validate={mustBeNumber}
-                >
-                  {renderInput({
-                    label: t("Quantity"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field
-                  name="container"
-                  validate={composeValidators(mustBeNumber)}
-                  type="text"
-                  defaultValue={updateData.container || ""}
-                >
-                  {renderInput({
-                    label: "Add container #",
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Previews
-                  idAuto={updateData.id}
-                  icon={<IconUpload className={styles.icon} />}
-                  setArrPics={setArrPicsContainer}
-                  arrPics={arrPicsContainer}
-                  title={t("Addphoto")}
-                  customText={styles.customText}
-                  customIconBlock={styles.customIconBlock}
-                  customThumbs={styles.thumbs}
-                  setNewArrPics={setNewArrPicsContainer}
-                  newArrPics={newArrPicsContainer}
-                />
-                {error ? <p>{error}</p> : null}
-                <Button
-                  customBtn={styles.btnSubmit}
-                  type="submit"
-                  disabled={loading || submitting || invalid}
-                >
-                  {t("UPDATEPART")}
-                </Button>
-              </form>
-            )}
+            render={({ handleSubmit, invalid, submitting }) => {
+              console.log(invalid);
+              return (
+                <form onSubmit={handleSubmit}>
+                  <Field
+                    name="client_id"
+                    type="text"
+                    defaultValue={updateData.client_id || ""}
+                  >
+                    {renderInput({
+                      label: t("ClientID"),
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameWrapperLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                  </Field>
+                  <Field
+                    name="name"
+                    type="text"
+                    defaultValue={updateData.name || ""}
+                  >
+                    {renderInput({
+                      label: t("Name"),
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameWrapperLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                  </Field>
+                  <Field
+                    name="auto"
+                    type="text"
+                    defaultValue={updateData.auto || ""}
+                  >
+                    {renderInput({
+                      label: t("Auto"),
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameWrapperLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                  </Field>
+                  <Field
+                    name="vin"
+                    type="text"
+                    validate={vinNum}
+                    defaultValue={updateData.vin || ""}
+                  >
+                    {renderInput({
+                      label: t("VINNumber"),
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameWrapperLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                  </Field>
+                  <Field
+                    name="status"
+                    component={renderSelect({
+                      placeholder: t(
+                        updateData.status.split("_").join(" ").toUpperCase()
+                      ),
+                      label: t("Status"),
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                    options={statusSelect(t)}
+                  />
+                  <Field
+                    name="quality"
+                    type="text"
+                    defaultValue={updateData.quality || ""}
+                    validate={mustBeNumber}
+                  >
+                    {renderInput({
+                      label: t("Quantity"),
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameWrapperLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                  </Field>
+                  <Field
+                    name="container"
+                    validate={composeValidators(mustBeNumber)}
+                    type="text"
+                    defaultValue={updateData.container || ""}
+                  >
+                    {renderInput({
+                      label: "Add container #",
+                      classNameWrapper: styles.popupFieldRow,
+                      classNameWrapperLabel: styles.label,
+                      widthInputBlock: styles.widthInput,
+                    })}
+                  </Field>
+                  <Previews
+                    idAuto={updateData.id}
+                    icon={<IconUpload className={styles.icon} />}
+                    setArrPics={setArrPicsContainer}
+                    arrPics={arrPicsContainer}
+                    title={t("Addphoto")}
+                    customText={styles.customText}
+                    customIconBlock={styles.customIconBlock}
+                    customThumbs={styles.thumbs}
+                    setNewArrPics={setNewArrPicsContainer}
+                    newArrPics={newArrPicsContainer}
+                  />
+                  {error ? <p className={styles.error}>{error}</p> : null}
+                  <Button
+                    customBtn={styles.btnSubmit}
+                    type="submit"
+                    disabled={loading || submitting}
+                  >
+                    {t("UPDATEPART")}
+                  </Button>
+                </form>
+              );
+            }}
           />
         </Popup>
       )}
