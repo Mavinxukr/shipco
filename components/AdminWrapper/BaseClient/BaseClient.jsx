@@ -91,7 +91,7 @@ const BaseClient = () => {
 
   useEffect(() => {
     dispatch(getBaseClient({}));
-    getSession().then((session) => console.log(session));
+    // getSession().then((session) => console.log(session));
   }, []);
 
   useEffect(() => {
@@ -390,52 +390,67 @@ const BaseClient = () => {
 export default BaseClient;
 
 const Table = ({ columns, data, setClients }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-        initialState: { pageIndex: 0 },
-      },
-      useSortBy,
-      useRowSelect,
-      (hooks) => {
-        hooks.allColumns.push((columns) => [
-          {
-            id: "selection",
-            Header: ({ getToggleAllRowsSelectedProps }) => (
-              <>
-                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-              </>
-            ),
-            Cell: ({ row }) => (
-              <>
-                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-              </>
-            ),
-          },
-          ...columns,
-        ]);
-      }
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    selectedFlatRows,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0 },
+    },
+    useSortBy,
+    useRowSelect,
+    (hooks) => {
+      hooks.allColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <>
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+            </>
+          ),
+          Cell: ({ row }) => (
+            <>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </>
+          ),
+        },
+        ...columns,
+      ]);
+    }
+  );
+
+  useEffect(() => {
+    const clients = selectedFlatRows.map((item) => item.values.id);
+    setClients((prev) =>
+      JSON.stringify(prev) !== JSON.stringify(clients) ? clients : prev
     );
+  }, [selectedFlatRows]);
 
   return (
     <>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  className={styles.sortHeader}
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  <IconSortTable className={styles.sort} />
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
+          {headerGroups.map((headerGroup) => {
+            return (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    className={styles.sortHeader}
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                  >
+                    <IconSortTable className={styles.sort} />
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            );
+          })}
         </thead>
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
@@ -446,23 +461,6 @@ const Table = ({ columns, data, setClients }) => {
                   <td
                     className={`BaseClient-${cell.column.id}`}
                     {...cell.getCellProps()}
-                    onClick={() => {
-                      if (!cell.row.isSelected) {
-                        // arrClientsId.push(cell.row.original.id);
-                        setClients((prev) => [...prev, cell.row.original.id]);
-                      } else {
-                        setClients((prev) =>
-                          prev.filter((item) => item !== cell.row.original.id)
-                        );
-
-                        // const index = arrClientsId.indexOf(
-                        //   cell.row.original.id
-                        // );
-                        // if (index > -1) {
-                        //   arrClientsId.splice(index, 1);
-                        // }
-                      }
-                    }}
                   >
                     {cell.render("Cell")}
                   </td>
