@@ -111,7 +111,6 @@ const Table = ({
                           customBtn={styles.actionsButton}
                           onClick={() => {
                             setItemGroup(cell.row.original);
-                            console.log(cell.row.original);
                             setPriceable(cell.row.original.applicable.name);
                             setIsPopupUpdate(true);
                           }}

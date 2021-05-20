@@ -232,7 +232,6 @@ const Parts = () => {
   };
 
   const onSubmitUpdate = async (values) => {
-    console.log(values);
     setLoading(true);
     setError("");
 
@@ -424,7 +423,6 @@ const Parts = () => {
           <Form
             onSubmit={onSubmitUpdate}
             render={({ handleSubmit, invalid, submitting }) => {
-              console.log(invalid);
               return (
                 <form onSubmit={handleSubmit}>
                   <Field

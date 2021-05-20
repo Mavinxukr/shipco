@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Field, Form } from 'react-final-form';
-import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/client';
+import React, { useState, useEffect } from "react";
+import { Field, Form } from "react-final-form";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/client";
 
 import {
   composeValidators,
   emailValidation,
   required,
-} from '../../../utils/validation';
+} from "../../../utils/validation";
 
-import { renderInput } from '../../../utils/renderInputs';
-import { useSession } from 'next-auth/client';
-import Button from '../../Button/Button';
-import styles from './Admin.scss';
-import Loader from '../../Loader/Loader';
+import { renderInput } from "../../../utils/renderInputs";
+import { useSession } from "next-auth/client";
+import Button from "../../Button/Button";
+import styles from "./Admin.scss";
+import Loader from "../../Loader/Loader";
 
 const Admin = () => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [session, loading] = useSession();
 
   const router = useRouter();
 
   useEffect(() => {
     if (session) {
-      router.replace('/');
+      router.replace("/");
     }
   }, [router]);
 
@@ -32,13 +32,12 @@ const Admin = () => {
   }
 
   const submitHandle = async (values) => {
-    const result = await signIn('admin', {
+    const result = await signIn("admin", {
       redirect: false,
       ...values,
     });
-    console.log(result);
     if (!result.error) {
-      router.replace('/base-client');
+      router.replace("/base-client");
     } else {
       setErrorMessage(result.error);
     }
@@ -57,8 +56,8 @@ const Admin = () => {
               type="email"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Email Address',
+                label: "",
+                placeholder: "Email Address",
               })}
             </Field>
             <Field
@@ -67,8 +66,8 @@ const Admin = () => {
               type="password"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Password',
+                label: "",
+                placeholder: "Password",
               })}
             </Field>
             {errorMessage && (

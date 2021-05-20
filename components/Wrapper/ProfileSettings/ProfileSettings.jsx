@@ -35,7 +35,6 @@ const ProfileSettings = () => {
   const userData = useSelector(currentUserDataSelector);
   const { t } = useTranslation("profile");
 
-  console.log(userData);
   useEffect(() => {
     if (userData && userData.image) {
       setImage(userData.image);

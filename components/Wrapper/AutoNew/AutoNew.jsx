@@ -63,7 +63,6 @@ const AutoNew = () => {
 
   useEffect(() => {
     const idAuto = router.query.idAuto;
-    console.log(idAuto);
     dispatch(getAutoId({}, +idAuto));
   }, [router.query]);
 

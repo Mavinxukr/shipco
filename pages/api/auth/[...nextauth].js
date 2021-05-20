@@ -23,7 +23,6 @@ const providers = [
           });
         }
       } catch (e) {
-        console.log(e);
         // This will return the error object to the signIn callback
         const errorMessage = e.response.data.message;
 
@@ -48,7 +47,6 @@ const providers = [
           },
         );
 
-        console.log(admin);
 
         if (admin.status) {
           return Promise.resolve({
@@ -85,7 +83,6 @@ const callbacks = {
     const updatedToken = { ...token };
 
     if (user) {
-      console.log(user);
       updatedToken.accessToken = user.data.data.auth.token;
       updatedToken.user = {
         name: user.data.data.user.name,

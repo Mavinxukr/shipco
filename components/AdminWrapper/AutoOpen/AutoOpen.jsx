@@ -96,7 +96,6 @@ const AutoOpen = () => {
   if (!isDataReceived) {
     return <Loader />;
   }
-  console.log(auto.data.lot_info);
 
   const saleObj = auto.data.sale_info || [];
   const saleArr = Object.keys(saleObj).map((item, index) => ({

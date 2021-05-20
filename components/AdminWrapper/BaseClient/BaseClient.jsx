@@ -109,7 +109,6 @@ const BaseClient = () => {
   }
 
   const arrClientsId = [];
-  console.log(clients);
 
   const onSubmit = (values) => {
     dispatch(

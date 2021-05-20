@@ -135,7 +135,6 @@ const CustomStepper = ({
           ))}
         </Stepper>
       </div>
-      {console.log(status)}
       {status ? (
         <div className={classNameForOpenStatus}>
           <Button
