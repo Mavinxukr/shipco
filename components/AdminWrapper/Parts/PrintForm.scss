@@ -1,0 +1,47 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.columnSelect {
+  & > div {
+    flex-direction: column;
+
+    label {
+      width: 100%;
+      margin: 10px;
+    }
+
+    div + div {
+      left: 0;
+      top: 80px;
+      max-height: 89px;
+      min-height: 8px;
+    }
+  }
+
+  .btnSubmit {
+    margin-left: 0;
+    margin-top: 40px;
+    width: 100% !important;
+  }
+}
+
+.btnSubmit {
+  width: 100%;
+  margin-top: 10px;
+  height: 40px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 521px) {
+    margin-top: 50px;
+  }
+}

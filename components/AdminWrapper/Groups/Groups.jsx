@@ -1,82 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Field, Form } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useTable } from "react-table";
-import Example from "../../Multi/Multi";
-import {
-  getGroups,
-  deleteGroups,
-  addNewGroups,
-  updateGroups,
-} from "../../../redux/actions/groups";
+import { getGroups } from "../../../redux/actions/groups";
 import {
   groupsDataSelector,
   groupsDataReceivedSelector,
 } from "../../../utils/selectors";
-import { printData, getIdsArr } from "../../../utils/helpers";
 import Button from "../../Button/Button";
-import Popup from "../../Popup/Popup";
 import MainLayout from "../../Layout/Global/Global";
 import IconPlus from "../../../assets/svg/Plus.svg";
 import CustomTable from "../../CustomTable/CustomTable";
-import {
-  composeValidators,
-  required,
-  mustBeNumber,
-} from "../../../utils/validation";
 import Pagination from "../../Pagination/Pagination";
-import { renderInput } from "../../../utils/renderInputs";
 import { columns, print } from "./data";
 import Loader from "../../Loader/Loader";
 import IconTrash from "../../../assets/svg/Trash.svg";
 import styles from "./Groups.scss";
 import IconP from "../../../assets/svg/p.svg";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../../context/PopupContext";
+import { AddNewGroupsForm } from "./AddNewGroupsForm";
+import { EditGroupForm } from "./EditGroupForm";
+import { DeleteGroupForm } from "./DeleteGroupForm";
+import { PrintForm } from "./PrintForm";
 
-const Table = ({ columns, data, dispatch, groupsArr }) => {
+const Table = ({ columns, data, groupsArr }) => {
+  const { setIsOpen, setContent } = useContext(PopupContext);
+
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
     useTable({
       columns,
       data,
       initialState: { pageIndex: 0 },
     });
-  const [deleteId, setDeleteId] = useState(null);
-  const [isPopupDelete, setIsPopupDelete] = useState(false);
-  const [isPopupUpdate, setIsPopupUpdate] = useState(false);
-  const [itemGroup, setItemGroup] = useState(null);
-  const [selected, setSelected] = useState([]);
-  const { t } = useTranslation("admin-groups");
-
-  const onSubmit = (values) => {
-    const id = selected;
-    const arrId = Object.keys(id).map((item, index) => ({
-      value: Object.values(id)[index].value,
-    }));
-    const submitId = [];
-    arrId.forEach((item) => {
-      submitId.push(Object.values(item));
-    });
-    dispatch(
-      updateGroups(
-        {},
-        {
-          ...values,
-          clients: submitId.join(),
-        },
-        itemGroup.id
-      )
-    );
-    setIsPopupUpdate(false);
-  };
-
-  if (isPopupUpdate === true) {
-    document.querySelector("#__next").classList.add("Global-overflow");
-  } else {
-    document.querySelector("#__next").classList.remove("Global-overflow");
-  }
 
   return (
     <>
@@ -111,16 +69,18 @@ const Table = ({ columns, data, dispatch, groupsArr }) => {
                           type="button"
                           customBtn={styles.actionsButton}
                           onClick={() => {
-                            setItemGroup(cell.row.original);
-                            setIsPopupUpdate(true);
-                            setSelected(
-                              cell.row.original.clients
+                            setContent(EditGroupForm, {
+                              itemGroup: cell.row.original,
+                              select: cell.row.original.clients
                                 ? cell.row.original.clients.map((item) => ({
                                     value: item.clients.id,
                                     label: item.clients.name,
                                   }))
-                                : selected
-                            );
+                                : [],
+                              allUsers: groupsArr,
+                            });
+
+                            setIsOpen(true);
                           }}
                         >
                           <IconP />
@@ -129,8 +89,11 @@ const Table = ({ columns, data, dispatch, groupsArr }) => {
                           type="button"
                           customBtn={styles.actionsButton}
                           onClick={() => {
-                            setDeleteId(cell.row.original.id);
-                            setIsPopupDelete(true);
+                            setContent(DeleteGroupForm, {
+                              deleteId: cell.row.original.id,
+                            });
+
+                            setIsOpen(true);
                           }}
                         >
                           <IconTrash />
@@ -179,81 +142,13 @@ const Table = ({ columns, data, dispatch, groupsArr }) => {
           })}
         </tbody>
       </table>
-      {isPopupUpdate && (
-        <Popup setIsPopupOpen={setIsPopupUpdate} title={t("UPDATEGROUP")}>
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <Field
-                  name="name"
-                  validate={required}
-                  type="text"
-                  defaultValue={itemGroup.name}
-                >
-                  {renderInput({
-                    label: t("Name"),
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <Example
-                  options={groupsArr}
-                  setSelected={setSelected}
-                  value={selected}
-                  label={t("Clientsid")}
-                />
-                <div className={styles.submitPopup}>
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("UPDATEGROUP")}{" "}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
-      {isPopupDelete && (
-        <Popup setIsPopupOpen={setIsPopupDelete} title="Delete this group">
-          <p>Are you sure that you want to delete this group?</p>
-          <div className={styles.groupPopupBtn}>
-            <Button
-              type="button"
-              customBtn={styles.popupBtn}
-              onClick={() => {
-                dispatch(deleteGroups({}, deleteId));
-                setDeleteId(null);
-                setIsPopupDelete(false);
-              }}
-            >
-              Yes
-            </Button>
-            <Button
-              type="button"
-              customBtn={styles.popupBtn}
-              onClick={() => {
-                setDeleteId(null);
-                setIsPopupDelete(false);
-              }}
-            >
-              No
-            </Button>
-          </div>
-        </Popup>
-      )}
     </>
   );
 };
 
 const Groups = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [printPopup, setPrintPopup] = useState(false);
-  const [selected, setSelected] = useState([]);
+  const { setIsOpen, setContent } = useContext(PopupContext);
+
   const { t } = useTranslation("admin-groups");
   const groups = useSelector(groupsDataSelector);
   const isDataReceived = useSelector(groupsDataReceivedSelector);
@@ -278,39 +173,6 @@ const Groups = () => {
     return <Loader />;
   }
 
-  const onSubmit = (values) => {
-    const arrId = selected.map((item) => item.value);
-    dispatch(
-      addNewGroups(
-        {},
-        {
-          ...values,
-          clients: arrId.join(),
-        }
-      )
-    );
-    setIsPopupOpen(false);
-  };
-
-  const onSubmitPrint = () => {
-    const idsArr = getIdsArr(selected);
-    printData({
-      params: {
-        fields: idsArr,
-      },
-      table: "groups",
-      selected: idsArr,
-      setSelected,
-      setPrintPopup,
-    });
-  };
-
-  if (isPopupOpen === true || printPopup === true) {
-    document.querySelector("#__next").classList.add("Global-overflow");
-  } else {
-    document.querySelector("#__next").classList.remove("Global-overflow");
-  }
-
   return (
     <MainLayout admin>
       <div className={styles.container}>
@@ -324,7 +186,8 @@ const Groups = () => {
               customBtn={styles.btnIcon}
               onClick={() => {
                 setSelected([]);
-                setIsPopupOpen(true);
+                setContent(AddNewGroupsForm);
+                setIsOpen(true);
               }}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
@@ -334,7 +197,10 @@ const Groups = () => {
           <div className={styles.groupBtn}>
             <Button
               customBtn={styles.rightBtn}
-              onClick={() => setPrintPopup(true)}
+              onClick={() => {
+                setContent(PrintForm);
+                setIsOpen(true);
+              }}
             >
               {t("print")}
             </Button>
@@ -366,70 +232,6 @@ const Groups = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
-      {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title={t("Add New Groups")}>
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <Field name="name" validate={required} type="text">
-                  {renderInput({
-                    label: t("Name"),
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <Example
-                  options={groups.additional.clients}
-                  setSelected={setSelected}
-                  value={selected}
-                  label={t("Clientsid")}
-                />
-                <div className={styles.submitPopup}>
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("Add New Groups")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
-      {printPopup && (
-        <Popup
-          customPopup={styles.heightPopup}
-          setIsPopupOpen={setPrintPopup}
-          title={t("PRINT")}
-        >
-          <Form
-            onSubmit={onSubmitPrint}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <div className={styles.columnSelect}>
-                  <Example
-                    options={print(t)}
-                    setSelected={setSelected}
-                    value={selected}
-                    label={t("SelectPrint")}
-                  />
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("SUBMIT")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

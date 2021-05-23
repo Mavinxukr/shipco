@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { useSortBy, useTable } from "react-table";
@@ -18,13 +18,13 @@ import { renderInputFile } from "../../../utils/renderInputs";
 import IconPlus from "../../../assets/svg/Plus.svg";
 import Loader from "../../Loader/Loader";
 import Button from "../../Button/Button";
-import { printData, getIdsArr } from "../../../utils/helpers";
-import Popup from "../../Popup/Popup";
-import MultiSelect from "../../Multi/Multi";
-import { print, columns } from "./data";
+
+import { columns } from "./data";
 import Pickers from "../../Pickers/Pickers";
 import styles from "./Invoices.scss";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../../context/PopupContext";
+import { PrintForm } from "./PrintForm";
 
 const Table = ({ columns, data, dispatch }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -136,9 +136,8 @@ const Table = ({ columns, data, dispatch }) => {
 const Invoices = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { setIsOpen, setContent } = useContext(PopupContext);
   const { t } = useTranslation("admin-invoices");
-  const [printPopup, setPrintPopup] = useState(false);
-  const [selected, setSelected] = useState([]);
 
   const invoices = useSelector(invoicesDataSelector);
   const isDataReceived = useSelector(invoicesDataReceivedSelector);
@@ -162,19 +161,6 @@ const Invoices = () => {
   if (!isDataReceived) {
     return <Loader />;
   }
-
-  const onSubmitPrint = () => {
-    const idsArr = getIdsArr(selected);
-    printData({
-      params: {
-        fields: idsArr,
-      },
-      table: "invoices",
-      selected: idsArr,
-      setSelected,
-      setPrintPopup,
-    });
-  };
 
   const onSubmitFilter = async (values) => {
     router.push({
@@ -211,7 +197,10 @@ const Invoices = () => {
           <h4 className={styles.title}>{t("invoices")}</h4>
           <Button
             customBtn={styles.rightBtn}
-            onClick={() => setPrintPopup(true)}
+            onClick={() => {
+              setContent(PrintForm);
+              setIsOpen(true);
+            }}
           >
             {t("print")}
           </Button>
@@ -275,36 +264,6 @@ const Invoices = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
-      {printPopup && (
-        <Popup
-          customPopup={styles.heightPopup}
-          setIsPopupOpen={setPrintPopup}
-          title={t("print")}
-        >
-          <Form
-            onSubmit={onSubmitPrint}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <div className={styles.columnSelect}>
-                  <MultiSelect
-                    options={print(t)}
-                    setSelected={setSelected}
-                    value={selected}
-                    label={t("selectPrint")}
-                  />
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("submit")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

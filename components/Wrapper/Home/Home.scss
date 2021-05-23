@@ -49,6 +49,11 @@
 .cars {
   background: #fafafa;
   padding: 100px 0;
+  &_buttonWrapper {
+    margin: 100px auto 15px auto;
+    width: 250px;
+    height: 50px;
+  }
 }
 
 .carsTitle {
@@ -57,9 +62,16 @@
 }
 
 .carsItems {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 82px;
+  grid-row-gap: 80px;
+}
+.carsItem {
+  width: 100%;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 .testimonialsTitle {

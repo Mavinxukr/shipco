@@ -1,0 +1,35 @@
+@import "../../../scss/core/vars";
+
+.popupFieldRow {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+
+  label {
+    margin: 0;
+    width: auto;
+  }
+}
+
+.widthInputBlock {
+  width: 70%;
+}
+
+.submitPopup {
+  width: 100%;
+}
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}

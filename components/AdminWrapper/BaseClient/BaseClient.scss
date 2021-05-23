@@ -97,14 +97,6 @@
   margin: 0 10px;
 }
 
-.sort {
-  margin-right: 10px;
-}
-
-.sortHeader:first-child svg {
-  display: none;
-}
-
 th:first-child {
   width: 45px;
   text-align: center;
@@ -114,88 +106,13 @@ form .flex {
   padding: 10px 0;
 }
 
-.submitPopup {
-  padding-left: 167px !important;
-  width: 100% !important;
-
-  @media screen and (max-width: 768px) {
-    padding-left: 0 !important;
-  }
-}
-
-.error {
-  color: $colorBackground;
-}
-
-.btnSubmit {
-  width: 100%;
-  font-weight: 500;
-  margin-top: 40px;
-  font-size: 18px;
-  text-transform: uppercase;
-  padding: 10px;
-  transition: all 0.3s;
-
-  &:hover {
-    background: $colorBackgroundHover;
-  }
-}
-
 .id span {
   color: $colorBackground;
-}
-
-.popupFieldRow {
-  flex-direction: row !important;
-  align-items: center;
-  padding: 10px 0;
-  width: 100% !important;
-
-  label {
-    margin: 0 31px 0 0 !important;
-    min-width: 136px;
-  }
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column !important;
-
-    label {
-      margin: 10px 0 !important;
-      width: 100% !important;
-      min-width: 100%;
-    }
-  }
-}
-
-.widthInputBlock {
-  width: 360px !important;
-
-  @media screen and (max-width: 768px) {
-    width: 100% !important;
-  }
 }
 
 .scrollTable {
   width: 100%;
   overflow: auto;
-}
-
-.columnSelect {
-  & > div {
-    flex-direction: column;
-
-    label {
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    div + div {
-      left: 0;
-      top: 80px;
-      max-height: 89px;
-      min-height: 8px;
-    }
-  }
 }
 
 .heightPopup {

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import classes from './FormRegistration.scss';
-import { Field, Form } from 'react-final-form';
-import Button from '../Button/Button';
-import { renderInput } from '../../utils/renderInputs';
-import { registration } from '../../services/user';
-import { signIn } from 'next-auth/client';
-import { useRouter } from 'next/router';
+import React, { useState, useContext } from "react";
+import classes from "./FormRegistration.scss";
+import { Field, Form } from "react-final-form";
+import Button from "../Button/Button";
+import { renderInput } from "../../utils/renderInputs";
+import { registration } from "../../services/user";
+import { signIn } from "next-auth/client";
+import { useRouter } from "next/router";
 
 import {
   composeValidators,
@@ -14,21 +14,25 @@ import {
   passwordValidation,
   snpValidation,
   validateForm,
-} from '../../utils/validation';
+} from "../../utils/validation";
+import { PopupContext } from "../../context/PopupContext";
+import { FormAuth } from "../FormAuth/FormAuth";
+
 export const FormRegistration = ({ setVariant }) => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+  const { setContent } = useContext(PopupContext);
 
   const onSubmit = async (values, funcAuth) => {
     const response = await funcAuth({}, values);
     if (response.status) {
-      const result = await signIn('user', {
+      const result = await signIn("user", {
         redirect: false,
         email: values.email,
         password: values.password,
       });
       if (!result.error) {
-        router.replace('/overview');
+        router.replace("/overview");
       } else {
         setErrorMessage(result.error);
       }
@@ -49,8 +53,8 @@ export const FormRegistration = ({ setVariant }) => {
               type="text"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Name',
+                label: "",
+                placeholder: "Name",
               })}
             </Field>
             <Field
@@ -59,8 +63,8 @@ export const FormRegistration = ({ setVariant }) => {
               type="email"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Email Address',
+                label: "",
+                placeholder: "Email Address",
               })}
             </Field>
             <Field
@@ -69,14 +73,14 @@ export const FormRegistration = ({ setVariant }) => {
               type="password"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Password',
+                label: "",
+                placeholder: "Password",
               })}
             </Field>
             <Field name="password_confirmation" type="password">
               {renderInput({
-                label: '',
-                placeholder: 'Confirm password',
+                label: "",
+                placeholder: "Confirm password",
               })}
             </Field>
             <div className={classes.checkboxBlock}>
@@ -106,11 +110,11 @@ export const FormRegistration = ({ setVariant }) => {
         )}
       />
       <p className={classes.text}>
-        Already Registered?{' '}
+        Already Registered?{" "}
         <Button
           customBtn={classes.btnRegister}
           onClick={() => {
-            setVariant('signIn');
+            setContent(<FormAuth />);
           }}
         >
           Log In

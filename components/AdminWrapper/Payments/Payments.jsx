@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { Field, Form } from "react-final-form";
@@ -34,19 +34,12 @@ import IconP from "../../../assets/svg/p.svg";
 import IconTrash from "../../../assets/svg/Trash.svg";
 import { columns, city, type } from "./data";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../../context/PopupContext";
+import { AddNewPayments } from "./AddNewPayments";
+import { EditPaymentsForm } from "./EditPaymentsForm";
 
-const Table = ({
-  columns,
-  data,
-  dispatch,
-  paymentsData,
-  setPaymentsData,
-  payments,
-}) => {
-  const [isPopupUpdate, setIsPopupUpdate] = useState(false);
-  const [itemGroup, setItemGroup] = useState(null);
-  const [priceable, setPriceable] = useState("");
-  const { t } = useTranslation("admin-payments");
+const Table = ({ columns, data, dispatch }) => {
+  const { setContent, setIsOpen } = useContext(PopupContext);
 
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
     useTable({
@@ -54,28 +47,6 @@ const Table = ({
       data,
       initialState: { pageIndex: 0 },
     });
-
-  const onSubmit = (values) => {
-    dispatch(
-      updatePayments(
-        {},
-        {
-          ...values,
-          applicable_type:
-            values.applicable_type && values.applicable_type.value,
-          applicable_id: values.applicable_id && values.applicable_id.value,
-        },
-        itemGroup.id
-      )
-    );
-    setIsPopupUpdate(false);
-  };
-
-  if (isPopupUpdate === true) {
-    document.querySelector("#__next").classList.add("Global-overflow");
-  } else {
-    document.querySelector("#__next").classList.remove("Global-overflow");
-  }
 
   return (
     <>
@@ -110,9 +81,10 @@ const Table = ({
                           type="button"
                           customBtn={styles.actionsButton}
                           onClick={() => {
-                            setItemGroup(cell.row.original);
-                            setPriceable(cell.row.original.applicable.name);
-                            setIsPopupUpdate(true);
+                            setContent(EditPaymentsForm, {
+                              data: cell.row.original,
+                            });
+                            setIsOpen(true);
                           }}
                         >
                           <IconP />
@@ -139,94 +111,16 @@ const Table = ({
           })}
         </tbody>
       </table>
-      {isPopupUpdate && (
-        <Popup setIsPopupOpen={setIsPopupUpdate} title="Update Payments ">
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <Field
-                  name="name"
-                  validate={required}
-                  type="text"
-                  defaultValue={itemGroup.name || ""}
-                >
-                  {renderInput({
-                    label: t("name"),
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <Field
-                  name="applicable_type"
-                  component={renderSelect({
-                    placeholder: itemGroup.applicable_type || "",
-                    label: t("applicableType"),
-                    classNameWrapper: "SelectCustom-popupFieldRow",
-                    custonOnChange: (value) => {
-                      setPriceable("");
-                      const key =
-                        value.label === "clients" ? "clients" : "groups";
-                      setPaymentsData(payments.additional[key]);
-                    },
-                  })}
-                  options={type}
-                />
-                <Field
-                  name="applicable_id"
-                  component={renderSelect({
-                    placeholder: priceable,
-                    label: t("applicableId"),
-                    id: "priceable_id",
-                    classNameWrapper: "SelectCustom-popupFieldRow",
-                  })}
-                  options={
-                    (paymentsData &&
-                      paymentsData.map((item) => ({
-                        value: item.id,
-                        label: item.name,
-                      }))) ||
-                    []
-                  }
-                />
-                <Field
-                  name="due_day"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                  defaultValue={itemGroup.due_day || ""}
-                >
-                  {renderInput({
-                    label: t("daysToPay"),
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <div className={styles.submitPopup}>
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("UPDATE PRICE")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </>
   );
 };
 
 const Payments = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [paymentsData, setPaymentsData] = useState(null);
   const { t } = useTranslation("admin-payments");
   const payments = useSelector(paymentsDataSelector);
   const isDataReceived = useSelector(paymentsDataReceivedSelector);
+  const { setContent, setIsOpen } = useContext(PopupContext);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -256,28 +150,6 @@ const Payments = () => {
     return <Loader />;
   }
 
-  const onSubmit = (values) => {
-    dispatch(
-      addNewPayments(
-        {},
-        {
-          ...values,
-          cities: values.cities && values.cities.value,
-          applicable_type:
-            values.applicable_type && values.applicable_type.value,
-          applicable_id: values.applicable_id && values.applicable_id.value,
-        }
-      )
-    );
-    setIsPopupOpen(!isPopupOpen);
-  };
-
-  if (isPopupOpen === true) {
-    document.querySelector("#__next").classList.add("Global-overflow");
-  } else {
-    document.querySelector("#__next").classList.remove("Global-overflow");
-  }
-
   return (
     <MainLayout admin>
       <div className={styles.container}>
@@ -289,7 +161,10 @@ const Payments = () => {
             <Button
               type="button"
               customBtn={styles.btnIcon}
-              onClick={() => setIsPopupOpen(true)}
+              onClick={() => {
+                setContent(AddNewPayments);
+                setIsOpen(true);
+              }}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
               {t("addNewPayments")}
@@ -332,76 +207,6 @@ const Payments = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
-      {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title={t("addNewPayments")}>
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <Field name="name" validate={required} type="text">
-                  {renderInput({
-                    label: t("name"),
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <Field
-                  name="applicable_type"
-                  component={renderSelect({
-                    placeholder: "",
-                    label: t("applicableType"),
-                    classNameWrapper: styles.popupFieldRow,
-                    custonOnChange: (value) => {
-                      const key =
-                        value.label === "clients" ? "clients" : "groups";
-                      setPaymentsData(payments.additional[key]);
-                    },
-                  })}
-                  options={type}
-                />
-                <Field
-                  name="applicable_id"
-                  component={renderSelect({
-                    placeholder: "",
-                    label: t("applicableId"),
-                    classNameWrapper: styles.popupFieldRow,
-                  })}
-                  options={
-                    (paymentsData &&
-                      paymentsData.map((item) => ({
-                        value: item.id,
-                        label: item.name,
-                      }))) ||
-                    []
-                  }
-                />
-                <Field
-                  name="due_day"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                >
-                  {renderInput({
-                    label: t("daysToPay"),
-                    classNameWrapper: styles.popupFieldRow,
-                    widthInputBlock: styles.widthInputBlock,
-                    classNameWrapperLabel: styles.label,
-                  })}
-                </Field>
-                <div className={styles.submitPopup}>
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("addNewPayments")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

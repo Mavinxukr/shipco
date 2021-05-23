@@ -92,20 +92,6 @@
   margin: 0 10px;
 }
 
-.btnSubmit {
-  width: 100%;
-  font-weight: 500;
-  margin-top: 40px;
-  font-size: 18px;
-  text-transform: uppercase;
-  padding: 10px;
-  transition: all 0.3s;
-
-  &:hover {
-    background: $colorBackgroundHover;
-  }
-}
-
 .submitPopup {
   padding-left: 167px;
   width: 100%;
@@ -161,39 +147,9 @@
   }
 }
 
-.popupBtn {
-  width: 70px;
-  margin-top: 10px;
-  padding: 10px 0;
-  text-align: center;
-}
-
-.groupPopupBtn {
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .red {
   color: $colorBackground;
   font-size: 24px;
-}
-
-.columnSelect {
-  & > div {
-    flex-direction: column;
-
-    label {
-      width: 100%;
-      margin: 10px;
-    }
-
-    div + div {
-      left: 0;
-      top: 80px;
-      max-height: 89px;
-      min-height: 8px;
-    }
-  }
 }
 
 .heightPopup {

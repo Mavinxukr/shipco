@@ -1,0 +1,33 @@
+@import "../../../scss/core/vars";
+
+.columnSelect {
+  & > div {
+    flex-direction: column;
+
+    label {
+      width: 100%;
+      margin: 10px;
+    }
+
+    div + div {
+      left: 0;
+      top: 80px;
+      max-height: 89px;
+      min-height: 8px;
+    }
+  }
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}

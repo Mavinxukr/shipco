@@ -1,0 +1,54 @@
+@import "../../../scss/core/vars";
+
+.popupFieldRow {
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+
+  label {
+    margin: 0 31px 0 0;
+    min-width: 136px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+
+    label {
+      margin: 10px 0;
+      width: 100%;
+      min-width: 100%;
+    }
+  }
+}
+
+.widthInputBlock {
+  width: 360px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.submitPopup {
+  padding-left: 167px;
+  width: 100%;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 0;
+  }
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}

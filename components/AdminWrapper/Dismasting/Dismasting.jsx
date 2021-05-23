@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import formatStringByPattern from "format-string-by-pattern";
 import { useRouter } from "next/router";
@@ -17,23 +17,21 @@ import CustomTable from "../../CustomTable/CustomTable";
 import Button from "../../Button/Button";
 import Pagination from "../../Pagination/Pagination";
 import CarInformation from "../../CarInformation/CarInformation";
-import { stateStatus, status, print } from "./data";
+import { stateStatus, status } from "./data";
 import styles from "./Admin-Dismasting.scss";
 import Loader from "../../Loader/Loader";
 import { updateShipping } from "../../../redux/actions/shipping";
 import { renderSelect, renderInput } from "../../../utils/renderInputs";
-import { printData, getIdsArr } from "../../../utils/helpers";
 import Popup from "../../Popup/Popup";
-import MultiSelect from "../../Multi/Multi";
 import cx from "classnames";
 import Pickers from "../../Pickers/Pickers";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../../context/PopupContext";
+import { PrintForm } from "./PrintForm";
 
 const Dismasting = () => {
   const router = useRouter();
-
-  const [printPopup, setPrintPopup] = useState(false);
-  const [selected, setSelected] = useState([]);
+  const { setIsOpen, setContent } = useContext(PopupContext);
   const { t } = useTranslation("admin-dismantings");
   const dismanting = useSelector(dismantingDataSelector);
   const isDataReceived = useSelector(dismantingDataReceivedSelector);
@@ -99,19 +97,6 @@ const Dismasting = () => {
   }));
   const newMakes = [allMakes, ...makeArr];
 
-  const onSubmitPrint = () => {
-    const idsArr = getIdsArr(selected);
-    printData({
-      params: {
-        fields: idsArr,
-      },
-      table: "dismantings",
-      selected: idsArr,
-      setSelected,
-      setPrintPopup,
-    });
-  };
-
   return (
     <MainLayout newLink admin>
       <SubHeader
@@ -136,7 +121,10 @@ const Dismasting = () => {
           <h4 className={styles.title}>{t("Dismantings")}</h4>
           <Button
             customBtn={styles.rightBtn}
-            onClick={() => setPrintPopup(true)}
+            onClick={() => {
+              setContent(PrintForm);
+              setIsOpen(true);
+            }}
           >
             {t("Print")}
           </Button>
@@ -255,36 +243,6 @@ const Dismasting = () => {
           </CustomTable>
         )}
       </div>
-      {printPopup && (
-        <Popup
-          customPopup={styles.heightPopup}
-          setIsPopupOpen={setPrintPopup}
-          title={t("Print")}
-        >
-          <Form
-            onSubmit={onSubmitPrint}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <div className={styles.columnSelect}>
-                  <MultiSelect
-                    options={print(t)}
-                    setSelected={setSelected}
-                    value={selected}
-                    label={t("Select the fields Print")}
-                  />
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("SUBMIT")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

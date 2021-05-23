@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 import "../../../public/slick/slick.css";
@@ -20,6 +20,10 @@ import { IndexHeader } from "../../IndexHeader/IndexHeader";
 import Loader from "../../Loader/Loader";
 import useTranslation from "next-translate/useTranslation";
 import ProductCard from "../../ProductCard/ProductCard";
+import { Button } from "../../UI/Button/Button";
+import { useRouter } from "next/router";
+import { PopupContext } from "../../../context/PopupContext";
+import { FormAuth } from "../../FormAuth/FormAuth";
 
 const SampleNextArrow = ({ onClick, index }) => (
   <button
@@ -44,10 +48,13 @@ const SamplePrevArrow = ({ onClick, index }) => (
 );
 
 const Home = () => {
+  const [popupLoginStatus, setPopupLoginStatus] = useState(false);
   const [index, setIndex] = useState(0);
   const [session, loading] = useSession();
   const [email, setEmail] = useState("");
   const { t, lang } = useTranslation("home");
+  const router = useRouter();
+  const { setContent, setIsOpen } = useContext(PopupContext);
 
   const settings = {
     dots: true,
@@ -70,7 +77,10 @@ const Home = () => {
 
   return (
     <>
-      <IndexHeader></IndexHeader>
+      <IndexHeader
+        popupLoginStatus={popupLoginStatus}
+        setPopupLoginStatus={setPopupLoginStatus}
+      ></IndexHeader>
       <main>
         <div className={styles.container}>
           <h2 className={styles.infoTitle}>{t("ourFeatures")}</h2>
@@ -118,43 +128,65 @@ const Home = () => {
             <h2 className={styles.carsTitle}>Cars</h2>
             <div className={styles.carsItems}>
               {/* {data.map((item) => ( */}
-              <ProductCard
-                item={{
-                  src: "https://front-shipko.mavinx.com/images/bmw.png",
-                  title: "ads",
-                  road: "qqq",
-                  petrol: "sda",
-                  year: "1111",
-                }}
-              />
-              <ProductCard
-                item={{
-                  src: "https://front-shipko.mavinx.com/images/bmw.png",
-                  title: "ads",
-                  road: "qqq",
-                  petrol: "sda",
-                  year: "1111",
-                }}
-              />
-              <ProductCard
-                item={{
-                  src: "https://front-shipko.mavinx.com/images/bmw.png",
-                  title: "ads",
-                  road: "qqq",
-                  petrol: "sda",
-                  year: "1111",
-                }}
-              />
-              <ProductCard
-                item={{
-                  src: "https://front-shipko.mavinx.com/images/bmw.png",
-                  title: "ads",
-                  road: "qqq",
-                  petrol: "sda",
-                  year: "1111",
-                }}
-              />
+              <div className={styles.carsItem}>
+                <ProductCard
+                  item={{
+                    src: "https://front-shipko.mavinx.com/images/bmw.png",
+                    title: "ads",
+                    road: "qqq",
+                    petrol: "sda",
+                    year: "1111",
+                  }}
+                />
+              </div>
+              <div className={styles.carsItem}>
+                <ProductCard
+                  item={{
+                    src: "https://front-shipko.mavinx.com/images/bmw.png",
+                    title: "ads",
+                    road: "qqq",
+                    petrol: "sda",
+                    year: "1111",
+                  }}
+                />
+              </div>
+              <div className={styles.carsItem}>
+                <ProductCard
+                  item={{
+                    src: "https://front-shipko.mavinx.com/images/bmw.png",
+                    title: "ads",
+                    road: "qqq",
+                    petrol: "sda",
+                    year: "1111",
+                  }}
+                />
+              </div>
+              <div className={styles.carsItem}>
+                <ProductCard
+                  item={{
+                    src: "https://front-shipko.mavinx.com/images/bmw.png",
+                    title: "ads",
+                    road: "qqq",
+                    petrol: "sda",
+                    year: "1111",
+                  }}
+                />
+              </div>
               {/* ))} */}
+            </div>
+            <div className={styles.cars_buttonWrapper}>
+              <Button
+                event={() => {
+                  if (session) {
+                    router.push("/auto");
+                  } else {
+                    setContent(FormAuth);
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                SEE ALL
+              </Button>
             </div>
           </div>
         </div>

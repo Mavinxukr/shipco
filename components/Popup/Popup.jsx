@@ -1,13 +1,20 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useContext } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import styles from "./Popup.scss";
 import IconClose from "../../assets/svg/close.svg";
+import { PopupContext } from "../../context/PopupContext";
 
-const Popup = ({ title, children, subTitle, setIsPopupOpen, customPopup }) => {
+const Popup = ({ title = "SHIPKO" }) => {
+  const { isOpen, setIsOpen, content } = useContext(PopupContext);
+
+  useEffect(() => {
+    console.log(isOpen);
+  }, [isOpen]);
+
   const escFunction = useCallback((event) => {
     if (event.keyCode === 27) {
-      setIsPopupOpen(false);
+      setIsOpen(false);
     }
   }, []);
 
@@ -19,27 +26,26 @@ const Popup = ({ title, children, subTitle, setIsPopupOpen, customPopup }) => {
     };
   }, []);
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <>
+    <div className={styles.popup}>
       <div
-        className={styles.popupBackground}
-        onClick={() => setIsPopupOpen(false)}
-      />
-      <div className={cx(styles.popup, customPopup)}>
+        className={styles.popup_overlay}
+        onClick={() => setIsOpen(false)}
+      ></div>
+      <div className={cx(styles.popup_body)}>
         <div className={styles.popupHeader}>
-          <h4 className={styles.popupTitle}>
-            {title}{" "}
-            {subTitle && (
-              <span className={styles.popupSubTitle}>{subTitle}</span>
-            )}
-          </h4>
-          <button type="button" onClick={() => setIsPopupOpen(false)}>
+          <h4 className={styles.popupTitle}>{title}</h4>
+          <button type="button" onClick={() => setIsOpen(false)}>
             <IconClose />
           </button>
         </div>
-        <div>{children}</div>
+        <div>{content}</div>
       </div>
-    </>
+    </div>
   );
 };
 Popup.propTypes = {

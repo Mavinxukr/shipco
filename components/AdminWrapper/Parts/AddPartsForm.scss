@@ -1,0 +1,81 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.popupFieldRow {
+  flex-direction: row !important;
+  align-items: center;
+  padding: 10px 0;
+  width: 100% !important;
+
+  label {
+    margin: 0 31px 0 0 !important;
+    min-width: 136px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column !important;
+
+    label {
+      margin: 10px 0 !important;
+      width: 100% !important;
+      min-width: 100%;
+    }
+  }
+}
+
+.customText {
+  margin: 24px 0;
+  position: relative;
+  outline: none;
+}
+
+.customIconBlock {
+  right: 0;
+  border: 1px solid $colorBorder;
+  background: $colorInput;
+  text-align: right;
+  width: 100%;
+  border-radius: 2px;
+  padding: 11px 16px;
+
+  @media screen and (max-width: 521px) {
+    top: 30px;
+    max-width: 100%;
+  }
+}
+
+.thumbs {
+  width: 100%;
+  margin: 0 0 0 auto;
+
+  & > div {
+    max-width: 110px;
+    height: 60px;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 521px) {
+    margin: 64px 0 0;
+  }
+}
+
+.btnSubmit {
+  width: 100%;
+  margin-top: 10px;
+  height: 40px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 521px) {
+    margin-top: 50px;
+  }
+}

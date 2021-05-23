@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import cx from "classnames";
-import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import Button from "../Button/Button";
 import { updateDismanting } from "../../redux/actions/dismanting";
@@ -11,8 +10,9 @@ import ButtonGroup from "../ButtonGroup/ButtonGroup";
 import IconEdit from "../../assets/svg/edit.svg";
 import Popup from "../Popup/Popup";
 import styles from "./CarInformation.scss";
-import { required } from "../../utils/validation";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../context/PopupContext";
+import { AddNotesForm } from "./AddNotesForm";
 
 const arrTypes = [
   "auction_picture",
@@ -45,26 +45,12 @@ const CarInformation = ({
 }) => {
   const [isCommentPopupOpen, setIsCommentPopupOpen] = useState(false);
   const [isHistoryPopupOpen, setIsHistoryPopupOpen] = useState(false);
+  const { setIsOpen, setContent } = useContext(PopupContext);
   const [switchOn, setSwitchOn] = useState(item.ship_info.disassembly);
   const fileCarfac = getArr(arrTypes, item.document)[3].images;
   const fileInvoice = getArr(arrTypes, item.document)[4].images;
   const dispatch = useDispatch();
   const { t } = useTranslation("dismanting");
-
-  const onSubmit = async (values) => {
-    dispatch(
-      updateShipping(
-        {},
-        {
-          auto_id: item.id,
-          ...values,
-        },
-        "",
-        true
-      )
-    );
-    setIsCommentPopupOpen(false);
-  };
 
   return (
     <div className={styles.flexItems}>
@@ -232,73 +218,14 @@ const CarInformation = ({
         </a>
         <Button
           customBtn={styles.colorText}
-          onClick={() => setIsCommentPopupOpen(true)}
+          onClick={() => {
+            setContent(AddNotesForm, { item });
+            setIsOpen(true);
+          }}
         >
           {t("AddingNotes")}
         </Button>
       </div>
-      {isCommentPopupOpen && (
-        <Popup
-          customPopup={styles.popupDamage}
-          title={t("AddingNotes")}
-          setIsPopupOpen={setIsCommentPopupOpen}
-        >
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, submitting, form, values, invalid }) => (
-              <form onSubmit={handleSubmit} className={styles.fullWidth}>
-                <div className={styles.flex}>
-                  <label className={styles.label}>{t("Comment")}</label>
-                  <Field
-                    className={styles.customTextarea}
-                    name="comment"
-                    validate={required}
-                    component="textarea"
-                    placeholder=""
-                  />
-                </div>
-                <Button
-                  customBtn={styles.btnSubmit}
-                  type="submit"
-                  disabled={submitting || invalid}
-                >
-                  {t("AddingNotes")}
-                </Button>
-              </form>
-            )}
-          />
-          <Button
-            customBtn={styles.btnSubmit}
-            type="button"
-            onClick={() => {
-              setIsCommentPopupOpen(false);
-              setIsHistoryPopupOpen(true);
-            }}
-          >
-            History
-          </Button>
-        </Popup>
-      )}
-      {isHistoryPopupOpen && (
-        <Popup
-          customPopup={styles.popupDamage}
-          title="History notes"
-          setIsPopupOpen={setIsHistoryPopupOpen}
-        >
-          {item.notes.length === 0 ? (
-            <p className={styles.noComment}>Not Comments</p>
-          ) : (
-            <>
-              {item.notes.map((itemNotes, index) => (
-                <div className={styles.blockComment} key={index}>
-                  <b className={styles.name}>{itemNotes.client.name}:</b>
-                  <p className={styles.comment}>{itemNotes.comment}</p>
-                </div>
-              ))}
-            </>
-          )}
-        </Popup>
-      )}
     </div>
   );
 };

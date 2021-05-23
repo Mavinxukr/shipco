@@ -1,17 +1,18 @@
-import React, { useEffect, forwardRef, useState, useRef } from "react";
+import React, {
+  useEffect,
+  forwardRef,
+  useState,
+  useRef,
+  useContext,
+} from "react";
 import { usePagination, useTable, useRowSelect } from "react-table";
-import formatStringByPattern from "format-string-by-pattern";
 import cx from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { Field, Form } from "react-final-form";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Pickers from "../../Pickers/Pickers";
-import {
-  getClient,
-  deleteClient,
-  addNewClient,
-} from "../../../redux/actions/client";
+import { getClient, deleteClient } from "../../../redux/actions/client";
 import {
   clientDataSelector,
   clientDataReceivedSelector,
@@ -25,37 +26,15 @@ import SubHeader from "../../Layout/SubHeader/SubHeader";
 import CustomTable from "../../CustomTable/CustomTable";
 import IconPlus from "../../../assets/svg/Plus.svg";
 import IconMinus from "../../../assets/svg/min.svg";
-import { printData, getIdsArr } from "../../../utils/helpers";
-import {
-  columns,
-  stateStatus,
-  status,
-  city,
-  print,
-  cityselect,
-  popularCars,
-  auctions,
-  damageStatus,
-  statusRadio,
-} from "./data";
+import { columns, stateStatus, cityselect, damageStatus } from "./data";
 import Loader from "../../Loader/Loader";
-import Popup from "../../Popup/Popup";
-import {
-  required,
-  mustBeNumber,
-  composeValidators,
-  lengthDueDay,
-  vinNum,
-} from "../../../utils/validation";
-import {
-  renderInput,
-  renderSelect,
-  renderInputFile,
-} from "../../../utils/renderInputs";
+import { renderSelect } from "../../../utils/renderInputs";
 import Pagination from "../../Pagination/Pagination";
-import MultiSelect from "../../Multi/Multi";
 import styles from "./Client.scss";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../../context/PopupContext";
+import { AddOffersForm } from "./AddOffersForm";
+import { PrintForm } from "./PrintForm";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -81,15 +60,11 @@ for (let i = 2000; i <= yearNow; i++) {
 
 const Client = () => {
   const client = useSelector(clientDataSelector);
-  const error = useSelector((state) => state.client.error);
   const currentClient = useSelector(currentClientDataSelector);
   const isDataReceived = useSelector(clientDataReceivedSelector);
   const isDataReceivedClient = useSelector(currentClientDataReceivedSelector);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [printPopup, setPrintPopup] = useState(false);
-  const [selected, setSelected] = useState([]);
-  const [stepIndex, setStepIndex] = useState(0);
   const { t } = useTranslation("admin-auto");
+  const { setIsOpen, setContent } = useContext(PopupContext);
 
   const selectYear = [];
 
@@ -107,53 +82,6 @@ const Client = () => {
   const arrAutoId = [];
 
   const router = useRouter();
-
-  const onSubmit = (values) => {
-    dispatch(
-      addNewClient(
-        {
-          client: +router.query.idUser || "",
-        },
-        {
-          ...values,
-          status: values.status && values.status.value,
-          make_name: values.make_name && values.make_name.value,
-          auction: values.auction && values.auction.value,
-          year: values.year && values.year.value,
-          client_id: values.client_id && values.client_id.value,
-          point_load_city:
-            values.point_load_city && values.point_load_city.label,
-          point_delivery_city:
-            values.point_delivery_city && values.point_delivery_city.label,
-          ship: 1,
-          lot: 1,
-          sale: 1,
-          feature: 1,
-          disassembly: 0,
-          invoice: 1,
-          damage_status: "case_closed",
-          offsite: stepIndex || "0",
-          invoice_document: [
-            {
-              type: "invoice",
-              file: document.querySelector("#car_fax_report").files,
-            },
-            {
-              type: "invoices",
-              file: document.querySelector("#invoice").files,
-            },
-          ],
-        }
-      )
-    );
-    setIsPopupOpen(false);
-  };
-
-  useEffect(() => {
-    if (!error) {
-      setIsPopupOpen(false);
-    }
-  }, [error]);
 
   useEffect(() => {
     const params = router.query.isClient
@@ -198,34 +126,6 @@ const Client = () => {
   if (!isDataReceived) {
     return <Loader />;
   }
-
-  if (isPopupOpen === true || printPopup === true) {
-    document.querySelector("#__next").classList.add("Global-overflow");
-  } else {
-    document.querySelector("#__next").classList.remove("Global-overflow");
-  }
-
-  const clientId = client.additional.clients;
-
-  const onSubmitPrint = () => {
-    const idsArr = getIdsArr(selected);
-    const paramsClient = router.query.isClient
-      ? {
-          fields: idsArr,
-        }
-      : {
-          client_id: +router.query.idUser || "",
-          fields: idsArr,
-        };
-    const tableClient = router.query.isClient ? "autos" : "client";
-    printData({
-      params: paramsClient,
-      table: tableClient,
-      selected: idsArr,
-      setSelected,
-      setPrintPopup,
-    });
-  };
 
   const onSubmitFilter = async (values) => {
     router.push({
@@ -282,7 +182,10 @@ const Client = () => {
             <Button
               type="button"
               customBtn={styles.btnIcon}
-              onClick={() => setIsPopupOpen(true)}
+              onClick={() => {
+                setContent(AddOffersForm);
+                setIsOpen(true);
+              }}
             >
               <IconPlus className={cx(styles.plus, styles.icon)} />
               {t("Add New offers")}
@@ -309,7 +212,10 @@ const Client = () => {
           <div className={styles.groupBtn}>
             <Button
               customBtn={styles.rightBtn}
-              onClick={() => setPrintPopup(true)}
+              onClick={() => {
+                setContent(PrintForm);
+                setIsOpen(true);
+              }}
             >
               {t("print")}
             </Button>
@@ -421,303 +327,6 @@ const Client = () => {
             <h1 className={styles.notFound}>nothing found</h1>
           )}
         </>
-        {isPopupOpen && (
-          <Popup setIsPopupOpen={setIsPopupOpen} title={t("Add New offers")}>
-            <Form
-              onSubmit={onSubmit}
-              render={({ handleSubmit, invalid, submitting }) => (
-                <form onSubmit={handleSubmit}>
-                  <Field
-                    name="make_name"
-                    validate={required}
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Make"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={popularCars}
-                  />
-                  <Field
-                    name="auction"
-                    validate={required}
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Auction"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={auctions}
-                  />
-                  <Field
-                    name="year"
-                    validate={required}
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Year"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={arrYear}
-                  />
-                  <Field name="model_name" validate={required} type="text">
-                    {renderInput({
-                      label: t("Model"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="client_id"
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Client id"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={clientId.map((item) => ({
-                      label: `${item.id} ${item.name}`,
-                      value: item.id,
-                    }))}
-                  />
-                  <Field
-                    name="vin_code"
-                    validate={composeValidators(required, vinNum)}
-                    type="text"
-                  >
-                    {renderInput({
-                      label: t("Vin code"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="status"
-                    validate={required}
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Status"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={status}
-                  />
-                  <Field
-                    name="point_load_city"
-                    validate={required}
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Point of loading"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={city}
-                  />
-                  <Field
-                    name="point_delivery_city"
-                    validate={required}
-                    component={renderSelect({
-                      placeholder: "",
-                      label: t("Delivery City"),
-                      classNameWrapper: styles.popupFieldRow,
-                    })}
-                    options={city}
-                  />
-                  <Field
-                    name="point_delivery_date"
-                    validate={composeValidators(
-                      required,
-                      mustBeNumber,
-                      lengthDueDay
-                    )}
-                    type="text"
-                    parse={formatStringByPattern("9999-99-99")}
-                  >
-                    {renderInput({
-                      label: t("Delivery date"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="lot_number"
-                    validate={composeValidators(required, mustBeNumber)}
-                    type="text"
-                  >
-                    {renderInput({
-                      label: t("Lot number"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="odometer" validate={required} type="text">
-                    {renderInput({
-                      label: t("Odometer"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="location" validate={required} type="text">
-                    {renderInput({
-                      label: t("Location"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="purchased_date"
-                    validate={composeValidators(
-                      required,
-                      mustBeNumber,
-                      lengthDueDay
-                    )}
-                    type="text"
-                    parse={formatStringByPattern("9999-99-99")}
-                  >
-                    {renderInput({
-                      label: t("Purchased date"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="color" validate={required} type="text">
-                    {renderInput({
-                      label: t("Color"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="key" validate={required} type="text">
-                    {renderInput({
-                      label: t("Key"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="note" type="text">
-                    {renderInput({
-                      label: t("Note"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field
-                    name="invoice_total_price"
-                    validate={composeValidators(required, mustBeNumber)}
-                    type="text"
-                  >
-                    {renderInput({
-                      label: t("Total Price"),
-                      classNameWrapper: styles.popupFieldRow,
-                      widthInputBlock: styles.widthInputBlock,
-                      classNameWrapperLabel: styles.label,
-                    })}
-                  </Field>
-                  <Field name="car_fax_report" type="file" validate={required}>
-                    {renderInputFile({
-                      label: t("CarFax report"),
-                      classNameWrapper: styles.popupFieldRow,
-                      customInput: styles.customInputFile,
-                      widthInputBlock: styles.noFiles,
-                      file: true,
-                      id: "car_fax_report",
-                      accept: ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
-                    })}
-                  </Field>
-                  <Field name="invoice" type="file" validate={required}>
-                    {renderInputFile({
-                      label: t("Invoice"),
-                      classNameWrapper: styles.popupFieldRow,
-                      customInput: styles.customInputFile,
-                      widthInputBlock: styles.noFiles,
-                      id: "invoice",
-                      file: true,
-                      accept: ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
-                    })}
-                  </Field>
-                  <div className={styles.flexRadio}>
-                    <p>{t("Offsite")}</p>
-                    {statusRadio.map((statusFilter) => {
-                      const classNameForButton = cx(styles.btnStatus, {
-                        [styles.activeStatus]: stepIndex === statusFilter.id,
-                      });
-
-                      return (
-                        <Button
-                          type="button"
-                          onClick={() => setStepIndex(statusFilter.id)}
-                          customBtn={classNameForButton}
-                          key={statusFilter.id}
-                        >
-                          {statusFilter.text}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                  {stepIndex === 1 && (
-                    <Field
-                      name="offsite_price"
-                      validate={composeValidators(required, mustBeNumber)}
-                      type="text"
-                      defaultValue={client.data.offsite_price || ""}
-                    >
-                      {renderInput({
-                        label: "Offsite price:",
-                        classNameWrapper: styles.popupFieldRow,
-                        customInput: styles.color,
-                        classNameWrapperLabel: styles.blackLabel,
-                      })}
-                    </Field>
-                  )}
-                  {error && <p className={styles.error}>Client not found</p>}
-                  <div className={styles.submitPopup}>
-                    <Button
-                      customBtn={styles.btnSubmit}
-                      type="submit"
-                      disabled={submitting || invalid}
-                    >
-                      {t("ADD NEW OFFERS")}
-                    </Button>
-                  </div>
-                </form>
-              )}
-            />
-          </Popup>
-        )}
-        {printPopup && (
-          <Popup
-            customPopup={styles.heightPopup}
-            setIsPopupOpen={setPrintPopup}
-            title="Print"
-          >
-            <Form
-              onSubmit={onSubmitPrint}
-              render={({ handleSubmit, invalid, submitting }) => (
-                <form onSubmit={handleSubmit}>
-                  <div className={styles.columnSelect}>
-                    <MultiSelect
-                      options={print}
-                      setSelected={setSelected}
-                      value={selected}
-                      label="Select the fields Print"
-                    />
-                    <Button
-                      customBtn={styles.btnSubmit}
-                      type="submit"
-                      disabled={submitting || invalid}
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </form>
-              )}
-            />
-          </Popup>
-        )}
       </div>
     </MainLayout>
   );

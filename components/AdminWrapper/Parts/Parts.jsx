@@ -1,47 +1,38 @@
-import React, { forwardRef, useRef, useEffect, useState } from "react";
+import React, {
+  forwardRef,
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import { usePagination, useRowSelect, useTable } from "react-table";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { Field, Form } from "react-final-form";
 import cx from "classnames";
-import {
-  getParts,
-  deleteParts,
-  addNewParts,
-  updateParts,
-} from "../../../redux/actions/parts";
+import { getParts, deleteParts } from "../../../redux/actions/parts";
 import {
   partsDataSelector,
   partsDataReceivedSelector,
-  clientPartsDataSelector,
 } from "../../../utils/selectors";
 import Loader from "../../Loader/Loader";
 import MainLayout from "../../Layout/Global/Global";
-import Popup from "../../Popup/Popup";
 import SubHeader from "../../Layout/SubHeader/SubHeader";
 import Button from "../../Button/Button";
-import Previews from "../../Previews/Previews";
 import IconP from "../../../assets/svg/p.svg";
 import IconTrash from "../../../assets/svg/Trash.svg";
 import IconPlus from "../../../assets/svg/Plus.svg";
-import IconUpload from "../../../assets/svg/uploadfile.svg";
 import IconFilter from "../../../assets/svg/Group (5).svg";
 import CustomTable from "../../CustomTable/CustomTable";
-import { printData, getIdsArr } from "../../../utils/helpers";
-import { columns, status, statusSelect, print } from "./data";
+import { columns, status } from "./data";
 import styles from "./Admin-parts.scss";
-import {
-  required,
-  mustBeNumber,
-  composeValidators,
-  vinNum,
-} from "../../../utils/validation";
-import { renderInput, renderSelect } from "../../../utils/renderInputs";
+
 import Pagination from "../../Pagination/Pagination";
 import HoverPopup from "../../HoverPopup/HoverPopup";
-import MultiSelect from "../../Multi/Multi";
 import useTranslation from "next-translate/useTranslation";
-import { updatePartsRequest } from "../../../services/parts";
+import { PopupContext } from "../../../context/PopupContext";
+import { PrintForm } from "./PrintForm";
+import { AddPartsForm } from "./AddPartsForm";
+import { EditPartsForm } from "./EditPartsForm";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -58,7 +49,8 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   );
 });
 
-const Table = ({ columns, data, setIsPopupUpdateOpen, setUpdateData }) => {
+const Table = ({ columns, data }) => {
+  const { setIsOpen, setContent } = useContext(PopupContext);
   const dispatch = useDispatch();
 
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
@@ -122,8 +114,10 @@ const Table = ({ columns, data, setIsPopupUpdateOpen, setUpdateData }) => {
                         type="button"
                         customBtn={styles.actionsButton}
                         onClick={() => {
-                          setUpdateData(cell.row.original);
-                          setIsPopupUpdateOpen(true);
+                          setContent(EditPartsForm, {
+                            data: cell.row.original,
+                          });
+                          setIsOpen(true);
                         }}
                       >
                         <IconP />
@@ -153,19 +147,11 @@ const Table = ({ columns, data, setIsPopupUpdateOpen, setUpdateData }) => {
 
 const Parts = () => {
   const router = useRouter();
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [arrPicsContainer, setArrPicsContainer] = useState([]);
   const [stepIndex, setStepIndex] = useState(0);
-  const [newArrPicsContainer, setNewArrPicsContainer] = useState([]);
-  const [isPopupUpdateOpen, setIsPopupUpdateOpen] = useState(false);
-  const [updateData, setUpdateData] = useState(null);
-  const [printPopup, setPrintPopup] = useState(false);
-  const [selected, setSelected] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+
   const isDataReceived = useSelector(partsDataReceivedSelector);
   const parts = useSelector(partsDataSelector);
-
+  const { setIsOpen, setContent } = useContext(PopupContext);
   const { t } = useTranslation("admin-parts");
 
   const dispatch = useDispatch();
@@ -184,130 +170,6 @@ const Parts = () => {
       })
     );
   }, [router.query]);
-
-  useEffect(() => {
-    if (updateData && updateData.images) {
-      setArrPicsContainer(updateData.images);
-    }
-  }, [updateData]);
-
-  useEffect(() => {
-    if (updateData) {
-      setArrPicsContainer(
-        parts.data.find((item) => item.id === updateData.id).images
-      );
-    }
-  }, [parts]);
-
-  // const vinNumbers = parts.additional.vin_numbers;
-  // const vinArr = Object.keys(vinNumbers).map((item, index) => ({
-  //   id: index + 1,
-  //   label: vinNumbers[index].vin_code,
-  //   value: vinNumbers[index].vin_code,
-  // }));
-
-  // const catalogNumbers = parts.additional.catalog_numbers;
-  // const catalogArr = Object.keys(catalogNumbers).map((item, index) => ({
-  //   id: index + 1,
-  //   label: catalogNumbers[index].catalog_number,
-  //   value: catalogNumbers[index].catalog_number,
-  // }));
-
-  const onSubmit = async (values) => {
-    dispatch(
-      addNewParts(
-        {},
-        {
-          ...values,
-          // vin: values.vin && values.vin.label,
-          // status: values.status && values.status.value,
-          catalog_number:
-            values.catalog_numberInput ||
-            (values.catalog_number && values.catalog_number.label),
-          image: newArrPicsContainer,
-        }
-      )
-    );
-    setIsPopupOpen(false);
-  };
-
-  const onSubmitUpdate = async (values) => {
-    setLoading(true);
-    setError("");
-
-    const response = await updatePartsRequest(
-      {},
-      {
-        ...values,
-        status: values.status && values.status.value,
-        catalog_number: values.catalog_number && values.catalog_number.label,
-        image: newArrPicsContainer,
-      },
-      updateData.id
-    );
-
-    if (response.status) {
-      setLoading(false);
-      setIsPopupUpdateOpen(false);
-      const clientPartsData = await useSelector(clientPartsDataSelector);
-      const idx = clientPartsData.data.findIndex((item) => item.id === id);
-      const newArr = [
-        ...clientPartsData.data.slice(0, idx),
-        response.data.data,
-        ...clientPartsData.data.slice(idx + 1),
-      ];
-      dispatch(
-        getClientPartsSuccess({
-          data: newArr,
-          links: clientPartsData.links,
-          additional: response.data.additional,
-        })
-      );
-      setArrPicsContainer([]);
-      setNewArrPicsContainer([]);
-    } else {
-      setLoading(false);
-      setError(response.message);
-    }
-
-    // dispatch(
-    //   updateParts(
-    //     {},
-    //     {
-    //       ...values,
-    //       status: values.status && values.status.value,
-    //       catalog_number: values.catalog_number && values.catalog_number.label,
-    //       image: newArrPicsContainer,
-    //     },
-    //     updateData.id
-    //   )
-    // );
-
-    // setIsPopupUpdateOpen(false);
-  };
-
-  const onSubmitPrint = () => {
-    const idsArr = getIdsArr(selected);
-    printData({
-      params: {
-        fields: idsArr,
-      },
-      table: "parts",
-      selected: idsArr,
-      setSelected,
-      setPrintPopup,
-    });
-  };
-
-  if (
-    isPopupOpen === true ||
-    printPopup === true ||
-    isPopupUpdateOpen === true
-  ) {
-    document.querySelector("#__next").classList.add("Global-overflow");
-  } else {
-    document.querySelector("#__next").classList.remove("Global-overflow");
-  }
 
   if (!isDataReceived) {
     return <Loader />;
@@ -337,7 +199,10 @@ const Parts = () => {
           <h4 className={styles.title}>{t("Parts")}</h4>
           <Button
             customBtn={styles.rightBtn}
-            onClick={() => setPrintPopup(true)}
+            onClick={() => {
+              setContent(PrintForm);
+              setIsOpen(true);
+            }}
           >
             {t("PRINT")}
           </Button>
@@ -346,8 +211,8 @@ const Parts = () => {
           <Button
             customBtn={styles.btnIcon}
             onClick={() => {
-              setArrPicsContainer([]);
-              setIsPopupOpen(true);
+              setContent(AddPartsForm);
+              setIsOpen(true);
             }}
           >
             <IconPlus className={styles.plus} />
@@ -401,12 +266,7 @@ const Parts = () => {
               router={router}
             />
             <div className={styles.scrollTable}>
-              <Table
-                columns={columns(t)}
-                data={parts.data}
-                setIsPopupUpdateOpen={setIsPopupUpdateOpen}
-                setUpdateData={setUpdateData}
-              />
+              <Table columns={columns(t)} data={parts.data} />
             </div>
             <Pagination
               params={parts.links}
@@ -418,276 +278,6 @@ const Parts = () => {
           <h1 className={styles.notFound}>nothing found</h1>
         )}
       </div>
-      {isPopupUpdateOpen && (
-        <Popup setIsPopupOpen={setIsPopupUpdateOpen} title={t("UPDATEPART")}>
-          <Form
-            onSubmit={onSubmitUpdate}
-            render={({ handleSubmit, invalid, submitting }) => {
-              return (
-                <form onSubmit={handleSubmit}>
-                  <Field
-                    name="client_id"
-                    type="text"
-                    defaultValue={updateData.client_id || ""}
-                  >
-                    {renderInput({
-                      label: t("ClientID"),
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameWrapperLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                  </Field>
-                  <Field
-                    name="name"
-                    type="text"
-                    defaultValue={updateData.name || ""}
-                  >
-                    {renderInput({
-                      label: t("Name"),
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameWrapperLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                  </Field>
-                  <Field
-                    name="auto"
-                    type="text"
-                    defaultValue={updateData.auto || ""}
-                  >
-                    {renderInput({
-                      label: t("Auto"),
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameWrapperLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                  </Field>
-                  <Field
-                    name="vin"
-                    type="text"
-                    validate={vinNum}
-                    defaultValue={updateData.vin || ""}
-                  >
-                    {renderInput({
-                      label: t("VINNumber"),
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameWrapperLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                  </Field>
-                  <Field
-                    name="status"
-                    component={renderSelect({
-                      placeholder: t(
-                        updateData.status.split("_").join(" ").toUpperCase()
-                      ),
-                      label: t("Status"),
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                    options={statusSelect(t)}
-                  />
-                  <Field
-                    name="quality"
-                    type="text"
-                    defaultValue={updateData.quality || ""}
-                    validate={mustBeNumber}
-                  >
-                    {renderInput({
-                      label: t("Quantity"),
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameWrapperLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                  </Field>
-                  <Field
-                    name="container"
-                    validate={composeValidators(mustBeNumber)}
-                    type="text"
-                    defaultValue={updateData.container || ""}
-                  >
-                    {renderInput({
-                      label: "Add container #",
-                      classNameWrapper: styles.popupFieldRow,
-                      classNameWrapperLabel: styles.label,
-                      widthInputBlock: styles.widthInput,
-                    })}
-                  </Field>
-                  <Previews
-                    idAuto={updateData.id}
-                    icon={<IconUpload className={styles.icon} />}
-                    setArrPics={setArrPicsContainer}
-                    arrPics={arrPicsContainer}
-                    title={t("Addphoto")}
-                    customText={styles.customText}
-                    customIconBlock={styles.customIconBlock}
-                    customThumbs={styles.thumbs}
-                    setNewArrPics={setNewArrPicsContainer}
-                    newArrPics={newArrPicsContainer}
-                  />
-                  {error ? <p className={styles.error}>{error}</p> : null}
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={loading || submitting}
-                  >
-                    {t("UPDATEPART")}
-                  </Button>
-                </form>
-              );
-            }}
-          />
-        </Popup>
-      )}
-      {isPopupOpen && (
-        <Popup setIsPopupOpen={setIsPopupOpen} title={t("add new part")}>
-          <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <Field name="client_id" validate={required} type="text">
-                  {renderInput({
-                    label: t("ClientID"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field name="catalog_numberInput" type="text">
-                  {renderInput({
-                    label: t("Catalog number"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                {/* <Field */}
-                {/*  name="catalog_number" */}
-                {/*  component={renderSelect({ */}
-                {/*    placeholder: '', */}
-                {/*    label: 'or', */}
-                {/*    classNameWrapper: styles.popupFieldRow, */}
-                {/*    classNameLabel: styles.label, */}
-                {/*    widthInputBlock: styles.widthInput, */}
-                {/*  })} */}
-                {/*  options={catalogArr} */}
-                {/* /> */}
-                <Field name="name" validate={required} type="text">
-                  {renderInput({
-                    label: t("Name"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field name="auto" validate={required} type="text">
-                  {renderInput({
-                    label: t("Auto"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                {/* <Field */}
-                {/*  name="vin" */}
-                {/*  component={renderSelect({ */}
-                {/*    placeholder: '', */}
-                {/*    label: 'VIN Number', */}
-                {/*    classNameWrapper: styles.popupFieldRow, */}
-                {/*    classNameLabel: styles.label, */}
-                {/*    widthInputBlock: styles.widthInput, */}
-                {/*  })} */}
-                {/*  options={vinArr} */}
-                {/* /> */}
-                {/* <Field */}
-                {/*  name="status" */}
-                {/*  validate={required} */}
-                {/*  component={renderSelect({ */}
-                {/*    placeholder: '', */}
-                {/*    label: 'Status', */}
-                {/*    classNameWrapper: styles.popupFieldRow, */}
-                {/*    classNameLabel: styles.label, */}
-                {/*    widthInputBlock: styles.widthInput, */}
-                {/*  })} */}
-                {/*  options={statusSelect} */}
-                {/* /> */}
-                <Field
-                  name="quality"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                >
-                  {renderInput({
-                    label: t("Quantity"),
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Field
-                  name="container"
-                  validate={composeValidators(required, mustBeNumber)}
-                  type="text"
-                >
-                  {renderInput({
-                    label: "Add container #",
-                    classNameWrapper: styles.popupFieldRow,
-                    classNameWrapperLabel: styles.label,
-                    widthInputBlock: styles.widthInput,
-                  })}
-                </Field>
-                <Previews
-                  icon={<IconUpload className={styles.icon} />}
-                  setArrPics={setArrPicsContainer}
-                  arrPics={arrPicsContainer}
-                  title={t("Addphoto")}
-                  customText={styles.customText}
-                  customIconBlock={styles.customIconBlock}
-                  customThumbs={styles.thumbs}
-                  setNewArrPics={setNewArrPicsContainer}
-                  newArrPics={newArrPicsContainer}
-                />
-                <Button
-                  customBtn={styles.btnSubmit}
-                  type="submit"
-                  disabled={submitting || invalid}
-                >
-                  {t("add new part")}
-                </Button>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
-      {printPopup && (
-        <Popup
-          customPopup={styles.heightPopup}
-          setIsPopupOpen={setPrintPopup}
-          title="Print"
-        >
-          <Form
-            onSubmit={onSubmitPrint}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <div className={styles.columnSelect}>
-                  <MultiSelect
-                    options={print(t)}
-                    setSelected={setSelected}
-                    value={selected}
-                    label={t("SelectPrint")}
-                  />
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("SUBMIT")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

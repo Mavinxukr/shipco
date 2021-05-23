@@ -3,7 +3,6 @@
 
 .label {
   color: $colorBackground;
-
   @media screen and (max-width: 768px) {
     width: 100%;
     margin: 10px 0;
@@ -12,6 +11,7 @@
 
 .flexSelect {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   z-index: 1;
@@ -24,6 +24,7 @@
 .select {
   width: 100%;
   display: flex;
+  align-self: flex-end;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,12 +65,12 @@
   display: block;
   position: absolute;
   top: 100% !important;
-  left: 167px;
   z-index: 99999999;
   background: $colorInput;
   border: 1px solid $colorBorder;
   border-radius: 2px;
   border-top: 0;
+  right: 0;
   width: 100%;
 
   @media screen and (max-width: 768px) {

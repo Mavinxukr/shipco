@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import formatStringByPattern from "format-string-by-pattern";
@@ -13,22 +13,19 @@ import SubHeader from "../../Layout/SubHeader/SubHeader";
 import CustomTable from "../../CustomTable/CustomTable";
 import Pagination from "../../Pagination/Pagination";
 import CarInformation from "../../CarInformation/CarInformation";
-import { stateStatus, status, print } from "./data";
-import { printData, getIdsArr } from "../../../utils/helpers";
+import { stateStatus, status } from "./data";
 import Button from "../../Button/Button";
 import styles from "./Shipping.scss";
 import Loader from "../../Loader/Loader";
 import { renderSelect, renderInput } from "../../../utils/renderInputs";
-import Popup from "../../Popup/Popup";
-import MultiSelect from "../../Multi/Multi";
 import useTranslation from "next-translate/useTranslation";
+import { PopupContext } from "../../../context/PopupContext";
+import { PrintForm } from "./PrintForm";
 
 const Shipping = () => {
   const router = useRouter();
   const { t } = useTranslation("shipping");
-  const [printPopup, setPrintPopup] = useState(false);
-  const [selected, setSelected] = useState([]);
-
+  const { setIsOpen, setContent } = useContext(PopupContext);
   const shipping = useSelector(shippingDataSelector);
   const isDataReceived = useSelector(shippingDataReceivedSelector);
 
@@ -100,19 +97,6 @@ const Shipping = () => {
   }));
   const newMakes = [allMakes, ...makeArr];
 
-  const onSubmitPrint = () => {
-    const idsArr = getIdsArr(selected);
-    printData({
-      params: {
-        fields: idsArr,
-      },
-      table: "shippings",
-      selected: idsArr,
-      setSelected,
-      setPrintPopup,
-    });
-  };
-
   return (
     <MainLayout newLink admin>
       <SubHeader
@@ -137,7 +121,10 @@ const Shipping = () => {
           <h4 className={styles.title}> {t("shipping")}</h4>
           <Button
             customBtn={styles.rightBtn}
-            onClick={() => setPrintPopup(true)}
+            onClick={() => {
+              setContent(PrintForm);
+              setIsOpen(true);
+            }}
           >
             {t("print")}
           </Button>
@@ -252,36 +239,6 @@ const Shipping = () => {
           </CustomTable>
         )}
       </div>
-      {printPopup && (
-        <Popup
-          customPopup={styles.heightPopup}
-          setIsPopupOpen={setPrintPopup}
-          title={t("print")}
-        >
-          <Form
-            onSubmit={onSubmitPrint}
-            render={({ handleSubmit, invalid, submitting }) => (
-              <form onSubmit={handleSubmit}>
-                <div className={styles.columnSelect}>
-                  <MultiSelect
-                    options={print}
-                    setSelected={setSelected}
-                    value={selected}
-                    label={t("SelectPrint")}
-                  />
-                  <Button
-                    customBtn={styles.btnSubmit}
-                    type="submit"
-                    disabled={submitting || invalid}
-                  >
-                    {t("submit")}
-                  </Button>
-                </div>
-              </form>
-            )}
-          />
-        </Popup>
-      )}
     </MainLayout>
   );
 };

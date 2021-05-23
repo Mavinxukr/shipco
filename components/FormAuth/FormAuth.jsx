@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import classes from './FormAuth.scss';
-import { Field, Form } from 'react-final-form';
-import Button from '../Button/Button';
-import { renderInput } from '../../utils/renderInputs';
-import { signIn } from 'next-auth/client';
-import { useRouter } from 'next/router';
+import React, { useState, useContext } from "react";
+import classes from "./FormAuth.scss";
+import { Field, Form } from "react-final-form";
+import Button from "../Button/Button";
+import { renderInput } from "../../utils/renderInputs";
+import { signIn } from "next-auth/client";
+import { useRouter } from "next/router";
 
 import {
   composeValidators,
   emailValidation,
   required,
-} from '../../utils/validation';
+} from "../../utils/validation";
+import { FormRegistration } from "../FormRegistration/FormRegistration";
+import { PopupContext } from "../../context/PopupContext";
 
-export const FormAuth = ({ setVariant }) => {
-  const [errorMessage, setErrorMessage] = useState('');
+export const FormAuth = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+  const { setContent } = useContext(PopupContext);
+
   const submitHandle = async (values) => {
-    const result = await signIn('user', {
+    const result = await signIn("user", {
       redirect: false,
       ...values,
     });
     if (!result.error) {
-      router.replace('/overview');
+      router.replace("/overview");
     } else {
       setErrorMessage(result.error);
     }
@@ -40,8 +44,8 @@ export const FormAuth = ({ setVariant }) => {
               type="email"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Email Address',
+                label: "",
+                placeholder: "Email Address",
               })}
             </Field>
             <Field
@@ -50,8 +54,8 @@ export const FormAuth = ({ setVariant }) => {
               type="password"
             >
               {renderInput({
-                label: '',
-                placeholder: 'Password',
+                label: "",
+                placeholder: "Password",
               })}
             </Field>
             {errorMessage && (
@@ -68,11 +72,11 @@ export const FormAuth = ({ setVariant }) => {
         )}
       />
       <p className={classes.text}>
-        Not on Shipco yet?{' '}
+        Not on Shipco yet?{" "}
         <Button
           customBtn={classes.btnRegister}
           onClick={() => {
-            setVariant('signUp');
+            setContent(<FormRegistration />);
           }}
         >
           Register

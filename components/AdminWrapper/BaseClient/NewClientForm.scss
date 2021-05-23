@@ -1,0 +1,59 @@
+@import "../../../scss/core/mixins";
+@import "../../../scss/core/vars";
+
+.popupFieldRow {
+  flex-direction: row !important;
+  align-items: center;
+  padding: 10px 0;
+  width: 100% !important;
+
+  label {
+    margin: 0 31px 0 0 !important;
+    min-width: 136px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column !important;
+
+    label {
+      margin: 10px 0 !important;
+      width: 100% !important;
+      min-width: 100%;
+    }
+  }
+}
+
+.widthInputBlock {
+  width: 360px !important;
+
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+  }
+}
+
+.error {
+  color: $colorBackground;
+}
+
+.submitPopup {
+  padding-left: 167px !important;
+  width: 100% !important;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 0 !important;
+  }
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}
