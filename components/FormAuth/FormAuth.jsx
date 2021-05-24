@@ -14,10 +14,10 @@ import {
 import { FormRegistration } from "../FormRegistration/FormRegistration";
 import { PopupContext } from "../../context/PopupContext";
 
-export const FormAuth = () => {
+export const FormAuth = ({ redirect = "/overview" }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const { setContent } = useContext(PopupContext);
+  const { setContent, setIsOpen } = useContext(PopupContext);
 
   const submitHandle = async (values) => {
     const result = await signIn("user", {
@@ -25,10 +25,11 @@ export const FormAuth = () => {
       ...values,
     });
     if (!result.error) {
-      router.replace("/overview");
+      router.push(redirect);
     } else {
       setErrorMessage(result.error);
     }
+    setIsOpen(false);
   };
 
   return (

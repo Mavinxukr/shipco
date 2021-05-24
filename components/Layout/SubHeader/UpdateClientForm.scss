@@ -1,0 +1,19 @@
+@import "../../../scss/core/vars";
+.submitPopup {
+  padding-left: 167px;
+  width: 100%;
+}
+
+.btnSubmit {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+}

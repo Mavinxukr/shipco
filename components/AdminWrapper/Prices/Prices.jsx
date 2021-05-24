@@ -97,12 +97,6 @@ const Table = ({ columns, data, dispatch }) => {
           })}
         </tbody>
       </table>
-      {isPopupUpdate && (
-        <Popup
-          setIsPopupOpen={setIsPopupUpdate}
-          title={t("updatePrice")}
-        ></Popup>
-      )}
     </>
   );
 };

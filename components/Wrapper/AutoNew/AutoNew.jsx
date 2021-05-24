@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cx from "classnames";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { Field, Form } from "react-final-form";
 import { getAutoId, updateAutoId } from "../../../redux/actions/autoId";
-import { getCurrentUser } from "../../../redux/actions/currentUser";
 import MainLayout from "../../Layout/Global/Global";
 import {
   autoIdDataSelector,
@@ -16,12 +14,14 @@ import SliderTabs from "../../SliderTabs/SliderTabs";
 import Button from "../../Button/Button";
 import Loader from "../../Loader/Loader";
 import Popup from "../../Popup/Popup";
-import ThumbSlider from "../../ThumbSlider/ThumbSlider";
 import "../../../public/slick/slick.css";
 import styles from "./AutoNew.scss";
 import Image from "../../Image/Image";
 import InformationBlock from "../../InformationBlock/InformationBlock";
 import { damage } from "./data";
+import { PopupContext } from "../../../context/PopupContext";
+import { AddNoteForm } from "./AddNoteForm";
+import { ShippingDamageFrom } from "./ShippingDamageFrom";
 
 const arrTypes = [
   "auction_picture",
@@ -45,9 +45,7 @@ const getArr = (items, arr) =>
 
 const AutoNew = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isCommentPopupOpen, setIsCommentPopupOpen] = useState(false);
-  const [isHistoryPopupOpen, setIsHistoryPopupOpen] = useState(false);
-  const [openSlide, setOpenSlide] = useState(0);
+  const { setContent, setIsOpen } = useContext(PopupContext);
 
   const autoId = useSelector(autoIdDataSelector);
   const isDataReceived = useSelector(autoIdDataReceivedSelector);
@@ -110,19 +108,6 @@ const AutoNew = () => {
   const autoContainer = autoData[2].images;
   const autoDamage = autoData[6].images;
 
-  const onSubmit = async (values) => {
-    dispatch(
-      updateAutoId(
-        {},
-        {
-          auto_id: autoId.id,
-          ...values,
-        }
-      )
-    );
-    setIsCommentPopupOpen(false);
-  };
-
   return (
     <MainLayout>
       <div className={styles.container}>
@@ -171,7 +156,8 @@ const AutoNew = () => {
                 customBtn={styles.link}
                 onClick={() => {
                   if (autoId.client.id === user.id) {
-                    setIsCommentPopupOpen(true);
+                    setContent(AddNoteForm);
+                    setIsOpen(true);
                   }
                 }}
               >
@@ -240,8 +226,8 @@ const AutoNew = () => {
                     key={image.id}
                     type="button"
                     onClick={() => {
-                      setIsPopupOpen(true);
-                      setOpenSlide(index);
+                      setContent(ShippingDamageFrom, { index });
+                      setIsOpen(true);
                     }}
                   >
                     <Image className={styles.image} src={image.link} />
@@ -250,85 +236,6 @@ const AutoNew = () => {
               </div>
             </InformationBlock>
           </div>
-          {isPopupOpen && (
-            <Popup
-              customPopup={styles.popupDamage}
-              title="Shipping Damage"
-              setIsPopupOpen={setIsPopupOpen}
-            >
-              <ThumbSlider
-                initialSlide={openSlide}
-                customArrow={styles.displayNone}
-              >
-                {autoDamage.map((item) => (
-                  <div key={item.id}>
-                    <Image className={styles.image} src={item.link} />
-                  </div>
-                ))}
-              </ThumbSlider>
-            </Popup>
-          )}
-          {isCommentPopupOpen && (
-            <Popup
-              customPopup={styles.popupDamage}
-              title="Adding notes"
-              setIsPopupOpen={setIsCommentPopupOpen}
-            >
-              <Form
-                onSubmit={onSubmit}
-                render={({ handleSubmit, submitting, form, values }) => (
-                  <form onSubmit={handleSubmit} className={styles.fullWidth}>
-                    <div className={styles.flex}>
-                      <label className={styles.label}>Comment:</label>
-                      <Field
-                        className={styles.customTextarea}
-                        name="comment"
-                        component="textarea"
-                        placeholder=""
-                      />
-                    </div>
-                    <Button
-                      customBtn={styles.btnSubmit}
-                      type="submit"
-                      disabled={submitting}
-                    >
-                      Adding notes
-                    </Button>
-                  </form>
-                )}
-              />
-              <Button
-                customBtn={styles.btnSubmit}
-                type="button"
-                onClick={() => {
-                  setIsCommentPopupOpen(false);
-                  setIsHistoryPopupOpen(true);
-                }}
-              >
-                History
-              </Button>
-            </Popup>
-          )}
-          {isHistoryPopupOpen && (
-            <Popup
-              customPopup={styles.popupDamage}
-              title="History notes"
-              setIsPopupOpen={setIsHistoryPopupOpen}
-            >
-              {autoId.notes.length === 0 ? (
-                <p className={styles.noComment}>Not Comments</p>
-              ) : (
-                <>
-                  {autoId.notes.map((item, index) => (
-                    <div className={styles.blockComment} key={index}>
-                      <b className={styles.name}>{item.client.name}:</b>
-                      <p className={styles.comment}>{item.comment}</p>
-                    </div>
-                  ))}
-                </>
-              )}
-            </Popup>
-          )}
         </div>
         <h3 className={styles.title}>Popular Vehicles Right Now</h3>
         <div

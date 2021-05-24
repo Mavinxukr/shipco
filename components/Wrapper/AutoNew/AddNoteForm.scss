@@ -1,0 +1,69 @@
+@import "scss/core/vars";
+
+.fullWidth {
+  width: 100%;
+  flex-wrap: wrap;
+
+  .flex {
+    flex-direction: column;
+  }
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  @media screen and (max-width: 1120px) {
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  @media screen and (max-width: 780px) {
+    & > div {
+      width: 100%;
+    }
+
+    header div div div {
+      display: flex;
+      flex-direction: column;
+
+      button {
+        border: 0 !important;
+      }
+    }
+
+    header + div > div,
+    header + div + div > div,
+    header + div + div + div > div {
+      padding: 20px 0 !important;
+    }
+  }
+}
+
+.customTextarea {
+  width: 360px;
+  height: 200px;
+  border: 1px solid $colorBorder;
+  border-radius: 3px;
+  padding: 10px;
+
+  @media screen and (max-width: 450px) {
+    width: 100%;
+  }
+}
+
+.btnSubmit {
+  width: 360px;
+  margin-top: 10px;
+  height: 40px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $colorBackgroundHover;
+  }
+
+  @media screen and (max-width: 450px) {
+    width: 100%;
+  }
+}

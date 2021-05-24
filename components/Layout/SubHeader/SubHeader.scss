@@ -15,7 +15,7 @@
   margin-bottom: 15px;
 
   @media screen and (max-width: 950px) {
-    nav{
+    nav {
       margin: 10px 0;
     }
   }
@@ -55,7 +55,7 @@
     }
   }
 
-  @media screen and (max-width: 1544px){
+  @media screen and (max-width: 1544px) {
     margin: 0 19px;
   }
 
@@ -63,7 +63,6 @@
     margin-left: 0;
     margin-bottom: 10px;
   }
-
 }
 
 .dotActive {
@@ -86,7 +85,7 @@
 }
 
 .customBtn {
-  background: transparent!important;
+  background: transparent !important;
   height: 34px;
   align-items: center;
   display: flex;
@@ -105,23 +104,4 @@
   display: flex;
   align-items: center;
   padding: 10px 0;
-}
-
-.submitPopup {
-  padding-left: 167px;
-  width: 100%;
-}
-
-.btnSubmit {
-  width: 100%;
-  font-weight: 500;
-  margin-top: 40px;
-  font-size: 18px;
-  text-transform: uppercase;
-  padding: 10px;
-  transition: all .3s;
-
-  &:hover {
-    background: $colorBackgroundHover;
-  }
 }

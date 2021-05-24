@@ -5,10 +5,8 @@ import "../../../public/slick/slick.css";
 import Slider from "react-slick";
 import GoogleMapReact from "google-map-react";
 import Image from "../../Image/Image";
-// import ProductCard from '../../ProductCard/ProductCard';
 import { sliderData } from "./data";
 import { useSession } from "next-auth/client";
-
 import IconQuotes from "../../../assets/svg/quotes.svg";
 import IconFb from "../../../assets/svg/Vector(1).svg";
 import IconIn from "../../../assets/svg/Group.svg";
@@ -180,7 +178,7 @@ const Home = () => {
                   if (session) {
                     router.push("/auto");
                   } else {
-                    setContent(FormAuth);
+                    setContent(FormAuth, { redirect: "/auto" });
                     setIsOpen(true);
                   }
                 }}

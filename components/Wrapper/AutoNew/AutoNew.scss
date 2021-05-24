@@ -201,20 +201,6 @@
   }
 }
 
-.displayNone {
-  & > div {
-    height: 500px;
-
-    @media (max-width: 1501px) {
-      height: auto;
-    }
-  }
-
-  button {
-    display: none;
-  }
-}
-
 .spaceBetween {
   display: flex;
   justify-content: flex-start;
@@ -235,49 +221,4 @@
     height: 50px;
     object-fit: initial;
   }
-}
-
-.btnSubmit {
-  width: 360px;
-  margin-top: 10px;
-  height: 40px;
-  text-transform: uppercase;
-  transition: all 0.3s;
-
-  &:hover {
-    background: $colorBackgroundHover;
-  }
-
-  @media screen and (max-width: 450px) {
-    width: 100%;
-  }
-}
-
-.customTextarea {
-  width: 360px;
-  height: 200px;
-  border: 1px solid $colorBorder;
-  border-radius: 3px;
-  padding: 10px;
-
-  @media screen and (max-width: 450px) {
-    width: 100%;
-  }
-}
-
-.name {
-  margin-right: 15px;
-}
-
-.comment {
-  width: 300px;
-}
-
-.noComment {
-  margin: 20px 0;
-  width: 300px;
-}
-
-.blockComment {
-  margin-top: 10px;
 }
