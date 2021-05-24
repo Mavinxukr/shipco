@@ -36,8 +36,8 @@
 }
 
 .btnStatus {
-  background: transparent;
-  color: $colorBackground;
+  background: transparent !important;
+  color: $colorBackground !important;
   text-transform: uppercase;
   margin: 10px 0;
 }
