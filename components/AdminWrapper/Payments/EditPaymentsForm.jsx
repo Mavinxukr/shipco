@@ -54,6 +54,9 @@ export const EditPaymentsForm = ({ data }) => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("UpdatePayments")}</span>
+          </h2>
           <Field
             name="name"
             validate={required}
@@ -119,7 +122,7 @@ export const EditPaymentsForm = ({ data }) => {
               type="submit"
               disabled={submitting || invalid}
             >
-              {t("UPDATE PRICE")}
+              {t("UpdatePayments")}
             </Button>
           </div>
         </form>

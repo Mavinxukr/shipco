@@ -72,12 +72,6 @@ export const AddOffersForm = () => {
     setIsOpen(false);
   };
 
-  //   useEffect(() => {
-  //     if (!error) {
-  //       setIsOpen(false);
-  //     }
-  //   }, [error]);
-
   const arrYear = [];
   const yearNow = new Date().getFullYear();
 
@@ -89,6 +83,9 @@ export const AddOffersForm = () => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}> {t("Add New offers")}</span>
+          </h2>
           <Field
             name="make_name"
             validate={required}

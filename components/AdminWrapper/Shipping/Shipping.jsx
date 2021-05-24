@@ -20,7 +20,7 @@ import Loader from "../../Loader/Loader";
 import { renderSelect, renderInput } from "../../../utils/renderInputs";
 import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
-import { PrintForm } from "./PrintForm";
+import { PrintShippingForm } from "./PrintShippingForm";
 
 const Shipping = () => {
   const router = useRouter();
@@ -122,7 +122,7 @@ const Shipping = () => {
           <Button
             customBtn={styles.rightBtn}
             onClick={() => {
-              setContent(PrintForm);
+              setContent(PrintShippingForm);
               setIsOpen(true);
             }}
           >

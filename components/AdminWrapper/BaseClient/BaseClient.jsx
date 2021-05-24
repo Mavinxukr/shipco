@@ -23,7 +23,7 @@ import Loader from "../../Loader/Loader";
 import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
 import { NewClientForm } from "./NewClientForm";
-import { PrintForm } from "./PrintForm";
+import { PrintClientForm } from "./PrintClientForm";
 import { TableClient } from "./TableClient";
 
 const todayDate = new Date();
@@ -125,7 +125,7 @@ const BaseClient = () => {
             <Button
               customBtn={styles.rightBtn}
               onClick={() => {
-                setContent(PrintForm);
+                setContent(PrintClientForm);
                 setIsOpen(true);
               }}
             >

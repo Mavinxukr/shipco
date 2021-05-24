@@ -1,27 +1,25 @@
 import React, { useContext, useState } from "react";
-import { Form } from "react-final-form";
-import useTranslation from "next-translate/useTranslation";
-import Button from "../../Button/Button";
+import styles from "./PrintInvoicesForm.scss";
 import { printData, getIdsArr } from "../../../utils/helpers";
-import Example from "../../Multi/Multi";
+import MultiSelect from "../../Multi/Multi";
 import { print } from "./data";
-import styles from "./PrintForm.scss";
+import Button from "../../Button/Button";
+import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
+import { Form } from "react-final-form";
 
-export const PrintForm = () => {
+export const PrintInvoicesForm = () => {
   const [selected, setSelected] = useState([]);
+  const { t } = useTranslation("admin-invoices");
   const { setIsOpen } = useContext(PopupContext);
-
-  const { t } = useTranslation("admin-groups");
 
   const onSubmitPrint = () => {
     const idsArr = getIdsArr(selected);
-
     printData({
       params: {
         fields: idsArr,
       },
-      table: "groups",
+      table: "invoices",
       selected: idsArr,
       setSelected,
       setPrintPopup: setIsOpen,
@@ -33,18 +31,21 @@ export const PrintForm = () => {
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
           <div className={styles.columnSelect}>
-            <Example
+            <h2 className={styles.title}>
+              <span className={styles.red}>{t("print")}</span>
+            </h2>
+            <MultiSelect
               options={print(t)}
               setSelected={setSelected}
               value={selected}
-              label={t("SelectPrint")}
+              label={t("selectPrint")}
             />
             <Button
               customBtn={styles.btnSubmit}
               type="submit"
               disabled={submitting || invalid}
             >
-              {t("SUBMIT")}
+              {t("submit")}
             </Button>
           </div>
         </form>

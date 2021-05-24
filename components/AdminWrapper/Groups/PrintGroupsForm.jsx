@@ -1,44 +1,46 @@
-import React, { useState, useContext } from "react";
-import useTranslation from "next-translate/useTranslation";
+import React, { useContext, useState } from "react";
 import { Form } from "react-final-form";
-
-import MultiSelect from "../../Multi/Multi";
+import useTranslation from "next-translate/useTranslation";
 import Button from "../../Button/Button";
 import { printData, getIdsArr } from "../../../utils/helpers";
+import Example from "../../Multi/Multi";
 import { print } from "./data";
-import styles from "./PrintForm.scss";
+import styles from "./PrintGroupsForm.scss";
 import { PopupContext } from "../../../context/PopupContext";
 
-export const PrintForm = () => {
+export const PrintGroupsForm = () => {
   const [selected, setSelected] = useState([]);
   const { setIsOpen } = useContext(PopupContext);
 
-  const { t } = useTranslation("admin-base-client");
+  const { t } = useTranslation("admin-groups");
 
-  const onSubmit = () => {
+  const onSubmitPrint = () => {
     const idsArr = getIdsArr(selected);
+
     printData({
       params: {
         fields: idsArr,
       },
-      table: "base_clients",
+      table: "groups",
       selected: idsArr,
       setSelected,
       setPrintPopup: setIsOpen,
     });
   };
-
   return (
     <Form
-      onSubmit={onSubmit}
+      onSubmit={onSubmitPrint}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("print")}</span>
+          </h2>
           <div className={styles.columnSelect}>
-            <MultiSelect
+            <Example
               options={print(t)}
               setSelected={setSelected}
               value={selected}
-              label={t("SelectthefieldsPrint")}
+              label={t("SelectPrint")}
             />
             <Button
               customBtn={styles.btnSubmit}

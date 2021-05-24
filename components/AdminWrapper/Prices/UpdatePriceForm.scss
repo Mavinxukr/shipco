@@ -1,5 +1,15 @@
+@import "../../../scss/core/mixins";
 @import "../../../scss/core/vars";
+.title {
+  margin-bottom: 30px;
+  line-height: 28px;
+  @include styleForText(24px, $fontRegular);
+}
 
+.red {
+  color: $colorBackground;
+  margin-right: 10px;
+}
 .popupFieldRow {
   flex-direction: row;
   align-items: center;
@@ -36,12 +46,7 @@
 }
 
 .submitPopup {
-  padding-left: 167px;
   width: 100%;
-
-  @media screen and (max-width: 768px) {
-    padding-left: 0;
-  }
 }
 
 .btnSubmit {

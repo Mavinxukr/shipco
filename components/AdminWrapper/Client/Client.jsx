@@ -34,7 +34,7 @@ import styles from "./Client.scss";
 import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
 import { AddOffersForm } from "./AddOffersForm";
-import { PrintForm } from "./PrintForm";
+import { PrintClientForm } from "./PrintClientForm";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -213,7 +213,7 @@ const Client = () => {
             <Button
               customBtn={styles.rightBtn}
               onClick={() => {
-                setContent(PrintForm);
+                setContent(PrintClientForm);
                 setIsOpen(true);
               }}
             >

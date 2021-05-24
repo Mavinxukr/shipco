@@ -42,6 +42,9 @@ export const EditGroupForm = ({ itemGroup, select, allUsers }) => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("UPDATEGROUP")}</span>
+          </h2>
           <Field
             name="name"
             validate={required}

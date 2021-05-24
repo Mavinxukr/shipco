@@ -10,7 +10,6 @@ import {
   pricesDataReceivedSelector,
 } from "../../../utils/selectors";
 import Button from "../../Button/Button";
-import Popup from "../../Popup/Popup";
 import MainLayout from "../../Layout/Global/Global";
 import IconPlus from "../../../assets/svg/Plus.svg";
 import CustomTable from "../../CustomTable/CustomTable";
@@ -25,7 +24,6 @@ import { PopupContext } from "../../../context/PopupContext";
 import { UpdatePriceForm } from "./UpdatePriceForm";
 
 const Table = ({ columns, data, dispatch }) => {
-  const [isPopupUpdate, setIsPopupUpdate] = useState(false);
   const { t } = useTranslation("admin-price");
   const { setIsOpen, setContent } = useContext(PopupContext);
 

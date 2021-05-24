@@ -1,6 +1,16 @@
 @import "../../../scss/core/mixins";
 @import "../../../scss/core/vars";
 
+.title {
+  margin-bottom: 30px;
+  line-height: 28px;
+  @include styleForText(24px, $fontRegular);
+}
+
+.red {
+  color: $colorBackground;
+  margin-right: 10px;
+}
 .popupFieldRow {
   flex-direction: row !important;
   align-items: center;

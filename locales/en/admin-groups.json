@@ -1,7 +1,7 @@
 {
   "GROUPS": "GROUPS",
-  "print": "print",
-  "import": "import",
+  "print": "Print",
+  "import": "Import",
   "price": "Price",
   "Add New Groups": "Add New Groups",
   "Name": "Name",
@@ -12,7 +12,7 @@
   "Clientsingroup": "Clients in the group",
   "Daystopay": "Days to pay",
   "Actions": "Actions",
-  "UPDATEGROUP": "UPDATE GROUP",
+  "UPDATEGROUP": "Update group",
   "PRINT": "PRINT",
   "SelectPrint": "Select the fields Print",
   "SUBMIT": "SUBMIT"

@@ -1,5 +1,9 @@
-@import '../../scss/core/vars';
+@import "../../scss/core/vars";
+@import "../../scss/core/mixins";
 
+.title {
+  @include styleForText(24px, $fontRegular, $colorBackground);
+}
 .widthForm {
   width: 435px;
 
@@ -17,8 +21,8 @@
   }
 }
 .btnRegister {
-  background: transparent !important;
-  color: blue !important;
+  background: transparent;
+  color: blue;
   font-size: 16px;
 }
 .headerTitle {
@@ -43,10 +47,10 @@
 }
 
 .checkedLogin {
-  flex-direction: row-reverse !important;
-  justify-content: flex-end !important;
-  align-items: baseline !important;
-  width: auto !important;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: baseline;
+  width: auto;
 }
 .widthCheckboxBlock {
   flex-direction: row-reverse;
@@ -57,10 +61,11 @@
   input {
     margin-right: 10px;
     width: 15px;
+    height: 15px;
   }
 }
 .classNameWrapperLabel {
-  color: $colorContent !important;
+  color: $colorContent;
 }
 
 .btnSubmit {

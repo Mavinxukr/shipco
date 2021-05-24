@@ -73,11 +73,11 @@ export const FormAuth = ({ redirect = "/overview" }) => {
         )}
       />
       <p className={classes.text}>
-        Not on Shipco yet?{" "}
+        Not on Shipco yet?
         <Button
           customBtn={classes.btnRegister}
           onClick={() => {
-            setContent(<FormRegistration />);
+            setContent(FormRegistration);
           }}
         >
           Register

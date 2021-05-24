@@ -37,6 +37,9 @@ export const AddNewGroupsForm = () => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("Add New Groups")}</span>
+          </h2>
           <Field name="name" validate={required} type="text">
             {renderInput({
               label: t("Name"),

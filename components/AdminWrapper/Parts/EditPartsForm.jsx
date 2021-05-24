@@ -90,6 +90,9 @@ export const EditPartsForm = ({ data }) => {
       render={({ handleSubmit, submitting }) => {
         return (
           <form onSubmit={handleSubmit}>
+            <h2 className={styles.title}>
+              <span className={styles.red}>{t("UPDATEPART")}</span>
+            </h2>
             <Field
               name="client_id"
               type="text"

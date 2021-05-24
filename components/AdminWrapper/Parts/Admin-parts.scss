@@ -4,7 +4,11 @@
 .container {
   @include container();
 }
-
+.price {
+  label {
+    margin: 0;
+  }
+}
 .flex {
   display: flex;
   align-items: center;

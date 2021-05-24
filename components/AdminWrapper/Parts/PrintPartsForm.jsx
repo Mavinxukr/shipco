@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
-import styles from "./PrintForm.scss";
-import MultiSelect from "../../Multi/Multi";
 import useTranslation from "next-translate/useTranslation";
-import { printData, getIdsArr } from "../../../utils/helpers";
-import { PopupContext } from "../../../context/PopupContext";
 import { Form } from "react-final-form";
+import MultiSelect from "../../Multi/Multi";
 import Button from "../../Button/Button";
+import { printData, getIdsArr } from "../../../utils/helpers";
 import { print } from "./data";
+import styles from "./PrintPartsForm.scss";
+import { PopupContext } from "../../../context/PopupContext";
 
-export const PrintForm = () => {
-  const { t } = useTranslation("shipping");
+export const PrintPartsForm = () => {
+  const { t } = useTranslation("admin-parts");
   const [selected, setSelected] = useState([]);
   const { setIsOpen } = useContext(PopupContext);
 
@@ -19,20 +19,24 @@ export const PrintForm = () => {
       params: {
         fields: idsArr,
       },
-      table: "shippings",
+      table: "parts",
       selected: idsArr,
       setSelected,
       setPrintPopup: setIsOpen,
     });
   };
+
   return (
     <Form
       onSubmit={onSubmitPrint}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("PRINT")}</span>
+          </h2>
           <div className={styles.columnSelect}>
             <MultiSelect
-              options={print}
+              options={print(t)}
               setSelected={setSelected}
               value={selected}
               label={t("SelectPrint")}
@@ -42,7 +46,7 @@ export const PrintForm = () => {
               type="submit"
               disabled={submitting || invalid}
             >
-              {t("submit")}
+              {t("SUBMIT")}
             </Button>
           </div>
         </form>

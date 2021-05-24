@@ -35,6 +35,9 @@ export const AddNotesForm = ({ item }) => {
         onSubmit={onSubmit}
         render={({ handleSubmit, submitting, form, values, invalid }) => (
           <form onSubmit={handleSubmit} className={styles.fullWidth}>
+            <h2 className={styles.title}>
+              <span className={styles.red}>Adding notes</span>
+            </h2>
             <div className={styles.flex}>
               <label className={styles.label}>{t("Comment")}</label>
               <Field

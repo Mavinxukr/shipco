@@ -50,11 +50,28 @@ export const NewClientForm = () => {
     value: item.state,
   }));
 
+  const todayDate = new Date();
+  const currYear = todayDate.getFullYear();
+  let currMonth = todayDate.getMonth() + 1;
+  let currDay = todayDate.getDate();
+  if (currMonth < 10) {
+    currMonth = `0${todayDate.getMonth() + 1}`;
+  }
+  if (currDay < 10) {
+    currDay = `0${todayDate.getDate()}`;
+  }
+
+  const finalDate = `${currDay}.${currMonth}.${currYear}`;
+
   return (
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("AddNewclient")} </span>
+            {finalDate}
+          </h2>
           <Field
             name="name"
             validate={composeValidators(required, snpValidation)}

@@ -1,4 +1,16 @@
+@import "../../../scss/core/mixins";
 @import "../../../scss/core/vars";
+
+.title {
+  margin-bottom: 30px;
+  line-height: 28px;
+  @include styleForText(24px, $fontRegular);
+}
+
+.red {
+  color: $colorBackground;
+  margin-right: 10px;
+}
 
 .columnSelect {
   & > div {
@@ -6,7 +18,7 @@
 
     label {
       width: 100%;
-      margin: 10px;
+      margin: 10px 0;
     }
 
     div + div {
@@ -17,13 +29,14 @@
     }
   }
 }
+
 .btnSubmit {
   width: 100%;
   font-weight: 500;
   margin-top: 40px;
   font-size: 18px;
-  text-transform: uppercase;
   padding: 10px;
+  text-transform: uppercase;
   transition: all 0.3s;
 
   &:hover {

@@ -24,7 +24,7 @@ import Pickers from "../../Pickers/Pickers";
 import styles from "./Invoices.scss";
 import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
-import { PrintForm } from "./PrintForm";
+import { PrintInvoicesForm } from "./PrintInvoicesForm";
 
 const Table = ({ columns, data, dispatch }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -198,7 +198,7 @@ const Invoices = () => {
           <Button
             customBtn={styles.rightBtn}
             onClick={() => {
-              setContent(PrintForm);
+              setContent(PrintInvoicesForm);
               setIsOpen(true);
             }}
           >

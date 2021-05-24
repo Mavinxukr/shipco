@@ -43,6 +43,9 @@ export const AddNewPayments = () => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("addNewPayments")}</span>
+          </h2>
           <Field name="name" validate={required} type="text">
             {renderInput({
               label: t("name"),

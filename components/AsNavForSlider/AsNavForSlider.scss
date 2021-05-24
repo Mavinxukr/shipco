@@ -1,6 +1,9 @@
-@import "scss/core/mixins";
-@import "scss/core/vars";
+@import "../../scss/core/vars";
+@import "../../scss/core/mixins";
 
+.title {
+  @include styleForText(24px, $fontRegular, $colorBackground);
+}
 .asNavFOr {
   width: 120px;
   height: 100px;

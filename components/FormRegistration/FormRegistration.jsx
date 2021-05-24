@@ -41,7 +41,7 @@ export const FormRegistration = ({ setVariant }) => {
 
   return (
     <div>
-      <h5>Register</h5>
+      <h5 className={classes.title}>Register</h5>
       <Form
         onSubmit={(values) => onSubmit(values, registration)}
         validate={validateForm}
@@ -114,7 +114,7 @@ export const FormRegistration = ({ setVariant }) => {
         <Button
           customBtn={classes.btnRegister}
           onClick={() => {
-            setContent(<FormAuth />);
+            setContent(FormAuth);
           }}
         >
           Log In

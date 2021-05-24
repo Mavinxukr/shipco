@@ -3,6 +3,7 @@
 
 .label {
   color: $colorBackground;
+  min-width: 136px;
   @media screen and (max-width: 768px) {
     width: 100%;
     margin: 10px 0;
@@ -26,7 +27,6 @@
   display: flex;
   align-self: flex-end;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
   padding: 12px;
@@ -47,6 +47,7 @@
   max-height: 89px;
   min-height: 8px;
   overflow: auto;
+  width: inherit;
 
   button {
     width: 100%;
@@ -62,7 +63,8 @@
 }
 
 .activeOption {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 100% !important;
   z-index: 99999999;

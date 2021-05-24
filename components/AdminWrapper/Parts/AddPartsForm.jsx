@@ -51,6 +51,9 @@ export const AddPartsForm = () => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("add new part")}</span>
+          </h2>
           <Field name="client_id" validate={required} type="text">
             {renderInput({
               label: t("ClientID"),

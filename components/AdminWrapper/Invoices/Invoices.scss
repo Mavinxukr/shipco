@@ -23,7 +23,6 @@
 
 .title {
   color: $colorBackground;
-  margin-top: 60px;
 }
 
 .filterText {
@@ -223,7 +222,7 @@ th.documents svg {
 
 .pickers {
   flex-wrap: nowrap;
-
+  align-items: center;
   div div {
     margin: 0;
 

@@ -5,7 +5,7 @@ import styles from "./Popup.scss";
 import IconClose from "../../assets/svg/close.svg";
 import { PopupContext } from "../../context/PopupContext";
 
-const Popup = ({ title = "SHIPKO" }) => {
+const Popup = () => {
   const { isOpen, setIsOpen, content } = useContext(PopupContext);
 
   useEffect(() => {
@@ -37,12 +37,13 @@ const Popup = ({ title = "SHIPKO" }) => {
         onClick={() => setIsOpen(false)}
       ></div>
       <div className={cx(styles.popup_body)}>
-        <div className={styles.popupHeader}>
-          <h4 className={styles.popupTitle}>{title}</h4>
-          <button type="button" onClick={() => setIsOpen(false)}>
-            <IconClose />
-          </button>
-        </div>
+        <button
+          className={styles.close}
+          type="button"
+          onClick={() => setIsOpen(false)}
+        >
+          <IconClose />
+        </button>
         <div>{content}</div>
       </div>
     </div>

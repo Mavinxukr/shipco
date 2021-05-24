@@ -1,5 +1,16 @@
 @import "../../../scss/core/vars";
+@import "../../../scss/core/mixins";
 
+.title {
+  margin-bottom: 30px;
+  line-height: 28px;
+  @include styleForText(24px, $fontRegular);
+}
+
+.red {
+  color: $colorBackground;
+  margin-right: 10px;
+}
 .popupFieldRow {
   flex-direction: row;
   align-items: center;
@@ -18,7 +29,7 @@
 }
 
 .widthInputBlock {
-  width: 360px;
+  width: 100%;
 
   @media screen and (max-width: 768px) {
     width: 100%;

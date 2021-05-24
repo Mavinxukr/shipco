@@ -24,7 +24,7 @@ import { PopupContext } from "../../../context/PopupContext";
 import { AddNewGroupsForm } from "./AddNewGroupsForm";
 import { EditGroupForm } from "./EditGroupForm";
 import { DeleteGroupForm } from "./DeleteGroupForm";
-import { PrintForm } from "./PrintForm";
+import { PrintGroupsForm } from "./PrintGroupsForm";
 
 const Table = ({ columns, data, groupsArr }) => {
   const { setIsOpen, setContent } = useContext(PopupContext);
@@ -185,7 +185,6 @@ const Groups = () => {
               type="button"
               customBtn={styles.btnIcon}
               onClick={() => {
-                setSelected([]);
                 setContent(AddNewGroupsForm);
                 setIsOpen(true);
               }}
@@ -198,7 +197,7 @@ const Groups = () => {
             <Button
               customBtn={styles.rightBtn}
               onClick={() => {
-                setContent(PrintForm);
+                setContent(PrintGroupsForm);
                 setIsOpen(true);
               }}
             >

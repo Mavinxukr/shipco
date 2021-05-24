@@ -30,7 +30,7 @@ import Pagination from "../../Pagination/Pagination";
 import HoverPopup from "../../HoverPopup/HoverPopup";
 import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
-import { PrintForm } from "./PrintForm";
+import { PrintPartsForm } from "./PrintPartsForm";
 import { AddPartsForm } from "./AddPartsForm";
 import { EditPartsForm } from "./EditPartsForm";
 
@@ -200,7 +200,7 @@ const Parts = () => {
           <Button
             customBtn={styles.rightBtn}
             onClick={() => {
-              setContent(PrintForm);
+              setContent(PrintPartsForm);
               setIsOpen(true);
             }}
           >

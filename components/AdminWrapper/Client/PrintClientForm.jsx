@@ -1,49 +1,58 @@
 import React, { useContext, useState } from "react";
-import styles from "./PrintForm.scss";
 import MultiSelect from "../../Multi/Multi";
-import useTranslation from "next-translate/useTranslation";
+import Button from "../../Button/Button";
+import { Form } from "react-final-form";
+import styles from "./PrintClientForm.scss";
+import { useRouter } from "next/router";
+import { print } from "./data";
 import { printData, getIdsArr } from "../../../utils/helpers";
 import { PopupContext } from "../../../context/PopupContext";
-import { Form } from "react-final-form";
-import Button from "../../Button/Button";
-import { print } from "./data";
 
-export const PrintForm = () => {
-  const { t } = useTranslation("admin-parts");
+export const PrintClientForm = () => {
   const [selected, setSelected] = useState([]);
+  const router = useRouter();
   const { setIsOpen } = useContext(PopupContext);
 
   const onSubmitPrint = () => {
     const idsArr = getIdsArr(selected);
+    const paramsClient = router.query.isClient
+      ? {
+          fields: idsArr,
+        }
+      : {
+          client_id: +router.query.idUser || "",
+          fields: idsArr,
+        };
+    const tableClient = router.query.isClient ? "autos" : "client";
     printData({
-      params: {
-        fields: idsArr,
-      },
-      table: "parts",
+      params: paramsClient,
+      table: tableClient,
       selected: idsArr,
       setSelected,
       setPrintPopup: setIsOpen,
     });
   };
-
   return (
     <Form
       onSubmit={onSubmitPrint}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>Print</span>
+          </h2>
           <div className={styles.columnSelect}>
             <MultiSelect
-              options={print(t)}
+              options={print}
               setSelected={setSelected}
               value={selected}
-              label={t("SelectPrint")}
+              label="Select the fields Print"
             />
             <Button
               customBtn={styles.btnSubmit}
               type="submit"
               disabled={submitting || invalid}
             >
-              {t("SUBMIT")}
+              Submit
             </Button>
           </div>
         </form>

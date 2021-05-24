@@ -69,7 +69,6 @@ const TableUpdate = ({ columns, data }) => {
 };
 
 export const UpdatePriceForm = ({ itemGroup }) => {
-  console.log(itemGroup);
   const prices = useSelector(pricesDataSelector);
   const { t } = useTranslation("admin-price");
   const [priceableData, setPriceableData] = useState([]);
@@ -121,6 +120,9 @@ export const UpdatePriceForm = ({ itemGroup }) => {
       onSubmit={onSubmit}
       render={({ handleSubmit, invalid, submitting }) => (
         <form onSubmit={handleSubmit}>
+          <h2 className={styles.title}>
+            <span className={styles.red}>{t("updatePrice")}</span>
+          </h2>
           <Field
             name="name"
             validate={required}

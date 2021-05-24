@@ -27,7 +27,7 @@ import cx from "classnames";
 import Pickers from "../../Pickers/Pickers";
 import useTranslation from "next-translate/useTranslation";
 import { PopupContext } from "../../../context/PopupContext";
-import { PrintForm } from "./PrintForm";
+import { PrintDismantingForm } from "./PrintDismantingForm";
 
 const Dismasting = () => {
   const router = useRouter();
@@ -122,7 +122,7 @@ const Dismasting = () => {
           <Button
             customBtn={styles.rightBtn}
             onClick={() => {
-              setContent(PrintForm);
+              setContent(PrintDismantingForm);
               setIsOpen(true);
             }}
           >

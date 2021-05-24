@@ -1,8 +1,8 @@
-@import '../../scss/core/vars';
-@import '../../scss/core/mixins';
+@import "../../scss/core/vars";
+@import "../../scss/core/mixins";
 
 .title {
-  @include styleForText(24px, $fontRegular);
+  @include styleForText(24px, $fontRegular, $colorBackground);
 }
 .widthForm {
   width: 435px;
