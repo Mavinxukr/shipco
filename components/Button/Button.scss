@@ -5,16 +5,14 @@
   background: $colorBackground;
   color: $white;
   cursor: pointer;
-  transition: all .3s;
+  transition: all 0.3s;
   font-family: "RobotoMedium", sans-serif;
 
-
-  //&:hover{
-  //  background: $colorBackgroundHover;
-  //}
+  svg {
+    border-radius: 50%;
+  }
 }
 
 .active {
   opacity: 1 !important;
 }
-
