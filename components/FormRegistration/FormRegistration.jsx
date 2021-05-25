@@ -35,8 +35,16 @@ export const FormRegistration = () => {
         router.replace("/overview");
         setIsOpen(false);
       } else {
-        setErrorMessage(result.error);
+        console.log(result);
+        setErrorMessage(result.errors);
       }
+    }
+    if (response.hasOwnProperty("errors")) {
+      let message = "";
+      Object.keys(response.errors).map((item) => {
+        message += response.errors[item].join(" ");
+      });
+      setErrorMessage(message);
     }
   };
 
