@@ -40,7 +40,7 @@ export const FormRegistration = ({ setVariant }) => {
   };
 
   return (
-    <div>
+    <>
       <h5 className={classes.title}>Register</h5>
       <Form
         onSubmit={(values) => onSubmit(values, registration)}
@@ -120,6 +120,6 @@ export const FormRegistration = ({ setVariant }) => {
           Log In
         </Button>
       </p>
-    </div>
+    </>
   );
 };

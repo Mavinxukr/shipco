@@ -5,7 +5,7 @@
   @include styleForText(24px, $fontRegular, $colorBackground);
 }
 .widthForm {
-  width: 435px;
+  width: 100%;
 
   input {
     margin-top: 40px;
@@ -21,8 +21,8 @@
   }
 }
 .btnRegister {
-  background: transparent;
-  color: blue;
+  background: transparent !important;
+  color: blue !important;
   font-size: 16px;
 }
 .headerTitle {
@@ -47,10 +47,10 @@
 }
 
 .checkedLogin {
-  flex-direction: row-reverse;
+  flex-direction: row-reverse !important;
   justify-content: flex-end;
   align-items: baseline;
-  width: auto;
+  width: auto !important;
 }
 .widthCheckboxBlock {
   flex-direction: row-reverse;
