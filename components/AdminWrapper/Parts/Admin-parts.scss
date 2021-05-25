@@ -66,8 +66,8 @@
 }
 
 .btnIcon {
-  background: $white;
-  color: $colorBackground;
+  background: $white !important;
+  color: $colorBackground !important;
   font-weight: 500;
   display: flex;
   align-items: center;

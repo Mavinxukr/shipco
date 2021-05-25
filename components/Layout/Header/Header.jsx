@@ -4,7 +4,7 @@ import Link from "next/link";
 import PropsType from "prop-types";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { useSession, signOut } from "next-auth/client";
+import { getSession, signOut } from "next-auth/client";
 import {
   currentUserDataSelector,
   autoByContainerDataSelector,
@@ -45,8 +45,14 @@ const Header = ({ newLink, admin }) => {
   const { t, lang } = useTranslation("client-header");
 
   useEffect(() => {
-    dispatch(getCurrentUser({}));
-    dispatch(getAutoByContainer());
+    getSession().then((session) => {
+      if (session && session.user.role === "user") {
+        dispatch(getCurrentUser({}));
+      }
+      if (session && session.user.role === "admin") {
+        dispatch(getAutoByContainer());
+      }
+    });
   }, []);
 
   function logoutHandler() {

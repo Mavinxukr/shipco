@@ -26,19 +26,6 @@ import { NewClientForm } from "./NewClientForm";
 import { PrintClientForm } from "./PrintClientForm";
 import { TableClient } from "./TableClient";
 
-const todayDate = new Date();
-const currYear = todayDate.getFullYear();
-let currMonth = todayDate.getMonth() + 1;
-let currDay = todayDate.getDate();
-
-if (currMonth < 10) {
-  currMonth = `0${todayDate.getMonth() + 1}`;
-}
-
-if (currDay < 10) {
-  currDay = `0${todayDate.getDate()}`;
-}
-
 const BaseClient = () => {
   const baseClient = useSelector(baseClientDataSelector);
   const isDataReceived = useSelector(baseClientDataReceivedSelector);

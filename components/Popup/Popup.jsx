@@ -7,11 +7,6 @@ import { PopupContext } from "../../context/PopupContext";
 
 const Popup = () => {
   const { isOpen, setIsOpen, content } = useContext(PopupContext);
-
-  useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
-
   const escFunction = useCallback((event) => {
     if (event.keyCode === 27) {
       setIsOpen(false);
@@ -20,7 +15,6 @@ const Popup = () => {
 
   useEffect(() => {
     document.addEventListener("keydown", escFunction, false);
-
     return () => {
       document.removeEventListener("keydown", escFunction, false);
     };
