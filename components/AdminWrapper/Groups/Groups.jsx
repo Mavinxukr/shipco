@@ -64,7 +64,7 @@ const Table = ({ columns, data, groupsArr }) => {
                     {...cell.getCellProps()}
                   >
                     {cell.column.id === "actions" ? (
-                      <>
+                      <div className={styles.buttonsBlock}>
                         <Button
                           type="button"
                           customBtn={styles.actionsButton}
@@ -98,7 +98,7 @@ const Table = ({ columns, data, groupsArr }) => {
                         >
                           <IconTrash />
                         </Button>
-                      </>
+                      </div>
                     ) : (
                       <>
                         {cell.column.id === "client" ? (

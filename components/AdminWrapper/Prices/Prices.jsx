@@ -59,7 +59,7 @@ const Table = ({ columns, data, dispatch }) => {
                 {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>
                     {cell.column.id === "actions" ? (
-                      <>
+                      <div className={styles.buttonsBlock}>
                         <Button
                           type="button"
                           customBtn={styles.actionsButton}
@@ -82,7 +82,7 @@ const Table = ({ columns, data, dispatch }) => {
                         >
                           <IconTrash />
                         </Button>
-                      </>
+                      </div>
                     ) : (
                       <>
                         <>{cell.render("Cell")}</>

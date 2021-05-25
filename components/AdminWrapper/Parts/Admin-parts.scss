@@ -121,7 +121,10 @@
   height: 28px;
   margin-right: 30px;
 }
-
+.buttonsBlock {
+  display: flex;
+  align-items: center;
+}
 th:first-child {
   width: 45px;
   text-align: center;

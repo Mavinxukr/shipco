@@ -109,7 +109,7 @@ const Table = ({ columns, data }) => {
                   {...cell.getCellProps()}
                 >
                   {cell.column.id === "actions" ? (
-                    <>
+                    <div className={styles.buttonsBlock}>
                       <Button
                         type="button"
                         customBtn={styles.actionsButton}
@@ -131,7 +131,7 @@ const Table = ({ columns, data }) => {
                       >
                         <IconTrash />
                       </Button>
-                    </>
+                    </div>
                   ) : (
                     <>{cell.render("Cell")}</>
                   )}
