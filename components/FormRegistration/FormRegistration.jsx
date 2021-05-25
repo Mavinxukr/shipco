@@ -18,10 +18,10 @@ import {
 import { PopupContext } from "../../context/PopupContext";
 import { FormAuth } from "../FormAuth/FormAuth";
 
-export const FormRegistration = ({ setVariant }) => {
+export const FormRegistration = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const { setContent } = useContext(PopupContext);
+  const { setContent, setIsOpen } = useContext(PopupContext);
 
   const onSubmit = async (values, funcAuth) => {
     const response = await funcAuth({}, values);
@@ -33,6 +33,7 @@ export const FormRegistration = ({ setVariant }) => {
       });
       if (!result.error) {
         router.replace("/overview");
+        setIsOpen(false);
       } else {
         setErrorMessage(result.error);
       }
