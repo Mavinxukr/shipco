@@ -23,7 +23,10 @@ import {
   currentUserDataSelector,
   isAuthSelector,
 } from "../../../utils/selectors";
-import { editCurrentUser } from "../../../redux/actions/currentUser";
+import {
+  editCurrentUser,
+  getCurrentUser,
+} from "../../../redux/actions/currentUser";
 import useTranslation from "next-translate/useTranslation";
 import PlacesAutocomplete from "react-places-autocomplete";
 
@@ -36,13 +39,19 @@ const ProfileSettings = () => {
   const { t } = useTranslation("profile");
 
   useEffect(() => {
+    if (!userData) {
+      dispatch(getCurrentUser({}));
+    }
+  }, []);
+
+  useEffect(() => {
     if (userData && userData.image) {
       setImage(userData.image);
     }
   }, [userData]);
 
   if (!userData) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   const onSubmit = (values) => {

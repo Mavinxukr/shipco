@@ -81,7 +81,7 @@ export default class MyDocument extends Document {
             href="/static/favicon-16x16.png"
           />
           <link rel="manifest" href="/static/manifest.json" />
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKSxRjZeMrbQCrI7ROxox-m7wh907L0aI&libraries=places"></script>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtKsqYcsf4cUJ-lKlsyDeDJhr0pnjR4fk&libraries=places"></script>
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
           <meta name="theme-color" content="#ffffff" />
