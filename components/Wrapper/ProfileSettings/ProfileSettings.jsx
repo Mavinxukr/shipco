@@ -191,52 +191,56 @@ const ProfileSettings = () => {
                     })}
                   </Field>
                   <Field name="address">
-                    {({ input }) => (
-                      <PlacesAutocomplete
-                        value={address}
-                        onChange={(ev) => console.log(ev)}
-                        onSelect={(ev) => console.log(ev)}
-                        {...input}
-                      >
-                        {({
-                          getInputProps,
-                          suggestions,
-                          getSuggestionItemProps,
-                        }) => (
-                          <div className={styles.mediaFullWidth}>
-                            <div className={styles.address}>
-                              <label className={styles.address_label}>
-                                {t("adress")}
-                              </label>
-                              <input
-                                {...getInputProps({
-                                  placeholder: "Введите адресс",
-                                  className: styles.address_input,
-                                })}
-                              />
-                              {suggestions.length === 0 && (
-                                <ul className={styles.address_list}>
-                                  {suggestions.map((suggestion) => (
-                                    <li
-                                      className={styles.address_item}
-                                      {...getSuggestionItemProps(suggestion)}
-                                    >
-                                      <span>{suggestion.description}</span>
-                                    </li>
-                                  ))}
-                                  <li className={styles.address_item}>
-                                    qqwqeqweqweqwe
-                                  </li>
-                                  <li className={styles.address_item}>
-                                    qqwqeqweqweqwe
-                                  </li>
-                                </ul>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </PlacesAutocomplete>
-                    )}
+                    {({ input }) => {
+                      console.log(input);
+                      return (
+                        <PlacesAutocomplete
+                          {...input}
+                          value={address}
+                          onChange={(place) => setAddress(place)}
+                          onSelect={(place) => setAddress(place)}
+                        >
+                          {({
+                            getInputProps,
+                            suggestions,
+                            getSuggestionItemProps,
+                            loading,
+                          }) => {
+                            return (
+                              <div className={styles.mediaFullWidth}>
+                                <div className={styles.address}>
+                                  <label className={styles.address_label}>
+                                    {t("adress")}
+                                  </label>
+                                  <input
+                                    {...getInputProps({
+                                      placeholder: "Введите адресс",
+                                      className: styles.address_input,
+                                    })}
+                                  />
+                                  {loading && <div>Loading...</div>}
+                                  {suggestions.length !== 0 && (
+                                    <ul className={styles.address_list}>
+                                      {suggestions.map((suggestion) => (
+                                        <li
+                                          className={styles.address_item}
+                                          {...getSuggestionItemProps(
+                                            suggestion
+                                          )}
+                                          key={suggestion.placeId}
+                                        >
+                                          <span>{suggestion.description}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          }}
+                        </PlacesAutocomplete>
+                      );
+                    }}
                   </Field>
                   <Field
                     name="card_number"
